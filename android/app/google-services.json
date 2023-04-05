@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "635068110518",
+    "project_id": "arifa-medikal-klinik",
+    "storage_bucket": "arifa-medikal-klinik.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635068110518:android:22fc793778d730d4db3817",
+        "android_client_info": {
+          "package_name": "com.example.arifa_medikal_klink_3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635068110518-9go64ht4789n53ojgq87krqesgmcfanb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl_lZbRiZ0_LJFTghc4b9J_9uRq9xLa18"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635068110518-2do57he8reujiuq2ig8cpa2bt5e2gpe1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "635068110518-7egl3sd4ahukh1f2cc5iou7ino9gglab.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.arifaMedikalKlinik2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
