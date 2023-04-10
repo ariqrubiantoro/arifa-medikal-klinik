@@ -1,3 +1,4 @@
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/add_pasien_profil.dart';
 import 'package:arifa_medikal_klink_3/screens/detail_pasien.dart';
 import 'package:arifa_medikal_klink_3/screens/formulir/form1.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -106,8 +107,11 @@ class _MenuUtamaState extends State<MenuUtama> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+          //   return Form1();
+          // }));
           Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-            return Form1();
+            return AddPasienProfil();
           }));
         },
         child: Icon(Icons.add),
