@@ -2,18 +2,23 @@
 
 import 'package:arifa_medikal_klink_3/components/colors/color.dart';
 import 'package:arifa_medikal_klink_3/components/widget/text.dart';
+import 'package:arifa_medikal_klink_3/model/penyakit_keluarga_mode.dart';
 import 'package:flutter/material.dart';
+
+import '../../../service/firebase_firestore_service.dart';
 
 enum Question { ayah, ibu, tidak }
 
 class PenayahkitKeluarga extends StatefulWidget {
-  const PenayahkitKeluarga({super.key});
+  const PenayahkitKeluarga({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PenayahkitKeluarga> createState() => _PenayahkitKeluargaState();
 }
 
 class _PenayahkitKeluargaState extends State<PenayahkitKeluarga> {
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
   Question _quest = Question.tidak;
   Question _quest2 = Question.tidak;
   Question _quest3 = Question.tidak;
@@ -38,6 +43,7 @@ class _PenayahkitKeluargaState extends State<PenayahkitKeluarga> {
 
   @override
   Widget build(BuildContext context) {
+    print("id pasien : ${widget.idPasien}");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: blueDefault,
@@ -557,6 +563,7 @@ class _PenayahkitKeluargaState extends State<PenayahkitKeluarga> {
                   ),
                   InkWell(
                     // onTap: () => showDialogProfil(),
+                    onTap: saveButton,
 
                     child: Container(
                       padding:
@@ -581,5 +588,22 @@ class _PenayahkitKeluargaState extends State<PenayahkitKeluarga> {
         ),
       ),
     );
+  }
+
+  void saveButton() async {
+    PenyakitKeluargaModel data = PenyakitKeluargaModel(
+      kencingManis: _quest.name,
+      darahTinggi: _quest2.name,
+      asamLambung: _quest3.name,
+      alergi: _quest4.name,
+      paru: _quest5.name,
+      stroke: _quest6.name,
+      ginjal: _quest7.name,
+      hemorhoid: _quest8.name,
+      kanker: _quest9.name,
+      jantung: _quest10.name,
+    );
+
+    await firestore.setPenyakitKeluarga(data, widget.idPasien!);
   }
 }
