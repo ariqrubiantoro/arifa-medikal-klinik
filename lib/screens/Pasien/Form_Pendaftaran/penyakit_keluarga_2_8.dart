@@ -2,19 +2,20 @@
 
 import 'package:arifa_medikal_klink_3/components/colors/color.dart';
 import 'package:arifa_medikal_klink_3/components/widget/text.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/riwayat_kebiasaan_3_8.dart';
 import 'package:flutter/material.dart';
+
+import '../../../service/firebase_firestore_service.dart';
 
 enum Question { ayah, ibu, tidak }
 
-class PenyakitKeluarga extends StatefulWidget {
-  const PenyakitKeluarga({super.key});
+class PenayahkitKeluarga extends StatefulWidget {
+  const PenayahkitKeluarga({super.key});
 
   @override
   State<PenyakitKeluarga> createState() => _PenyakitKeluargaState();
 }
 
-class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
+class _PenayahkitKeluargaState extends State<PenayahkitKeluarga> {
   Question _quest = Question.tidak;
   Question _quest2 = Question.tidak;
   Question _quest3 = Question.tidak;
@@ -39,6 +40,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
 
   @override
   Widget build(BuildContext context) {
+    print("id pasien : ${widget.idPasien}");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: blueDefault,
@@ -558,10 +560,6 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                   ),
                   InkWell(
                     // onTap: () => showDialogProfil(),
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return RiwwayatKebiasaan3();
-                    })),
 
                     child: Container(
                       padding:
@@ -586,5 +584,22 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
         ),
       ),
     );
+  }
+
+  void saveButton() async {
+    PenyakitKeluargaModel data = PenyakitKeluargaModel(
+      kencingManis: _quest.name,
+      darahTinggi: _quest2.name,
+      asamLambung: _quest3.name,
+      alergi: _quest4.name,
+      paru: _quest5.name,
+      stroke: _quest6.name,
+      ginjal: _quest7.name,
+      hemorhoid: _quest8.name,
+      kanker: _quest9.name,
+      jantung: _quest10.name,
+    );
+
+    await firestore.setPenyakitKeluarga(data, widget.idPasien!);
   }
 }
