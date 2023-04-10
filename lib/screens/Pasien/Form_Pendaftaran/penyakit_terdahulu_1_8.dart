@@ -444,7 +444,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                     // onTap: () => showDialogProfil(),
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return PenayahkitKeluarga();
+                      return PenyakitKeluarga();
                     })),
 
                     child: Container(
