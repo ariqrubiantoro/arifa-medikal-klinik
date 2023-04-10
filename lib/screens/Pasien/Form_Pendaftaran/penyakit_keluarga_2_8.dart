@@ -4,18 +4,19 @@ import 'package:arifa_medikal_klink_3/components/colors/color.dart';
 import 'package:arifa_medikal_klink_3/components/widget/text.dart';
 import 'package:flutter/material.dart';
 
+import '../../../model/penyakit_keluarga_mode.dart';
 import '../../../service/firebase_firestore_service.dart';
 
 enum Question { ayah, ibu, tidak }
 
-class PenayahkitKeluarga extends StatefulWidget {
-  const PenayahkitKeluarga({super.key});
+class PenyakitKeluarga extends StatefulWidget {
+  const PenyakitKeluarga({super.key, String? idPasien});
 
   @override
   State<PenyakitKeluarga> createState() => _PenyakitKeluargaState();
 }
 
-class _PenayahkitKeluargaState extends State<PenayahkitKeluarga> {
+class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
   Question _quest = Question.tidak;
   Question _quest2 = Question.tidak;
   Question _quest3 = Question.tidak;
@@ -40,7 +41,7 @@ class _PenayahkitKeluargaState extends State<PenayahkitKeluarga> {
 
   @override
   Widget build(BuildContext context) {
-    print("id pasien : ${widget.idPasien}");
+    // print("id pasien : ${widget.idPasien}");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: blueDefault,
@@ -586,20 +587,20 @@ class _PenayahkitKeluargaState extends State<PenayahkitKeluarga> {
     );
   }
 
-  void saveButton() async {
-    PenyakitKeluargaModel data = PenyakitKeluargaModel(
-      kencingManis: _quest.name,
-      darahTinggi: _quest2.name,
-      asamLambung: _quest3.name,
-      alergi: _quest4.name,
-      paru: _quest5.name,
-      stroke: _quest6.name,
-      ginjal: _quest7.name,
-      hemorhoid: _quest8.name,
-      kanker: _quest9.name,
-      jantung: _quest10.name,
-    );
+  // void saveButton() async {
+  //   PenyakitKeluargaModel data = PenyakitKeluargaModel(
+  //     kencingManis: _quest.name,
+  //     darahTinggi: _quest2.name,
+  //     asamLambung: _quest3.name,
+  //     alergi: _quest4.name,
+  //     paru: _quest5.name,
+  //     stroke: _quest6.name,
+  //     ginjal: _quest7.name,
+  //     hemorhoid: _quest8.name,
+  //     kanker: _quest9.name,
+  //     jantung: _quest10.name,
+  //   );
 
-    await firestore.setPenyakitKeluarga(data, widget.idPasien!);
-  }
+  //   await firestore.setPenyakitKeluarga(data, widget.idPasien!);
+  // }
 }

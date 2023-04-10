@@ -449,7 +449,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                     // onTap: () => showDialogProfil(),
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return PenayahkitKeluarga();
+                      return PenyakitKeluarga();
                     })),
 
                     child: Container(
@@ -494,7 +494,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
     await firestore.setPenyakitTerdahulu(data, widget.idPasien!);
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return PenayahkitKeluarga(
+      return PenyakitKeluarga(
         idPasien: widget.idPasien,
       );
     }));
