@@ -2,6 +2,8 @@
 
 import 'package:arifa_medikal_klink_3/components/colors/color.dart';
 import 'package:arifa_medikal_klink_3/components/widget/text.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_terdahulu_1_8.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/riwayat_kebiasaan_3_8.dart';
 import 'package:flutter/material.dart';
 
 import '../../../model/penyakit_keluarga_mode.dart';
@@ -17,6 +19,8 @@ class PenyakitKeluarga extends StatefulWidget {
 }
 
 class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
+
   Question _quest = Question.tidak;
   Question _quest2 = Question.tidak;
   Question _quest3 = Question.tidak;
@@ -561,6 +565,12 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                   ),
                   InkWell(
                     // onTap: () => showDialogProfil(),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return RiwwayatKebiasaan3();
+                      }),
+                    ),
 
                     child: Container(
                       padding:
@@ -587,20 +597,20 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
     );
   }
 
-  // void saveButton() async {
-  //   PenyakitKeluargaModel data = PenyakitKeluargaModel(
-  //     kencingManis: _quest.name,
-  //     darahTinggi: _quest2.name,
-  //     asamLambung: _quest3.name,
-  //     alergi: _quest4.name,
-  //     paru: _quest5.name,
-  //     stroke: _quest6.name,
-  //     ginjal: _quest7.name,
-  //     hemorhoid: _quest8.name,
-  //     kanker: _quest9.name,
-  //     jantung: _quest10.name,
-  //   );
+  void saveButton() async {
+    PenyakitKeluargaModel data = PenyakitKeluargaModel(
+      kencingManis: _quest.name,
+      darahTinggi: _quest2.name,
+      asamLambung: _quest3.name,
+      alergi: _quest4.name,
+      paru: _quest5.name,
+      stroke: _quest6.name,
+      ginjal: _quest7.name,
+      hemorhoid: _quest8.name,
+      kanker: _quest9.name,
+      jantung: _quest10.name,
+    );
 
-  //   await firestore.setPenyakitKeluarga(data, widget.idPasien!);
-  // }
+    await firestore.setPenyakitKeluarga(data, "widget.idPasien!");
+  }
 }

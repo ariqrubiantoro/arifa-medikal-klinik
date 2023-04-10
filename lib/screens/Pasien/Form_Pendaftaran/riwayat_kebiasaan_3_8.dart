@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keluhan_sekarang_4_8.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/colors/color.dart';
@@ -24,7 +25,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
   String olahraga = "Tidak";
 
   bool visibleFormMeroko = false;
-  bool visibleFormMiras = true;
+  bool visibleFormMiras = false;
 
   final lamaMerokok = TextEditingController();
   final banyakBatangMerokok = TextEditingController();
@@ -419,7 +420,12 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                 ),
                 InkWell(
                   // onTap: () => showDialogProfil(),
-
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return KeluhanSekarang4();
+                    }),
+                  ),
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
