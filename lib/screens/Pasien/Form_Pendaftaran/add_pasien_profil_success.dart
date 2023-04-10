@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import '../../../components/colors/color.dart';
 
 class AddPasienProfilSucces extends StatefulWidget {
-  const AddPasienProfilSucces({super.key});
+  const AddPasienProfilSucces({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<AddPasienProfilSucces> createState() => _AddPasienProfilSuccesState();
@@ -69,7 +70,9 @@ class _AddPasienProfilSuccesState extends State<AddPasienProfilSucces> {
             InkWell(
               onTap: () =>
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return PenyakitTerdahulu1();
+                return PenyakitTerdahulu1(
+                  idPasien: widget.idPasien,
+                );
               })),
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 10),

@@ -2,19 +2,24 @@
 
 import 'package:arifa_medikal_klink_3/components/colors/color.dart';
 import 'package:arifa_medikal_klink_3/components/widget/text.dart';
+import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_keluarga_2_8.dart';
 import 'package:flutter/material.dart';
+
+import '../../../service/firebase_firestore_service.dart';
 
 enum Question { ya, tidak }
 
 class PenyakitTerdahulu1 extends StatefulWidget {
-  const PenyakitTerdahulu1({super.key});
+  const PenyakitTerdahulu1({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PenyakitTerdahulu1> createState() => _PenyakitTerdahulu1State();
 }
 
 class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
   Question _quest = Question.tidak;
   Question _quest2 = Question.tidak;
   Question _quest3 = Question.tidak;
@@ -442,10 +447,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                   ),
                   InkWell(
                     // onTap: () => showDialogProfil(),
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return PenayahkitKeluarga();
-                    })),
+                    onTap: saveButton,
 
                     child: Container(
                       padding:
@@ -470,5 +472,26 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
         ),
       ),
     );
+  }
+
+  void saveButton() async {
+    PenyakitTerdahuluModel data = PenyakitTerdahuluModel(
+      darahTinggi: _quest.name,
+      paru: _quest2.name,
+      asamLambung: _quest3.name,
+      alergi: _quest4.name,
+      riwayatOperasi: _quest5.name,
+      riwayatKecelakaan: _quest6.name,
+      riwayatRawatRs: _quest7.name,
+      hepatitis: _quest8.name,
+      kencingManis: _quest9.name,
+      patahTulang: _quest10.name,
+    );
+
+    await firestore.setPenyakitTerdahulu(data, widget.idPasien!);
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return PenayahkitKeluarga();
+    }));
   }
 }

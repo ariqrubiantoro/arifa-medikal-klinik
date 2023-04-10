@@ -2,10 +2,12 @@
 
 import 'package:arifa_medikal_klink_3/components/alert/alert.dart';
 import 'package:arifa_medikal_klink_3/components/colors/color.dart';
+import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/add_pasien_profil_success.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/widget/text.dart';
+import '../../../service/firebase_firestore_service.dart';
 
 class AddPasienProfil extends StatefulWidget {
   const AddPasienProfil({super.key});
@@ -15,6 +17,7 @@ class AddPasienProfil extends StatefulWidget {
 }
 
 class _AddPasienProfilState extends State<AddPasienProfil> {
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
   final namaC = TextEditingController();
   final nikC = TextEditingController();
   final alamatC = TextEditingController();
@@ -353,10 +356,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                 ),
                 Expanded(
                     child: InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return AddPasienProfilSucces();
-                  })),
+                  onTap: saveButton,
                   child: Container(
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -373,6 +373,34 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
           ],
         );
       },
+    );
+  }
+
+  void saveButton() async {
+    PasienModel pasien = PasienModel(
+      nama: namaC.text,
+      jenisKelamin: jkStr,
+      nik: nikC.text,
+      alamat: alamatC.text,
+      tanggalPemeriksaan: tglPemeriksaanC.text,
+      tempatLahir: tempatLahirC.text,
+      tanggalLahir: tglLahirC.text,
+      umur: int.parse(umurC.text),
+      perusahaan: perusahaanC.text,
+      bagian: bagianC.text,
+      noHp: nohpC.text,
+      waktu: DateTime.now().toString(),
+    );
+
+    await firestore.setPasien(pasien);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return AddPasienProfilSucces(
+          idPasien: pasien.id,
+        );
+      }),
     );
   }
 }
