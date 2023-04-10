@@ -1,3 +1,4 @@
+import 'package:arifa_medikal_klink_3/model/auth_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ class AuthForm extends StatefulWidget {
   AuthForm(this.submitFn);
 
   final void Function(String email, String username, String password,
-      bool isLogin, String nomorSTR) submitFn;
+      bool isLogin, String nomorSTR, String role) submitFn;
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -20,6 +21,13 @@ class _AuthFormState extends State<AuthForm> {
   var _namaLengkap = '';
   var _userPassword = '';
   var _nomorSTR = '';
+  final List<RoleType> _roleType = [
+    RoleType.admin,
+    RoleType.pic,
+    RoleType.dokter,
+  ];
+
+  final ValueNotifier<RoleType> _roleTypeNotifier = ValueNotifier(RoleType.pic);
 
   void cobaMasuk() {
     final cekMasuk = _formKey.currentState!.validate();
@@ -27,8 +35,8 @@ class _AuthFormState extends State<AuthForm> {
 
     if (cekMasuk) {
       _formKey.currentState!.save();
-      widget.submitFn(
-          _userEmail, _namaLengkap, _userPassword, _udahLogin, _nomorSTR);
+      widget.submitFn(_userEmail, _namaLengkap, _userPassword, _udahLogin,
+          _nomorSTR, _roleTypeNotifier.value.value);
     }
   }
 
@@ -93,6 +101,24 @@ class _AuthFormState extends State<AuthForm> {
                   _userPassword = value!;
                 },
               ),
+              if (!_udahLogin)
+                ValueListenableBuilder(
+                  valueListenable: _roleTypeNotifier,
+                  builder: (context, value, child) {
+                    return DropdownButtonFormField<RoleType>(
+                      value: value,
+                      onChanged: (value) {
+                        _roleTypeNotifier.value = value!;
+                      },
+                      items: _roleType
+                          .map((e) => DropdownMenuItem(
+                                value: e,
+                                child: Text(e.value),
+                              ))
+                          .toList(),
+                    );
+                  },
+                ),
               SizedBox(
                 height: 12,
               ),

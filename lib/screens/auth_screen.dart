@@ -19,7 +19,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _isLoading = false;
 
   void _submitAuthForm(String email, String username, String password,
-      bool isLogin, String nomorSTR) async {
+      bool isLogin, String nomorSTR, String roleType) async {
     UserCredential authResult;
 
     try {
@@ -33,7 +33,12 @@ class _AuthScreenState extends State<AuthScreen> {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(authResult.user!.uid)
-            .set({'username': username, 'email': email, 'nomor STR': nomorSTR});
+            .set({
+          'username': username,
+          'email': email,
+          'nomor STR': nomorSTR,
+          'role': roleType
+        });
         setState(() {
           _isLoading = false;
         });
