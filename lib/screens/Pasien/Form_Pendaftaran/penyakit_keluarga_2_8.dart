@@ -12,7 +12,8 @@ import '../../../service/firebase_firestore_service.dart';
 enum Question { ayah, ibu, tidak }
 
 class PenyakitKeluarga extends StatefulWidget {
-  const PenyakitKeluarga({super.key, String? idPasien});
+  const PenyakitKeluarga({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PenyakitKeluarga> createState() => _PenyakitKeluargaState();
@@ -565,12 +566,14 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                   ),
                   InkWell(
                     // onTap: () => showDialogProfil(),
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return RiwwayatKebiasaan3();
-                      }),
-                    ),
+                    // onTap: () => Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) {
+                    //     return RiwwayatKebiasaan3();
+                    //   }),
+                    // ),
+
+                    onTap: saveButton,
 
                     child: Container(
                       padding:
@@ -611,6 +614,12 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
       jantung: _quest10.name,
     );
 
-    await firestore.setPenyakitKeluarga(data, "widget.idPasien!");
+    await firestore.setPenyakitKeluarga(data, widget.idPasien!);
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RiwwayatKebiasaan3(idPasien: widget.idPasien),
+        ));
   }
 }
