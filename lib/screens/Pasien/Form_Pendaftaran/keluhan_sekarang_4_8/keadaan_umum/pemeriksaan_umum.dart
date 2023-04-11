@@ -365,11 +365,11 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                     ),
                   ),
                   InkWell(
-                    // onTap: () => Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) {
-                    //   return PemeriksaanMata();
-                    // })),
-                    onTap: saveButton,
+                    onTap: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return PemeriksaanMata();
+                    })),
+                    // onTap: saveButton,
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),

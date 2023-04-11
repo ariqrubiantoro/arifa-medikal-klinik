@@ -446,12 +446,11 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                     ),
                   ),
                   InkWell(
-                    // onTap: () => showDialogProfil(),
-                    // onTap: () => Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) {
-                    //   return PenyakitKeluarga();
-                    // })),
-                    onTap: saveButton,
+                    onTap: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return PenyakitKeluarga();
+                    })),
+                    // onTap: saveButton,
 
                     child: Container(
                       padding:

@@ -413,11 +413,11 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                     ),
                   ),
                   InkWell(
-                    // onTap: () => Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) {
-                    //   return PemeriksaanTHT();
-                    // })),
-                    onTap: saveButton,
+                    onTap: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return PemeriksaanTHT();
+                    })),
+                    // onTap: saveButton,
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -445,15 +445,15 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
 
   void saveButton() {
     PemeriksaanMataModel data = PemeriksaanMataModel(
-      kacaMata: _questKacamata.name,
-      kondisi: _questKondisi.name,
+      kacaMata: kacamata,
+      kondisi: kondisi,
       visusKiri: int.parse(osKiri.text),
       visusKanan: int.parse(osKanan.text),
-      olahraga: _questOlahraga.name,
-      butaWarna: _questButa.name,
-      penyakitMata: _questPenMata.name,
-      konjungtiva: _questKonjungtiva.name,
-      sklera: _questSklera.name,
+      olahraga: olahraga,
+      butaWarna: buta,
+      penyakitMata: penMata,
+      konjungtiva: konjungtiva,
+      sklera: sklera,
     );
 
     firstore.setPemeriksaanMata(

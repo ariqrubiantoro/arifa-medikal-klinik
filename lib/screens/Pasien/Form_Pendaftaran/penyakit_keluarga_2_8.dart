@@ -565,15 +565,14 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                     ),
                   ),
                   InkWell(
-                    // onTap: () => showDialogProfil(),
-                    // onTap: () => Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) {
-                    //     return RiwwayatKebiasaan3();
-                    //   }),
-                    // ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return RiwwayatKebiasaan3();
+                      }),
+                    ),
 
-                    onTap: saveButton,
+                    // onTap: saveButton,
 
                     child: Container(
                       padding:
