@@ -357,14 +357,15 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                 Expanded(
                     child: InkWell(
                   // onTap: saveButton,
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return AddPasienProfilSucces(
-                        idPasien: "",
-                      );
-                    }),
-                  ),
+                  // onTap: () => Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) {
+                  //     return AddPasienProfilSucces(
+                  //       idPasien: "",
+                  //     );
+                  //   }),
+                  // ),
+                  onTap: saveButton,
                   child: Container(
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(

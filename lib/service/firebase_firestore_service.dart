@@ -1,6 +1,7 @@
 import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_keluarga_mode.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
+import 'package:arifa_medikal_klink_3/model/riwayat_kebiasaan_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseFirestoreService {
@@ -33,5 +34,15 @@ class FirebaseFirestoreService {
     await doc.set(penyakitKeluarga.toJson());
 
     return penyakitKeluarga;
+  }
+
+  Future<RiwayatKebiasaanModel> setRiwayatKebiasaan(
+      RiwayatKebiasaanModel riwayatKebiasaan, String idPasien) async {
+    DocumentReference doc =
+        firestore.collection('riwayatKebiasaan').doc(idPasien);
+
+    await doc.set(riwayatKebiasaan.toJson());
+
+    return riwayatKebiasaan;
   }
 }
