@@ -614,6 +614,12 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
       jantung: jantung,
     );
 
-    await firestore.setPenyakitKeluarga(data, "widget.idPasien!");
+    firestore.setPenyakitKeluarga(data, widget.idPasien!);
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RiwwayatKebiasaan3(idPasien: widget.idPasien),
+        ));
   }
 }

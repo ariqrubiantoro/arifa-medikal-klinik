@@ -1,8 +1,11 @@
 import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_mata_model.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_keluarga_mode.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
 import 'package:arifa_medikal_klink_3/model/riwayat_kebiasaan_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../model/pemeriksaan_umum_model.dart';
 
 class FirebaseFirestoreService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -44,5 +47,33 @@ class FirebaseFirestoreService {
     await doc.set(riwayatKebiasaan.toJson());
 
     return riwayatKebiasaan;
+  }
+
+  Future<PemeriksaanUmumModel> setPemeriksaanUmum(
+      {required PemeriksaanUmumModel pemeriksaanUmum,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanUmum')
+        .doc(idPasien);
+
+    await doc.set(pemeriksaanUmum.toJson());
+
+    return pemeriksaanUmum;
+  }
+
+  Future<PemeriksaanMataModel> setPemeriksaanMata(
+      {required PemeriksaanMataModel pemeriksaanMata,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanMata')
+        .doc(idPasien);
+
+    await doc.set(pemeriksaanMata.toJson());
+
+    return pemeriksaanMata;
   }
 }
