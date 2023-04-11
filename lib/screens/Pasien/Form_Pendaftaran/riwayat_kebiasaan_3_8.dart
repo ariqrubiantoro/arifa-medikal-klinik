@@ -469,7 +469,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
               gelas: banyakGelasMiras.text,
               botol: banyakBotolMiras.text)
           : null,
-      olahraga: _quest3.name,
+      olahraga: olahraga,
     );
 
     firestore.setRiwayatKebiasaan(data, widget.idPasien!);

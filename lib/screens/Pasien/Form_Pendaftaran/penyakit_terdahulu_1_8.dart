@@ -480,16 +480,16 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
 
   void saveButton() async {
     PenyakitTerdahuluModel data = PenyakitTerdahuluModel(
-      darahTinggi: _quest.name,
-      paru: _quest2.name,
-      asamLambung: _quest3.name,
-      alergi: _quest4.name,
-      riwayatOperasi: _quest5.name,
-      riwayatKecelakaan: _quest6.name,
-      riwayatRawatRs: _quest7.name,
-      hepatitis: _quest8.name,
-      kencingManis: _quest9.name,
-      patahTulang: _quest10.name,
+      darahTinggi: darahTinggi,
+      paru: paru,
+      asamLambung: asamLambung,
+      alergi: alergi,
+      riwayatOperasi: riwayatOperasi,
+      riwayatKecelakaan: riwayatOperasi,
+      riwayatRawatRs: riwayatRawatrs,
+      hepatitis: hepatitis,
+      kencingManis: kencingManis,
+      patahTulang: patahTulang,
     );
 
     await firestore.setPenyakitTerdahulu(data, widget.idPasien!);
