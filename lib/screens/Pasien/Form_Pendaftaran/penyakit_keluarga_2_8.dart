@@ -12,7 +12,8 @@ import '../../../service/firebase_firestore_service.dart';
 enum Question { ayah, ibu, tidak }
 
 class PenyakitKeluarga extends StatefulWidget {
-  const PenyakitKeluarga({super.key, String? idPasien});
+  const PenyakitKeluarga({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PenyakitKeluarga> createState() => _PenyakitKeluargaState();
@@ -599,18 +600,18 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
 
   void saveButton() async {
     PenyakitKeluargaModel data = PenyakitKeluargaModel(
-      kencingManis: _quest.name,
-      darahTinggi: _quest2.name,
-      asamLambung: _quest3.name,
-      alergi: _quest4.name,
-      paru: _quest5.name,
-      stroke: _quest6.name,
-      ginjal: _quest7.name,
-      hemorhoid: _quest8.name,
-      kanker: _quest9.name,
-      jantung: _quest10.name,
+      kencingManis: kencingManis,
+      darahTinggi: darahTinggi,
+      asamLambung: asamLambung,
+      alergi: alergi,
+      paru: paru,
+      stroke: stroke,
+      ginjal: ginjal,
+      hemorhoid: hermorhid,
+      kanker: kanker,
+      jantung: jantung,
     );
 
-    await firestore.setPenyakitKeluarga(data, "widget.idPasien!");
+    await firestore.setPenyakitKeluarga(data, widget.idPasien!);
   }
 }

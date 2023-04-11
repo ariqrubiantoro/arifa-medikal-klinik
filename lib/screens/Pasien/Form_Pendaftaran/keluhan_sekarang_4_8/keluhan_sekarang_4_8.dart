@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_THT.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_mata.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_umum.dart';
 import 'package:flutter/material.dart';
 
@@ -129,6 +131,16 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return PemeriksaanUmum();
+                                    }));
+                                  } else if (index == 1) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return PemeriksaanMata();
+                                    }));
+                                  } else if (index == 2) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return PemeriksaanTHT();
                                     }));
                                   }
                                 },
