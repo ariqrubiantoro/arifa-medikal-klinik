@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_mata_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_THT.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -13,13 +15,15 @@ enum QuestRabun { dekat, jauh }
 enum QuestNormal { normal, tidak }
 
 class PemeriksaanMata extends StatefulWidget {
-  const PemeriksaanMata({super.key});
+  const PemeriksaanMata({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PemeriksaanMata> createState() => _PemeriksaanMataState();
 }
 
 class _PemeriksaanMataState extends State<PemeriksaanMata> {
+  FirebaseFirestoreService firstore = FirebaseFirestoreService();
   QuestYaNo _questKacamata = QuestYaNo.tidak;
   QuestRabun _questKondisi = QuestRabun.jauh;
   QuestYaNo _questOlahraga = QuestYaNo.tidak;
@@ -409,10 +413,11 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return PemeriksaanTHT();
-                    })),
+                    // onTap: () => Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) {
+                    //   return PemeriksaanTHT();
+                    // })),
+                    onTap: saveButton,
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -436,5 +441,22 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
         ),
       ),
     );
+  }
+
+  void saveButton() {
+    PemeriksaanMataModel data = PemeriksaanMataModel(
+      kacaMata: _questKacamata.name,
+      kondisi: _questKondisi.name,
+      visusKiri: int.parse(osKiri.text),
+      visusKanan: int.parse(osKanan.text),
+      olahraga: _questOlahraga.name,
+      butaWarna: _questButa.name,
+      penyakitMata: _questPenMata.name,
+      konjungtiva: _questKonjungtiva.name,
+      sklera: _questSklera.name,
+    );
+
+    firstore.setPemeriksaanMata(
+        pemeriksaanMata: data, idPasien: widget.idPasien!);
   }
 }

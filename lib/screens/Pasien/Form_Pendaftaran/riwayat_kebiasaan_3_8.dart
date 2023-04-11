@@ -473,5 +473,12 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
     );
 
     firestore.setRiwayatKebiasaan(data, widget.idPasien!);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => KeluhanSekarang4(
+            idPasien: widget.idPasien,
+          ),
+        ));
   }
 }

@@ -1,19 +1,23 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_umum_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_mata.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
+import '../../../../../service/firebase_firestore_service.dart';
 
 class PemeriksaanUmum extends StatefulWidget {
-  const PemeriksaanUmum({super.key});
+  const PemeriksaanUmum({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PemeriksaanUmum> createState() => _PemeriksaanUmumState();
 }
 
 class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
   final tinggiBadan = TextEditingController();
   final beratBadan = TextEditingController();
   final beratBadanIdeal = TextEditingController();
@@ -361,10 +365,11 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return PemeriksaanMata();
-                    })),
+                    // onTap: () => Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) {
+                    //   return PemeriksaanMata();
+                    // })),
+                    onTap: saveButton,
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -388,5 +393,25 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
         ),
       ),
     );
+  }
+
+  void saveButton() async {
+    print("data ${widget.idPasien}");
+    PemeriksaanUmumModel data = PemeriksaanUmumModel(
+      tinggiBadan: int.parse(tinggiBadan.text),
+      beratBadan: int.parse(beratBadan.text),
+      beratBadanIdeal: int.parse(beratBadanIdeal.text),
+      imt: int.parse(imt.text),
+      lingkarPerut: int.parse(lingkaranPerut.text),
+      tekananDarah: int.parse(tekananDarah.text),
+      denyutNadi: int.parse(denyutNadi.text),
+      pernapasan: int.parse(pernapasan.text),
+      suhu: int.parse(suhu.text),
+    );
+
+    await firestore.setPemeriksaanUmum(
+        pemeriksaanUmum: data, idPasien: widget.idPasien!);
+
+        
   }
 }

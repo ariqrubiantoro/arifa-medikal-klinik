@@ -9,7 +9,8 @@ import '../../../../components/colors/color.dart';
 import '../../../../components/widget/text.dart';
 
 class KeluhanSekarang4 extends StatefulWidget {
-  const KeluhanSekarang4({super.key});
+  const KeluhanSekarang4({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<KeluhanSekarang4> createState() => _KeluhanSekarang4State();
@@ -130,12 +131,16 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                                   if (index == 0) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return PemeriksaanUmum();
+                                      return PemeriksaanUmum(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   } else if (index == 1) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return PemeriksaanMata();
+                                      return PemeriksaanMata(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   } else if (index == 2) {
                                     Navigator.push(context,
