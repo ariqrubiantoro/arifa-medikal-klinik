@@ -566,12 +566,14 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                   ),
                   InkWell(
                     // onTap: () => showDialogProfil(),
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return RiwwayatKebiasaan3();
-                      }),
-                    ),
+                    // onTap: () => Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) {
+                    //     return RiwwayatKebiasaan3();
+                    //   }),
+                    // ),
+
+                    onTap: saveButton,
 
                     child: Container(
                       padding:
@@ -612,6 +614,6 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
       jantung: jantung,
     );
 
-    await firestore.setPenyakitKeluarga(data, widget.idPasien!);
+    await firestore.setPenyakitKeluarga(data, "widget.idPasien!");
   }
 }
