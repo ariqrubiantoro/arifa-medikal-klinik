@@ -2,6 +2,7 @@
 
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_THT.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_mata.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_rongga_dada.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_umum.dart';
 import 'package:flutter/material.dart';
 
@@ -146,6 +147,11 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return PemeriksaanTHT();
+                                    }));
+                                  } else if (index == 3) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return PemeriksaanRonggaDada();
                                     }));
                                   }
                                 },
