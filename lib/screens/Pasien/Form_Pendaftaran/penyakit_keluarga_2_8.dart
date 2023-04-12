@@ -49,17 +49,10 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
     // print("id pasien : ${widget.idPasien}");
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: blueDefault,
-        automaticallyImplyLeading: false,
-        title: Row(children: [
-          Icon(Icons.arrow_back),
-          SizedBox(
-            width: 20,
-          ),
-          textDefault("Riwayat Penyakit Keluarga (Orang Tua)", Colors.white, 18,
-              FontWeight.bold)
-        ]),
-      ),
+          backgroundColor: blueDefault,
+          automaticallyImplyLeading: true,
+          title: textDefault("Riwayat Penyakit Keluarga (Orang Tua)",
+              Colors.white, 16, FontWeight.bold)),
       body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -74,7 +67,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        textDefault("2/8", Colors.black, 16, FontWeight.bold)
+                        textDefault("2/8", Colors.black, 14, FontWeight.bold)
                       ],
                     ),
                     SizedBox(
@@ -106,7 +99,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                       height: 10,
                     ),
                     textDefault(
-                        "Kencing Manis", Colors.black, 16, FontWeight.bold),
+                        "Kencing Manis", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -150,7 +143,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                       height: 5,
                     ),
                     textDefault(
-                        "Darah Tinggi", Colors.black, 16, FontWeight.bold),
+                        "Darah Tinggi", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -195,7 +188,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                       height: 5,
                     ),
                     textDefault(
-                        "Asam Lambung", Colors.black, 16, FontWeight.bold),
+                        "Asam Lambung", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -238,7 +231,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Alergi", Colors.black, 16, FontWeight.bold),
+                    textDefault("Alergi", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -325,7 +318,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Stroke", Colors.black, 16, FontWeight.bold),
+                    textDefault("Stroke", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -368,7 +361,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Ginjal", Colors.black, 16, FontWeight.bold),
+                    textDefault("Ginjal", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -411,7 +404,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Hemorhoid", Colors.black, 16, FontWeight.bold),
+                    textDefault("Hemorhoid", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -454,7 +447,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Kanker", Colors.black, 16, FontWeight.bold),
+                    textDefault("Kanker", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -497,7 +490,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Jantung", Colors.black, 16, FontWeight.bold),
+                    textDefault("Jantung", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(

@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_rongga_perut.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -57,7 +58,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
       appBar: AppBar(
           backgroundColor: blueDefault,
           title: textDefault("Keadaan Umum - Pemeriksaan Rongga Dada",
-              Colors.white, 18, FontWeight.bold)),
+              Colors.white, 16, FontWeight.bold)),
       body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -71,7 +72,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        textDefault("4/8", Colors.black, 16, FontWeight.bold)
+                        textDefault("4/8", Colors.black, 14, FontWeight.bold)
                       ],
                     ),
                     SizedBox(
@@ -120,7 +121,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             textDefault(
-                                "Jantung", Colors.black, 16, FontWeight.bold),
+                                "Jantung", Colors.black, 14, FontWeight.bold),
                             Icon(tapJantung
                                 ? Icons.arrow_drop_up
                                 : Icons.arrow_drop_down)
@@ -150,7 +151,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             textDefault(
-                                "Paru", Colors.black, 16, FontWeight.bold),
+                                "Paru", Colors.black, 14, FontWeight.bold),
                             Icon(tapParu
                                 ? Icons.arrow_drop_up
                                 : Icons.arrow_drop_down)
@@ -186,10 +187,10 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     ),
                   ),
                   InkWell(
-                    // onTap: () => Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) {
-                    //   return PemeriksaanRonggaDada();
-                    // })),
+                    onTap: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return PemeriksaanRonggaPerut();
+                    })),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -224,7 +225,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Batas-Batas Jantung", Colors.black, 16, FontWeight.bold),
+          textDefault("Batas-Batas Jantung", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -254,7 +255,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Auskultasi", Colors.black, 16, FontWeight.bold),
+          textDefault("Auskultasi", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -284,7 +285,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Iktus Kordis", Colors.black, 16, FontWeight.bold),
+          textDefault("Iktus Kordis", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -314,7 +315,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Bunyi Jantung", Colors.black, 16, FontWeight.bold),
+          textDefault("Bunyi Jantung", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -344,7 +345,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Bunyi Nafas", Colors.black, 16, FontWeight.bold),
+          textDefault("Bunyi Nafas", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -374,7 +375,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Lain-Lain", Colors.black, 16, FontWeight.bold),
+          textDefault("Lain-Lain", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -418,7 +419,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Inspeksi Kanan", Colors.black, 16, FontWeight.bold),
+          textDefault("Inspeksi Kanan", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -448,7 +449,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Inspeksi Kiri", Colors.black, 16, FontWeight.bold),
+          textDefault("Inspeksi Kiri", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -478,7 +479,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Palpasi Kanan", Colors.black, 16, FontWeight.bold),
+          textDefault("Palpasi Kanan", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -508,7 +509,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Palpasi Kiri", Colors.black, 16, FontWeight.bold),
+          textDefault("Palpasi Kiri", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -538,7 +539,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Perkusi Kanan", Colors.black, 16, FontWeight.bold),
+          textDefault("Perkusi Kanan", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -568,7 +569,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Perkusi Kiri", Colors.black, 16, FontWeight.bold),
+          textDefault("Perkusi Kiri", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -598,7 +599,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Auskultasi Kanan", Colors.black, 16, FontWeight.bold),
+          textDefault("Auskultasi Kanan", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -628,7 +629,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Auskultasi Kiri", Colors.black, 16, FontWeight.bold),
+          textDefault("Auskultasi Kiri", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(

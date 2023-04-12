@@ -31,14 +31,9 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: blueDefault,
-        title: Row(
-          children: [
-            textDefault("Keadaan Umum - Pemeriksaan Umum", Colors.white, 18,
-                FontWeight.bold)
-          ],
-        ),
-      ),
+          backgroundColor: blueDefault,
+          title: textDefault("Keadaan Umum - Pemeriksaan Umum", Colors.white,
+              16, FontWeight.bold)),
       body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -52,7 +47,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        textDefault("4/8", Colors.black, 16, FontWeight.bold)
+                        textDefault("4/8", Colors.black, 14, FontWeight.bold)
                       ],
                     ),
                     SizedBox(
@@ -87,10 +82,10 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                       children: [
                         Container(
                           width: 150,
-                          child: textDefault("Tinggi Badan", Colors.black, 16,
+                          child: textDefault("Tinggi Badan", Colors.black, 14,
                               FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 16, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
                           height: 30,
@@ -105,7 +100,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                                   contentPadding: EdgeInsets.all(0),
                                   border: InputBorder.none)),
                         ),
-                        textDefault(" cm", Colors.black, 16, FontWeight.normal),
+                        textDefault(" cm", Colors.black, 14, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -115,10 +110,10 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                       children: [
                         Container(
                           width: 150,
-                          child: textDefault("Berat Badan", Colors.black, 16,
+                          child: textDefault("Berat Badan", Colors.black, 14,
                               FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 16, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
                           height: 30,
@@ -133,7 +128,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                                   contentPadding: EdgeInsets.all(0),
                                   border: InputBorder.none)),
                         ),
-                        textDefault(" kg", Colors.black, 16, FontWeight.normal),
+                        textDefault(" kg", Colors.black, 14, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -146,7 +141,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           child: textDefault("Berat Badan Ideal", Colors.black,
                               16, FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 16, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
                           height: 30,
@@ -161,7 +156,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                                   contentPadding: EdgeInsets.all(0),
                                   border: InputBorder.none)),
                         ),
-                        textDefault(" kg", Colors.black, 16, FontWeight.normal),
+                        textDefault(" kg", Colors.black, 14, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -172,9 +167,9 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 150,
                           child: textDefault(
-                              "IMT", Colors.black, 16, FontWeight.normal),
+                              "IMT", Colors.black, 14, FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 16, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
                           height: 30,
@@ -201,7 +196,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           child: textDefault("Lingkaran Perut", Colors.black,
                               16, FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 16, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
                           height: 30,
@@ -216,7 +211,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                                   contentPadding: EdgeInsets.all(0),
                                   border: InputBorder.none)),
                         ),
-                        textDefault(" cm", Colors.black, 16, FontWeight.normal),
+                        textDefault(" cm", Colors.black, 14, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -226,10 +221,10 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                       children: [
                         Container(
                           width: 150,
-                          child: textDefault("Tekanan Darah", Colors.black, 16,
+                          child: textDefault("Tekanan Darah", Colors.black, 14,
                               FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 16, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
                           height: 30,
@@ -245,7 +240,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                                   border: InputBorder.none)),
                         ),
                         textDefault(
-                            " mmHg", Colors.black, 16, FontWeight.normal),
+                            " mmHg", Colors.black, 14, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -255,10 +250,10 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                       children: [
                         Container(
                           width: 150,
-                          child: textDefault("Denyut Nadi", Colors.black, 16,
+                          child: textDefault("Denyut Nadi", Colors.black, 14,
                               FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 16, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
                           height: 30,
@@ -274,7 +269,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                                   border: InputBorder.none)),
                         ),
                         textDefault(
-                            " x/menit", Colors.black, 16, FontWeight.normal),
+                            " x/menit", Colors.black, 14, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -287,7 +282,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           child: textDefault("Frek. Pernafasan", Colors.black,
                               16, FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 16, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
                           height: 30,
@@ -303,7 +298,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                                   border: InputBorder.none)),
                         ),
                         textDefault(
-                            " x/menit", Colors.black, 16, FontWeight.normal),
+                            " x/menit", Colors.black, 14, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -314,9 +309,9 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 150,
                           child: textDefault(
-                              "Suhu", Colors.black, 16, FontWeight.normal),
+                              "Suhu", Colors.black, 14, FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 16, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
                           height: 30,
@@ -331,7 +326,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                                   contentPadding: EdgeInsets.all(0),
                                   border: InputBorder.none)),
                         ),
-                        textDefault(" °C", Colors.black, 16, FontWeight.normal),
+                        textDefault(" °C", Colors.black, 14, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -411,7 +406,5 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
 
     await firestore.setPemeriksaanUmum(
         pemeriksaanUmum: data, idPasien: widget.idPasien!);
-
-        
   }
 }

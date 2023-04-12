@@ -39,7 +39,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
         backgroundColor: blueDefault,
         title: Row(
           children: [
-            textDefault("Tambah Pasien", Colors.white, 18, FontWeight.bold)
+            textDefault("Tambah Pasien", Colors.white, 16, FontWeight.bold)
           ],
         ),
       ),
@@ -53,7 +53,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    textDefault("Nama", Colors.black, 16, FontWeight.normal),
+                    textDefault("Nama", Colors.black, 14, FontWeight.normal),
                     SizedBox(
                       height: 5,
                     ),
@@ -70,7 +70,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                       height: 10,
                     ),
                     textDefault(
-                        "Jenis Kelamin", Colors.black, 16, FontWeight.normal),
+                        "Jenis Kelamin", Colors.black, 14, FontWeight.normal),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -87,7 +87,8 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                                     });
                                   }),
                               Expanded(
-                                child: Text('Pria'),
+                                child: textDefault("Pria", Colors.black, 14,
+                                    FontWeight.normal),
                               )
                             ],
                           ),
@@ -105,7 +106,10 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                                       idJk = 2;
                                     });
                                   }),
-                              Expanded(child: Text('Wanita'))
+                              Expanded(
+                                child: textDefault("Wanita", Colors.black, 14,
+                                    FontWeight.normal),
+                              )
                             ],
                           ),
                           flex: 2,
@@ -115,7 +119,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                     SizedBox(
                       height: 10,
                     ),
-                    textDefault("NIK", Colors.black, 16, FontWeight.normal),
+                    textDefault("NIK", Colors.black, 14, FontWeight.normal),
                     SizedBox(
                       height: 5,
                     ),
@@ -132,7 +136,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                     SizedBox(
                       height: 10,
                     ),
-                    textDefault("Alamat", Colors.black, 16, FontWeight.normal),
+                    textDefault("Alamat", Colors.black, 14, FontWeight.normal),
                     SizedBox(
                       height: 5,
                     ),
@@ -148,7 +152,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                     SizedBox(
                       height: 10,
                     ),
-                    textDefault("Tanggal Pemeriksaan", Colors.black, 16,
+                    textDefault("Tanggal Pemeriksaan", Colors.black, 14,
                         FontWeight.normal),
                     SizedBox(
                       height: 5,
@@ -166,7 +170,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                       height: 10,
                     ),
                     textDefault(
-                        "Tempat Lahir", Colors.black, 16, FontWeight.normal),
+                        "Tempat Lahir", Colors.black, 14, FontWeight.normal),
                     SizedBox(
                       height: 5,
                     ),
@@ -183,7 +187,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                       height: 10,
                     ),
                     textDefault(
-                        "Tanggal Lahir", Colors.black, 16, FontWeight.normal),
+                        "Tanggal Lahir", Colors.black, 14, FontWeight.normal),
                     SizedBox(
                       height: 5,
                     ),
@@ -199,7 +203,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                     SizedBox(
                       height: 10,
                     ),
-                    textDefault("Umur", Colors.black, 16, FontWeight.normal),
+                    textDefault("Umur", Colors.black, 14, FontWeight.normal),
                     SizedBox(
                       height: 5,
                     ),
@@ -217,7 +221,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                       height: 10,
                     ),
                     textDefault(
-                        "Perusahaan", Colors.black, 16, FontWeight.normal),
+                        "Perusahaan", Colors.black, 14, FontWeight.normal),
                     SizedBox(
                       height: 5,
                     ),
@@ -234,7 +238,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                       height: 10,
                     ),
                     textDefault(
-                        "Bagian/Seksi", Colors.black, 16, FontWeight.normal),
+                        "Bagian/Seksi", Colors.black, 14, FontWeight.normal),
                     SizedBox(
                       height: 5,
                     ),
@@ -251,7 +255,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                       height: 10,
                     ),
                     textDefault(
-                        "No. Handphone", Colors.black, 16, FontWeight.normal),
+                        "No. Handphone", Colors.black, 14, FontWeight.normal),
                     SizedBox(
                       height: 5,
                     ),
@@ -333,7 +337,10 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
           content: Text(
             "Apakah Anda yakin ingin\nmenyimpan?",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontFamily: 'poppins',
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
           ),
           actions: <Widget>[
             Row(
@@ -348,7 +355,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: textDefault(
-                            "Tidak", Colors.black, 16, FontWeight.bold),
+                            "Tidak", Colors.black, 14, FontWeight.bold),
                       )),
                 )),
                 SizedBox(
@@ -373,7 +380,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: textDefault(
-                            "Ya, Simpan", Colors.white, 16, FontWeight.bold),
+                            "Ya, Simpan", Colors.white, 14, FontWeight.bold),
                       )),
                 )),
               ],

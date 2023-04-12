@@ -47,14 +47,9 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: blueDefault,
-        title: Row(
-          children: [
-            textDefault("Keadaan Umum - Pemeriksaan Mata", Colors.white, 18,
-                FontWeight.bold)
-          ],
-        ),
-      ),
+          backgroundColor: blueDefault,
+          title: textDefault("Keadaan Umum - Pemeriksaan Mata", Colors.white,
+              16, FontWeight.bold)),
       body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -69,7 +64,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        textDefault("4/8", Colors.black, 16, FontWeight.bold)
+                        textDefault("4/8", Colors.black, 14, FontWeight.bold)
                       ],
                     ),
                     SizedBox(
@@ -101,7 +96,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                       height: 20,
                     ),
                     textDefault(
-                        "Berkaca Mata", Colors.black, 16, FontWeight.bold),
+                        "Berkaca Mata", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -136,7 +131,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         textDefault(
-                            "Kondisi", Colors.black, 16, FontWeight.bold),
+                            "Kondisi", Colors.black, 14, FontWeight.bold),
                         Row(
                           children: <Widget>[
                             Radio(
@@ -174,7 +169,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           child: textDefault("Visus Os (Kiri)", Colors.black,
                               16, FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 16, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
                           height: 30,
@@ -203,7 +198,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           child: textDefault("Visus Os (Kanan)", Colors.black,
                               16, FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 16, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
                           height: 30,
@@ -225,7 +220,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Olahraga", Colors.black, 16, FontWeight.bold),
+                    textDefault("Olahraga", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -257,7 +252,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                       height: 5,
                     ),
                     textDefault(
-                        "Buta Warna", Colors.black, 16, FontWeight.bold),
+                        "Buta Warna", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -289,7 +284,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                       height: 5,
                     ),
                     textDefault(
-                        "Penyakit Mata", Colors.black, 16, FontWeight.bold),
+                        "Penyakit Mata", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -321,7 +316,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                       height: 5,
                     ),
                     textDefault(
-                        "Konjungtiva", Colors.black, 16, FontWeight.bold),
+                        "Konjungtiva", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -353,7 +348,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Sklera", Colors.black, 16, FontWeight.bold),
+                    textDefault("Sklera", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(

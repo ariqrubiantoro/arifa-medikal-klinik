@@ -50,7 +50,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
           SizedBox(
             width: 20,
           ),
-          textDefault("Riwayat Kebiasaan", Colors.white, 18, FontWeight.bold)
+          textDefault("Riwayat Kebiasaan", Colors.white, 16, FontWeight.bold)
         ]),
       ),
       body: Container(
@@ -67,7 +67,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        textDefault("3/8", Colors.black, 16, FontWeight.bold)
+                        textDefault("3/8", Colors.black, 14, FontWeight.bold)
                       ],
                     ),
                     SizedBox(
@@ -98,7 +98,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                     SizedBox(
                       height: 10,
                     ),
-                    textDefault("Merokok", Colors.black, 16, FontWeight.bold),
+                    textDefault("Merokok", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -140,10 +140,10 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                 children: [
                                   Container(
                                     width: 70,
-                                    child: textDefault("Lama", Colors.black, 16,
+                                    child: textDefault("Lama", Colors.black, 14,
                                         FontWeight.normal),
                                   ),
-                                  textDefault(":  ", Colors.black, 16,
+                                  textDefault(":  ", Colors.black, 14,
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
@@ -160,7 +160,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                           border: InputBorder.none),
                                     ),
                                   ),
-                                  textDefault(" Tahun", Colors.black, 16,
+                                  textDefault(" Tahun", Colors.black, 14,
                                       FontWeight.normal),
                                 ],
                               ),
@@ -174,7 +174,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                     child: textDefault("Banyak", Colors.black,
                                         16, FontWeight.normal),
                                   ),
-                                  textDefault(":  ", Colors.black, 16,
+                                  textDefault(":  ", Colors.black, 14,
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
@@ -191,7 +191,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                           border: InputBorder.none),
                                     ),
                                   ),
-                                  textDefault(" Batang/Hari", Colors.black, 16,
+                                  textDefault(" Batang/Hari", Colors.black, 14,
                                       FontWeight.normal),
                                 ],
                               ),
@@ -202,10 +202,10 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                 children: [
                                   Container(
                                     width: 70,
-                                    child: textDefault("", Colors.black, 16,
+                                    child: textDefault("", Colors.black, 14,
                                         FontWeight.normal),
                                   ),
-                                  textDefault("   ", Colors.black, 16,
+                                  textDefault("   ", Colors.black, 14,
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
@@ -222,7 +222,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                           border: InputBorder.none),
                                     ),
                                   ),
-                                  textDefault(" Bungkus/Hari", Colors.black, 16,
+                                  textDefault(" Bungkus/Hari", Colors.black, 14,
                                       FontWeight.normal),
                                 ],
                               ),
@@ -233,7 +233,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                       height: 5,
                     ),
                     textDefault(
-                        "Minuman Keras", Colors.black, 16, FontWeight.bold),
+                        "Minuman Keras", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -272,10 +272,10 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                 children: [
                                   Container(
                                     width: 70,
-                                    child: textDefault("Lama", Colors.black, 16,
+                                    child: textDefault("Lama", Colors.black, 14,
                                         FontWeight.normal),
                                   ),
-                                  textDefault(":  ", Colors.black, 16,
+                                  textDefault(":  ", Colors.black, 14,
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
@@ -292,7 +292,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                           border: InputBorder.none),
                                     ),
                                   ),
-                                  textDefault(" Tahun", Colors.black, 16,
+                                  textDefault(" Tahun", Colors.black, 14,
                                       FontWeight.normal),
                                 ],
                               ),
@@ -306,7 +306,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                     child: textDefault("Banyak", Colors.black,
                                         16, FontWeight.normal),
                                   ),
-                                  textDefault(":  ", Colors.black, 16,
+                                  textDefault(":  ", Colors.black, 14,
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
@@ -323,7 +323,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                           border: InputBorder.none),
                                     ),
                                   ),
-                                  textDefault(" Gelas/Hari", Colors.black, 16,
+                                  textDefault(" Gelas/Hari", Colors.black, 14,
                                       FontWeight.normal),
                                 ],
                               ),
@@ -334,10 +334,10 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                 children: [
                                   Container(
                                     width: 70,
-                                    child: textDefault("", Colors.black, 16,
+                                    child: textDefault("", Colors.black, 14,
                                         FontWeight.normal),
                                   ),
-                                  textDefault("   ", Colors.black, 16,
+                                  textDefault("   ", Colors.black, 14,
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
@@ -354,7 +354,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                           border: InputBorder.none),
                                     ),
                                   ),
-                                  textDefault(" Botol/Hari", Colors.black, 16,
+                                  textDefault(" Botol/Hari", Colors.black, 14,
                                       FontWeight.normal),
                                 ],
                               ),
@@ -364,7 +364,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Olahraga", Colors.black, 16, FontWeight.bold),
+                    textDefault("Olahraga", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(

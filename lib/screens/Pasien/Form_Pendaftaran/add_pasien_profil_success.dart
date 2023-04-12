@@ -60,9 +60,12 @@ class _AddPasienProfilSuccesState extends State<AddPasienProfilSucces> {
               height: 50,
             ),
             Text(
-              "Profil Pasien berhasil \ndisimpan!",
+              "Profil Pasien berhasil\ndisimpan!",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontFamily: 'poppins',
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 20,
@@ -75,7 +78,7 @@ class _AddPasienProfilSuccesState extends State<AddPasienProfilSucces> {
                 );
               })),
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     color: Colors.blue,
