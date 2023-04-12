@@ -2521,7 +2521,7 @@ class DetailPasien extends StatelessWidget {
                                     ),
                                     pw.Container(
                                       width: 80,
-                                      child: pw.Text("Biceps",
+                                      child: pw.Text("Triceps",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2571,7 +2571,7 @@ class DetailPasien extends StatelessWidget {
                                     ),
                                     pw.Container(
                                       width: 80,
-                                      child: pw.Text("Biceps",
+                                      child: pw.Text("Babinsky",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:

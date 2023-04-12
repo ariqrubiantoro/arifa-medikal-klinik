@@ -8,11 +8,11 @@ extension RoleTypeEnumExtension on RoleType {
   String get value {
     switch (this) {
       case RoleType.admin:
-        return 'Admin';
+        return 'ADMIN';
       case RoleType.pic:
-        return 'Pic';
+        return 'PIC';
       case RoleType.dokter:
-        return 'Dokter';
+        return 'DOKTER';
       default:
         return '';
     }

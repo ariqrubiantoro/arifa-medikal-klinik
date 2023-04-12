@@ -59,14 +59,9 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: blueDefault,
-        title: Row(
-          children: [
-            textDefault("Keadaan Umum - Pemeriksaan THT", Colors.white, 18,
-                FontWeight.bold)
-          ],
-        ),
-      ),
+          backgroundColor: blueDefault,
+          title: textDefault("Keadaan Umum - Pemeriksaan THT", Colors.white, 16,
+              FontWeight.bold)),
       body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -80,7 +75,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        textDefault("4/8", Colors.black, 16, FontWeight.bold)
+                        textDefault("4/8", Colors.black, 14, FontWeight.bold)
                       ],
                     ),
                     SizedBox(
@@ -267,7 +262,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Membran Tymp Kiri", Colors.black, 16, FontWeight.bold),
+          textDefault("Membran Tymp Kiri", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -297,7 +292,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Membran Tymp Kanan", Colors.black, 16, FontWeight.bold),
+          textDefault("Membran Tymp Kanan", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -328,7 +323,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
             height: 5,
           ),
           textDefault(
-              "Penyakit Telinga Kiri", Colors.black, 16, FontWeight.bold),
+              "Penyakit Telinga Kiri", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -358,7 +353,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Serumen", Colors.black, 16, FontWeight.bold),
+          textDefault("Serumen", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -389,7 +384,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
             height: 5,
           ),
           textDefault(
-              "Penyakit Telinga Kanan", Colors.black, 16, FontWeight.bold),
+              "Penyakit Telinga Kanan", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -419,7 +414,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Serumen", Colors.black, 16, FontWeight.bold),
+          textDefault("Serumen", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -460,7 +455,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Pilek/Tersumbat", Colors.black, 16, FontWeight.bold),
+          textDefault("Pilek/Tersumbat", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -490,7 +485,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Lidah", Colors.black, 16, FontWeight.bold),
+          textDefault("Lidah", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -520,7 +515,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Lain-Lain", Colors.black, 16, FontWeight.bold),
+          textDefault("Lain-Lain", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -564,7 +559,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Tonsil Kanan", Colors.black, 16, FontWeight.bold),
+          textDefault("Tonsil Kanan", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -594,7 +589,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Tonsil Kiri", Colors.black, 16, FontWeight.bold),
+          textDefault("Tonsil Kiri", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -624,7 +619,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Pharing", Colors.black, 16, FontWeight.bold),
+          textDefault("Pharing", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -654,7 +649,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Tiroid", Colors.black, 16, FontWeight.bold),
+          textDefault("Tiroid", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(
@@ -684,7 +679,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           SizedBox(
             height: 5,
           ),
-          textDefault("Lain-Lain", Colors.black, 16, FontWeight.bold),
+          textDefault("Lain-Lain", Colors.black, 14, FontWeight.bold),
           Row(
             children: <Widget>[
               Radio(

@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_THT.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_gentalia.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_mata.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_rongga_dada.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_rongga_perut.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_umum.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +50,7 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
         backgroundColor: blueDefault,
         title: Row(
           children: [
-            textDefault("Keluhan Sekarang", Colors.white, 18, FontWeight.bold)
+            textDefault("Keluhan Sekarang", Colors.white, 16, FontWeight.bold)
           ],
         ),
       ),
@@ -65,7 +67,7 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        textDefault("4/8", Colors.black, 16, FontWeight.bold)
+                        textDefault("4/8", Colors.black, 14, FontWeight.bold)
                       ],
                     ),
                     SizedBox(
@@ -113,7 +115,7 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              textDefault("Keadaan Umum", Colors.black, 16,
+                              textDefault("Keadaan Umum", Colors.black, 14,
                                   FontWeight.bold),
                               Icon(tapKeadaanUmum
                                   ? Icons.arrow_drop_up
@@ -152,6 +154,16 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return PemeriksaanRonggaDada();
+                                    }));
+                                  } else if (index == 4) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return PemeriksaanRonggaPerut();
+                                    }));
+                                  } else if (index == 5) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return PemeriksaanGentalia();
                                     }));
                                   }
                                 },
@@ -200,7 +212,7 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               textDefault("Riwayat Pajanan pada Pekerjaan",
-                                  Colors.black, 16, FontWeight.bold),
+                                  Colors.black, 14, FontWeight.bold),
                               Icon(tapRiwayatPajanan
                                   ? Icons.arrow_drop_up
                                   : Icons.arrow_drop_down)

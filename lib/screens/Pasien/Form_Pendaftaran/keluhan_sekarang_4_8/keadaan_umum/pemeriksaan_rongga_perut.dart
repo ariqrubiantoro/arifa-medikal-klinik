@@ -1,77 +1,68 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:arifa_medikal_klink_3/components/colors/color.dart';
-import 'package:arifa_medikal_klink_3/components/widget/text.dart';
-import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_keluarga_2_8.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_gentalia.dart';
 import 'package:flutter/material.dart';
 
-import '../../../service/firebase_firestore_service.dart';
+import '../../../../../components/colors/color.dart';
+import '../../../../../components/widget/text.dart';
 
 enum Question { ya, tidak }
 
-class PenyakitTerdahulu1 extends StatefulWidget {
-  const PenyakitTerdahulu1({this.idPasien, super.key});
-  final String? idPasien;
+class PemeriksaanRonggaPerut extends StatefulWidget {
+  const PemeriksaanRonggaPerut({super.key});
 
   @override
-  State<PenyakitTerdahulu1> createState() => _PenyakitTerdahulu1State();
+  State<PemeriksaanRonggaPerut> createState() => _PemeriksaanRonggaPerutState();
 }
 
-class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
-  FirebaseFirestoreService firestore = FirebaseFirestoreService();
-  Question _quest = Question.tidak;
-  Question _quest2 = Question.tidak;
-  Question _quest3 = Question.tidak;
-  Question _quest4 = Question.tidak;
-  Question _quest5 = Question.tidak;
-  Question _quest6 = Question.tidak;
-  Question _quest7 = Question.tidak;
-  Question _quest8 = Question.tidak;
-  Question _quest9 = Question.tidak;
-  Question _quest10 = Question.tidak;
+class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
+  Question _quest1 = Question.ya;
+  Question _quest2 = Question.ya;
+  Question _quest3 = Question.ya;
+  Question _quest4 = Question.ya;
+  Question _quest5 = Question.ya;
+  Question _quest6 = Question.ya;
+  Question _quest7 = Question.ya;
+  Question _quest8 = Question.ya;
+  Question _quest9 = Question.ya;
 
-  String darahTinggi = "Tidak Ada";
-  String paru = "Tidak Ada";
-  String asamLambung = "Tidak Ada";
-  String alergi = "Tidak Ada";
-  String riwayatOperasi = "Tidak Ada";
-  String riwayatKecelakaan = "Tidak Ada";
-  String riwayatRawatrs = "Tidak Ada";
-  String hepatitis = "Tidak Ada";
-  String kencingManis = "Tidak Ada";
-  String patahTulang = "Tidak Ada";
+  String inpeksi = "";
+  String auskultasi = "";
+  String hati = "";
+  String limpa = "";
+  String ginjalKiri = "";
+  String ginjalKanan = "";
+  String hernia = "";
+  String tumor = "";
+  String lainlain = "";
+
+  final perkusi = TextEditingController();
+  final ballotementKiri = TextEditingController();
+  final ballotementKanan = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: blueDefault,
-        automaticallyImplyLeading: false,
-        title: Row(children: [
-          Icon(Icons.arrow_back),
-          SizedBox(
-            width: 30,
-          ),
-          textDefault(
-              "Riwayat Penyakit Terdahulu", Colors.white, 16, FontWeight.bold)
-        ]),
-      ),
+          backgroundColor: blueDefault,
+          title: textDefault("Keadaan Umum - Pemeriksaan Rongga Perut",
+              Colors.white, 16, FontWeight.bold)),
       body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
+                child: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.all(20),
-                child: SingleChildScrollView(
-                    child: Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        textDefault("1/8", Colors.black, 14, FontWeight.bold)
+                        textDefault("4/8", Colors.black, 14, FontWeight.bold)
                       ],
                     ),
                     SizedBox(
@@ -81,7 +72,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                       children: [
                         Container(
                           height: 10,
-                          width: 40,
+                          width: 180,
                           decoration: BoxDecoration(
                               color: blueDefault,
                               borderRadius: BorderRadius.only(
@@ -100,42 +91,63 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                       ],
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
-                    textDefault(
-                        "Darah Tinggi", Colors.black, 14, FontWeight.bold),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault("Inpeksi", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
                           value: Question.ya,
-                          groupValue: _quest,
+                          groupValue: _quest1,
                           onChanged: (value) {
                             setState(() {
-                              _quest = value!;
-                              darahTinggi = "Ya";
-                            });
-                          },
-                        ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
-                        Radio(
-                          value: Question.tidak,
-                          groupValue: _quest,
-                          onChanged: (value) {
-                            setState(() {
-                              _quest = value!;
-                              darahTinggi = "Tidak Ada";
+                              _quest1 = value!;
+                              inpeksi = "Normal";
                             });
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Normal", Colors.black, 14, FontWeight.normal),
+                        Radio(
+                          value: Question.tidak,
+                          groupValue: _quest1,
+                          onChanged: (value) {
+                            setState(() {
+                              _quest1 = value!;
+                              inpeksi = "Tidak Normal";
+                            });
+                          },
+                        ),
+                        textDefault("Tidak Normal", Colors.black, 14,
+                            FontWeight.normal),
                       ],
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Penyakit Paru (Asma, TBC, dll)", Colors.black,
-                        16, FontWeight.bold),
+                    textDefault("Perkusi", Colors.black, 14, FontWeight.bold),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.grey)),
+                      child: TextFormField(
+                          controller: perkusi,
+                          decoration:
+                              InputDecoration(border: InputBorder.none)),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault(
+                        "Auskultasi", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -144,31 +156,30 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           onChanged: (value) {
                             setState(() {
                               _quest2 = value!;
-                              paru = "Ya";
+                              auskultasi = "Normal";
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault(
+                            "Normal", Colors.black, 14, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest2,
                           onChanged: (value) {
                             setState(() {
                               _quest2 = value!;
-                              paru = "Tidak Ada";
-                              print(paru);
+                              auskultasi = "Tidak Normal";
                             });
                           },
                         ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                        textDefault("Tidak Normal", Colors.black, 14,
+                            FontWeight.normal),
                       ],
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault(
-                        "Asam Lambung", Colors.black, 14, FontWeight.bold),
+                    textDefault("Hati", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -177,29 +188,30 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           onChanged: (value) {
                             setState(() {
                               _quest3 = value!;
-                              asamLambung = "Ya";
+                              hati = "Normal";
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault(
+                            "Normal", Colors.black, 14, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest3,
                           onChanged: (value) {
                             setState(() {
                               _quest3 = value!;
-                              asamLambung = "Tidak Ada";
+                              hati = "Tidak Normal";
                             });
                           },
                         ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                        textDefault("Tidak Normal", Colors.black, 14,
+                            FontWeight.normal),
                       ],
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Alergi", Colors.black, 14, FontWeight.bold),
+                    textDefault("Limpa", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -208,30 +220,31 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           onChanged: (value) {
                             setState(() {
                               _quest4 = value!;
-                              alergi = "Ya";
+                              limpa = "Normal";
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault(
+                            "Normal", Colors.black, 14, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest4,
                           onChanged: (value) {
                             setState(() {
                               _quest4 = value!;
-                              alergi = "Tidak Ada";
+                              limpa = "Tidak Normal";
                             });
                           },
                         ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                        textDefault("Tidak Normal", Colors.black, 14,
+                            FontWeight.normal),
                       ],
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     textDefault(
-                        "Riwayat Operasi", Colors.black, 14, FontWeight.bold),
+                        "Ginjal Kiri", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -240,30 +253,50 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           onChanged: (value) {
                             setState(() {
                               _quest5 = value!;
-                              riwayatOperasi = "Ya";
+                              ginjalKiri = "Normal";
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault(
+                            "Normal", Colors.black, 14, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest5,
                           onChanged: (value) {
                             setState(() {
                               _quest5 = value!;
-                              riwayatOperasi = "Tidak Ada";
+                              ginjalKiri = "Tidak Normal";
                             });
                           },
                         ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                        textDefault("Tidak Normal", Colors.black, 14,
+                            FontWeight.normal),
                       ],
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Riwayat Kecelakaan", Colors.black, 14,
-                        FontWeight.bold),
+                    textDefault(
+                        "Ballotement", Colors.black, 14, FontWeight.bold),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.grey)),
+                      child: TextFormField(
+                          controller: ballotementKiri,
+                          decoration:
+                              InputDecoration(border: InputBorder.none)),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault(
+                        "Ginjal Kanan", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -272,30 +305,49 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           onChanged: (value) {
                             setState(() {
                               _quest6 = value!;
-                              riwayatKecelakaan = "Ya";
+                              ginjalKanan = "Normal";
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault(
+                            "Normal", Colors.black, 14, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest6,
                           onChanged: (value) {
                             setState(() {
                               _quest6 = value!;
-                              riwayatKecelakaan = "Tidak Ada";
+                              ginjalKanan = "Tidak Normal";
                             });
                           },
                         ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                        textDefault("Tidak Normal", Colors.black, 14,
+                            FontWeight.normal),
                       ],
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     textDefault(
-                        "Riwayat Rawat RS", Colors.black, 14, FontWeight.bold),
+                        "Ballotement", Colors.black, 14, FontWeight.bold),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.grey)),
+                      child: TextFormField(
+                          controller: ballotementKanan,
+                          decoration:
+                              InputDecoration(border: InputBorder.none)),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault("Hernia", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -304,29 +356,30 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           onChanged: (value) {
                             setState(() {
                               _quest7 = value!;
-                              riwayatRawatrs = "Ya";
+                              hernia = "Normal";
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault(
+                            "Normal", Colors.black, 14, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest7,
                           onChanged: (value) {
                             setState(() {
                               _quest7 = value!;
-                              riwayatRawatrs = "Tidak Ada";
+                              hernia = "Tidak Normal";
                             });
                           },
                         ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                        textDefault("Tidak Normal", Colors.black, 14,
+                            FontWeight.normal),
                       ],
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Hepatitis", Colors.black, 14, FontWeight.bold),
+                    textDefault("Tumor", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -335,30 +388,30 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           onChanged: (value) {
                             setState(() {
                               _quest8 = value!;
-                              hepatitis = "Ya";
+                              tumor = "Normal";
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault(
+                            "Normal", Colors.black, 14, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest8,
                           onChanged: (value) {
                             setState(() {
                               _quest8 = value!;
-                              hepatitis = "Tidak Ada";
+                              tumor = "Tidak Normal";
                             });
                           },
                         ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                        textDefault("Tidak Normal", Colors.black, 14,
+                            FontWeight.normal),
                       ],
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault(
-                        "Kencing Manis", Colors.black, 14, FontWeight.bold),
+                    textDefault("Lain-Lain", Colors.black, 14, FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -367,70 +420,38 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           onChanged: (value) {
                             setState(() {
                               _quest9 = value!;
-                              kencingManis = "Ya";
+                              lainlain = "Normal";
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault(
+                            "Normal", Colors.black, 14, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest9,
                           onChanged: (value) {
                             setState(() {
                               _quest9 = value!;
-                              kencingManis = "Tidak Ada";
+                              lainlain = "Tidak Normal";
                             });
                           },
                         ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    textDefault("Patah Tulang (terpasang PEN)", Colors.black,
-                        16, FontWeight.bold),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: Question.ya,
-                          groupValue: _quest10,
-                          onChanged: (value) {
-                            setState(() {
-                              _quest10 = value!;
-                              patahTulang = "Ya";
-                            });
-                          },
-                        ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
-                        Radio(
-                          value: Question.tidak,
-                          groupValue: _quest10,
-                          onChanged: (value) {
-                            setState(() {
-                              _quest10 = value!;
-                              patahTulang = "Tidak Ada";
-                            });
-                          },
-                        ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                        textDefault("Tidak Normal", Colors.black, 14,
+                            FontWeight.normal),
                       ],
                     ),
                   ],
-                )),
+                ),
               ),
-            ),
+            )),
             Container(
               decoration: BoxDecoration(
                   color: Colors.white,
-                  boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 2)]),
+                  boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 4)]),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    // onTap: () => showDialogProfil(),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -448,10 +469,8 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                   InkWell(
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return PenyakitKeluarga();
+                      return PemeriksaanGentalia();
                     })),
-                    // onTap: saveButton,
-
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -470,33 +489,10 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                   )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
     );
-  }
-
-  void saveButton() async {
-    PenyakitTerdahuluModel data = PenyakitTerdahuluModel(
-      darahTinggi: darahTinggi,
-      paru: paru,
-      asamLambung: asamLambung,
-      alergi: alergi,
-      riwayatOperasi: riwayatOperasi,
-      riwayatKecelakaan: riwayatOperasi,
-      riwayatRawatRs: riwayatRawatrs,
-      hepatitis: hepatitis,
-      kencingManis: kencingManis,
-      patahTulang: patahTulang,
-    );
-
-    await firestore.setPenyakitTerdahulu(data, widget.idPasien!);
-
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return PenyakitKeluarga(
-        idPasien: widget.idPasien,
-      );
-    }));
   }
 }
