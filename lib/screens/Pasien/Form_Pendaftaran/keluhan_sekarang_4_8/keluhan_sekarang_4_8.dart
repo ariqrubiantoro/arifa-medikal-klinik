@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_THT.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_anggota_gerak.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_gentalia.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_mata.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_rongga_dada.dart';
@@ -164,6 +165,11 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return PemeriksaanGentalia();
+                                    }));
+                                  } else if (index == 6) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return PemeriksaanAnggotaGerak();
                                     }));
                                   }
                                 },

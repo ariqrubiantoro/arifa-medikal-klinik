@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_anggota_gerak.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -207,10 +208,10 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
                   ),
                 ),
                 InkWell(
-                  // onTap: () => Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) {
-                  //   return PemeriksaanRonggaDada();
-                  // })),
+                  onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                    return PemeriksaanAnggotaGerak();
+                  })),
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
