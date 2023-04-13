@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_rongga_perut_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_gentalia.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class PemeriksaanRonggaPerut extends StatefulWidget {
-  const PemeriksaanRonggaPerut({super.key});
+  const PemeriksaanRonggaPerut({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PemeriksaanRonggaPerut> createState() => _PemeriksaanRonggaPerutState();
@@ -40,6 +43,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
   final ballotementKiri = TextEditingController();
   final ballotementKanan = TextEditingController();
 
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -467,10 +471,11 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return PemeriksaanGentalia();
-                    })),
+                    // onTap: () => Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) {
+                    //   return PemeriksaanGentalia();
+                    // })),
+                    onTap: saveButton,
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -494,5 +499,25 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
         ),
       ),
     );
+  }
+
+  void saveButton() async {
+    PemeriksaanRonggaPerutModel data = PemeriksaanRonggaPerutModel(
+      inspeksi: _quest1.name == "ya" ? "Normal" : "Tidak Normal",
+      perkusi: perkusi.text,
+      auskultasi: _quest2.name == "ya" ? "Normal" : "Tidak Normal",
+      hati: _quest3.name == "ya" ? "Normal" : "Tidak Normal",
+      limpa: _quest4.name == "ya" ? "Normal" : "Tidak Normal",
+      ginjalKiri: _quest5.name == "ya" ? "Normal" : "Tidak Normal",
+      ballotementKiri: ballotementKiri.text,
+      ginjalKanan: _quest6.name == "ya" ? "Normal" : "Tidak Normal",
+      ballotementKanan: ballotementKanan.text,
+      hernia: _quest7.name == "ya" ? "Normal" : "Tidak Normal",
+      tumor: _quest8.name == "ya" ? "Normal" : "Tidak Normal",
+      lainLain: _quest9.name == "ya" ? "Normal" : "Tidak Normal",
+    );
+
+    firestore.setPemeriksaanRonggaPerut(
+        pemeriksaanRonggaPerut: data, idPasien: widget.idPasien!);
   }
 }

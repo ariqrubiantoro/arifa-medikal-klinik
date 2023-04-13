@@ -446,11 +446,11 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return PenyakitKeluarga();
-                    })),
-                    // onTap: saveButton,
+                    // onTap: () => Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) {
+                    //   return PenyakitKeluarga();
+                    // })),
+                    onTap: saveButton,
 
                     child: Container(
                       padding:
@@ -491,7 +491,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
       patahTulang: patahTulang,
     );
 
-    await firestore.setPenyakitTerdahulu(data, widget.idPasien!);
+    firestore.setPenyakitTerdahulu(data, widget.idPasien!);
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return PenyakitKeluarga(

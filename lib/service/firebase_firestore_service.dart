@@ -1,10 +1,15 @@
 import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_gentalia_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_mata_model.dart';
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_tht_model.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_keluarga_mode.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
 import 'package:arifa_medikal_klink_3/model/riwayat_kebiasaan_model.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_gentalia.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../model/pemeriksaan_rongga_dada_model.dart';
+import '../model/pemeriksaan_rongga_perut_model.dart';
 import '../model/pemeriksaan_umum_model.dart';
 
 class FirebaseFirestoreService {
@@ -75,5 +80,61 @@ class FirebaseFirestoreService {
     await doc.set(pemeriksaanMata.toJson());
 
     return pemeriksaanMata;
+  }
+
+  Future<PemeriksaanTHTModel> setPemeriksaanTHT(
+      {required PemeriksaanTHTModel pemeriksaanTHT,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanTHT')
+        .doc(idPasien);
+
+    await doc.set(pemeriksaanTHT.toJson());
+
+    return pemeriksaanTHT;
+  }
+
+  Future<PemeriksaanRonggaDadaModel> setPemeriksaanRonggaDada(
+      {required PemeriksaanRonggaDadaModel pemeriksaanRonggaDada,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanRonggaDada')
+        .doc(idPasien);
+
+    await doc.set(pemeriksaanRonggaDada.toJson());
+
+    return pemeriksaanRonggaDada;
+  }
+
+  Future<PemeriksaanRonggaPerutModel> setPemeriksaanRonggaPerut(
+      {required PemeriksaanRonggaPerutModel pemeriksaanRonggaPerut,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanRonggaPerut')
+        .doc(idPasien);
+
+    await doc.set(pemeriksaanRonggaPerut.toJson());
+
+    return pemeriksaanRonggaPerut;
+  }
+
+  Future<PemeriksaanGentaliaModel> setPemeriksaanGentalia(
+      {required PemeriksaanGentaliaModel pemeriksaanGentalia,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanGentalia')
+        .doc(idPasien);
+
+    await doc.set(pemeriksaanGentalia.toJson());
+
+    return pemeriksaanGentalia;
   }
 }
