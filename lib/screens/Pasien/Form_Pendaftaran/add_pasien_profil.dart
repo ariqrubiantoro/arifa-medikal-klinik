@@ -407,7 +407,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
       waktu: DateTime.now().toString(),
     );
 
-    await firestore.setPasien(pasien);
+    firestore.setPasien(pasien);
 
     Navigator.push(
       context,

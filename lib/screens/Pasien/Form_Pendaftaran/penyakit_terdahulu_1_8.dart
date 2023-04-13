@@ -491,7 +491,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
       patahTulang: patahTulang,
     );
 
-    await firestore.setPenyakitTerdahulu(data, widget.idPasien!);
+    firestore.setPenyakitTerdahulu(data, widget.idPasien!);
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return PenyakitKeluarga(

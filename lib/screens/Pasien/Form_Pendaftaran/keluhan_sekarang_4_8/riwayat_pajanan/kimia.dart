@@ -1,6 +1,6 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
 
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_refleks.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/biologi.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -8,41 +8,45 @@ import '../../../../../components/widget/text.dart';
 
 enum Question { ya, tidak }
 
-class PemeriksaanAnggotaGerak extends StatefulWidget {
-  const PemeriksaanAnggotaGerak({super.key});
+class Kimia extends StatefulWidget {
+  const Kimia({super.key});
 
   @override
-  State<PemeriksaanAnggotaGerak> createState() =>
-      _PemeriksaanAnggotaGerakState();
+  State<Kimia> createState() => _KimiaState();
 }
 
-class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
-  Question _quest1 = Question.ya;
-  Question _quest2 = Question.ya;
-  Question _quest3 = Question.ya;
-  Question _quest4 = Question.ya;
-  Question _quest5 = Question.ya;
-  Question _quest6 = Question.ya;
-  Question _quest7 = Question.ya;
-  Question _quest8 = Question.ya;
+class _KimiaState extends State<Kimia> {
+  Question _quest1 = Question.tidak;
+  Question _quest2 = Question.tidak;
+  Question _quest3 = Question.tidak;
+  Question _quest4 = Question.tidak;
+  Question _quest5 = Question.tidak;
+  Question _quest6 = Question.tidak;
+  Question _quest7 = Question.tidak;
+  Question _quest8 = Question.tidak;
+  Question _quest9 = Question.tidak;
+  Question _quest10 = Question.tidak;
 
-  String atasKanan = "";
-  String atasKiri = "";
-  String bawahKanan = "";
-  String bawahKiri = "";
-  String sembabKanan = "";
-  String sembabKiri = "";
-  String cacatKanan = "";
-  String cacatKiri = "";
+  String debuAnorganik = "";
+  String debuOrganik = "";
+  String asap = "";
+  String logamBerat = "";
+  String pelarutOrganik = "";
+  String iritanAsam = "";
+  String iritanBasa = "";
+  String cairanPembersih = "";
+  String pestisida = "";
+  String uapLogam = "";
+
+  final lainlain = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
           backgroundColor: blueDefault,
-          title: textDefault("Keadaan Umum - Pemeriksaan Anggota Gerak",
-              Colors.white, 16, FontWeight.bold)),
+          title: textDefault(
+              "Riwayat Pajanan - Kimia", Colors.white, 16, FontWeight.bold)),
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -87,7 +91,8 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                   SizedBox(
                     height: 20,
                   ),
-                  textDefault("Atas Kanan", Colors.black, 14, FontWeight.bold),
+                  textDefault("Debu Anorganik (Silika, Semen, dll)",
+                      Colors.black, 14, FontWeight.bold),
                   Row(
                     children: <Widget>[
                       Radio(
@@ -96,30 +101,29 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         onChanged: (value) {
                           setState(() {
                             _quest1 = value!;
-                            atasKanan = "Normal";
+                            debuAnorganik = "Ya";
                           });
                         },
                       ),
-                      textDefault(
-                          "Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest1,
                         onChanged: (value) {
                           setState(() {
                             _quest1 = value!;
-                            atasKanan = "Tidak Normal";
+                            debuAnorganik = "Tidak";
                           });
                         },
                       ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault("Atas Kiri", Colors.black, 14, FontWeight.bold),
+                  textDefault("Debu Organik (Kapas, Tekstil, Gandum)",
+                      Colors.black, 14, FontWeight.bold),
                   Row(
                     children: <Widget>[
                       Radio(
@@ -128,30 +132,28 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         onChanged: (value) {
                           setState(() {
                             _quest2 = value!;
-                            atasKiri = "Normal";
+                            debuOrganik = "Ya";
                           });
                         },
                       ),
-                      textDefault(
-                          "Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest2,
                         onChanged: (value) {
                           setState(() {
                             _quest2 = value!;
-                            atasKiri = "Tidak Normal";
+                            debuOrganik = "Tidak";
                           });
                         },
                       ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault("Bawah Kanan", Colors.black, 14, FontWeight.bold),
+                  textDefault("Asap", Colors.black, 14, FontWeight.bold),
                   Row(
                     children: <Widget>[
                       Radio(
@@ -160,30 +162,29 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         onChanged: (value) {
                           setState(() {
                             _quest3 = value!;
-                            bawahKanan = "Normal";
+                            asap = "Ya";
                           });
                         },
                       ),
-                      textDefault(
-                          "Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest3,
                         onChanged: (value) {
                           setState(() {
                             _quest3 = value!;
-                            bawahKanan = "Tidak Normal";
+                            asap = "Tidak";
                           });
                         },
                       ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault("Bawah Kiri", Colors.black, 14, FontWeight.bold),
+                  textDefault("Logam Berat (Timah Hitam, Air Raksa)",
+                      Colors.black, 14, FontWeight.bold),
                   Row(
                     children: <Widget>[
                       Radio(
@@ -192,31 +193,29 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         onChanged: (value) {
                           setState(() {
                             _quest4 = value!;
-                            bawahKiri = "Normal";
+                            logamBerat = "Ya";
                           });
                         },
                       ),
-                      textDefault(
-                          "Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest4,
                         onChanged: (value) {
                           setState(() {
                             _quest4 = value!;
-                            bawahKiri = "Tidak Normal";
+                            logamBerat = "Tidak";
                           });
                         },
                       ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault(
-                      "Sembab/Oedem Kanan", Colors.black, 14, FontWeight.bold),
+                  textDefault("Pelarut Organik (Benzene, Alkil, Toluen)",
+                      Colors.black, 14, FontWeight.bold),
                   Row(
                     children: <Widget>[
                       Radio(
@@ -225,31 +224,29 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         onChanged: (value) {
                           setState(() {
                             _quest5 = value!;
-                            sembabKanan = "Normal";
+                            pelarutOrganik = "Ya";
                           });
                         },
                       ),
-                      textDefault(
-                          "Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest5,
                         onChanged: (value) {
                           setState(() {
                             _quest5 = value!;
-                            sembabKanan = "Tidak Normal";
+                            pelarutOrganik = "Tidak";
                           });
                         },
                       ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault(
-                      "Sembab/Oedem Kiri", Colors.black, 14, FontWeight.bold),
+                  textDefault("Iritan Asam (Air Keras, Asam Sulfat)",
+                      Colors.black, 14, FontWeight.bold),
                   Row(
                     children: <Widget>[
                       Radio(
@@ -258,30 +255,29 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         onChanged: (value) {
                           setState(() {
                             _quest6 = value!;
-                            sembabKiri = "Normal";
+                            iritanAsam = "Ya";
                           });
                         },
                       ),
-                      textDefault(
-                          "Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest6,
                         onChanged: (value) {
                           setState(() {
                             _quest6 = value!;
-                            sembabKiri = "Tidak Normal";
+                            iritanAsam = "Tidak";
                           });
                         },
                       ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault("Cacat Kanan", Colors.black, 14, FontWeight.bold),
+                  textDefault("Iritan Basa (Amoniak, Soda Api)", Colors.black,
+                      14, FontWeight.bold),
                   Row(
                     children: <Widget>[
                       Radio(
@@ -290,30 +286,29 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         onChanged: (value) {
                           setState(() {
                             _quest7 = value!;
-                            cacatKanan = "Normal";
+                            iritanBasa = "Ya";
                           });
                         },
                       ),
-                      textDefault(
-                          "Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest7,
                         onChanged: (value) {
                           setState(() {
                             _quest7 = value!;
-                            cacatKanan = "Tidak Normal";
+                            iritanBasa = "Tidak";
                           });
                         },
                       ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault("Cacat Kiri", Colors.black, 14, FontWeight.bold),
+                  textDefault("Cairan Pembersih (Amonia, Klor, Kaporit)",
+                      Colors.black, 14, FontWeight.bold),
                   Row(
                     children: <Widget>[
                       Radio(
@@ -322,29 +317,101 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         onChanged: (value) {
                           setState(() {
                             _quest8 = value!;
-                            cacatKiri = "Normal";
+                            cairanPembersih = "Ya";
                           });
                         },
                       ),
-                      textDefault(
-                          "Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest8,
                         onChanged: (value) {
                           setState(() {
                             _quest8 = value!;
-                            cacatKiri = "Tidak Normal";
+                            cairanPembersih = "Tidak";
                           });
                         },
                       ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
                     height: 5,
                   ),
+                  textDefault("Pestisida", Colors.black, 14, FontWeight.bold),
+                  Row(
+                    children: <Widget>[
+                      Radio(
+                        value: Question.ya,
+                        groupValue: _quest9,
+                        onChanged: (value) {
+                          setState(() {
+                            _quest9 = value!;
+                            pestisida = "Ya";
+                          });
+                        },
+                      ),
+                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      Radio(
+                        value: Question.tidak,
+                        groupValue: _quest9,
+                        onChanged: (value) {
+                          setState(() {
+                            _quest9 = value!;
+                            pestisida = "Tidak";
+                          });
+                        },
+                      ),
+                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  textDefault("Uap Logam (Mangan, Seng)", Colors.black, 14,
+                      FontWeight.bold),
+                  Row(
+                    children: <Widget>[
+                      Radio(
+                        value: Question.ya,
+                        groupValue: _quest10,
+                        onChanged: (value) {
+                          setState(() {
+                            _quest10 = value!;
+                            uapLogam = "Ya";
+                          });
+                        },
+                      ),
+                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      Radio(
+                        value: Question.tidak,
+                        groupValue: _quest10,
+                        onChanged: (value) {
+                          setState(() {
+                            _quest10 = value!;
+                            uapLogam = "Tidak";
+                          });
+                        },
+                      ),
+                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  textDefault("Lain-Lain", Colors.black, 14, FontWeight.bold),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TextFormField(
+                        controller: lainlain,
+                        decoration: InputDecoration(border: InputBorder.none)),
+                  )
                 ],
               ),
             ),
@@ -373,7 +440,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                 InkWell(
                   onTap: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                    return PemeriksaanRefleks();
+                    return Biologi();
                   })),
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),

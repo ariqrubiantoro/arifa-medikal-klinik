@@ -455,7 +455,6 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
   }
 
   void saveButton() async {
-    print("data ${_quest2.name}");
     RiwayatKebiasaanModel data = RiwayatKebiasaanModel(
       merokok: _quest.name != "tidak"
           ? MerokokModel(

@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_tht_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_rongga_dada.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class PemeriksaanTHT extends StatefulWidget {
-  const PemeriksaanTHT({super.key});
+  const PemeriksaanTHT({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PemeriksaanTHT> createState() => _PemeriksaanTHTState();
@@ -53,6 +56,8 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
   String pharing = "";
   String tiroid = "";
   String lainlainKerongkongan = "";
+
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -224,10 +229,11 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return PemeriksaanRonggaDada();
-                    })),
+                    // onTap: () => Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) {
+                    //   return PemeriksaanRonggaDada();
+                    // })),
+                    onTap: saveButton,
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -363,6 +369,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   setState(() {
                     _questTelinga4 = value!;
                     serumenKiri = "Ada";
+                    print(_questTelinga4.name);
                   });
                 },
               ),
@@ -712,5 +719,39 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
         ],
       ),
     );
+  }
+
+  void saveButton() async {
+    PemeriksaanTHTModel data = PemeriksaanTHTModel(
+      telinga: Telinga(
+        membranTympKiri:
+            _questTelinga1.name == "ya" ? "Normal" : "Tidak Normal",
+        membranTympKanan:
+            _questTelinga2.name == "ya" ? "Normal" : "Tidak Normal",
+        penyakitTelingaKiri:
+            _questTelinga3.name == "ya" ? "Normal" : "Tidak Normal",
+        serumenKiri: _questTelinga4.name == "ya" ? "Ada" : "Tidak Ada",
+        penyakitTelingaKanan:
+            _questTelinga5.name == "ya" ? "Normal" : "Tidak Normal",
+        serumenKanan: _questTelinga6.name == "ya" ? "Ada" : "Tidak Ada",
+      ),
+      hidung: Hidung(
+        pilekTersumbat: _questHidung1.name == "ya" ? "Normal" : "Tidak Ada",
+        lidah: _questHidung2.name == "ya" ? "Normal" : "Tidak Normal",
+        lainLain: _questHidung3.name == "ya" ? "Normal" : "Tidak Normal",
+      ),
+      kerongkongan: Kerongkongan(
+        tonsilKanan:
+            _questKerongkongan1.name == "ya" ? "Normal" : "Tidak Normal",
+        tonsilKiri:
+            _questKerongkongan2.name == "ya" ? "Normal" : "Tidak Normal",
+        pharing: _questKerongkongan3.name == "ya" ? "Normal" : "Tidak Normal",
+        tiroid: _questKerongkongan4.name == "ya" ? "Normal" : "Tidak Normal",
+        lainLain: _questKerongkongan5.name == "ya" ? "Ada" : "Tidak Ada",
+      ),
+    );
+
+    firestore.setPemeriksaanTHT(
+        pemeriksaanTHT: data, idPasien: widget.idPasien!);
   }
 }

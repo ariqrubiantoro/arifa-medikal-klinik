@@ -1,13 +1,15 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_anggota_gerak.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
+import '../../../../../model/pemeriksaan_gentalia_model.dart';
+import '../../../../../service/firebase_firestore_service.dart';
 
 class PemeriksaanGentalia extends StatefulWidget {
-  const PemeriksaanGentalia({super.key});
+  const PemeriksaanGentalia({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PemeriksaanGentalia> createState() => _PemeriksaanGentaliaState();
@@ -20,6 +22,7 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
   final spincter = TextEditingController();
   final efidymis = TextEditingController();
   final ekskresi = TextEditingController();
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -208,10 +211,10 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return PemeriksaanAnggotaGerak();
-                  })),
+                  // onTap: () => Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) {
+                  //   return PemeriksaanRonggaDada();
+                  // })),
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -233,5 +236,19 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
         ],
       )),
     );
+  }
+
+  void saveButton() async {
+    PemeriksaanGentaliaModel data = PemeriksaanGentaliaModel(
+      hernia: hernia.text,
+      hemorhoid: hemorhoid.text,
+      sikatriks: sikatriks.text,
+      spincter: spincter.text,
+      efidymisTestisProstat: efidymis.text,
+      ekskresi: ekskresi.text,
+    );
+
+    firestore.setPemeriksaanGentalia(
+        pemeriksaanGentalia: data, idPasien: widget.idPasien!);
   }
 }
