@@ -110,6 +110,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                             setState(() {
                               _quest1 = value!;
                               inpeksi = "Normal";
+                              print("inpeksi = $inpeksi");
                             });
                           },
                         ),
@@ -122,6 +123,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                             setState(() {
                               _quest1 = value!;
                               inpeksi = "Tidak Normal";
+                              print("inpeksi = $inpeksi");
                             });
                           },
                         ),

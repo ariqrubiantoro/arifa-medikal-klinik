@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:arifa_medikal_klink_3/model/pemeriksaan_gentalia_model.dart';
-import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
+import '../../../../../model/pemeriksaan_gentalia_model.dart';
+import '../../../../../service/firebase_firestore_service.dart';
 
 class PemeriksaanGentalia extends StatefulWidget {
   const PemeriksaanGentalia({this.idPasien, super.key});
@@ -215,7 +215,6 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
                   //     MaterialPageRoute(builder: (context) {
                   //   return PemeriksaanRonggaDada();
                   // })),
-                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),

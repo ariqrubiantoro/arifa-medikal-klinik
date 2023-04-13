@@ -1,11 +1,19 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_THT.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_anggota_gerak.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_gentalia.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_kelenjar_getah.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_mata.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_refleks.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_rongga_dada.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_rongga_perut.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_umum.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/biologi.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/ergonomis.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/fisik.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/kimia.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/psikologis.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../components/colors/color.dart';
@@ -173,6 +181,21 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                                         idPasien: widget.idPasien,
                                       );
                                     }));
+                                  } else if (index == 6) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return PemeriksaanAnggotaGerak();
+                                    }));
+                                  } else if (index == 7) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return PemeriksaanRefleks();
+                                    }));
+                                  } else if (index == 8) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return PemeriksaanKelenjarGetah();
+                                    }));
                                   }
                                 },
                                 child: Container(
@@ -233,24 +256,57 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                             shrinkWrap: true,
                             physics: BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return Container(
-                                  margin: EdgeInsets.only(
-                                      left: 5, right: 5, top: 5),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(5),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey, blurRadius: 2)
-                                      ]),
-                                  child: Row(
-                                    children: [
-                                      textDefault(listRiwayatPajanan[index],
-                                          Colors.black, 14, FontWeight.normal),
-                                    ],
-                                  ));
+                              return InkWell(
+                                onTap: () {
+                                  if (index == 0) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return Fisik();
+                                    }));
+                                  } else if (index == 1) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return Kimia();
+                                    }));
+                                  } else if (index == 2) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return Biologi();
+                                    }));
+                                  } else if (index == 3) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return Psikologis();
+                                    }));
+                                  } else if (index == 4) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return Ergonomis();
+                                    }));
+                                  }
+                                },
+                                child: Container(
+                                    margin: EdgeInsets.only(
+                                        left: 5, right: 5, top: 5),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(5),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.grey, blurRadius: 2)
+                                        ]),
+                                    child: Row(
+                                      children: [
+                                        textDefault(
+                                            listRiwayatPajanan[index],
+                                            Colors.black,
+                                            14,
+                                            FontWeight.normal),
+                                      ],
+                                    )),
+                              );
                             })
                         : Container()
                   ],
