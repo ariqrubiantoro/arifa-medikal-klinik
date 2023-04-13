@@ -357,6 +357,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 InkWell(
+                  onTap: () => Navigator.of(context).pop(),
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),

@@ -14,6 +14,7 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_se
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/fisik.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/kimia.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/psikologis.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaan_5_8.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../components/colors/color.dart';
@@ -337,8 +338,10 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                     ),
                   ),
                   InkWell(
-                    // onTap: () => showDialogProfil(),
-
+                    onTap: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return Pemeriksaan5();
+                    })),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),

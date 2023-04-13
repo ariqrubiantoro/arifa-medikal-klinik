@@ -1,42 +1,35 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../components/colors/color.dart';
-import '../../../../../components/widget/text.dart';
-import '../../../../../model/pemeriksaan_gentalia_model.dart';
-import '../../../../../service/firebase_firestore_service.dart';
+import '../../../components/colors/color.dart';
+import '../../../components/widget/text.dart';
 
-class PemeriksaanGentalia extends StatefulWidget {
-  const PemeriksaanGentalia({this.idPasien, super.key});
-  final String? idPasien;
+class Pemeriksaan5 extends StatefulWidget {
+  const Pemeriksaan5({super.key});
 
   @override
-  State<PemeriksaanGentalia> createState() => _PemeriksaanGentaliaState();
+  State<Pemeriksaan5> createState() => _Pemeriksaan5State();
 }
 
-class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
-  final hernia = TextEditingController();
-  final hemorhoid = TextEditingController();
-  final sikatriks = TextEditingController();
-  final spincter = TextEditingController();
-  final efidymis = TextEditingController();
-  final ekskresi = TextEditingController();
-  FirebaseFirestoreService firestore = FirebaseFirestoreService();
+class _Pemeriksaan5State extends State<Pemeriksaan5> {
+  final fisik = TextEditingController();
+  final gigiMulut = TextEditingController();
+  final audiometri = TextEditingController();
+  final spirometri = TextEditingController();
+  final treadmill = TextEditingController();
+  final laboratorium = TextEditingController();
+  final jantung = TextEditingController();
+  final paru = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
           backgroundColor: blueDefault,
-          title: textDefault(
-              "Keadaan Umum - Pemeriksaan Gentalia dan Anorektal",
-              Colors.white,
-              16,
-              FontWeight.bold)),
-      body: Container(
-          child: Column(
+          title: textDefault("Pemeriksaan", Colors.white, 16, FontWeight.bold)),
+      body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
@@ -49,7 +42,7 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      textDefault("4/8", Colors.black, 14, FontWeight.bold)
+                      textDefault("5/8", Colors.black, 14, FontWeight.bold)
                     ],
                   ),
                   SizedBox(
@@ -59,7 +52,7 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
                     children: [
                       Container(
                         height: 10,
-                        width: 180,
+                        width: 220,
                         decoration: BoxDecoration(
                             color: blueDefault,
                             borderRadius: BorderRadius.only(
@@ -80,80 +73,25 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
                   SizedBox(
                     height: 20,
                   ),
-                  textDefault("Hernia", Colors.black, 14, FontWeight.bold),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey)),
-                    child: TextFormField(
-                        controller: hernia,
-                        decoration: InputDecoration(border: InputBorder.none)),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  textDefault("Haemorhoid", Colors.black, 14, FontWeight.bold),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey)),
-                    child: TextFormField(
-                        controller: hemorhoid,
-                        decoration: InputDecoration(border: InputBorder.none)),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  textDefault("Sikatriks", Colors.black, 14, FontWeight.bold),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey)),
-                    child: TextFormField(
-                        controller: sikatriks,
-                        decoration: InputDecoration(border: InputBorder.none)),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  textDefault("Spincter", Colors.black, 14, FontWeight.bold),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey)),
-                    child: TextFormField(
-                        controller: spincter,
-                        decoration: InputDecoration(border: InputBorder.none)),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
                   textDefault(
-                      "Untuk Laki-Laki:", Colors.black, 20, FontWeight.bold),
+                      "Pemeriksaan Fisik", Colors.black, 14, FontWeight.bold),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TextFormField(
+                      controller: fisik,
+                      decoration: InputDecoration(border: InputBorder.none),
+                    ),
+                  ),
                   SizedBox(
                     height: 10,
                   ),
-                  textDefault("Efidymis/Testis/Prostat", Colors.black, 14,
+                  textDefault("Pemeriksaan Gigi dan Mulut", Colors.black, 14,
                       FontWeight.bold),
                   SizedBox(
                     height: 5,
@@ -161,29 +99,126 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey)),
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
                     child: TextFormField(
-                        controller: efidymis,
-                        decoration: InputDecoration(border: InputBorder.none)),
+                      controller: gigiMulut,
+                      decoration: InputDecoration(border: InputBorder.none),
+                    ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  textDefault("Ekskresi", Colors.black, 14, FontWeight.bold),
+                  textDefault("Pemeriksaan Audiometri", Colors.black, 14,
+                      FontWeight.bold),
                   SizedBox(
                     height: 5,
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey)),
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
                     child: TextFormField(
-                        controller: ekskresi,
-                        decoration: InputDecoration(border: InputBorder.none)),
+                      controller: audiometri,
+                      decoration: InputDecoration(border: InputBorder.none),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  textDefault("Pemeriksaan Spirometri", Colors.black, 14,
+                      FontWeight.bold),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TextFormField(
+                      controller: spirometri,
+                      decoration: InputDecoration(border: InputBorder.none),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  textDefault("Pemeriksaan Treadmill", Colors.black, 14,
+                      FontWeight.bold),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TextFormField(
+                      controller: treadmill,
+                      decoration: InputDecoration(border: InputBorder.none),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  textDefault("Pemeriksaan Laboratorium", Colors.black, 14,
+                      FontWeight.bold),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TextFormField(
+                      controller: laboratorium,
+                      decoration: InputDecoration(border: InputBorder.none),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  textDefault(
+                      "Pemeriksaan X-Ray:", Colors.black, 16, FontWeight.bold),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  textDefault("Jantung", Colors.black, 14, FontWeight.bold),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TextFormField(
+                      controller: jantung,
+                      decoration: InputDecoration(border: InputBorder.none),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  textDefault("Paru", Colors.black, 14, FontWeight.bold),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TextFormField(
+                      controller: paru,
+                      decoration: InputDecoration(border: InputBorder.none),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                 ],
               ),
@@ -212,10 +247,10 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
                   ),
                 ),
                 InkWell(
-                  // onTap: () => Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) {
-                  //   return PemeriksaanRonggaDada();
-                  // })),
+                  onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                    return Anjuran6();
+                  })),
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -235,21 +270,7 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
             ),
           ),
         ],
-      )),
+      ),
     );
-  }
-
-  void saveButton() async {
-    PemeriksaanGentaliaModel data = PemeriksaanGentaliaModel(
-      hernia: hernia.text,
-      hemorhoid: hemorhoid.text,
-      sikatriks: sikatriks.text,
-      spincter: spincter.text,
-      efidymisTestisProstat: efidymis.text,
-      ekskresi: ekskresi.text,
-    );
-
-    firestore.setPemeriksaanGentalia(
-        pemeriksaanGentalia: data, idPasien: widget.idPasien!);
   }
 }

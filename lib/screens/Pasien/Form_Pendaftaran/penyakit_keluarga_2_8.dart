@@ -542,7 +542,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    // onTap: () => showDialogProfil(),
+                    onTap: () => Navigator.of(context).pop(),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),

@@ -430,7 +430,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    // onTap: () => showDialogProfil(),
+                    onTap: () => Navigator.of(context).pop(),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
