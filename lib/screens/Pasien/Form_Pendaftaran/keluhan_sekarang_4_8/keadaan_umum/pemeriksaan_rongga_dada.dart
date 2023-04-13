@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_rongga_dada_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_rongga_perut.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class PemeriksaanRonggaDada extends StatefulWidget {
-  const PemeriksaanRonggaDada({super.key});
+  const PemeriksaanRonggaDada({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PemeriksaanRonggaDada> createState() => _PemeriksaanRonggaDadaState();
@@ -50,6 +53,8 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
 
   bool tapJantung = false;
   bool tapParu = false;
+
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -187,10 +192,11 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return PemeriksaanRonggaPerut();
-                    })),
+                    // onTap: () => Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) {
+                    //   return PemeriksaanRonggaPerut();
+                    // })),
+                    onTap: saveButton,
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -662,5 +668,32 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
         ],
       ),
     );
+  }
+
+  void saveButton() async {
+    PemeriksaanRonggaDadaModel data = PemeriksaanRonggaDadaModel(
+      jantung: JantungModel(
+        batasBatasJantung:
+            _questJantung1.name == "ya" ? "Normal" : "Tidak Normal",
+        auskultasi: _questJantung2.name == "ya" ? "Normal" : "Tidak Normal",
+        iktusKordis: _questJantung3.name == "ya" ? "Normal" : "Tidak Normal",
+        bunyiJantung: _questJantung4.name == "ya" ? "Normal" : "Tidak Normal",
+        bunyuNafas: _questJantung5.name == "ya" ? "Normal" : "Tidak Normal",
+        lainLain: _questJantung6.name == "ya" ? "Normal" : "Tidak Normal",
+      ),
+      paru: ParuModel(
+        inspeksiKanan: _questParu1.name == "ya" ? "Normal" : "Tidak Normal",
+        inspeksiKiri: _questParu2.name == "ya" ? "Normal" : "Tidak Normal",
+        palpasiKanan: _questParu3.name == "ya" ? "Normal" : "Tidak Normal",
+        palpasiKiri: _questParu4.name == "ya" ? "Normal" : "Tidak Normal",
+        perkusiKanan: _questParu5.name == "ya" ? "Normal" : "Tidak Normal",
+        perkusiKiri: _questParu6.name == "ya" ? "Normal" : "Tidak Normal",
+        auskultasiKanan: _questParu7.name == "ya" ? "Normal" : "Tidak Normal",
+        auskultasiKiri: _questParu8.name == "ya" ? "Normal" : "Tidak Normal",
+      ),
+    );
+
+    firestore.setPemeriksaanRonggaDada(
+        pemeriksaanRonggaDada: data, idPasien: widget.idPasien!);
   }
 }

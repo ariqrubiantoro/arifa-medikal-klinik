@@ -148,22 +148,30 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                                   } else if (index == 2) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return PemeriksaanTHT();
+                                      return PemeriksaanTHT(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   } else if (index == 3) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return PemeriksaanRonggaDada();
+                                      return PemeriksaanRonggaDada(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   } else if (index == 4) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return PemeriksaanRonggaPerut();
+                                      return PemeriksaanRonggaPerut(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   } else if (index == 5) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return PemeriksaanGentalia();
+                                      return PemeriksaanGentalia(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   }
                                 },
