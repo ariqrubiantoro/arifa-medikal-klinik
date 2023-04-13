@@ -1,31 +1,32 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/psikologis.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/kesimpulan_derajat_8_8.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../components/colors/color.dart';
-import '../../../../../components/widget/text.dart';
+import '../../../components/colors/color.dart';
+import '../../../components/widget/text.dart';
 
 enum Question { ya, tidak }
 
-class Biologi extends StatefulWidget {
-  const Biologi({super.key});
+class KesimpulanKelayakan7 extends StatefulWidget {
+  const KesimpulanKelayakan7({super.key});
 
   @override
-  State<Biologi> createState() => _BiologiState();
+  State<KesimpulanKelayakan7> createState() => _KesimpulanKelayakan7State();
 }
 
-class _BiologiState extends State<Biologi> {
+class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
   Question _quest1 = Question.tidak;
   Question _quest2 = Question.tidak;
   Question _quest3 = Question.tidak;
   Question _quest4 = Question.tidak;
 
-  String bakteri = "";
-  String darah = "";
-  String nyamuk = "";
-  String limbah = "";
-  final lainlain = TextEditingController();
+  String layakBekerjaTanpaCatatan = "";
+  String layakBekerjaDenganCatatan = "";
+  String layakBekerjaDenganPenyesuaian = "";
+  String layakUntukBekerja = "";
+
+  final cardiovaskuler = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _BiologiState extends State<Biologi> {
       appBar: AppBar(
           backgroundColor: blueDefault,
           title: textDefault(
-              "Riwayat Pajanan - Biologi", Colors.white, 16, FontWeight.bold)),
+              "Kesimpulan Kelayakan Kerja", Colors.white, 16, FontWeight.bold)),
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -47,7 +48,7 @@ class _BiologiState extends State<Biologi> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      textDefault("4/8", Colors.black, 14, FontWeight.bold)
+                      textDefault("7/8", Colors.black, 14, FontWeight.bold)
                     ],
                   ),
                   SizedBox(
@@ -57,7 +58,7 @@ class _BiologiState extends State<Biologi> {
                     children: [
                       Container(
                         height: 10,
-                        width: 180,
+                        width: 300,
                         decoration: BoxDecoration(
                             color: blueDefault,
                             borderRadius: BorderRadius.only(
@@ -78,8 +79,8 @@ class _BiologiState extends State<Biologi> {
                   SizedBox(
                     height: 20,
                   ),
-                  textDefault("Bakteri/Virus/Jamur/Parasit", Colors.black, 14,
-                      FontWeight.bold),
+                  textDefault("Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini",
+                      Colors.black, 14, FontWeight.bold),
                   Row(
                     children: <Widget>[
                       Radio(
@@ -88,7 +89,7 @@ class _BiologiState extends State<Biologi> {
                         onChanged: (value) {
                           setState(() {
                             _quest1 = value!;
-                            bakteri = "Ya";
+                            layakBekerjaTanpaCatatan = "Ya";
                           });
                         },
                       ),
@@ -99,7 +100,7 @@ class _BiologiState extends State<Biologi> {
                         onChanged: (value) {
                           setState(() {
                             _quest1 = value!;
-                            bakteri = "Tidak";
+                            layakBekerjaTanpaCatatan = "Tidak";
                           });
                         },
                       ),
@@ -109,7 +110,10 @@ class _BiologiState extends State<Biologi> {
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault("Darah/Cairan Tubuh Lain", Colors.black, 14,
+                  textDefault(
+                      "Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini, dengan Catatan",
+                      Colors.black,
+                      14,
                       FontWeight.bold),
                   Row(
                     children: <Widget>[
@@ -119,7 +123,7 @@ class _BiologiState extends State<Biologi> {
                         onChanged: (value) {
                           setState(() {
                             _quest2 = value!;
-                            darah = "Ya";
+                            layakBekerjaDenganCatatan = "Ya";
                           });
                         },
                       ),
@@ -130,7 +134,7 @@ class _BiologiState extends State<Biologi> {
                         onChanged: (value) {
                           setState(() {
                             _quest2 = value!;
-                            darah = "Tidak";
+                            layakBekerjaDenganCatatan = "Tidak";
                           });
                         },
                       ),
@@ -140,7 +144,10 @@ class _BiologiState extends State<Biologi> {
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault("Nyamuk/Serangga/Lain-Lain", Colors.black, 14,
+                  textDefault(
+                      "Layak Bekerja dengan Penyesuaian dan atau Pembatasan Kerja",
+                      Colors.black,
+                      14,
                       FontWeight.bold),
                   Row(
                     children: <Widget>[
@@ -150,7 +157,7 @@ class _BiologiState extends State<Biologi> {
                         onChanged: (value) {
                           setState(() {
                             _quest3 = value!;
-                            nyamuk = "Ya";
+                            layakBekerjaDenganPenyesuaian = "Ya";
                           });
                         },
                       ),
@@ -161,7 +168,7 @@ class _BiologiState extends State<Biologi> {
                         onChanged: (value) {
                           setState(() {
                             _quest3 = value!;
-                            nyamuk = "Tidak";
+                            layakBekerjaDenganPenyesuaian = "Tidak";
                           });
                         },
                       ),
@@ -171,8 +178,8 @@ class _BiologiState extends State<Biologi> {
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault("Limbah (Kotoran Manusia/Hewan)", Colors.black,
-                      14, FontWeight.bold),
+                  textDefault(
+                      "Layak untuk Bekerja", Colors.black, 14, FontWeight.bold),
                   Row(
                     children: <Widget>[
                       Radio(
@@ -181,7 +188,7 @@ class _BiologiState extends State<Biologi> {
                         onChanged: (value) {
                           setState(() {
                             _quest4 = value!;
-                            limbah = "Ya";
+                            layakUntukBekerja = "Ya";
                           });
                         },
                       ),
@@ -192,7 +199,7 @@ class _BiologiState extends State<Biologi> {
                         onChanged: (value) {
                           setState(() {
                             _quest4 = value!;
-                            limbah = "Tidak";
+                            layakUntukBekerja = "Tidak";
                           });
                         },
                       ),
@@ -202,7 +209,8 @@ class _BiologiState extends State<Biologi> {
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault("Lain-Lain", Colors.black, 14, FontWeight.bold),
+                  textDefault("Resiko Cardiovaskuler", Colors.black, 14,
+                      FontWeight.bold),
                   SizedBox(
                     height: 5,
                   ),
@@ -212,9 +220,10 @@ class _BiologiState extends State<Biologi> {
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(10)),
                     child: TextFormField(
-                        controller: lainlain,
-                        decoration: InputDecoration(border: InputBorder.none)),
-                  )
+                      controller: cardiovaskuler,
+                      decoration: InputDecoration(border: InputBorder.none),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -244,7 +253,7 @@ class _BiologiState extends State<Biologi> {
                 InkWell(
                   onTap: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                    return Psikologis();
+                    return KesimpulanDerajat8();
                   })),
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),

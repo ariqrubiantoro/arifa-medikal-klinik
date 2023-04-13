@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaan_5_8.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -336,6 +337,7 @@ class _ErgonomisState extends State<Ergonomis> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 InkWell(
+                  onTap: () => Navigator.of(context).pop(),
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -350,10 +352,10 @@ class _ErgonomisState extends State<Ergonomis> {
                   ),
                 ),
                 InkWell(
-                  // onTap: () => Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) {
-                  //   return Biologi();
-                  // })),
+                  onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                    return Pemeriksaan5();
+                  })),
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),

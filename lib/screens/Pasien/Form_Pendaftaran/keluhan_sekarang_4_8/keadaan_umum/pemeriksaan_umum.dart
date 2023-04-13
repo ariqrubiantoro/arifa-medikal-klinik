@@ -344,7 +344,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    // onTap: () => showDialogProfil(),
+                    onTap: () => Navigator.of(context).pop(),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),

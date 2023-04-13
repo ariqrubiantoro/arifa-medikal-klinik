@@ -458,6 +458,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
+                    onTap: () => Navigator.of(context).pop(),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),

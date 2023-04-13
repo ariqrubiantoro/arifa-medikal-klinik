@@ -1,31 +1,26 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/psikologis.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/kesimpulan_kelayakan_7_8.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../components/colors/color.dart';
-import '../../../../../components/widget/text.dart';
+import '../../../components/colors/color.dart';
+import '../../../components/widget/text.dart';
 
 enum Question { ya, tidak }
 
-class Biologi extends StatefulWidget {
-  const Biologi({super.key});
+class Anjuran6 extends StatefulWidget {
+  const Anjuran6({super.key});
 
   @override
-  State<Biologi> createState() => _BiologiState();
+  State<Anjuran6> createState() => _Anjuran6State();
 }
 
-class _BiologiState extends State<Biologi> {
+class _Anjuran6State extends State<Anjuran6> {
   Question _quest1 = Question.tidak;
   Question _quest2 = Question.tidak;
-  Question _quest3 = Question.tidak;
-  Question _quest4 = Question.tidak;
 
-  String bakteri = "";
-  String darah = "";
-  String nyamuk = "";
-  String limbah = "";
-  final lainlain = TextEditingController();
+  String konsumsiAir = "";
+  String olahragaTeratur = "";
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +28,7 @@ class _BiologiState extends State<Biologi> {
       appBar: AppBar(
           backgroundColor: blueDefault,
           title: textDefault(
-              "Riwayat Pajanan - Biologi", Colors.white, 16, FontWeight.bold)),
+              "Anjuran-Anjuran", Colors.white, 16, FontWeight.bold)),
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -47,7 +42,7 @@ class _BiologiState extends State<Biologi> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      textDefault("4/8", Colors.black, 14, FontWeight.bold)
+                      textDefault("6/8", Colors.black, 14, FontWeight.bold)
                     ],
                   ),
                   SizedBox(
@@ -57,7 +52,7 @@ class _BiologiState extends State<Biologi> {
                     children: [
                       Container(
                         height: 10,
-                        width: 180,
+                        width: 260,
                         decoration: BoxDecoration(
                             color: blueDefault,
                             borderRadius: BorderRadius.only(
@@ -78,8 +73,8 @@ class _BiologiState extends State<Biologi> {
                   SizedBox(
                     height: 20,
                   ),
-                  textDefault("Bakteri/Virus/Jamur/Parasit", Colors.black, 14,
-                      FontWeight.bold),
+                  textDefault("Konsumsi Air Mineral 2-3 Liter dalam Sehari",
+                      Colors.black, 14, FontWeight.bold),
                   Row(
                     children: <Widget>[
                       Radio(
@@ -88,7 +83,7 @@ class _BiologiState extends State<Biologi> {
                         onChanged: (value) {
                           setState(() {
                             _quest1 = value!;
-                            bakteri = "Ya";
+                            konsumsiAir = "Ya";
                           });
                         },
                       ),
@@ -99,7 +94,7 @@ class _BiologiState extends State<Biologi> {
                         onChanged: (value) {
                           setState(() {
                             _quest1 = value!;
-                            bakteri = "Tidak";
+                            konsumsiAir = "Tidak";
                           });
                         },
                       ),
@@ -109,7 +104,10 @@ class _BiologiState extends State<Biologi> {
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault("Darah/Cairan Tubuh Lain", Colors.black, 14,
+                  textDefault(
+                      "Olahraga Teratur Minimal 30 Menit Setiap Harinya 3-4X Seminggu",
+                      Colors.black,
+                      14,
                       FontWeight.bold),
                   Row(
                     children: <Widget>[
@@ -119,7 +117,7 @@ class _BiologiState extends State<Biologi> {
                         onChanged: (value) {
                           setState(() {
                             _quest2 = value!;
-                            darah = "Ya";
+                            olahragaTeratur = "Ya";
                           });
                         },
                       ),
@@ -130,7 +128,7 @@ class _BiologiState extends State<Biologi> {
                         onChanged: (value) {
                           setState(() {
                             _quest2 = value!;
-                            darah = "Tidak";
+                            olahragaTeratur = "Tidak";
                           });
                         },
                       ),
@@ -140,81 +138,6 @@ class _BiologiState extends State<Biologi> {
                   SizedBox(
                     height: 5,
                   ),
-                  textDefault("Nyamuk/Serangga/Lain-Lain", Colors.black, 14,
-                      FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: Question.ya,
-                        groupValue: _quest3,
-                        onChanged: (value) {
-                          setState(() {
-                            _quest3 = value!;
-                            nyamuk = "Ya";
-                          });
-                        },
-                      ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
-                      Radio(
-                        value: Question.tidak,
-                        groupValue: _quest3,
-                        onChanged: (value) {
-                          setState(() {
-                            _quest3 = value!;
-                            nyamuk = "Tidak";
-                          });
-                        },
-                      ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault("Limbah (Kotoran Manusia/Hewan)", Colors.black,
-                      14, FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: Question.ya,
-                        groupValue: _quest4,
-                        onChanged: (value) {
-                          setState(() {
-                            _quest4 = value!;
-                            limbah = "Ya";
-                          });
-                        },
-                      ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
-                      Radio(
-                        value: Question.tidak,
-                        groupValue: _quest4,
-                        onChanged: (value) {
-                          setState(() {
-                            _quest4 = value!;
-                            limbah = "Tidak";
-                          });
-                        },
-                      ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault("Lain-Lain", Colors.black, 14, FontWeight.bold),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: TextFormField(
-                        controller: lainlain,
-                        decoration: InputDecoration(border: InputBorder.none)),
-                  )
                 ],
               ),
             ),
@@ -244,7 +167,7 @@ class _BiologiState extends State<Biologi> {
                 InkWell(
                   onTap: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                    return Psikologis();
+                    return KesimpulanKelayakan7();
                   })),
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
