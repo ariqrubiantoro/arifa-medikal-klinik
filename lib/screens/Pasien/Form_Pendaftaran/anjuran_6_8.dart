@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/model/ajuran_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/kesimpulan_kelayakan_7_8.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class Anjuran6 extends StatefulWidget {
-  const Anjuran6({super.key});
+  const Anjuran6({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<Anjuran6> createState() => _Anjuran6State();
@@ -21,6 +24,8 @@ class _Anjuran6State extends State<Anjuran6> {
 
   String konsumsiAir = "";
   String olahragaTeratur = "";
+
+  final FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -165,10 +170,11 @@ class _Anjuran6State extends State<Anjuran6> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return KesimpulanKelayakan7();
-                  })),
+                  // onTap: () => Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) {
+                  //   return KesimpulanKelayakan7();
+                  // })),
+                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -190,5 +196,20 @@ class _Anjuran6State extends State<Anjuran6> {
         ],
       ),
     );
+  }
+
+  saveButton() async {
+    AjuranModel data = AjuranModel(
+      konsumsiAir: konsumsiAir,
+      olahragaTeratur: olahragaTeratur,
+    );
+
+    firestore.setAjuran(ajuran: data, idPasien: widget.idPasien!);
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return KesimpulanKelayakan7(
+        idPasien: widget.idPasien,
+      );
+    }));
   }
 }

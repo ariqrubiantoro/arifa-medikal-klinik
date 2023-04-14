@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/model/psikologi_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/ergonomis.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class Psikologis extends StatefulWidget {
-  const Psikologis({super.key});
+  const Psikologis({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<Psikologis> createState() => _PsikologisState();
@@ -33,6 +36,8 @@ class _PsikologisState extends State<Psikologis> {
   String konflikDalamKeluarga = "";
 
   final lainlain = TextEditingController();
+
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -355,10 +360,11 @@ class _PsikologisState extends State<Psikologis> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return Ergonomis();
-                  })),
+                  // onTap: () => Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) {
+                  //   return Ergonomis();
+                  // })),
+                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -380,5 +386,20 @@ class _PsikologisState extends State<Psikologis> {
         ],
       ),
     );
+  }
+
+  saveButton() async {
+    PsikologiModel data = PsikologiModel(
+      bebanKerja: bebanKerja,
+      pekerjaanTidakSesuai: pekerjaanTidakSesuai,
+      ketidakjelasanTugas: ketidakjelasanTugas,
+      hamabatanJenjangKarir: hambatanJenjang,
+      shift: bekerjaGiliran,
+      konflikRekanKerja: konflikDenganTeman,
+      konflikKeluarga: konflikDalamKeluarga,
+      lainLain: lainlain.text,
+    );
+
+    firestore.setPsikologi(psikologi: data, idPasien: widget.idPasien!);
   }
 }

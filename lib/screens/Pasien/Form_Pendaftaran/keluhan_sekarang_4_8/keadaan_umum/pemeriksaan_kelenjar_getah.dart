@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_kelenjar_getah_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/fisik.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class PemeriksaanKelenjarGetah extends StatefulWidget {
-  const PemeriksaanKelenjarGetah({super.key});
+  const PemeriksaanKelenjarGetah({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PemeriksaanKelenjarGetah> createState() =>
@@ -38,6 +41,8 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
   String infraKanan = "";
   String inguinalKiri = "";
   String inguinalKanan = "";
+
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -445,10 +450,11 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return Fisik();
-                  })),
+                  // onTap: () => Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) {
+                  //   return Fisik();
+                  // })),
+                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -470,5 +476,23 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
         ],
       ),
     );
+  }
+
+  saveButton() async {
+    PemeriksaanKelenjarGetahModel data = PemeriksaanKelenjarGetahModel(
+      cervicalKanan: cervicalKanan,
+      cervicalKiri: cervicalKiri,
+      axilaKiri: axilaKiri,
+      axilaKanan: axilaKanan,
+      supraclaviculaKiri: supraKiri,
+      supraclaviculaKanan: supraKanan,
+      infraclaviculaKiri: infraKiri,
+      infraclaviculaKanan: infraKanan,
+      inguinalKiri: inguinalKiri,
+      inguinalKanan: inguinalKanan,
+    );
+
+    firestore.setPemeriksaanKelenjarGetah(
+        pemeriksaanKelenjarGetah: data, idPasien: widget.idPasien!);
   }
 }

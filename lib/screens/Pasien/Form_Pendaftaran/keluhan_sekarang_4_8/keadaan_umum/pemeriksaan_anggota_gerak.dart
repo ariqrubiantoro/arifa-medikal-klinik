@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_anggota_gerak_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_refleks.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class PemeriksaanAnggotaGerak extends StatefulWidget {
-  const PemeriksaanAnggotaGerak({super.key});
+  const PemeriksaanAnggotaGerak({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PemeriksaanAnggotaGerak> createState() =>
@@ -34,6 +37,8 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
   String sembabKiri = "";
   String cacatKanan = "";
   String cacatKiri = "";
+
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -372,10 +377,11 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return PemeriksaanRefleks();
-                  })),
+                  // onTap: () => Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) {
+                  //   return PemeriksaanRefleks();
+                  // })),
+                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -397,5 +403,21 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
         ],
       ),
     );
+  }
+
+  saveButton() async {
+    PemeriksaanAnggotaGerakModel data = PemeriksaanAnggotaGerakModel(
+      atasKanan: atasKanan,
+      atasKiri: atasKiri,
+      bawahKanan: bawahKanan,
+      bawahKiri: bawahKiri,
+      cacatKanan: cacatKanan,
+      cacatKiri: cacatKiri,
+      sembabOedemKanan: sembabKanan,
+      sembabOedemKiri: sembabKiri,
+    );
+
+    firestore.setPemeriksaanAnggotaGerak(
+        pemeriksaanAnggotaGerak: data, idPasien: widget.idPasien!);
   }
 }

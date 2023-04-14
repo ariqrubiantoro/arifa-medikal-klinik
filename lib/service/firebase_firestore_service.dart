@@ -1,13 +1,24 @@
 import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_anggota_gerak_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_gentalia_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_mata_model.dart';
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_refleks_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_tht_model.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_keluarga_mode.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
+import 'package:arifa_medikal_klink_3/model/psikologi_model.dart';
 import 'package:arifa_medikal_klink_3/model/riwayat_kebiasaan_model.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_gentalia.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../model/ajuran_model.dart';
+import '../model/biologi_model.dart';
+import '../model/ergonomis_model.dart';
+import '../model/fisik_model.dart';
+import '../model/kelayakan_kerja_model.dart';
+import '../model/kesimpulan_derajat_kesehatan.dart';
+import '../model/kimia_model.dart';
+import '../model/pemeriksaan_kelenjar_getah_model.dart';
+import '../model/pemeriksaan_model.dart';
 import '../model/pemeriksaan_rongga_dada_model.dart';
 import '../model/pemeriksaan_rongga_perut_model.dart';
 import '../model/pemeriksaan_umum_model.dart';
@@ -136,5 +147,152 @@ class FirebaseFirestoreService {
     await doc.set(pemeriksaanGentalia.toJson());
 
     return pemeriksaanGentalia;
+  }
+
+  Future<PemeriksaanAnggotaGerakModel> setPemeriksaanAnggotaGerak(
+      {required PemeriksaanAnggotaGerakModel pemeriksaanAnggotaGerak,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanAnggotaGerak')
+        .doc(idPasien);
+
+    await doc.set(pemeriksaanAnggotaGerak.toJson());
+
+    return pemeriksaanAnggotaGerak;
+  }
+
+  Future<PemeriksaanRefleksModel> setPemeriksaanRefleks(
+      {required PemeriksaanRefleksModel pemeriksaanRefleks,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanRefleks')
+        .doc(idPasien);
+
+    await doc.set(pemeriksaanRefleks.toJson());
+
+    return pemeriksaanRefleks;
+  }
+
+  Future<PemeriksaanKelenjarGetahModel> setPemeriksaanKelenjarGetah(
+      {required PemeriksaanKelenjarGetahModel pemeriksaanKelenjarGetah,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanKelenjarGetah')
+        .doc(idPasien);
+
+    await doc.set(pemeriksaanKelenjarGetah.toJson());
+
+    return pemeriksaanKelenjarGetah;
+  }
+
+  Future<FisikModel> setFisik(
+      {required FisikModel fisik, required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('fisik')
+        .doc(idPasien);
+
+    await doc.set(fisik.toJson());
+
+    return fisik;
+  }
+
+  Future<KimiaModel> setKimia(
+      {required KimiaModel kimia, required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('kimia')
+        .doc(idPasien);
+
+    await doc.set(kimia.toJson());
+
+    return kimia;
+  }
+
+  Future<BiologiModel> setBiologi(
+      {required BiologiModel biologi, required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('biologi')
+        .doc(idPasien);
+
+    await doc.set(biologi.toJson());
+
+    return biologi;
+  }
+
+  Future<PsikologiModel> setPsikologi(
+      {required PsikologiModel psikologi, required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('psikologi')
+        .doc(idPasien);
+
+    await doc.set(psikologi.toJson());
+
+    return psikologi;
+  }
+
+  Future<ErgonomisModel> setErgonomis(
+      {required ErgonomisModel ergonomis, required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('ergonomis')
+        .doc(idPasien);
+
+    await doc.set(ergonomis.toJson());
+
+    return ergonomis;
+  }
+
+  Future<PemeriksaanModel> setPemeriksaan(
+      {required PemeriksaanModel pemeriksaan, required String idPasien}) async {
+    DocumentReference doc = firestore.collection('pemeriksaan').doc(idPasien);
+
+    await doc.set(pemeriksaan.toJson());
+
+    return pemeriksaan;
+  }
+
+  Future<AjuranModel> setAjuran(
+      {required AjuranModel ajuran, required String idPasien}) async {
+    DocumentReference doc = firestore.collection('ajuran').doc(idPasien);
+
+    await doc.set(ajuran.toJson());
+
+    return ajuran;
+  }
+
+  Future<KelayakanKerjaModel> setKelayakanKerja(
+      {required KelayakanKerjaModel kelayakanKerja,
+      required String idPasien}) async {
+    DocumentReference doc =
+        firestore.collection('kelayakanKerja').doc(idPasien);
+
+    await doc.set(kelayakanKerja.toJson());
+
+    return kelayakanKerja;
+  }
+
+  Future<KesimpulanDerajatKesehatanModel> setKesimpulanDerajatKesehatan(
+      {required KesimpulanDerajatKesehatanModel kesimpulanDerajatKesehatan,
+      required String idPasien}) async {
+    DocumentReference doc =
+        firestore.collection('kesimpulanDerajatKesehatan').doc(idPasien);
+
+    await doc.set(kesimpulanDerajatKesehatan.toJson());
+
+    return kesimpulanDerajatKesehatan;
   }
 }

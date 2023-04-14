@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:arifa_medikal_klink_3/model/kelayakan_kerja_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/kesimpulan_derajat_8_8.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class KesimpulanKelayakan7 extends StatefulWidget {
-  const KesimpulanKelayakan7({super.key});
+  const KesimpulanKelayakan7({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<KesimpulanKelayakan7> createState() => _KesimpulanKelayakan7State();
@@ -27,6 +30,8 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
   String layakUntukBekerja = "";
 
   final cardiovaskuler = TextEditingController();
+
+  final FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -251,10 +256,11 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return KesimpulanDerajat8();
-                  })),
+                  // onTap: () => Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) {
+                  //   return KesimpulanDerajat8();
+                  // })),
+                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -276,5 +282,25 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
         ],
       ),
     );
+  }
+
+  saveButton() async {
+    KelayakanKerjaModel data = KelayakanKerjaModel(
+      layakBekerjaSesuaiPosisi: layakBekerjaTanpaCatatan,
+      layakBekerjaDenganCatatan: layakBekerjaDenganCatatan,
+      layakBekerjaDenganPenyesuaian: layakBekerjaDenganPenyesuaian,
+      layakuntukBekerja: layakUntukBekerja,
+      resikoCardioVascular: cardiovaskuler.text,
+    );
+
+    firestore
+        .setKelayakanKerja(kelayakanKerja: data, idPasien: widget.idPasien!)
+        .whenComplete(
+          () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return KesimpulanDerajat8(
+              idPasien: widget.idPasien,
+            );
+          })),
+        );
   }
 }

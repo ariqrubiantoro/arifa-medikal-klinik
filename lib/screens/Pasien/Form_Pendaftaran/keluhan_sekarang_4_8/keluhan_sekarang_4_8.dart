@@ -185,17 +185,23 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                                   } else if (index == 6) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return PemeriksaanAnggotaGerak();
+                                      return PemeriksaanAnggotaGerak(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   } else if (index == 7) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return PemeriksaanRefleks();
+                                      return PemeriksaanRefleks(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   } else if (index == 8) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return PemeriksaanKelenjarGetah();
+                                      return PemeriksaanKelenjarGetah(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   }
                                 },
@@ -262,27 +268,37 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                                   if (index == 0) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return Fisik();
+                                      return Fisik(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   } else if (index == 1) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return Kimia();
+                                      return Kimia(
+                                        pasienId: widget.idPasien,
+                                      );
                                     }));
                                   } else if (index == 2) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return Biologi();
+                                      return Biologi(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   } else if (index == 3) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return Psikologis();
+                                      return Psikologis(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   } else if (index == 4) {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return Ergonomis();
+                                      return Ergonomis(
+                                        idPasien: widget.idPasien,
+                                      );
                                     }));
                                   }
                                 },
@@ -340,7 +356,9 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                   InkWell(
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return Pemeriksaan5();
+                      return Pemeriksaan5(
+                        idPasien: widget.idPasien,
+                      );
                     })),
                     child: Container(
                       padding:

@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/model/biologi_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/psikologis.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class Biologi extends StatefulWidget {
-  const Biologi({super.key});
+  const Biologi({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<Biologi> createState() => _BiologiState();
@@ -26,6 +29,8 @@ class _BiologiState extends State<Biologi> {
   String nyamuk = "";
   String limbah = "";
   final lainlain = TextEditingController();
+
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -242,10 +247,11 @@ class _BiologiState extends State<Biologi> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return Psikologis();
-                  })),
+                  // onTap: () => Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) {
+                  //   return Psikologis();
+                  // })),
+                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -267,5 +273,17 @@ class _BiologiState extends State<Biologi> {
         ],
       ),
     );
+  }
+
+  saveButton() async {
+    BiologiModel data = BiologiModel(
+      bakteri: bakteri,
+      darah: darah,
+      nyamuk: nyamuk,
+      limbah: limbah,
+      lainLain: lainlain.text,
+    );
+
+    firestore.setBiologi(biologi: data, idPasien: widget.idPasien!);
   }
 }

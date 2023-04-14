@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:arifa_medikal_klink_3/model/kesimpulan_derajat_kesehatan.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/form_success.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class KesimpulanDerajat8 extends StatefulWidget {
-  const KesimpulanDerajat8({super.key});
+  const KesimpulanDerajat8({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<KesimpulanDerajat8> createState() => _KesimpulanDerajat8State();
@@ -31,6 +34,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
   String str5 = "";
   String str6 = "";
   String str7 = "";
+  final FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -394,13 +398,13 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                 ),
                 Expanded(
                     child: InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return FormSuccess();
-                    }),
-                  ),
-                  // onTap: saveButton,
+                  // onTap: () => Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) {
+                  //     return FormSuccess();
+                  //   }),
+                  // ),
+                  onTap: saveButton,
                   child: Container(
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -418,5 +422,30 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
         );
       },
     );
+  }
+
+  saveButton() async {
+    KesimpulanDerajatKesehatanModel data = KesimpulanDerajatKesehatanModel(
+        ditemukanKelainanMedis: str1,
+        ditemukanKelainanYangTidakSerius: str2,
+        ditemukanKelainanResikoKesehatanRendah: str3,
+        ditemukanKelainanResikoKesehatanSedang: str4,
+        ditemukanKelainanResikoKesehatanTinggi: str5,
+        ditemukanKelainanMenyebabkanKeterbatasan: str6,
+        tidakDapatBekerja: str7);
+
+    firestore
+        .setKesimpulanDerajatKesehatan(
+            kesimpulanDerajatKesehatan: data, idPasien: widget.idPasien!)
+        .whenComplete(
+          () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return FormSuccess(
+                idPasien: widget.idPasien,
+              );
+            }),
+          ),
+        );
   }
 }

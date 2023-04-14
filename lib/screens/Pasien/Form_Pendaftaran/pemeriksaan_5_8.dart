@@ -1,13 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/colors/color.dart';
 import '../../../components/widget/text.dart';
 
 class Pemeriksaan5 extends StatefulWidget {
-  const Pemeriksaan5({super.key});
+  const Pemeriksaan5({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<Pemeriksaan5> createState() => _Pemeriksaan5State();
@@ -22,6 +25,7 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
   final laboratorium = TextEditingController();
   final jantung = TextEditingController();
   final paru = TextEditingController();
+  final FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -247,10 +251,11 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return Anjuran6();
-                  })),
+                  // onTap: () => Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) {
+                  //   return Anjuran6();
+                  // })),
+                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -272,5 +277,26 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
         ],
       ),
     );
+  }
+
+  saveButton() async {
+    PemeriksaanModel data = PemeriksaanModel(
+      pemeriksaanFisik: fisik.text,
+      pemeriksaanGigiMulut: gigiMulut.text,
+      pemeriksaanAudioMetri: audiometri.text,
+      pemeriksaanSpirometri: spirometri.text,
+      pemeriksaanTreadmill: treadmill.text,
+      pemeriksaanLaboratorium: laboratorium.text,
+      pemeriksaanXrayJantung: jantung.text,
+      paru: paru.text,
+    );
+
+    firestore.setPemeriksaan(pemeriksaan: data, idPasien: widget.idPasien!);
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return Anjuran6(
+        idPasien: widget.idPasien,
+      );
+    }));
   }
 }

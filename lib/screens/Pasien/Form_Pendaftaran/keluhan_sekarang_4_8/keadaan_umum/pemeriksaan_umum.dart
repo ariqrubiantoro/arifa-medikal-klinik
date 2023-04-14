@@ -360,11 +360,11 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return PemeriksaanMata();
-                    })),
-                    // onTap: saveButton,
+                    // onTap: () => Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) {
+                    //   return PemeriksaanMata();
+                    // })),
+                    onTap: saveButton,
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -391,7 +391,6 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
   }
 
   void saveButton() async {
-    print("data ${widget.idPasien}");
     PemeriksaanUmumModel data = PemeriksaanUmumModel(
       tinggiBadan: int.parse(tinggiBadan.text),
       beratBadan: int.parse(beratBadan.text),
