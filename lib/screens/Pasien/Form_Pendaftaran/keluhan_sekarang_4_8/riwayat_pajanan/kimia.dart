@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/model/kimia_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/biologi.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class Kimia extends StatefulWidget {
-  const Kimia({super.key});
+  const Kimia({this.pasienId, super.key});
+  final String? pasienId;
 
   @override
   State<Kimia> createState() => _KimiaState();
@@ -39,6 +42,7 @@ class _KimiaState extends State<Kimia> {
   String uapLogam = "";
 
   final lainlain = TextEditingController();
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -439,10 +443,11 @@ class _KimiaState extends State<Kimia> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return Biologi();
-                  })),
+                  // onTap: () => Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) {
+                  //   return Biologi();
+                  // })),
+                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -464,5 +469,23 @@ class _KimiaState extends State<Kimia> {
         ],
       ),
     );
+  }
+
+  saveButton() async {
+    KimiaModel data = KimiaModel(
+      debuAnorganik: debuAnorganik,
+      debuOrganik: debuOrganik,
+      asap: asap,
+      logamBerat: logamBerat,
+      pelarutOrganik: pelarutOrganik,
+      iritanAsam: iritanAsam,
+      iritanBasa: iritanBasa,
+      cairanPembersih: cairanPembersih,
+      pestisida: pestisida,
+      uapLogam: uapLogam,
+      lainLain: lainlain.text,
+    );
+
+    firestore.setKimia(kimia: data, idPasien: widget.pasienId!);
   }
 }

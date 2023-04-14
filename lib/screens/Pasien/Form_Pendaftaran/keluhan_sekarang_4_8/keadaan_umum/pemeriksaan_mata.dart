@@ -408,11 +408,11 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return PemeriksaanTHT();
-                    })),
-                    // onTap: saveButton,
+                    // onTap: () => Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) {
+                    //   return PemeriksaanTHT();
+                    // })),
+                    onTap: saveButton,
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),

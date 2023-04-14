@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:arifa_medikal_klink_3/model/fisik_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/kimia.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class Fisik extends StatefulWidget {
-  const Fisik({super.key});
+  const Fisik({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<Fisik> createState() => _FisikState();
@@ -35,6 +38,8 @@ class _FisikState extends State<Fisik> {
   String ketinggian = "";
 
   final lainlain = TextEditingController();
+
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -374,10 +379,11 @@ class _FisikState extends State<Fisik> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return Kimia();
-                  })),
+                  // onTap: () => Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) {
+                  //   return Kimia();
+                  // })),
+                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -399,5 +405,21 @@ class _FisikState extends State<Fisik> {
         ],
       ),
     );
+  }
+
+  saveButton() async {
+    FisikModel data = FisikModel(
+      kebisingan: kebisingan,
+      suhuPanas: suhuPanas,
+      suhuDingin: suhuDingin,
+      radiasiBukanPengion: radiasiBukanPengion,
+      radiasiPengion: radiasiPengion,
+      getaranLokal: getaranLokal,
+      getaranSeluruhTubuh: getaranTubuh,
+      ketinggian: ketinggian,
+      lainLain: lainlain.text,
+    );
+
+    firestore.setFisik(fisik: data, idPasien: widget.idPasien!);
   }
 }

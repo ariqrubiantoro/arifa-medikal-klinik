@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_refleks_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_kelenjar_getah.dart';
+import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
@@ -9,7 +11,8 @@ import '../../../../../components/widget/text.dart';
 enum Question { ya, tidak }
 
 class PemeriksaanRefleks extends StatefulWidget {
-  const PemeriksaanRefleks({super.key});
+  const PemeriksaanRefleks({this.idPasien, super.key});
+  final String? idPasien;
 
   @override
   State<PemeriksaanRefleks> createState() => _PemeriksaanRefleksState();
@@ -30,6 +33,8 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
   final tricepsKiri = TextEditingController();
   final babinskyKanan = TextEditingController();
   final babinskyKiri = TextEditingController();
+
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -117,10 +122,11 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return PemeriksaanKelenjarGetah();
-                  })),
+                  // onTap: () => Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) {
+                  //   return PemeriksaanKelenjarGetah();
+                  // })),
+                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -415,5 +421,28 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
         ),
       ],
     );
+  }
+
+  saveButton() async {
+    PemeriksaanRefleksModel data = PemeriksaanRefleksModel(
+      pupil: PupilModel(
+        pupil: strPupil,
+        bicepsKanan: bicepsKanan.text,
+        bicepsKiri: bicepsKiri.text,
+      ),
+      patella: PatellaModel(
+        patella: strPatella,
+        tricepsKanan: tricepsKanan.text,
+        tricepsKiri: tricepsKiri.text,
+      ),
+      achilles: AchillesModel(
+        acciles: strAchilles,
+        babinskiKanan: babinskyKanan.text,
+        babinskiKiri: babinskyKiri.text,
+      ),
+    );
+
+    firestore.setPemeriksaanRefleks(
+        pemeriksaanRefleks: data, idPasien: widget.idPasien!);
   }
 }

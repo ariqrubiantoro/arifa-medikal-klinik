@@ -2,6 +2,7 @@
 
 import 'package:arifa_medikal_klink_3/components/widget/text.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_terdahulu_1_8.dart';
+import 'package:arifa_medikal_klink_3/screens/menu_utama.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/colors/color.dart';
@@ -77,6 +78,13 @@ class _FormSuccessState extends State<FormSuccess> {
               //     idPasien: widget.idPasien,
               //   );
               // })),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MenuUtama(),
+                    ));
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                 width: MediaQuery.of(context).size.width,

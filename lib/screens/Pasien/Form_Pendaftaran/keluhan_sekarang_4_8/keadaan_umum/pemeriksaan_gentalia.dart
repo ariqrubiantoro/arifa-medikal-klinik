@@ -216,6 +216,7 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
                   //     MaterialPageRoute(builder: (context) {
                   //   return PemeriksaanRonggaDada();
                   // })),
+                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),

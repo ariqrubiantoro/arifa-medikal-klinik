@@ -424,13 +424,13 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                 ),
                 InkWell(
                   // onTap: () => showDialogProfil(),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return KeluhanSekarang4();
-                    }),
-                  ),
-                  // onTap: saveButton,
+                  // onTap: () => Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) {
+                  //     return KeluhanSekarang4();
+                  //   }),
+                  // ),
+                  onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     margin: EdgeInsets.only(top: 10, bottom: 10),
