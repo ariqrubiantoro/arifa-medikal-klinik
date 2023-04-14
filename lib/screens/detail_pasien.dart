@@ -90,7 +90,8 @@ class DetailPasien extends StatelessWidget {
                         height: 20,
                         decoration: pw.BoxDecoration(
                             border: pw.Border.all(color: PdfColors.black)),
-                        child: pw.Text("", style: pw.TextStyle(fontSize: 14))),
+                        child: pw.Text(pasienSnapshots['namaPasien'],
+                            style: pw.TextStyle(fontSize: 14))),
                     pw.Container(
                         padding: pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
                         width: 160,
@@ -105,7 +106,8 @@ class DetailPasien extends StatelessWidget {
                         height: 20,
                         decoration: pw.BoxDecoration(
                             border: pw.Border.all(color: PdfColors.black)),
-                        child: pw.Text("", style: pw.TextStyle(fontSize: 14))),
+                        child: pw.Text(pasienSnapshots['tanggal_pemeriksaan'],
+                            style: pw.TextStyle(fontSize: 14))),
                   ]),
                   pw.Row(children: [
                     pw.Container(
@@ -122,7 +124,8 @@ class DetailPasien extends StatelessWidget {
                         height: 20,
                         decoration: pw.BoxDecoration(
                             border: pw.Border.all(color: PdfColors.black)),
-                        child: pw.Text("", style: pw.TextStyle(fontSize: 14))),
+                        child: pw.Text(pasienSnapshots['jenis_kelamin'],
+                            style: pw.TextStyle(fontSize: 14))),
                     pw.Container(
                         padding: pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
                         width: 160,
@@ -137,7 +140,11 @@ class DetailPasien extends StatelessWidget {
                         height: 20,
                         decoration: pw.BoxDecoration(
                             border: pw.Border.all(color: PdfColors.black)),
-                        child: pw.Text("", style: pw.TextStyle(fontSize: 14))),
+                        child: pw.Text(
+                            pasienSnapshots['tanggal_lahir'] +
+                                "/" +
+                                "${pasienSnapshots['umur']}",
+                            style: pw.TextStyle(fontSize: 14))),
                   ]),
                   pw.Row(children: [
                     pw.Container(
@@ -154,7 +161,8 @@ class DetailPasien extends StatelessWidget {
                         height: 20,
                         decoration: pw.BoxDecoration(
                             border: pw.Border.all(color: PdfColors.black)),
-                        child: pw.Text("", style: pw.TextStyle(fontSize: 14))),
+                        child: pw.Text("${pasienSnapshots['NIK']}",
+                            style: pw.TextStyle(fontSize: 14))),
                     pw.Container(
                         padding: pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
                         width: 160,
@@ -169,7 +177,8 @@ class DetailPasien extends StatelessWidget {
                         height: 20,
                         decoration: pw.BoxDecoration(
                             border: pw.Border.all(color: PdfColors.black)),
-                        child: pw.Text("", style: pw.TextStyle(fontSize: 14))),
+                        child: pw.Text(pasienSnapshots['perusahaan'],
+                            style: pw.TextStyle(fontSize: 14))),
                   ]),
                   pw.Row(
                       mainAxisAlignment: pw.MainAxisAlignment.start,
@@ -191,8 +200,8 @@ class DetailPasien extends StatelessWidget {
                             height: 60,
                             decoration: pw.BoxDecoration(
                                 border: pw.Border.all(color: PdfColors.black)),
-                            child:
-                                pw.Text("", style: pw.TextStyle(fontSize: 14))),
+                            child: pw.Text(pasienSnapshots['alamat'],
+                                style: pw.TextStyle(fontSize: 14))),
                         pw.Column(children: [
                           pw.Row(children: [
                             pw.Container(
@@ -213,7 +222,7 @@ class DetailPasien extends StatelessWidget {
                                 decoration: pw.BoxDecoration(
                                     border:
                                         pw.Border.all(color: PdfColors.black)),
-                                child: pw.Text("",
+                                child: pw.Text(pasienSnapshots['bagian'],
                                     style: pw.TextStyle(fontSize: 14))),
                           ]),
                           pw.Row(children: [
@@ -235,7 +244,7 @@ class DetailPasien extends StatelessWidget {
                                 decoration: pw.BoxDecoration(
                                     border:
                                         pw.Border.all(color: PdfColors.black)),
-                                child: pw.Text("",
+                                child: pw.Text(pasienSnapshots['no_hp'],
                                     style: pw.TextStyle(fontSize: 14))),
                           ]),
                           pw.Row(children: [
