@@ -28,14 +28,14 @@ class _FisikState extends State<Fisik> {
   Question _quest7 = Question.tidak;
   Question _quest8 = Question.tidak;
 
-  String kebisingan = "";
-  String suhuPanas = "";
-  String suhuDingin = "";
-  String radiasiBukanPengion = "";
-  String radiasiPengion = "";
-  String getaranLokal = "";
-  String getaranTubuh = "";
-  String ketinggian = "";
+  String kebisingan = "Tidak";
+  String suhuPanas = "Tidak";
+  String suhuDingin = "Tidak";
+  String radiasiBukanPengion = "Tidak";
+  String radiasiPengion = "Tidak";
+  String getaranLokal = "Tidak";
+  String getaranTubuh = "Tidak";
+  String ketinggian = "Tidak";
 
   final lainlain = TextEditingController();
 
@@ -421,5 +421,10 @@ class _FisikState extends State<Fisik> {
     );
 
     firestore.setFisik(fisik: data, idPasien: widget.idPasien!);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return Kimia(
+        pasienId: widget.idPasien,
+      );
+    }));
   }
 }

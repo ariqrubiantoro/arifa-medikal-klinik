@@ -22,8 +22,8 @@ class _Anjuran6State extends State<Anjuran6> {
   Question _quest1 = Question.tidak;
   Question _quest2 = Question.tidak;
 
-  String konsumsiAir = "";
-  String olahragaTeratur = "";
+  String konsumsiAir = "Tidak";
+  String olahragaTeratur = "Tidak";
 
   final FirebaseFirestoreService firestore = FirebaseFirestoreService();
 

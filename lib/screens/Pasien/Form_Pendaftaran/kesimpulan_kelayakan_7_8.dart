@@ -24,10 +24,10 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
   Question _quest3 = Question.tidak;
   Question _quest4 = Question.tidak;
 
-  String layakBekerjaTanpaCatatan = "";
-  String layakBekerjaDenganCatatan = "";
-  String layakBekerjaDenganPenyesuaian = "";
-  String layakUntukBekerja = "";
+  String layakBekerjaTanpaCatatan = "Tidak";
+  String layakBekerjaDenganCatatan = "Tidak";
+  String layakBekerjaDenganPenyesuaian = "Tidak";
+  String layakUntukBekerja = "Tidak";
 
   final cardiovaskuler = TextEditingController();
 

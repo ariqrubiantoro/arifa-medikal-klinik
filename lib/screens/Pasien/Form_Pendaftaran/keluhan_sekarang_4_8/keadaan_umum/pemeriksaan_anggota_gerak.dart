@@ -29,14 +29,14 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
   Question _quest7 = Question.ya;
   Question _quest8 = Question.ya;
 
-  String atasKanan = "";
-  String atasKiri = "";
-  String bawahKanan = "";
-  String bawahKiri = "";
-  String sembabKanan = "";
-  String sembabKiri = "";
-  String cacatKanan = "";
-  String cacatKiri = "";
+  String atasKanan = "Normal";
+  String atasKiri = "Normal";
+  String bawahKanan = "Normal";
+  String bawahKiri = "Normal";
+  String sembabKanan = "Normal";
+  String sembabKiri = "Normal";
+  String cacatKanan = "Normal";
+  String cacatKiri = "Normal";
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
@@ -419,5 +419,11 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
 
     firestore.setPemeriksaanAnggotaGerak(
         pemeriksaanAnggotaGerak: data, idPasien: widget.idPasien!);
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return PemeriksaanRefleks(
+        idPasien: widget.idPasien,
+      );
+    }));
   }
 }

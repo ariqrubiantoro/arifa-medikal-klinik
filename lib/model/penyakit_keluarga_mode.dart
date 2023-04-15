@@ -25,17 +25,21 @@ class PenyakitKeluargaModel {
     this.jantung,
   });
 
-  PenyakitKeluargaModel.fromJson(Map<String, dynamic> json) {
-    kencingManis = json['kencing_manis'];
-    darahTinggi = json['darah_tinggi'];
-    asamLambung = json['asam_lambung'];
-    alergi = json['alergi'];
-    paru = json['paru'];
-    stroke = json['stroke'];
-    ginjal = json['ginjal'];
-    hemorhoid = json['hemorhoid'];
-    kanker = json['kanker'];
-    jantung = json['jantung'];
+  factory PenyakitKeluargaModel.fromJson(
+      String? id, Map<String, dynamic> json) {
+    return PenyakitKeluargaModel(
+      id: id,
+      kencingManis: json['kencing_manis'],
+      darahTinggi: json['darah_tinggi'],
+      asamLambung: json['asam_lambung'],
+      alergi: json['alergi'],
+      paru: json['paru'],
+      stroke: json['stroke'],
+      ginjal: json['ginjal'],
+      hemorhoid: json['hemorhoid'],
+      kanker: json['kanker'],
+      jantung: json['jantung'],
+    );
   }
 
   Map<String, dynamic> toJson() {

@@ -31,16 +31,16 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
   Question _quest9 = Question.ya;
   Question _quest10 = Question.ya;
 
-  String cervicalKiri = "";
-  String cervicalKanan = "";
-  String axilaKiri = "";
-  String axilaKanan = "";
-  String supraKiri = "";
-  String supraKanan = "";
-  String infraKiri = "";
-  String infraKanan = "";
-  String inguinalKiri = "";
-  String inguinalKanan = "";
+  String cervicalKiri = "Normal";
+  String cervicalKanan = "Normal";
+  String axilaKiri = "Normal";
+  String axilaKanan = "Normal";
+  String supraKiri = "Normal";
+  String supraKanan = "Normal";
+  String infraKiri = "Normal";
+  String infraKanan = "Normal";
+  String inguinalKiri = "Normal";
+  String inguinalKanan = "Normal";
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
@@ -494,5 +494,11 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
 
     firestore.setPemeriksaanKelenjarGetah(
         pemeriksaanKelenjarGetah: data, idPasien: widget.idPasien!);
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return Fisik(
+        idPasien: widget.idPasien,
+      );
+    }));
   }
 }

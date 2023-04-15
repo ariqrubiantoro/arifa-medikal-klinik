@@ -24,10 +24,10 @@ class _BiologiState extends State<Biologi> {
   Question _quest3 = Question.tidak;
   Question _quest4 = Question.tidak;
 
-  String bakteri = "";
-  String darah = "";
-  String nyamuk = "";
-  String limbah = "";
+  String bakteri = "Tidak";
+  String darah = "Tidak";
+  String nyamuk = "Tidak";
+  String limbah = "Tidak";
   final lainlain = TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
@@ -285,5 +285,10 @@ class _BiologiState extends State<Biologi> {
     );
 
     firestore.setBiologi(biologi: data, idPasien: widget.idPasien!);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return Psikologis(
+        idPasien: widget.idPasien,
+      );
+    }));
   }
 }

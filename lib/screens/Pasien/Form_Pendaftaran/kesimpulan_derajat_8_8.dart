@@ -27,13 +27,13 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
   Question _quest6 = Question.tidak;
   Question _quest7 = Question.tidak;
 
-  String str1 = "";
-  String str2 = "";
-  String str3 = "";
-  String str4 = "";
-  String str5 = "";
-  String str6 = "";
-  String str7 = "";
+  String str1 = "Tidak";
+  String str2 = "Tidak";
+  String str3 = "Tidak";
+  String str4 = "Tidak";
+  String str5 = "Tidak";
+  String str6 = "Tidak";
+  String str7 = "Tidak";
   final FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override

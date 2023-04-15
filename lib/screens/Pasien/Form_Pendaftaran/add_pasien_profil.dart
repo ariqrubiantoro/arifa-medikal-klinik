@@ -4,6 +4,7 @@ import 'package:arifa_medikal_klink_3/components/alert/alert.dart';
 import 'package:arifa_medikal_klink_3/components/colors/color.dart';
 import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/add_pasien_profil_success.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/widget/text.dart';
@@ -32,6 +33,34 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
   int idJk = 0;
 
   var jkStr = "";
+
+  Future<void> selectTanggalPemeriksaan(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900, 8),
+        lastDate: DateTime(2101));
+    if (picked != null) {
+      setState(() {
+        tglPemeriksaanC.text =
+            DateFormat("dd MMMM yyyy").format(picked).toString();
+      });
+    }
+  }
+
+  Future<void> selectTanggalLahir(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900, 8),
+        lastDate: DateTime(2101));
+    if (picked != null) {
+      setState(() {
+        tglLahirC.text = DateFormat("dd MMMM yyyy").format(picked).toString();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,15 +186,20 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                     SizedBox(
                       height: 5,
                     ),
-                    Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: TextFormField(
-                          controller: tglPemeriksaanC,
-                          decoration: InputDecoration(border: InputBorder.none),
-                        )),
+                    InkWell(
+                      onTap: () => selectTanggalPemeriksaan(context),
+                      child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: TextFormField(
+                            enabled: false,
+                            controller: tglPemeriksaanC,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          )),
+                    ),
                     SizedBox(
                       height: 10,
                     ),
@@ -191,15 +225,20 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                     SizedBox(
                       height: 5,
                     ),
-                    Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: TextFormField(
-                          controller: tglLahirC,
-                          decoration: InputDecoration(border: InputBorder.none),
-                        )),
+                    InkWell(
+                      onTap: () => selectTanggalLahir(context),
+                      child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: TextFormField(
+                            controller: tglLahirC,
+                            enabled: false,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          )),
+                    ),
                     SizedBox(
                       height: 10,
                     ),

@@ -30,32 +30,32 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
   Question _questHidung2 = Question.ya;
   Question _questHidung3 = Question.ya;
 
-  Question _questKerongkongan1 = Question.tidak;
-  Question _questKerongkongan2 = Question.tidak;
-  Question _questKerongkongan3 = Question.tidak;
-  Question _questKerongkongan4 = Question.tidak;
+  Question _questKerongkongan1 = Question.ya;
+  Question _questKerongkongan2 = Question.ya;
+  Question _questKerongkongan3 = Question.ya;
+  Question _questKerongkongan4 = Question.ya;
   Question _questKerongkongan5 = Question.tidak;
 
   bool tapTelinga = false;
   bool tapHidung = false;
   bool tapKerongkongan = false;
 
-  String tympKiri = "";
-  String tympKanan = "";
-  String telingaKiri = "";
-  String serumenKiri = "";
-  String telingaKanan = "";
-  String serumenKanan = "";
+  String tympKiri = "Normal";
+  String tympKanan = "Normal";
+  String telingaKiri = "Normal";
+  String serumenKiri = "Tidak Ada";
+  String telingaKanan = "Normal";
+  String serumenKanan = "Tidak Ada";
 
-  String pilek = "";
-  String lidah = "";
-  String lainlainHidung = "";
+  String pilek = "Tidak Ada";
+  String lidah = "Normal";
+  String lainlainHidung = "Normal";
 
-  String tonsilKanan = "";
-  String tonsilKiri = "";
-  String pharing = "";
-  String tiroid = "";
-  String lainlainKerongkongan = "";
+  String tonsilKanan = "Normal";
+  String tonsilKiri = "Normal";
+  String pharing = "Normal";
+  String tiroid = "Normal";
+  String lainlainKerongkongan = "Tidak Ada";
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
@@ -753,5 +753,11 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
 
     firestore.setPemeriksaanTHT(
         pemeriksaanTHT: data, idPasien: widget.idPasien!);
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return PemeriksaanRonggaDada(
+        idPasien: widget.idPasien,
+      );
+    }));
   }
 }

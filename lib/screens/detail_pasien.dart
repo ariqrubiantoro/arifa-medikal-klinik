@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../model/penyakit_keluarga_mode.dart';
 import '../service/firebase_firestore_service.dart';
 
 class DetailPasien extends StatefulWidget {
@@ -26,6 +27,7 @@ class DetailPasien extends StatefulWidget {
 class _DetailPasienState extends State<DetailPasien> {
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
   PenyakitTerdahuluModel? _penyakitTerdahulu;
+  PenyakitKeluargaModel? _penyakitKeluarga;
 
   @override
   void initState() {
@@ -471,12 +473,12 @@ class _DetailPasienState extends State<DetailPasien> {
                               pw.Row(children: [
                                 pw.Container(
                                   width: 250,
-                                  child: pw.Text("a. Darah tinggi",
+                                  child: pw.Text("a. Kencing manis",
                                       style: pw.TextStyle(
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ayah ( )      Ibu ( )",
+                                pw.Text(": ${_penyakitKeluarga!.kencingManis}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -484,13 +486,12 @@ class _DetailPasienState extends State<DetailPasien> {
                               pw.Row(children: [
                                 pw.Container(
                                   width: 250,
-                                  child: pw.Text(
-                                      "b. Penyakit paru (Asma, TBC dll)",
+                                  child: pw.Text("b. Darah tinggi",
                                       style: pw.TextStyle(
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ayah ( )      Ibu ( )",
+                                pw.Text(": ${_penyakitKeluarga!.darahTinggi}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -503,7 +504,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ayah ( )      Ibu ( )",
+                                pw.Text(": ${_penyakitKeluarga!.asamLambung}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -516,72 +517,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ayah ( )      Ibu ( )",
-                                    style: pw.TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: pw.FontWeight.normal)),
-                              ]),
-                              pw.Row(children: [
-                                pw.Container(
-                                  width: 250,
-                                  child: pw.Text("e. Riwayat operasi",
-                                      style: pw.TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: pw.FontWeight.normal)),
-                                ),
-                                pw.Text(": Ayah ( )      Ibu ( )",
-                                    style: pw.TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: pw.FontWeight.normal)),
-                              ]),
-                              pw.Row(children: [
-                                pw.Container(
-                                  width: 250,
-                                  child: pw.Text("f. Riwayat kecelakaan",
-                                      style: pw.TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: pw.FontWeight.normal)),
-                                ),
-                                pw.Text(": Ayah ( )      Ibu ( )",
-                                    style: pw.TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: pw.FontWeight.normal)),
-                              ]),
-                              pw.Row(children: [
-                                pw.Container(
-                                  width: 250,
-                                  child: pw.Text("g. Riwayat rawat RS",
-                                      style: pw.TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: pw.FontWeight.normal)),
-                                ),
-                                pw.Text(": Ayah ( )      Ibu ( )",
-                                    style: pw.TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: pw.FontWeight.normal)),
-                              ]),
-                              pw.Row(children: [
-                                pw.Container(
-                                  width: 250,
-                                  child: pw.Text("h. Hepatitis",
-                                      style: pw.TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: pw.FontWeight.normal)),
-                                ),
-                                pw.Text(": Ayah ( )      Ibu ( )",
-                                    style: pw.TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: pw.FontWeight.normal)),
-                              ]),
-                              pw.Row(children: [
-                                pw.Container(
-                                  width: 250,
-                                  child: pw.Text("i. Kencing manis",
-                                      style: pw.TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: pw.FontWeight.normal)),
-                                ),
-                                pw.Text(": Ayah ( )      Ibu ( )",
+                                pw.Text(": ${_penyakitKeluarga!.alergi}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -590,12 +526,77 @@ class _DetailPasienState extends State<DetailPasien> {
                                 pw.Container(
                                   width: 250,
                                   child: pw.Text(
-                                      "j. Patah tulang (terpasang PEN)",
+                                      "e. Penyakit paru (Asma, TBC, dll)",
                                       style: pw.TextStyle(
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ayah ( )      Ibu ( )",
+                                pw.Text(": ${_penyakitKeluarga!.paru}",
+                                    style: pw.TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: pw.FontWeight.normal)),
+                              ]),
+                              pw.Row(children: [
+                                pw.Container(
+                                  width: 250,
+                                  child: pw.Text("f. Stroke",
+                                      style: pw.TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: pw.FontWeight.normal)),
+                                ),
+                                pw.Text(": ${_penyakitKeluarga!.stroke}",
+                                    style: pw.TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: pw.FontWeight.normal)),
+                              ]),
+                              pw.Row(children: [
+                                pw.Container(
+                                  width: 250,
+                                  child: pw.Text("g. Ginjal",
+                                      style: pw.TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: pw.FontWeight.normal)),
+                                ),
+                                pw.Text(": ${_penyakitKeluarga!.ginjal}",
+                                    style: pw.TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: pw.FontWeight.normal)),
+                              ]),
+                              pw.Row(children: [
+                                pw.Container(
+                                  width: 250,
+                                  child: pw.Text("h. Hemorrhoid",
+                                      style: pw.TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: pw.FontWeight.normal)),
+                                ),
+                                pw.Text(": ${_penyakitKeluarga!.hemorhoid}",
+                                    style: pw.TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: pw.FontWeight.normal)),
+                              ]),
+                              pw.Row(children: [
+                                pw.Container(
+                                  width: 250,
+                                  child: pw.Text("i. Kanker",
+                                      style: pw.TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: pw.FontWeight.normal)),
+                                ),
+                                pw.Text(": ${_penyakitKeluarga!.kanker}",
+                                    style: pw.TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: pw.FontWeight.normal)),
+                              ]),
+                              pw.Row(children: [
+                                pw.Container(
+                                  width: 250,
+                                  child: pw.Text("j. Jantung",
+                                      style: pw.TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: pw.FontWeight.normal)),
+                                ),
+                                pw.Text(": ${_penyakitKeluarga!.jantung}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -4080,6 +4081,8 @@ class _DetailPasienState extends State<DetailPasien> {
   void initializeData() async {
     _penyakitTerdahulu =
         await firestore.getPenyakitTerdahulu(widget.pasienSnapshots.id);
+    _penyakitKeluarga =
+        await firestore.getPenyakitKeluarga(widget.pasienSnapshots.id);
     setState(() {});
   }
 }
