@@ -45,6 +45,15 @@ class FirebaseFirestoreService {
     return penyakitTerdahulu;
   }
 
+  Future<PenyakitTerdahuluModel> getPenyakitTerdahulu(String idPasien) async {
+    DocumentReference doc =
+        firestore.collection('penyakitTerdahulu').doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+
+    return PenyakitTerdahuluModel.fromJson(
+        snapshot.id, snapshot.data() as Map<String, dynamic>);
+  }
+
   Future<PenyakitKeluargaModel> setPenyakitKeluarga(
       PenyakitKeluargaModel penyakitKeluarga, String idPasien) async {
     DocumentReference doc =

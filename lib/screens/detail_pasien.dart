@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,10 +12,27 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-class DetailPasien extends StatelessWidget {
+import '../service/firebase_firestore_service.dart';
+
+class DetailPasien extends StatefulWidget {
   const DetailPasien({super.key, required this.pasienSnapshots});
 
   final DocumentSnapshot pasienSnapshots;
+
+  @override
+  State<DetailPasien> createState() => _DetailPasienState();
+}
+
+class _DetailPasienState extends State<DetailPasien> {
+  FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  PenyakitTerdahuluModel? _penyakitTerdahulu;
+
+  @override
+  void initState() {
+    initializeData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     void getPDF() async {
@@ -90,7 +108,7 @@ class DetailPasien extends StatelessWidget {
                         height: 20,
                         decoration: pw.BoxDecoration(
                             border: pw.Border.all(color: PdfColors.black)),
-                        child: pw.Text(pasienSnapshots['namaPasien'],
+                        child: pw.Text(widget.pasienSnapshots['namaPasien'],
                             style: pw.TextStyle(fontSize: 14))),
                     pw.Container(
                         padding: pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
@@ -106,7 +124,8 @@ class DetailPasien extends StatelessWidget {
                         height: 20,
                         decoration: pw.BoxDecoration(
                             border: pw.Border.all(color: PdfColors.black)),
-                        child: pw.Text(pasienSnapshots['tanggal_pemeriksaan'],
+                        child: pw.Text(
+                            widget.pasienSnapshots['tanggal_pemeriksaan'],
                             style: pw.TextStyle(fontSize: 14))),
                   ]),
                   pw.Row(children: [
@@ -124,7 +143,7 @@ class DetailPasien extends StatelessWidget {
                         height: 20,
                         decoration: pw.BoxDecoration(
                             border: pw.Border.all(color: PdfColors.black)),
-                        child: pw.Text(pasienSnapshots['jenis_kelamin'],
+                        child: pw.Text(widget.pasienSnapshots['jenis_kelamin'],
                             style: pw.TextStyle(fontSize: 14))),
                     pw.Container(
                         padding: pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
@@ -141,9 +160,9 @@ class DetailPasien extends StatelessWidget {
                         decoration: pw.BoxDecoration(
                             border: pw.Border.all(color: PdfColors.black)),
                         child: pw.Text(
-                            pasienSnapshots['tanggal_lahir'] +
+                            widget.pasienSnapshots['tanggal_lahir'] +
                                 "/" +
-                                "${pasienSnapshots['umur']}",
+                                "${widget.pasienSnapshots['umur']}",
                             style: pw.TextStyle(fontSize: 14))),
                   ]),
                   pw.Row(children: [
@@ -161,7 +180,7 @@ class DetailPasien extends StatelessWidget {
                         height: 20,
                         decoration: pw.BoxDecoration(
                             border: pw.Border.all(color: PdfColors.black)),
-                        child: pw.Text("${pasienSnapshots['NIK']}",
+                        child: pw.Text("${widget.pasienSnapshots['NIK']}",
                             style: pw.TextStyle(fontSize: 14))),
                     pw.Container(
                         padding: pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
@@ -177,7 +196,7 @@ class DetailPasien extends StatelessWidget {
                         height: 20,
                         decoration: pw.BoxDecoration(
                             border: pw.Border.all(color: PdfColors.black)),
-                        child: pw.Text(pasienSnapshots['perusahaan'],
+                        child: pw.Text(widget.pasienSnapshots['perusahaan'],
                             style: pw.TextStyle(fontSize: 14))),
                   ]),
                   pw.Row(
@@ -200,7 +219,7 @@ class DetailPasien extends StatelessWidget {
                             height: 60,
                             decoration: pw.BoxDecoration(
                                 border: pw.Border.all(color: PdfColors.black)),
-                            child: pw.Text(pasienSnapshots['alamat'],
+                            child: pw.Text(widget.pasienSnapshots['alamat'],
                                 style: pw.TextStyle(fontSize: 14))),
                         pw.Column(children: [
                           pw.Row(children: [
@@ -222,7 +241,7 @@ class DetailPasien extends StatelessWidget {
                                 decoration: pw.BoxDecoration(
                                     border:
                                         pw.Border.all(color: PdfColors.black)),
-                                child: pw.Text(pasienSnapshots['bagian'],
+                                child: pw.Text(widget.pasienSnapshots['bagian'],
                                     style: pw.TextStyle(fontSize: 14))),
                           ]),
                           pw.Row(children: [
@@ -244,7 +263,7 @@ class DetailPasien extends StatelessWidget {
                                 decoration: pw.BoxDecoration(
                                     border:
                                         pw.Border.all(color: PdfColors.black)),
-                                child: pw.Text(pasienSnapshots['no_hp'],
+                                child: pw.Text(widget.pasienSnapshots['no_hp'],
                                     style: pw.TextStyle(fontSize: 14))),
                           ]),
                           pw.Row(children: [
@@ -297,7 +316,8 @@ class DetailPasien extends StatelessWidget {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(
+                                    ": ${_penyakitTerdahulu!.darahTinggi ?? ""}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -311,7 +331,7 @@ class DetailPasien extends StatelessWidget {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(": ${_penyakitTerdahulu!.paru ?? ""}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -324,7 +344,8 @@ class DetailPasien extends StatelessWidget {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(
+                                    ": ${_penyakitTerdahulu!.asamLambung ?? ""}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -337,7 +358,7 @@ class DetailPasien extends StatelessWidget {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(": ${_penyakitTerdahulu!.alergi ?? ""}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -350,7 +371,8 @@ class DetailPasien extends StatelessWidget {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(
+                                    ": ${_penyakitTerdahulu!.riwayatOperasi ?? ""}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -363,7 +385,8 @@ class DetailPasien extends StatelessWidget {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(
+                                    ": ${_penyakitTerdahulu!.riwayatKecelakaan ?? ""}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -376,7 +399,8 @@ class DetailPasien extends StatelessWidget {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(
+                                    ": ${_penyakitTerdahulu!.riwayatRawatRs ?? ""}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -389,7 +413,8 @@ class DetailPasien extends StatelessWidget {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(
+                                    ": ${_penyakitTerdahulu!.hepatitis ?? ""}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -402,7 +427,8 @@ class DetailPasien extends StatelessWidget {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(
+                                    ": ${_penyakitTerdahulu!.kencingManis ?? ""}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -416,7 +442,8 @@ class DetailPasien extends StatelessWidget {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(
+                                    ": ${_penyakitTerdahulu!.patahTulang ?? ""}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -4025,7 +4052,7 @@ class DetailPasien extends StatelessWidget {
       // final file = File('${dir.path}/pasienMCU.pdf');
 
       final file =
-          File('${dir.path}/Hasil MCU ${pasienSnapshots['namaPasien']}');
+          File('${dir.path}/Hasil MCU ${widget.pasienSnapshots['namaPasien']}');
       // await OpenFilex.open(file.path);
       await OpenFile.open(file.path);
       await file.writeAsBytes(bytes);
@@ -4039,7 +4066,7 @@ class DetailPasien extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(pasienSnapshots['namaPasien']),
+              Text(widget.pasienSnapshots['namaPasien']),
               ElevatedButton(
                   child: Text('Download File'),
                   onPressed: () {
@@ -4048,5 +4075,11 @@ class DetailPasien extends StatelessWidget {
             ],
           )),
     );
+  }
+
+  void initializeData() async {
+    _penyakitTerdahulu =
+        await firestore.getPenyakitTerdahulu(widget.pasienSnapshots.id);
+    setState(() {});
   }
 }
