@@ -29,15 +29,15 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
   Question _quest8 = Question.ya;
   Question _quest9 = Question.ya;
 
-  String inpeksi = "";
-  String auskultasi = "";
-  String hati = "";
-  String limpa = "";
-  String ginjalKiri = "";
-  String ginjalKanan = "";
-  String hernia = "";
-  String tumor = "";
-  String lainlain = "";
+  String inpeksi = "Normal";
+  String auskultasi = "Normal";
+  String hati = "Normal";
+  String limpa = "Normal";
+  String ginjalKiri = "Normal";
+  String ginjalKanan = "Normal";
+  String hernia = "Normal";
+  String tumor = "Normal";
+  String lainlain = "Normal";
 
   final perkusi = TextEditingController();
   final ballotementKiri = TextEditingController();
@@ -522,5 +522,10 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
 
     firestore.setPemeriksaanRonggaPerut(
         pemeriksaanRonggaPerut: data, idPasien: widget.idPasien!);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return PemeriksaanGentalia(
+        idPasien: widget.idPasien,
+      );
+    }));
   }
 }

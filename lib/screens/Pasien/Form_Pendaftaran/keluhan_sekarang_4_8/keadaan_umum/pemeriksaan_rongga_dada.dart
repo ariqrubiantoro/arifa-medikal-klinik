@@ -35,21 +35,21 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
   Question _questParu7 = Question.ya;
   Question _questParu8 = Question.ya;
 
-  String batasJantung = "";
-  String auskultasi = "";
-  String iktusKordis = "";
-  String bunyiJantung = "";
-  String bunyiNafas = "";
-  String lainlainJantung = "";
+  String batasJantung = "Normal";
+  String auskultasi = "Normal";
+  String iktusKordis = "Normal";
+  String bunyiJantung = "Normal";
+  String bunyiNafas = "Ada";
+  String lainlainJantung = "Normal";
 
-  String inpeksiKanan = "";
-  String inpeksiKiri = "";
-  String palpasiKanan = "";
-  String palpasiKiri = "";
-  String perkusiKanan = "";
-  String perkusiKiri = "";
-  String auskultasiKanan = "";
-  String auskultasiKiri = "";
+  String inpeksiKanan = "Normal";
+  String inpeksiKiri = "Normal";
+  String palpasiKanan = "Normal";
+  String palpasiKiri = "Normal";
+  String perkusiKanan = "Normal";
+  String perkusiKiri = "Normal";
+  String auskultasiKanan = "Normal";
+  String auskultasiKiri = "Normal";
 
   bool tapJantung = false;
   bool tapParu = false;
@@ -696,5 +696,11 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
 
     firestore.setPemeriksaanRonggaDada(
         pemeriksaanRonggaDada: data, idPasien: widget.idPasien!);
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return PemeriksaanRonggaPerut(
+        idPasien: widget.idPasien,
+      );
+    }));
   }
 }

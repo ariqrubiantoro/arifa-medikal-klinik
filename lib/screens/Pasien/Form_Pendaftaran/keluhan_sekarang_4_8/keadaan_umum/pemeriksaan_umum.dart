@@ -89,6 +89,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 80,
                           height: 30,
+                          padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -96,9 +97,8 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           child: TextFormField(
                               controller: tinggiBadan,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
-                                  border: InputBorder.none)),
+                              decoration:
+                                  InputDecoration(border: InputBorder.none)),
                         ),
                         textDefault(" cm", Colors.black, 14, FontWeight.normal),
                       ],
@@ -117,6 +117,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 80,
                           height: 30,
+                          padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -124,9 +125,8 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           child: TextFormField(
                               controller: beratBadan,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
-                                  border: InputBorder.none)),
+                              decoration:
+                                  InputDecoration(border: InputBorder.none)),
                         ),
                         textDefault(" kg", Colors.black, 14, FontWeight.normal),
                       ],
@@ -145,6 +145,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 80,
                           height: 30,
+                          padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -152,9 +153,8 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           child: TextFormField(
                               controller: beratBadanIdeal,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
-                                  border: InputBorder.none)),
+                              decoration:
+                                  InputDecoration(border: InputBorder.none)),
                         ),
                         textDefault(" kg", Colors.black, 14, FontWeight.normal),
                       ],
@@ -173,6 +173,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 80,
                           height: 30,
+                          padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -180,9 +181,8 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           child: TextFormField(
                               controller: imt,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
-                                  border: InputBorder.none)),
+                              decoration:
+                                  InputDecoration(border: InputBorder.none)),
                         ),
                       ],
                     ),
@@ -200,6 +200,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 80,
                           height: 30,
+                          padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -207,9 +208,8 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           child: TextFormField(
                               controller: lingkaranPerut,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
-                                  border: InputBorder.none)),
+                              decoration:
+                                  InputDecoration(border: InputBorder.none)),
                         ),
                         textDefault(" cm", Colors.black, 14, FontWeight.normal),
                       ],
@@ -228,6 +228,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 80,
                           height: 30,
+                          padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -235,9 +236,8 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           child: TextFormField(
                               controller: tekananDarah,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
-                                  border: InputBorder.none)),
+                              decoration:
+                                  InputDecoration(border: InputBorder.none)),
                         ),
                         textDefault(
                             " mmHg", Colors.black, 14, FontWeight.normal),
@@ -257,6 +257,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 80,
                           height: 30,
+                          padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -264,9 +265,8 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           child: TextFormField(
                               controller: denyutNadi,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
-                                  border: InputBorder.none)),
+                              decoration:
+                                  InputDecoration(border: InputBorder.none)),
                         ),
                         textDefault(
                             " x/menit", Colors.black, 14, FontWeight.normal),
@@ -286,6 +286,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 80,
                           height: 30,
+                          padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -293,9 +294,8 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           child: TextFormField(
                               controller: pernapasan,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
-                                  border: InputBorder.none)),
+                              decoration:
+                                  InputDecoration(border: InputBorder.none)),
                         ),
                         textDefault(
                             " x/menit", Colors.black, 14, FontWeight.normal),
@@ -315,6 +315,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 80,
                           height: 30,
+                          padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -322,9 +323,8 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           child: TextFormField(
                               controller: suhu,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
-                                  border: InputBorder.none)),
+                              decoration:
+                                  InputDecoration(border: InputBorder.none)),
                         ),
                         textDefault(" °C", Colors.black, 14, FontWeight.normal),
                       ],
@@ -405,5 +405,10 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
 
     await firestore.setPemeriksaanUmum(
         pemeriksaanUmum: data, idPasien: widget.idPasien!);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return PemeriksaanMata(
+        idPasien: widget.idPasien,
+      );
+    }));
   }
 }

@@ -30,16 +30,16 @@ class _KimiaState extends State<Kimia> {
   Question _quest9 = Question.tidak;
   Question _quest10 = Question.tidak;
 
-  String debuAnorganik = "";
-  String debuOrganik = "";
-  String asap = "";
-  String logamBerat = "";
-  String pelarutOrganik = "";
-  String iritanAsam = "";
-  String iritanBasa = "";
-  String cairanPembersih = "";
-  String pestisida = "";
-  String uapLogam = "";
+  String debuAnorganik = "Tidak";
+  String debuOrganik = "Tidak";
+  String asap = "Tidak";
+  String logamBerat = "Tidak";
+  String pelarutOrganik = "Tidak";
+  String iritanAsam = "Tidak";
+  String iritanBasa = "Tidak";
+  String cairanPembersih = "Tidak";
+  String pestisida = "Tidak";
+  String uapLogam = "Tidak";
 
   final lainlain = TextEditingController();
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
@@ -487,5 +487,11 @@ class _KimiaState extends State<Kimia> {
     );
 
     firestore.setKimia(kimia: data, idPasien: widget.pasienId!);
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return Biologi(
+        idPasien: widget.pasienId,
+      );
+    }));
   }
 }

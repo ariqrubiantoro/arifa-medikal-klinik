@@ -202,9 +202,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                 child: TextFormField(
                     controller: bicepsKanan,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(0),
-                        border: InputBorder.none)),
+                    decoration: InputDecoration(border: InputBorder.none)),
               ),
             ),
           ],
@@ -230,9 +228,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                 child: TextFormField(
                     controller: bicepsKiri,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(0),
-                        border: InputBorder.none)),
+                    decoration: InputDecoration(border: InputBorder.none)),
               ),
             ),
           ],
@@ -293,9 +289,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                 child: TextFormField(
                     controller: tricepsKanan,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(0),
-                        border: InputBorder.none)),
+                    decoration: InputDecoration(border: InputBorder.none)),
               ),
             ),
           ],
@@ -321,9 +315,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                 child: TextFormField(
                     controller: tricepsKiri,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(0),
-                        border: InputBorder.none)),
+                    decoration: InputDecoration(border: InputBorder.none)),
               ),
             ),
           ],
@@ -384,9 +376,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                 child: TextFormField(
                     controller: babinskyKanan,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(0),
-                        border: InputBorder.none)),
+                    decoration: InputDecoration(border: InputBorder.none)),
               ),
             ),
           ],
@@ -412,9 +402,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                 child: TextFormField(
                     controller: babinskyKiri,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(0),
-                        border: InputBorder.none)),
+                    decoration: InputDecoration(border: InputBorder.none)),
               ),
             ),
           ],
@@ -444,5 +432,10 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
 
     firestore.setPemeriksaanRefleks(
         pemeriksaanRefleks: data, idPasien: widget.idPasien!);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return PemeriksaanKelenjarGetah(
+        idPasien: widget.idPasien,
+      );
+    }));
   }
 }

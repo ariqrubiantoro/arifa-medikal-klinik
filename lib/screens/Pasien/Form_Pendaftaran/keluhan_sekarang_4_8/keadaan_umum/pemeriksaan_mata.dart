@@ -35,13 +35,13 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
   final osKiri = TextEditingController();
   final osKanan = TextEditingController();
 
-  String kacamata = "";
-  String kondisi = "";
-  String olahraga = "";
-  String buta = "";
-  String penMata = "";
-  String konjungtiva = "";
-  String sklera = "";
+  String kacamata = "Tidak";
+  String kondisi = "Rabun Jauh";
+  String olahraga = "Tidak";
+  String buta = "Tidak";
+  String penMata = "Tidak";
+  String konjungtiva = "Tidak Normal";
+  String sklera = "Tidak Normal";
 
   @override
   Widget build(BuildContext context) {
@@ -180,9 +180,8 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           child: TextFormField(
                               controller: osKiri,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
-                                  border: InputBorder.none)),
+                              decoration:
+                                  InputDecoration(border: InputBorder.none)),
                         ),
                         textDefault(" (Tanpa lensa koreksi)", Colors.black, 12,
                             FontWeight.normal),
@@ -209,9 +208,8 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           child: TextFormField(
                               controller: osKanan,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
-                                  border: InputBorder.none)),
+                              decoration:
+                                  InputDecoration(border: InputBorder.none)),
                         ),
                         textDefault(" (Tanpa lensa koreksi)", Colors.black, 12,
                             FontWeight.normal),
@@ -453,5 +451,11 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
 
     firstore.setPemeriksaanMata(
         pemeriksaanMata: data, idPasien: widget.idPasien!);
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return PemeriksaanTHT(
+        idPasien: widget.idPasien,
+      );
+    }));
   }
 }

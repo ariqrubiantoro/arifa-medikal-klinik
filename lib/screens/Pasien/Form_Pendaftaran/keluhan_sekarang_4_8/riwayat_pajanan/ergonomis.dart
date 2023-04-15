@@ -27,13 +27,13 @@ class _ErgonomisState extends State<Ergonomis> {
   Question _quest6 = Question.tidak;
   Question _quest7 = Question.tidak;
 
-  String gerakanBerulang = "";
-  String angkatAngkutBerat = "";
-  String dudukLama = "";
-  String berdiriLama = "";
-  String posisiTubuh = "";
-  String pencahayaan = "";
-  String bekerjaDenganLayar = "";
+  String gerakanBerulang = "Tidak";
+  String angkatAngkutBerat = "Tidak";
+  String dudukLama = "Tidak";
+  String berdiriLama = "Tidak";
+  String posisiTubuh = "Tidak";
+  String pencahayaan = "Tidak";
+  String bekerjaDenganLayar = "Tidak";
 
   final lainlain = TextEditingController();
 
@@ -398,5 +398,10 @@ class _ErgonomisState extends State<Ergonomis> {
     );
 
     firestore.setErgonomis(ergonomis: data, idPasien: widget.idPasien!);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return Pemeriksaan5(
+        idPasien: widget.idPasien,
+      );
+    }));
   }
 }
