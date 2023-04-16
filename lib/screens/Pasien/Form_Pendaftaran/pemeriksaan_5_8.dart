@@ -18,6 +18,8 @@ class Pemeriksaan5 extends StatefulWidget {
 
 class _Pemeriksaan5State extends State<Pemeriksaan5> {
   final fisik = TextEditingController();
+  final mata = TextEditingController();
+
   final gigiMulut = TextEditingController();
   final audiometri = TextEditingController();
   final spirometri = TextEditingController();
@@ -89,6 +91,24 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
                         borderRadius: BorderRadius.circular(10)),
                     child: TextFormField(
                       controller: fisik,
+                      decoration: InputDecoration(border: InputBorder.none),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  textDefault(
+                      "Pemeriksaan Mata", Colors.black, 14, FontWeight.bold),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TextFormField(
+                      controller: mata,
                       decoration: InputDecoration(border: InputBorder.none),
                     ),
                   ),
@@ -282,6 +302,7 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
   saveButton() async {
     PemeriksaanModel data = PemeriksaanModel(
       pemeriksaanFisik: fisik.text,
+      pemeriksaanMata: mata.text,
       pemeriksaanGigiMulut: gigiMulut.text,
       pemeriksaanAudioMetri: audiometri.text,
       pemeriksaanSpirometri: spirometri.text,

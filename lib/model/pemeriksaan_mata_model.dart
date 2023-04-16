@@ -23,17 +23,19 @@ class PemeriksaanMataModel {
     this.sklera,
   });
 
-  PemeriksaanMataModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    kacaMata = json['kacaMata'];
-    kondisi = json['kondisi'];
-    visusKiri = json['visusKiri'];
-    visusKanan = json['visusKanan'];
-    olahraga = json['olahraga'];
-    butaWarna = json['butaWarna'];
-    penyakitMata = json['penyakitMata'];
-    konjungtiva = json['konjungtiva'];
-    sklera = json['sklera'];
+  factory PemeriksaanMataModel.fromJson(String? id, Map<String, dynamic> json) {
+    return PemeriksaanMataModel(
+      id: json['id'],
+      kacaMata: json['kacaMata'],
+      kondisi: json['kondisi'],
+      visusKiri: json['visusKiri'],
+      visusKanan: json['visusKanan'],
+      olahraga: json['olahraga'],
+      butaWarna: json['butaWarna'],
+      penyakitMata: json['penyakitMata'],
+      konjungtiva: json['konjungtiva'],
+      sklera: json['sklera'],
+    );
   }
 
   Map<String, dynamic> toJson() {

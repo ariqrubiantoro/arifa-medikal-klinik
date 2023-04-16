@@ -16,18 +16,22 @@ class KesimpulanDerajatKesehatanModel {
       this.ditemukanKelainanMenyebabkanKeterbatasan,
       this.tidakDapatBekerja});
 
-  KesimpulanDerajatKesehatanModel.fromJson(Map<String, dynamic> json) {
-    ditemukanKelainanMedis = json['ditemukanKelainanMedis'];
-    ditemukanKelainanYangTidakSerius = json['ditemukanKelainanYangTidakSerius'];
-    ditemukanKelainanResikoKesehatanRendah =
-        json['ditemukanKelainanResikoKesehatanRendah'];
-    ditemukanKelainanResikoKesehatanSedang =
-        json['ditemukanKelainanResikoKesehatanSedang'];
-    ditemukanKelainanResikoKesehatanTinggi =
-        json['ditemukanKelainanResikoKesehatanTinggi'];
-    ditemukanKelainanMenyebabkanKeterbatasan =
-        json['ditemukanKelainanMenyebabkanKeterbatasan'];
-    tidakDapatBekerja = json['tidakDapatBekerja'];
+  factory KesimpulanDerajatKesehatanModel.fromJson(
+      String? id, Map<String, dynamic> json) {
+    return KesimpulanDerajatKesehatanModel(
+      ditemukanKelainanMedis: json['ditemukanKelainanMedis'],
+      ditemukanKelainanYangTidakSerius:
+          json['ditemukanKelainanYangTidakSerius'],
+      ditemukanKelainanResikoKesehatanRendah:
+          json['ditemukanKelainanResikoKesehatanRendah'],
+      ditemukanKelainanResikoKesehatanSedang:
+          json['ditemukanKelainanResikoKesehatanSedang'],
+      ditemukanKelainanResikoKesehatanTinggi:
+          json['ditemukanKelainanResikoKesehatanTinggi'],
+      ditemukanKelainanMenyebabkanKeterbatasan:
+          json['ditemukanKelainanMenyebabkanKeterbatasan'],
+      tidakDapatBekerja: json['tidakDapatBekerja'],
+    );
   }
 
   Map<String, dynamic> toJson() {

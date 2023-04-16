@@ -1,5 +1,6 @@
 class PemeriksaanModel {
   String? pemeriksaanFisik;
+  String? pemeriksaanMata;
   String? pemeriksaanGigiMulut;
   String? pemeriksaanAudioMetri;
   String? pemeriksaanSpirometri;
@@ -10,6 +11,7 @@ class PemeriksaanModel {
 
   PemeriksaanModel({
     this.pemeriksaanFisik,
+    this.pemeriksaanMata,
     this.pemeriksaanGigiMulut,
     this.pemeriksaanAudioMetri,
     this.pemeriksaanSpirometri,
@@ -19,20 +21,34 @@ class PemeriksaanModel {
     this.paru,
   });
 
-  PemeriksaanModel.fromJson(Map<String, dynamic> json) {
-    pemeriksaanFisik = json['pemeriksaan_fisik'];
-    pemeriksaanGigiMulut = json['pemeriksaan_gigi_mulut'];
-    pemeriksaanAudioMetri = json['pemeriksaan_audio_metri'];
-    pemeriksaanSpirometri = json['pemeriksaan_spirometri'];
-    pemeriksaanTreadmill = json['pemeriksaan_treadmill'];
-    pemeriksaanLaboratorium = json['pemeriksaan_laboratorium'];
-    pemeriksaanXrayJantung = json['pemeriksaan_xray_jantung'];
-    paru = json['paru'];
+  factory PemeriksaanModel.fromJson(String? id, Map<String, dynamic> json) {
+    return PemeriksaanModel(
+      pemeriksaanFisik: json['pemeriksaan_fisik'],
+      pemeriksaanMata: json['pemeriksaan_mata'],
+      pemeriksaanGigiMulut: json['pemeriksaan_gigi_mulut'],
+      pemeriksaanAudioMetri: json['pemeriksaan_audio_metri'],
+      pemeriksaanSpirometri: json['pemeriksaan_spirometri'],
+      pemeriksaanTreadmill: json['pemeriksaan_treadmill'],
+      pemeriksaanLaboratorium: json['peemriksaan_laboratorium'],
+      pemeriksaanXrayJantung: json['pemeriksaan_xray_jantung'],
+      paru: json['paru'],
+    );
   }
+  // PemeriksaanModel.fromJson(Map<String, dynamic> json) {
+  //   pemeriksaanFisik = json['pemeriksaan_fisik'];
+  //   pemeriksaanGigiMulut = json['pemeriksaan_gigi_mulut'];
+  //   pemeriksaanAudioMetri = json['pemeriksaan_audio_metri'];
+  //   pemeriksaanSpirometri = json['pemeriksaan_spirometri'];
+  //   pemeriksaanTreadmill = json['pemeriksaan_treadmill'];
+  //   pemeriksaanLaboratorium = json['pemeriksaan_laboratorium'];
+  //   pemeriksaanXrayJantung = json['pemeriksaan_xray_jantung'];
+  //   paru = json['paru'];
+  // }
 
   Map<String, dynamic> toJson() {
     return {
       'pemeriksaan_fisik': pemeriksaanFisik,
+      'pemeriksaan_mata': pemeriksaanMata,
       'pemeriksaan_gigi_mulut': pemeriksaanGigiMulut,
       'pemeriksaan_audio_metri': pemeriksaanAudioMetri,
       'pemeriksaan_spirometri': pemeriksaanSpirometri,
