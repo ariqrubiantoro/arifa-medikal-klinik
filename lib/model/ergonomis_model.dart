@@ -19,15 +19,17 @@ class ErgonomisModel {
     this.lainLain,
   });
 
-  ErgonomisModel.fromJson(Map<String, dynamic> json) {
-    gerakanBerulang = json['gerakan_berulang'];
-    angkatBerat = json['angkat_berat'];
-    dudukLama = json['duduk_lama'];
-    berdiriLama = json['berdiri_lama'];
-    posisiTubuh = json['posisi_tubuh'];
-    pencahayaanTidakSesuai = json['pencahayaan_tidak_sesuai'];
-    bekerjaDenganLayar = json['bekerja_dengan_layar'];
-    lainLain = json['lain_lain'];
+  factory ErgonomisModel.fromJson(String idPasiend, Map<String, dynamic> json) {
+    return ErgonomisModel(
+      gerakanBerulang: json['gerakan_berulang'],
+      angkatBerat: json['angkat_berat'],
+      dudukLama: json['duduk_lama'],
+      berdiriLama: json['berdiri_lama'],
+      posisiTubuh: json['posisi_tubuh'],
+      pencahayaanTidakSesuai: json['pencahayaan_tidak_sesuai'],
+      bekerjaDenganLayar: json['bekerja_dengan_layar'],
+      lainLain: json['lain_lain'],
+    );
   }
 
   Map<String, dynamic> toJson() {

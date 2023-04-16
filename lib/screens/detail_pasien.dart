@@ -2,10 +2,10 @@
 
 import 'dart:io';
 
+import 'package:arifa_medikal_klink_3/model/biologi_model.dart';
 import 'package:arifa_medikal_klink_3/model/kesimpulan_derajat_kesehatan.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_kelenjar_getah_model.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_anggota_gerak.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +15,10 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../model/ajuran_model.dart';
+import '../model/ergonomis_model.dart';
+import '../model/fisik_model.dart';
 import '../model/kelayakan_kerja_model.dart';
+import '../model/kimia_model.dart';
 import '../model/pemeriksaan_anggota_gerak_model.dart';
 import '../model/pemeriksaan_gentalia_model.dart';
 import '../model/pemeriksaan_mata_model.dart';
@@ -26,6 +29,8 @@ import '../model/pemeriksaan_rongga_perut_model.dart';
 import '../model/pemeriksaan_tht_model.dart';
 import '../model/pemeriksaan_umum_model.dart';
 import '../model/penyakit_keluarga_mode.dart';
+import '../model/psikologi_model.dart';
+import '../model/riwayat_kebiasaan_model.dart';
 import '../service/firebase_firestore_service.dart';
 
 class DetailPasien extends StatefulWidget {
@@ -54,6 +59,12 @@ class _DetailPasienState extends State<DetailPasien> {
   PemeriksaanAnggotaGerakModel? _pemeriksaanAnggotaGerak;
   PemeriksaanRefleksModel? _pemeriksaanRefleks;
   PemeriksaanKelenjarGetahModel? _pemeriksaanKelenjarGetah;
+  RiwayatKebiasaanModel? _riwayatKebiasaan;
+  FisikModel? _fisik;
+  KimiaModel? _kimia;
+  BiologiModel? _biologi;
+  PsikologiModel? _psikologi;
+  ErgonomisModel? _ergonomis;
 
   // RiwayatKebiasaanModel? _riwayatKebiasaan;
 
@@ -92,8 +103,13 @@ class _DetailPasienState extends State<DetailPasien> {
         await firestore.getPemeriksaanRefleks(widget.pasienSnapshots.id);
     _pemeriksaanKelenjarGetah =
         await firestore.getPemeriksaanKelenjarGetah(widget.pasienSnapshots.id);
-    // _riwayatKebiasaan =
-    //     await firestore.getRiwayatKebiasaan(widget.pasienSnapshots.id);
+    _riwayatKebiasaan =
+        await firestore.getRiwayatKebiasaan(widget.pasienSnapshots.id);
+    _fisik = await firestore.getFisik(widget.pasienSnapshots.id);
+    _kimia = await firestore.getKimia(widget.pasienSnapshots.id);
+    _biologi = await firestore.getBiologi(widget.pasienSnapshots.id);
+    _psikologi = await firestore.getPsikologi(widget.pasienSnapshots.id);
+    _ergonomis = await firestore.getErgonomis(widget.pasienSnapshots.id);
     setState(() {});
   }
 
@@ -691,7 +707,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(
+                                    ": ${_riwayatKebiasaan!.merokok != null ? 'Ya' : 'Tidak'}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -704,7 +721,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": ( ) Tahun",
+                                pw.Text(
+                                    ": (${_riwayatKebiasaan!.merokok!.lama ?? '-'}) Tahun",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -717,7 +735,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": ( ) Batang/hari",
+                                pw.Text(
+                                    ": (${_riwayatKebiasaan!.merokok!.batang ?? '-'}) Batang/hari",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -730,7 +749,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": ( ) Bungkus/hari",
+                                pw.Text(
+                                    ": (${_riwayatKebiasaan!.merokok!.bungkus ?? '-'}) Bungkus/hari",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -743,7 +763,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(
+                                    ": ${_riwayatKebiasaan!.miras != null ? 'Ya' : 'Tidak'}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -756,7 +777,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": ( ) Tahun",
+                                pw.Text(
+                                    ": (${_riwayatKebiasaan!.miras != null ? _riwayatKebiasaan!.miras!.lama : '-'}) Tahun",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -769,7 +791,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": ( ) Gelas/hari",
+                                pw.Text(
+                                    ": (${_riwayatKebiasaan!.miras != null ? _riwayatKebiasaan!.miras!.gelas : '-'}) Gelas/hari",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -782,7 +805,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": ( ) Botol/hari",
+                                pw.Text(
+                                    ": (${_riwayatKebiasaan!.miras != null ? _riwayatKebiasaan!.miras!.botol : '-'}) Botol/hari",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -795,7 +819,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
                                 ),
-                                pw.Text(": Ya/Tidak Ada",
+                                pw.Text(
+                                    ": ${_riwayatKebiasaan!.olahraga != null ? 'Ya' : 'Tidak'}",
                                     style: pw.TextStyle(
                                         fontSize: 12,
                                         fontWeight: pw.FontWeight.normal)),
@@ -2945,7 +2970,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_fisik!.kebisingan ?? '-'}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -2961,7 +2987,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_fisik!.suhuPanas ?? '-'}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -2977,7 +3004,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_fisik!.suhuDingin ?? '-'}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -2994,7 +3022,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_fisik!.radiasiBukanPengion ?? '-'}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3011,7 +3040,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_fisik!.radiasiPengion ?? '-'}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3027,7 +3057,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_fisik!.getaranLokal ?? '-'}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3044,7 +3075,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_fisik!.getaranSeluruhTubuh ?? '-'}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3060,7 +3092,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_fisik!.ketinggian ?? '-'}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3076,7 +3109,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": -",
+                                            pw.Text(
+                                                ": ${_fisik!.lainLain ?? '-'}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3119,7 +3153,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_kimia!.debuAnorganik ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3136,7 +3171,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_kimia!.debuOrganik ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3152,7 +3188,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(": ${_kimia!.asap ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3169,7 +3205,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_kimia!.logamBerat != null ? "Ya" : "Tidak"}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3186,7 +3223,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_kimia!.logamBerat ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3203,7 +3241,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_kimia!.pelarutOrganik ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3220,7 +3259,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_kimia!.iritanAsam ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3237,7 +3277,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_kimia!.iritanBasa ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3254,7 +3295,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_kimia!.cairanPembersih ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3270,7 +3312,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_kimia!.pestisida ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3287,7 +3330,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_kimia!.uapLogam ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3303,7 +3347,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": -",
+                                            pw.Text(
+                                                ": ${_kimia!.lainLain ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3344,7 +3389,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_biologi!.bakteri ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3361,7 +3407,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_biologi!.darah ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3378,7 +3425,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_biologi!.nyamuk ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3395,7 +3443,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": Ya/Tidak",
+                                            pw.Text(
+                                                ": ${_biologi!.limbah ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3411,7 +3460,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ),
-                                            pw.Text(": -",
+                                            pw.Text(
+                                                ": ${_biologi!.lainLain ?? ""}",
                                                 style: pw.TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -3455,7 +3505,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                             .FontWeight
                                                             .normal)),
                                               ),
-                                              pw.Text(": Ya/Tidak",
+                                              pw.Text(
+                                                  ": ${_psikologi!.bebanKerja ?? ""}",
                                                   style: pw.TextStyle(
                                                       fontSize: 12,
                                                       fontWeight: pw
@@ -3473,7 +3524,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                             .FontWeight
                                                             .normal)),
                                               ),
-                                              pw.Text(": Ya/Tidak",
+                                              pw.Text(
+                                                  ": ${_psikologi!.pekerjaanTidakSesuai ?? ""}",
                                                   style: pw.TextStyle(
                                                       fontSize: 12,
                                                       fontWeight: pw
@@ -3491,7 +3543,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                             .FontWeight
                                                             .normal)),
                                               ),
-                                              pw.Text(": Ya/Tidak",
+                                              pw.Text(
+                                                  ": ${_psikologi!.ketidakjelasanTugas ?? ""}",
                                                   style: pw.TextStyle(
                                                       fontSize: 12,
                                                       fontWeight: pw
@@ -3509,7 +3562,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                             .FontWeight
                                                             .normal)),
                                               ),
-                                              pw.Text(": Ya/Tidak",
+                                              pw.Text(
+                                                  ": ${_psikologi!.hamabatanJenjangKarir ?? ""}",
                                                   style: pw.TextStyle(
                                                       fontSize: 12,
                                                       fontWeight: pw
@@ -3527,7 +3581,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                             .FontWeight
                                                             .normal)),
                                               ),
-                                              pw.Text(": Ya/Tidak",
+                                              pw.Text(
+                                                  ": ${_psikologi!.shift ?? ""}",
                                                   style: pw.TextStyle(
                                                       fontSize: 12,
                                                       fontWeight: pw
@@ -3545,7 +3600,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                             .FontWeight
                                                             .normal)),
                                               ),
-                                              pw.Text(": Ya/Tidak",
+                                              pw.Text(
+                                                  ": ${_psikologi!.konflikRekanKerja ?? ""}",
                                                   style: pw.TextStyle(
                                                       fontSize: 12,
                                                       fontWeight: pw
@@ -3563,7 +3619,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                             .FontWeight
                                                             .normal)),
                                               ),
-                                              pw.Text(": Ya/Tidak",
+                                              pw.Text(
+                                                  ": ${_psikologi!.konflikKeluarga ?? ""}",
                                                   style: pw.TextStyle(
                                                       fontSize: 12,
                                                       fontWeight: pw
@@ -3580,7 +3637,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                                             .FontWeight
                                                             .normal)),
                                               ),
-                                              pw.Text(": -",
+                                              pw.Text(
+                                                  ": ${_psikologi!.lainLain ?? ""}",
                                                   style: pw.TextStyle(
                                                       fontSize: 12,
                                                       fontWeight: pw
@@ -3621,7 +3679,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
-                                  pw.Text(": Ya/Tidak",
+                                  pw.Text(
+                                      ": ${_ergonomis!.gerakanBerulang ?? ""}",
                                       style: pw.TextStyle(
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
@@ -3635,7 +3694,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
-                                  pw.Text(": Ya/Tidak",
+                                  pw.Text(": ${_ergonomis!.angkatBerat ?? ""}",
                                       style: pw.TextStyle(
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
@@ -3650,7 +3709,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
-                                  pw.Text(": Ya/Tidak",
+                                  pw.Text(": ${_ergonomis!.dudukLama ?? ""}",
                                       style: pw.TextStyle(
                                           fontSize: 12,
                                           fontWeight: pw.FontWeight.normal)),
@@ -3725,7 +3784,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text(": Ya/Tidak",
+                                    pw.Text(
+                                        ": ${_ergonomis!.berdiriLama ?? ""}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -3741,7 +3801,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text(": Ya/Tidak",
+                                    pw.Text(
+                                        ": ${_ergonomis!.posisiTubuh ?? ""}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -3757,7 +3818,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text(": Ya/Tidak",
+                                    pw.Text(
+                                        ": ${_ergonomis!.pencahayaanTidakSesuai ?? ""}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -3773,7 +3835,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text(": Ya/Tidak",
+                                    pw.Text(
+                                        ": ${_ergonomis!.bekerjaDenganLayar ?? ""}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -3788,7 +3851,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text(": -",
+                                    pw.Text(": ${_ergonomis!.lainLain ?? ""}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),

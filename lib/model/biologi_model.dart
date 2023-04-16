@@ -13,12 +13,14 @@ class BiologiModel {
     this.lainLain,
   });
 
-  BiologiModel.fromJson(Map<String, dynamic> json) {
-    bakteri = json['bakteri'];
-    darah = json['darah'];
-    nyamuk = json['nyamuk'];
-    limbah = json['limbah'];
-    lainLain = json['lainLain'];
+  factory BiologiModel.fromJson(String idPasien, Map<String, dynamic> json) {
+    return BiologiModel(
+      bakteri: json['bakteri'],
+      darah: json['darah'],
+      nyamuk: json['nyamuk'],
+      limbah: json['limbah'],
+      lainLain: json['lainLain'],
+    );
   }
 
   Map<String, dynamic> toJson() {

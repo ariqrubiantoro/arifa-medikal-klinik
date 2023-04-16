@@ -13,21 +13,15 @@ class RiwayatKebiasaanModel {
   factory RiwayatKebiasaanModel.fromJson(
       String? id, Map<String, dynamic> json) {
     return RiwayatKebiasaanModel(
-        id: id,
-        merokok: json['merokok'] != null
-            ? MerokokModel.fromJson(json['merokok'])
-            : null,
-        miras:
-            json['miras'] != null ? MirasModel.fromJson(json['miras']) : null,
-        olahraga: json['olahraga']);
+      id: id,
+      merokok: json['merokok'] != "Tidak"
+          ? MerokokModel.fromJson(json['merokok'])
+          : null,
+      miras:
+          json['miras'] != "Tidak" ? MirasModel.fromJson(json['miras']) : null,
+      olahraga: json['olahraga'],
+    );
   }
-
-  // RiwayatKebiasaanModel.fromJson(Map<String, dynamic> json) {
-  //   merokok =
-  //       json['merokok'] != null ? MerokokModel.fromJson(json['merokok']) : null;
-  //   miras = json['miras'] != null ? MirasModel.fromJson(json['miras']) : null;
-  //   olahraga = json['olahraga'];
-  // }
 
   Map<String, dynamic> toJson() {
     return {
