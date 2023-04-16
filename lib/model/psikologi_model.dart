@@ -19,15 +19,17 @@ class PsikologiModel {
     this.lainLain,
   });
 
-  PsikologiModel.fromJson(Map<String, dynamic> json) {
-    bebanKerja = json['beban_kerja'];
-    pekerjaanTidakSesuai = json['pekerjaan_tidak_sesuai'];
-    ketidakjelasanTugas = json['ketidakjelasan_tugas'];
-    hamabatanJenjangKarir = json['hamabatan_jenjang_karir'];
-    shift = json['shift'];
-    konflikRekanKerja = json['konflik_rekan_kerja'];
-    konflikKeluarga = json['konflik_keluarga'];
-    lainLain = json['lain_lain'];
+  factory PsikologiModel.fromJson(String idPasien, Map<String, dynamic> json) {
+    return PsikologiModel(
+      bebanKerja: json['beban_kerja'],
+      pekerjaanTidakSesuai: json['pekerjaan_tidak_sesuai'],
+      ketidakjelasanTugas: json['ketidakjelasan_tugas'],
+      hamabatanJenjangKarir: json['hamabatan_jenjang_karir'],
+      shift: json['shift'],
+      konflikRekanKerja: json['konflik_rekan_kerja'],
+      konflikKeluarga: json['konflik_keluarga'],
+      lainLain: json['lain_lain'],
+    );
   }
 
   Map<String, dynamic> toJson() {

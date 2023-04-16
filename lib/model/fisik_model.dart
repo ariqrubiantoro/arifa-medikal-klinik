@@ -21,16 +21,18 @@ class FisikModel {
     this.lainLain,
   });
 
-  FisikModel.fromJson(Map<String, dynamic> json) {
-    kebisingan = json['kebisingan'];
-    suhuPanas = json['suhuPanas'];
-    suhuDingin = json['suhuDingin'];
-    radiasiBukanPengion = json['radiasiBukanPengion'];
-    radiasiPengion = json['radiasiPengion'];
-    getaranLokal = json['getaranLokal'];
-    getaranSeluruhTubuh = json['getaranSeluruhTubuh'];
-    ketinggian = json['ketinggian'];
-    lainLain = json['lainLain'];
+  factory FisikModel.fromJson(String id, Map<String, dynamic> json) {
+    return FisikModel(
+      kebisingan: json['kebisingan'],
+      suhuPanas: json['suhuPanas'],
+      suhuDingin: json['suhuDingin'],
+      radiasiBukanPengion: json['radiasiBukanPengion'],
+      radiasiPengion: json['radiasiPengion'],
+      getaranLokal: json['getaranLokal'],
+      getaranSeluruhTubuh: json['getaranSeluruhTubuh'],
+      ketinggian: json['ketinggian'],
+      lainLain: json['lainLain'],
+    );
   }
 
   Map<String, dynamic> toJson() {

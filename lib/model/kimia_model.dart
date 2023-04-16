@@ -25,18 +25,20 @@ class KimiaModel {
     this.lainLain,
   });
 
-  KimiaModel.fromJson(Map<String, dynamic> json) {
-    debuAnorganik = json['debu_anorganik'];
-    debuOrganik = json['debu_organik'];
-    asap = json['asap'];
-    logamBerat = json['logam_berat'];
-    pelarutOrganik = json['pelarut_organik'];
-    iritanAsam = json['iritan_asam'];
-    iritanBasa = json['iritan_basa'];
-    cairanPembersih = json['cairan_pembersih'];
-    pestisida = json['pestisida'];
-    uapLogam = json['uap_logam'];
-    lainLain = json['lain_lain'];
+  factory KimiaModel.fromJson(String idPasien, Map<String, dynamic> json) {
+    return KimiaModel(
+      debuAnorganik: json['debu_anorganik'],
+      debuOrganik: json['debu_organik'],
+      asap: json['asap'],
+      logamBerat: json['logam_berat'],
+      pelarutOrganik: json['pelarut_organik'],
+      iritanAsam: json['iritan_asam'],
+      iritanBasa: json['iritan_basa'],
+      cairanPembersih: json['cairan_pembersih'],
+      pestisida: json['pestisida'],
+      uapLogam: json['uap_logam'],
+      lainLain: json['lain_lain'],
+    );
   }
 
   Map<String, dynamic> toJson() {
