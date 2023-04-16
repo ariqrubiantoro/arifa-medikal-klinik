@@ -12,12 +12,14 @@ class KelayakanKerjaModel {
       this.layakuntukBekerja,
       this.resikoCardioVascular});
 
-  KelayakanKerjaModel.fromJson(Map<String, dynamic> json) {
-    layakBekerjaSesuaiPosisi = json['layakBekerjaSesuaiPosisi'];
-    layakBekerjaDenganCatatan = json['layakBekerjaDenganCatatan'];
-    layakBekerjaDenganPenyesuaian = json['layakBekerjaDenganPenyesuaian'];
-    layakuntukBekerja = json['layakuntukBekerja'];
-    resikoCardioVascular = json['resikoCardioVascular'];
+  factory KelayakanKerjaModel.fromJson(String? id, Map<String, dynamic> json) {
+    return KelayakanKerjaModel(
+      layakBekerjaSesuaiPosisi: json['layakBekerjaSesuaiPosisi'],
+      layakBekerjaDenganCatatan: json['layakBekerjaDenganCatatan'],
+      layakBekerjaDenganPenyesuaian: json['layakBekerjaDenganPenyesuaian'],
+      layakuntukBekerja: json['layakuntukBekerja'],
+      resikoCardioVascular: json['resikoCardioVascular'],
+    );
   }
 
   Map<String, dynamic> toJson() {

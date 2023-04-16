@@ -29,9 +29,9 @@ class PenyakitKeluargaModel {
       String? id, Map<String, dynamic> json) {
     return PenyakitKeluargaModel(
       id: id,
-      kencingManis: json['kencing_manis'],
-      darahTinggi: json['darah_tinggi'],
-      asamLambung: json['asam_lambung'],
+      kencingManis: json['kencingManis'],
+      darahTinggi: json['darahTinggi'],
+      asamLambung: json['asamLambung'],
       alergi: json['alergi'],
       paru: json['paru'],
       stroke: json['stroke'],

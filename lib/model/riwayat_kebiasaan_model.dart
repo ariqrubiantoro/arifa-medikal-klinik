@@ -1,17 +1,33 @@
 class RiwayatKebiasaanModel {
   String? id;
+  String? strMerokok;
+
+  String? strMiras;
+
   MerokokModel? merokok;
   MirasModel? miras;
   String? olahraga;
 
   RiwayatKebiasaanModel({this.id, this.merokok, this.miras, this.olahraga});
 
-  RiwayatKebiasaanModel.fromJson(Map<String, dynamic> json) {
-    merokok =
-        json['merokok'] != null ? MerokokModel.fromJson(json['merokok']) : null;
-    miras = json['miras'] != null ? MirasModel.fromJson(json['miras']) : null;
-    olahraga = json['olahraga'];
+  factory RiwayatKebiasaanModel.fromJson(
+      String? id, Map<String, dynamic> json) {
+    return RiwayatKebiasaanModel(
+        id: id,
+        merokok: json['merokok'] != null
+            ? MerokokModel.fromJson(json['merokok'])
+            : null,
+        miras:
+            json['miras'] != null ? MirasModel.fromJson(json['miras']) : null,
+        olahraga: json['olahraga']);
   }
+
+  // RiwayatKebiasaanModel.fromJson(Map<String, dynamic> json) {
+  //   merokok =
+  //       json['merokok'] != null ? MerokokModel.fromJson(json['merokok']) : null;
+  //   miras = json['miras'] != null ? MirasModel.fromJson(json['miras']) : null;
+  //   olahraga = json['olahraga'];
+  // }
 
   Map<String, dynamic> toJson() {
     return {

@@ -4,9 +4,11 @@ class AjuranModel {
 
   AjuranModel({this.konsumsiAir, this.olahragaTeratur});
 
-  AjuranModel.fromJson(Map<String, dynamic> json) {
-    konsumsiAir = json['konsumsiAir'];
-    olahragaTeratur = json['olahragaTeratur'];
+  factory AjuranModel.fromJson(String? id, Map<String, dynamic> json) {
+    return AjuranModel(
+      konsumsiAir: json['konsumsiAir'],
+      olahragaTeratur: json['olahragaTeratur'],
+    );
   }
 
   Map<String, dynamic> toJson() {

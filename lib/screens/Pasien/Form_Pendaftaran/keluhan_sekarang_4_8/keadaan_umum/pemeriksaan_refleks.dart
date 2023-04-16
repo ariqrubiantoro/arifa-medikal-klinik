@@ -23,9 +23,9 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
   Question _quest2 = Question.ya;
   Question _quest3 = Question.ya;
 
-  String strPupil = "";
-  String strPatella = "";
-  String strAchilles = "";
+  String strPupil = "Normal";
+  String strPatella = "Normal";
+  String strAchilles = "Normal";
 
   final bicepsKanan = TextEditingController();
   final bicepsKiri = TextEditingController();

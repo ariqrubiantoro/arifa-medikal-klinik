@@ -21,16 +21,18 @@ class PemeriksaanUmumModel {
     this.suhu,
   });
 
-  PemeriksaanUmumModel.fromJson(Map<String, dynamic> json) {
-    tinggiBadan = json['tinggi_badan'];
-    beratBadan = json['berat_badan'];
-    beratBadanIdeal = json['berat_badan_ideal'];
-    imt = json['imt'];
-    lingkarPerut = json['lingkar_perut'];
-    tekananDarah = json['tekanan_darah'];
-    denyutNadi = json['denyut_nadi'];
-    pernapasan = json['pernapasan'];
-    suhu = json['suhu'];
+  factory PemeriksaanUmumModel.fromJson(String? id, Map<String, dynamic> json) {
+    return PemeriksaanUmumModel(
+      tinggiBadan: json['tinggi_badan'],
+      beratBadan: json['berat_badan'],
+      beratBadanIdeal: json['berat_badan_ideal'],
+      imt: json['imt'],
+      lingkarPerut: json['lingkar_perut'],
+      tekananDarah: json['tekanan_darah'],
+      denyutNadi: json['denyut_nadi'],
+      pernapasan: json['pernapasan'],
+      suhu: json['suhu'],
+    );
   }
 
   Map<String, dynamic> toJson() {
