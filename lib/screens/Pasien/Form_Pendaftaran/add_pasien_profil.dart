@@ -439,7 +439,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
       tanggalPemeriksaan: tglPemeriksaanC.text,
       tempatLahir: tempatLahirC.text,
       tanggalLahir: tglLahirC.text,
-      umur: int.parse(umurC.text),
+      umur: umurC.text,
       perusahaan: perusahaanC.text,
       bagian: bagianC.text,
       noHp: nohpC.text,

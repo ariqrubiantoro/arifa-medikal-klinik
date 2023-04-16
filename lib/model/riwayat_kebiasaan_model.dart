@@ -8,12 +8,20 @@ class RiwayatKebiasaanModel {
   MirasModel? miras;
   String? olahraga;
 
-  RiwayatKebiasaanModel({this.id, this.merokok, this.miras, this.olahraga});
+  RiwayatKebiasaanModel(
+      {this.id,
+      this.strMerokok,
+      this.strMiras,
+      this.merokok,
+      this.miras,
+      this.olahraga});
 
   factory RiwayatKebiasaanModel.fromJson(
       String? id, Map<String, dynamic> json) {
     return RiwayatKebiasaanModel(
       id: id,
+      strMerokok: json['strMerokok'],
+      strMiras: json['strMiras'],
       merokok: json['merokok'] != "Tidak"
           ? MerokokModel.fromJson(json['merokok'])
           : null,
@@ -25,6 +33,8 @@ class RiwayatKebiasaanModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'strMerokok': strMerokok,
+      'strMiras': strMiras,
       'merokok': merokok != null ? merokok?.toJson() : "Tidak",
       'miras': miras != null ? miras?.toJson() : "Tidak",
       'olahraga': olahraga,

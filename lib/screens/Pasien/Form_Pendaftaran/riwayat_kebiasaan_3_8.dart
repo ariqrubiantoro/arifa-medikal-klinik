@@ -20,13 +20,17 @@ class RiwwayatKebiasaan3 extends StatefulWidget {
 
 class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
-  Question _quest = Question.tidak;
-  Question _quest2 = Question.tidak;
-  Question _quest3 = Question.tidak;
+  int _quest = 0;
+  int _quest2 = 0;
+  int _quest3 = 0;
 
   String merokok = "Tidak";
   String miras = "Tidak";
   String olahraga = "Tidak";
+
+  final merokokF = TextEditingController();
+  final mirasF = TextEditingController();
+  final olahragaF = TextEditingController();
 
   bool visibleFormMeroko = false;
   bool visibleFormMiras = false;
@@ -102,7 +106,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                     Row(
                       children: <Widget>[
                         Radio(
-                          value: Question.ya,
+                          value: 1,
                           groupValue: _quest,
                           onChanged: (value) {
                             setState(() {
@@ -114,7 +118,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                         ),
                         textDefault("Ya", Colors.black, 14, FontWeight.normal),
                         Radio(
-                          value: Question.tidak,
+                          value: 2,
                           groupValue: _quest,
                           onChanged: (value) {
                             setState(() {
@@ -126,6 +130,29 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                         ),
                         textDefault(
                             "Tidak", Colors.black, 14, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest = 0;
+                                visibleFormMeroko = false;
+                              });
+                            },
+                            controller: merokokF,
+                            maxLength: 15,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
                       ],
                     ),
                     SizedBox(
@@ -237,7 +264,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                     Row(
                       children: <Widget>[
                         Radio(
-                          value: Question.ya,
+                          value: 1,
                           groupValue: _quest2,
                           onChanged: (value) {
                             setState(() {
@@ -249,7 +276,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                         ),
                         textDefault("Ya", Colors.black, 14, FontWeight.normal),
                         Radio(
-                          value: Question.tidak,
+                          value: 2,
                           groupValue: _quest2,
                           onChanged: (value) {
                             setState(() {
@@ -261,6 +288,29 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                         ),
                         textDefault(
                             "Tidak", Colors.black, 14, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest2 = 0;
+                                visibleFormMiras = false;
+                              });
+                            },
+                            controller: mirasF,
+                            maxLength: 15,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
                       ],
                     ),
                     visibleFormMiras
@@ -368,7 +418,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                     Row(
                       children: <Widget>[
                         Radio(
-                          value: Question.ya,
+                          value: 1,
                           groupValue: _quest3,
                           onChanged: (value) {
                             setState(() {
@@ -379,7 +429,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                         ),
                         textDefault("Ya", Colors.black, 14, FontWeight.normal),
                         Radio(
-                          value: Question.tidak,
+                          value: 2,
                           groupValue: _quest3,
                           onChanged: (value) {
                             setState(() {
@@ -390,6 +440,28 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                         ),
                         textDefault(
                             "Tidak", Colors.black, 14, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest3 = 0;
+                              });
+                            },
+                            controller: olahragaF,
+                            maxLength: 15,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
                       ],
                     ),
                     SizedBox(
@@ -455,14 +527,20 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
   }
 
   void saveButton() async {
+    merokok = merokokF.text != "" ? merokokF.text : merokok;
+    miras = mirasF.text != "" ? mirasF.text : miras;
+    olahraga = olahragaF.text != "" ? olahragaF.text : olahraga;
+
     RiwayatKebiasaanModel data = RiwayatKebiasaanModel(
-      merokok: _quest.name != "tidak"
+      strMerokok: merokok,
+      strMiras: miras,
+      merokok: _quest != 2
           ? MerokokModel(
               lama: lamaMerokok.text,
               batang: banyakBatangMerokok.text,
               bungkus: banyakBungkusMerokok.text)
           : null,
-      miras: _quest2.name != "tidak"
+      miras: _quest2 != 2
           ? MirasModel(
               lama: lamaMiras.text,
               gelas: banyakGelasMiras.text,

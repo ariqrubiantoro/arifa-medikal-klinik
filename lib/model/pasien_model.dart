@@ -7,7 +7,7 @@ class PasienModel {
   String? tanggalPemeriksaan;
   String? tempatLahir;
   String? tanggalLahir;
-  int? umur;
+  String? umur;
   String? perusahaan;
   String? bagian;
   String? noHp;
