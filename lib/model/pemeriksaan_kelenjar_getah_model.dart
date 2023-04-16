@@ -23,17 +23,20 @@ class PemeriksaanKelenjarGetahModel {
     this.inguinalKanan,
   });
 
-  PemeriksaanKelenjarGetahModel.fromJson(Map<String, dynamic> json) {
-    cervicalKiri = json['cervical_kiri'];
-    cervicalKanan = json['cervical_kanan'];
-    axilaKiri = json['axila_kiri'];
-    axilaKanan = json['axila_kanan'];
-    supraclaviculaKiri = json['supraclavicula_kiri'];
-    supraclaviculaKanan = json['supraclavicula_kanan'];
-    infraclaviculaKiri = json['infraclavicula_kiri'];
-    infraclaviculaKanan = json['infraclavicula_kanan'];
-    inguinalKiri = json['inguinal_kiri'];
-    inguinalKanan = json['inguinal_kanan'];
+  factory PemeriksaanKelenjarGetahModel.fromJson(
+      String? id, Map<String, dynamic> json) {
+    return PemeriksaanKelenjarGetahModel(
+      cervicalKiri: json['cervical_kiri'],
+      cervicalKanan: json['cervical_kanan'],
+      axilaKiri: json['axila_kiri'],
+      axilaKanan: json['axila_kanan'],
+      supraclaviculaKiri: json['supraclavicula_kiri'],
+      supraclaviculaKanan: json['supraclavicula_kanan'],
+      infraclaviculaKiri: json['infraclavicula_kiri'],
+      infraclaviculaKanan: json['infraclavicula_kanan'],
+      inguinalKiri: json['inguinal_kiri'],
+      inguinalKanan: json['inguinal_kanan'],
+    );
   }
 
   Map<String, dynamic> toJson() {

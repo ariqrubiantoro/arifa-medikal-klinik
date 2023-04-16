@@ -5,13 +5,17 @@ class PemeriksaanRefleksModel {
 
   PemeriksaanRefleksModel({this.pupil, this.patella, this.achilles});
 
-  PemeriksaanRefleksModel.fromJson(Map<String, dynamic> json) {
-    pupil = json['pupil'] != null ? PupilModel.fromJson(json['pupil']) : null;
-    patella =
-        json['patella'] != null ? PatellaModel.fromJson(json['patella']) : null;
-    achilles = json['achilles'] != null
-        ? AchillesModel.fromJson(json['achilles'])
-        : null;
+  factory PemeriksaanRefleksModel.fromJson(
+      String? id, Map<String, dynamic> json) {
+    return PemeriksaanRefleksModel(
+      pupil: json['pupil'] != null ? PupilModel.fromJson(json['pupil']) : null,
+      patella: json['patella'] != null
+          ? PatellaModel.fromJson(json['patella'])
+          : null,
+      achilles: json['achilles'] != null
+          ? AchillesModel.fromJson(json['achilles'])
+          : null,
+    );
   }
 
   Map<String, dynamic> toJson() {
