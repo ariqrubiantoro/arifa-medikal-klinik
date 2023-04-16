@@ -15,13 +15,16 @@ class PemeriksaanGentaliaModel {
     this.ekskresi,
   });
 
-  PemeriksaanGentaliaModel.fromJson(Map<String, dynamic> json) {
-    hernia = json['hernia'];
-    hemorhoid = json['hemorhoid'];
-    sikatriks = json['sikatriks'];
-    spincter = json['spincter'];
-    efidymisTestisProstat = json['efidymisTestisProstat'];
-    ekskresi = json['ekskresi'];
+  factory PemeriksaanGentaliaModel.fromJson(
+      String? id, Map<String, dynamic> json) {
+    return PemeriksaanGentaliaModel(
+      hernia: json['hernia'],
+      hemorhoid: json['hemorhoid'],
+      sikatriks: json['sikatriks'],
+      spincter: json['spincter'],
+      efidymisTestisProstat: json['efidymisTestisProstat'],
+      ekskresi: json['ekskresi'],
+    );
   }
 
   Map<String, dynamic> toJson() {

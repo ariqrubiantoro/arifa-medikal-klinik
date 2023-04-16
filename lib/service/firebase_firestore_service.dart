@@ -158,6 +158,18 @@ class FirebaseFirestoreService {
     return pemeriksaanTHT;
   }
 
+  Future<PemeriksaanTHTModel> getPemeriksaanTHT(String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanTHT')
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+
+    return PemeriksaanTHTModel.fromJson(
+        snapshot.id, snapshot.data() as Map<String, dynamic>);
+  }
+
   Future<PemeriksaanRonggaDadaModel> setPemeriksaanRonggaDada(
       {required PemeriksaanRonggaDadaModel pemeriksaanRonggaDada,
       required String idPasien}) async {
@@ -170,6 +182,19 @@ class FirebaseFirestoreService {
     await doc.set(pemeriksaanRonggaDada.toJson());
 
     return pemeriksaanRonggaDada;
+  }
+
+  Future<PemeriksaanRonggaDadaModel> getPemeriksaanRonggaDada(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanRonggaDada')
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+
+    return PemeriksaanRonggaDadaModel.fromJson(
+        snapshot.id, snapshot.data() as Map<String, dynamic>);
   }
 
   Future<PemeriksaanRonggaPerutModel> setPemeriksaanRonggaPerut(
@@ -186,6 +211,19 @@ class FirebaseFirestoreService {
     return pemeriksaanRonggaPerut;
   }
 
+  Future<PemeriksaanRonggaPerutModel> getPemeriksaanRonggaPerut(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanRonggaPerut')
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+
+    return PemeriksaanRonggaPerutModel.fromJson(
+        snapshot.id, snapshot.data() as Map<String, dynamic>);
+  }
+
   Future<PemeriksaanGentaliaModel> setPemeriksaanGentalia(
       {required PemeriksaanGentaliaModel pemeriksaanGentalia,
       required String idPasien}) async {
@@ -198,6 +236,19 @@ class FirebaseFirestoreService {
     await doc.set(pemeriksaanGentalia.toJson());
 
     return pemeriksaanGentalia;
+  }
+
+  Future<PemeriksaanGentaliaModel> getPemeriksaanGentalia(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanGentalia')
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+
+    return PemeriksaanGentaliaModel.fromJson(
+        snapshot.id, snapshot.data() as Map<String, dynamic>);
   }
 
   Future<PemeriksaanAnggotaGerakModel> setPemeriksaanAnggotaGerak(
@@ -214,6 +265,19 @@ class FirebaseFirestoreService {
     return pemeriksaanAnggotaGerak;
   }
 
+  Future<PemeriksaanAnggotaGerakModel> getPemeriksaanAnggotaGerak(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanAnggotaGerak')
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+
+    return PemeriksaanAnggotaGerakModel.fromJson(
+        snapshot.id, snapshot.data() as Map<String, dynamic>);
+  }
+
   Future<PemeriksaanRefleksModel> setPemeriksaanRefleks(
       {required PemeriksaanRefleksModel pemeriksaanRefleks,
       required String idPasien}) async {
@@ -228,6 +292,18 @@ class FirebaseFirestoreService {
     return pemeriksaanRefleks;
   }
 
+  Future<PemeriksaanRefleksModel> getPemeriksaanRefleks(String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanRefleks')
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+
+    return PemeriksaanRefleksModel.fromJson(
+        snapshot.id, snapshot.data() as Map<String, dynamic>);
+  }
+
   Future<PemeriksaanKelenjarGetahModel> setPemeriksaanKelenjarGetah(
       {required PemeriksaanKelenjarGetahModel pemeriksaanKelenjarGetah,
       required String idPasien}) async {
@@ -240,6 +316,19 @@ class FirebaseFirestoreService {
     await doc.set(pemeriksaanKelenjarGetah.toJson());
 
     return pemeriksaanKelenjarGetah;
+  }
+
+  Future<PemeriksaanKelenjarGetahModel> getPemeriksaanKelenjarGetah(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanKelenjarGetah')
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+
+    return PemeriksaanKelenjarGetahModel.fromJson(
+        snapshot.id, snapshot.data() as Map<String, dynamic>);
   }
 
   Future<FisikModel> setFisik(

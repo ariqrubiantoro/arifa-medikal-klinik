@@ -19,15 +19,18 @@ class PemeriksaanAnggotaGerakModel {
     this.cacatKiri,
   });
 
-  PemeriksaanAnggotaGerakModel.fromJson(Map<String, dynamic> json) {
-    atasKanan = json['atas_kanan'];
-    atasKiri = json['atas_kiri'];
-    bawahKanan = json['bawah_kanan'];
-    bawahKiri = json['bawah_kiri'];
-    sembabOedemKanan = json['sembab_oedem_kanan'];
-    sembabOedemKiri = json['sembab_oedem_kiri'];
-    cacatKanan = json['cacat_kanan'];
-    cacatKiri = json['cacat_kiri'];
+  factory PemeriksaanAnggotaGerakModel.fromJson(
+      String? id, Map<String, dynamic> json) {
+    return PemeriksaanAnggotaGerakModel(
+      atasKanan: json['atas_kanan'],
+      atasKiri: json['atas_kiri'],
+      bawahKanan: json['bawah_kanan'],
+      bawahKiri: json['bawah_kiri'],
+      sembabOedemKanan: json['sembab_oedem_kanan'],
+      sembabOedemKiri: json['sembab_oedem_kiri'],
+      cacatKanan: json['cacat_kanan'],
+      cacatKiri: json['cacat_kiri'],
+    );
   }
 
   Map<String, dynamic> toJson() {

@@ -3,7 +3,9 @@
 import 'dart:io';
 
 import 'package:arifa_medikal_klink_3/model/kesimpulan_derajat_kesehatan.dart';
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_kelenjar_getah_model.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_anggota_gerak.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,8 +16,14 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../model/ajuran_model.dart';
 import '../model/kelayakan_kerja_model.dart';
+import '../model/pemeriksaan_anggota_gerak_model.dart';
+import '../model/pemeriksaan_gentalia_model.dart';
 import '../model/pemeriksaan_mata_model.dart';
 import '../model/pemeriksaan_model.dart';
+import '../model/pemeriksaan_refleks_model.dart';
+import '../model/pemeriksaan_rongga_dada_model.dart';
+import '../model/pemeriksaan_rongga_perut_model.dart';
+import '../model/pemeriksaan_tht_model.dart';
 import '../model/pemeriksaan_umum_model.dart';
 import '../model/penyakit_keluarga_mode.dart';
 import '../service/firebase_firestore_service.dart';
@@ -39,6 +47,13 @@ class _DetailPasienState extends State<DetailPasien> {
   KesimpulanDerajatKesehatanModel? _kesimpulanDerajatKesehatan;
   PemeriksaanUmumModel? _pemeriksaanUmum;
   PemeriksaanMataModel? _pemeriksaanMata;
+  PemeriksaanTHTModel? _pemeriksaanTHT;
+  PemeriksaanRonggaDadaModel? _pemeriksaanRonggaDada;
+  PemeriksaanRonggaPerutModel? _pemeriksaanRonggaPerut;
+  PemeriksaanGentaliaModel? _pemeriksaanGentalia;
+  PemeriksaanAnggotaGerakModel? _pemeriksaanAnggotaGerak;
+  PemeriksaanRefleksModel? _pemeriksaanRefleks;
+  PemeriksaanKelenjarGetahModel? _pemeriksaanKelenjarGetah;
 
   // RiwayatKebiasaanModel? _riwayatKebiasaan;
 
@@ -63,7 +78,20 @@ class _DetailPasienState extends State<DetailPasien> {
         await firestore.getPemeriksaanUmum(widget.pasienSnapshots.id);
     _pemeriksaanMata =
         await firestore.getPemeriksaanMata(widget.pasienSnapshots.id);
-
+    _pemeriksaanTHT =
+        await firestore.getPemeriksaanTHT(widget.pasienSnapshots.id);
+    _pemeriksaanRonggaDada =
+        await firestore.getPemeriksaanRonggaDada(widget.pasienSnapshots.id);
+    _pemeriksaanRonggaPerut =
+        await firestore.getPemeriksaanRonggaPerut(widget.pasienSnapshots.id);
+    _pemeriksaanGentalia =
+        await firestore.getPemeriksaanGentalia(widget.pasienSnapshots.id);
+    _pemeriksaanAnggotaGerak =
+        await firestore.getPemeriksaanAnggotaGerak(widget.pasienSnapshots.id);
+    _pemeriksaanRefleks =
+        await firestore.getPemeriksaanRefleks(widget.pasienSnapshots.id);
+    _pemeriksaanKelenjarGetah =
+        await firestore.getPemeriksaanKelenjarGetah(widget.pasienSnapshots.id);
     // _riwayatKebiasaan =
     //     await firestore.getRiwayatKebiasaan(widget.pasienSnapshots.id);
     setState(() {});
@@ -1409,7 +1437,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                 pw.Container(
                                                   width: 150,
                                                   child: pw.Text(
-                                                      ": Normal/Tidak Normal",
+                                                      ": ${_pemeriksaanTHT!.telinga!.membranTympKiri}",
                                                       style: pw.TextStyle(
                                                           fontSize: 12,
                                                           fontWeight: pw
@@ -1434,7 +1462,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                 pw.Container(
                                                   width: 150,
                                                   child: pw.Text(
-                                                      ": Normal/Tidak Normal",
+                                                      ": ${_pemeriksaanTHT!.telinga!.membranTympKanan}",
                                                       style: pw.TextStyle(
                                                           fontSize: 12,
                                                           fontWeight: pw
@@ -1459,7 +1487,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                 pw.Container(
                                                   width: 150,
                                                   child: pw.Text(
-                                                      ": Normal/Tidak Normal",
+                                                      ": ${_pemeriksaanTHT!.telinga!.penyakitTelingaKiri}",
                                                       style: pw.TextStyle(
                                                           fontSize: 12,
                                                           fontWeight: pw
@@ -1467,7 +1495,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                               .normal)),
                                                 ),
                                                 pw.Text(
-                                                    "Serumen : Ada/Tidak ada",
+                                                    "Serumen : ${_pemeriksaanTHT!.telinga!.serumenKiri}",
                                                     style: pw.TextStyle(
                                                         fontSize: 12,
                                                         fontWeight: pw
@@ -1491,7 +1519,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                 pw.Container(
                                                   width: 150,
                                                   child: pw.Text(
-                                                      ": Normal/Tidak Normal",
+                                                      ": ${_pemeriksaanTHT!.telinga!.penyakitTelingaKanan}",
                                                       style: pw.TextStyle(
                                                           fontSize: 12,
                                                           fontWeight: pw
@@ -1499,7 +1527,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                               .normal)),
                                                 ),
                                                 pw.Text(
-                                                    "Serumen : Ada/Tidak ada",
+                                                    "Serumen : ${_pemeriksaanTHT!.telinga!.serumenKanan}",
                                                     style: pw.TextStyle(
                                                         fontSize: 12,
                                                         fontWeight: pw
@@ -1540,7 +1568,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Ya/Tidak Ada  ",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanTHT!.hidung!.pilekTersumbat}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -1560,7 +1589,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanTHT!.hidung!.lidah}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -1580,7 +1610,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Ya/Tidak Ada",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanTHT!.hidung!.lainLain}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -1620,7 +1651,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanTHT!.kerongkongan!.tonsilKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -1640,7 +1672,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanTHT!.kerongkongan!.tonsilKiri}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -1660,7 +1693,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanTHT!.kerongkongan!.pharing}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -1680,7 +1714,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Ya/Tidak ada",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanTHT!.kerongkongan!.tiroid}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -1700,7 +1735,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanTHT!.kerongkongan!.lainLain}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -1765,7 +1801,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                 pw.Container(
                                                   width: 150,
                                                   child: pw.Text(
-                                                      ": Normal/Tidak Normal",
+                                                      ": ${_pemeriksaanRonggaDada!.jantung!.batasBatasJantung}",
                                                       style: pw.TextStyle(
                                                           fontSize: 12,
                                                           fontWeight: pw
@@ -1773,7 +1809,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                               .normal)),
                                                 ),
                                                 pw.Text(
-                                                    "Iktus Kordis : Normal/Tidak Normal",
+                                                    "Iktus Kordis :${_pemeriksaanRonggaDada!.jantung!.iktusKordis}",
                                                     style: pw.TextStyle(
                                                         fontSize: 12,
                                                         fontWeight: pw
@@ -1797,7 +1833,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                 pw.Container(
                                                   width: 150,
                                                   child: pw.Text(
-                                                      ": Normal/Tidak Normal",
+                                                      ": ${_pemeriksaanRonggaDada!.jantung!.auskultasi}",
                                                       style: pw.TextStyle(
                                                           fontSize: 12,
                                                           fontWeight: pw
@@ -1805,7 +1841,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                               .normal)),
                                                 ),
                                                 pw.Text(
-                                                    "Bunyi Jantung : Normal/Tidak Normal",
+                                                    "Bunyi Jantung : ${_pemeriksaanRonggaDada!.jantung!.bunyiJantung}",
                                                     style: pw.TextStyle(
                                                         fontSize: 12,
                                                         fontWeight: pw
@@ -1829,7 +1865,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                 pw.Container(
                                                   width: 150,
                                                   child: pw.Text(
-                                                      ": Ya/Tidak Ada",
+                                                      ": ${_pemeriksaanRonggaDada!.jantung!.lainLain}",
                                                       style: pw.TextStyle(
                                                           fontSize: 12,
                                                           fontWeight: pw
@@ -1837,7 +1873,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                                               .normal)),
                                                 ),
                                                 pw.Text(
-                                                    "Bunyi Nafas  : Ada/Tidak ada",
+                                                    "Bunyi Nafas  :${_pemeriksaanRonggaDada!.jantung!.bunyuNafas}",
                                                     style: pw.TextStyle(
                                                         fontSize: 12,
                                                         fontWeight: pw
@@ -1879,13 +1915,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanRonggaDada!.paru!.inspeksiKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanRonggaDada!.paru!.inspeksiKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -1904,13 +1941,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanRonggaDada!.paru!.palpasiKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanRonggaDada!.paru!.palpasiKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -1929,13 +1967,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanRonggaDada!.paru!.perkusiKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanRonggaDada!.paru!.perkusiKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -1954,13 +1993,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanRonggaDada!.paru!.auskultasiKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanRonggaDada!.paru!.auskultasiKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -1998,7 +2038,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRonggaPerut!.inspeksi}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2018,7 +2059,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Timpani",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRonggaPerut!.perkusi}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2038,7 +2080,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRonggaPerut!.auskultasi}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2058,7 +2101,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Teraba/Tidak teraba",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRonggaPerut!.hati}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2078,7 +2122,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRonggaPerut!.limpa}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2098,7 +2143,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRonggaPerut!.ginjalKiri}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2107,7 +2153,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Ballotement : - Nyeri Ketok : Negatif",
+                                          "Ballotement : ${_pemeriksaanRonggaPerut!.ballotementKiri}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2127,7 +2173,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRonggaPerut!.ginjalKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2136,7 +2183,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Ballotement : - Nyeri Ketok : Negatif",
+                                          "Ballotement : ${_pemeriksaanRonggaPerut!.ballotementKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2156,7 +2203,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal ",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRonggaPerut!.hernia}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2176,7 +2224,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRonggaPerut!.tumor}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2196,7 +2245,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRonggaPerut!.lainLain}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2237,7 +2287,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          ": Tidak dilakukan pemeriksaan",
+                                          ": ${_pemeriksaanGentalia!.hernia}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2258,7 +2308,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          ": Tidak dilakukan pemeriksaan",
+                                          ": ${_pemeriksaanGentalia!.hemorhoid}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2279,7 +2329,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          ": Tidak dilakukan pemeriksaan",
+                                          ": ${_pemeriksaanGentalia!.sikatriks}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2300,7 +2350,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          ": Tidak dilakukan pemeriksaan",
+                                          ": ${_pemeriksaanGentalia!.spincter}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2320,8 +2370,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 200,
-                                      child: pw.Text(
-                                          ": Tidak dilakukan pemeriksaan",
+                                      child: pw.Text("",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2343,7 +2392,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          ": Tidak dilakukan pemeriksaan",
+                                          ": ${_pemeriksaanGentalia!.efidymisTestisProstat}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2364,7 +2413,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          ": Tidak dilakukan pemeriksaan",
+                                          ": ${_pemeriksaanGentalia!.ekskresi}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2405,13 +2454,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanAnggotaGerak!.atasKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanAnggotaGerak!.atasKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -2430,13 +2480,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanAnggotaGerak!.bawahKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanAnggotaGerak!.bawahKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -2455,13 +2506,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanAnggotaGerak!.sembabOedemKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanAnggotaGerak!.sembabOedemKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -2480,13 +2532,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanAnggotaGerak!.cacatKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanAnggotaGerak!.cacatKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -2516,7 +2569,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                   children: [
                                     pw.SizedBox(width: 340),
                                     pw.Container(
-                                      width: 60,
+                                      width: 65,
                                       child: pw.Text("Kanan",
                                           style: pw.TextStyle(
                                               fontSize: 12,
@@ -2545,7 +2598,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRefleks!.pupil!.pupil}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2569,14 +2623,16 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 55,
-                                      child: pw.Text("+",
+                                      child: pw.Text(
+                                          "${_pemeriksaanRefleks!.pupil!.bicepsKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight: pw.FontWeight.bold)),
                                     ),
                                     pw.Container(
                                       width: 50,
-                                      child: pw.Text("+",
+                                      child: pw.Text(
+                                          "${_pemeriksaanRefleks!.pupil!.bicepsKiri}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight: pw.FontWeight.bold)),
@@ -2595,7 +2651,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRefleks!.patella!.patella}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2619,14 +2676,16 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 55,
-                                      child: pw.Text("+",
+                                      child: pw.Text(
+                                          "${_pemeriksaanRefleks!.patella!.tricepsKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight: pw.FontWeight.bold)),
                                     ),
                                     pw.Container(
                                       width: 50,
-                                      child: pw.Text("+",
+                                      child: pw.Text(
+                                          "${_pemeriksaanRefleks!.patella!.tricepsKiri}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight: pw.FontWeight.bold)),
@@ -2645,7 +2704,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 150,
-                                      child: pw.Text(": Normal/Tidak Normal",
+                                      child: pw.Text(
+                                          ": ${_pemeriksaanRefleks!.achilles!.acciles}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
@@ -2669,14 +2729,16 @@ class _DetailPasienState extends State<DetailPasien> {
                                     ),
                                     pw.Container(
                                       width: 55,
-                                      child: pw.Text("-",
+                                      child: pw.Text(
+                                          "${_pemeriksaanRefleks!.achilles!.babinskiKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight: pw.FontWeight.bold)),
                                     ),
                                     pw.Container(
                                       width: 50,
-                                      child: pw.Text("-",
+                                      child: pw.Text(
+                                          "${_pemeriksaanRefleks!.achilles!.babinskiKiri}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight: pw.FontWeight.bold)),
@@ -2716,13 +2778,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanKelenjarGetah!.cervicalKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanKelenjarGetah!.cervicalKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -2741,13 +2804,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanKelenjarGetah!.axilaKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanKelenjarGetah!.axilaKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -2766,13 +2830,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanKelenjarGetah!.supraclaviculaKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanKelenjarGetah!.supraclaviculaKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -2791,13 +2856,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanKelenjarGetah!.infraclaviculaKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanKelenjarGetah!.infraclaviculaKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),
@@ -2816,13 +2882,14 @@ class _DetailPasienState extends State<DetailPasien> {
                                     pw.Container(
                                       width: 200,
                                       child: pw.Text(
-                                          "Kanan : Normal/Tidak Normal",
+                                          "Kanan : ${_pemeriksaanKelenjarGetah!.inguinalKanan}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
-                                    pw.Text("Kiri : Normal/Tidak Normal",
+                                    pw.Text(
+                                        "Kiri : ${_pemeriksaanKelenjarGetah!.inguinalKiri}",
                                         style: pw.TextStyle(
                                             fontSize: 12,
                                             fontWeight: pw.FontWeight.normal)),

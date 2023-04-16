@@ -4,10 +4,14 @@ class PemeriksaanRonggaDadaModel {
 
   PemeriksaanRonggaDadaModel({this.jantung, this.paru});
 
-  PemeriksaanRonggaDadaModel.fromJson(Map<String, dynamic> json) {
-    jantung =
-        json['jantung'] != null ? JantungModel.fromJson(json['jantung']) : null;
-    paru = json['paru'] != null ? ParuModel.fromJson(json['paru']) : null;
+  factory PemeriksaanRonggaDadaModel.fromJson(
+      String? id, Map<String, dynamic> json) {
+    return PemeriksaanRonggaDadaModel(
+      jantung: json['jantung'] != null
+          ? JantungModel.fromJson(json['jantung'])
+          : null,
+      paru: json['paru'] != null ? ParuModel.fromJson(json['paru']) : null,
+    );
   }
 
   Map<String, dynamic> toJson() {

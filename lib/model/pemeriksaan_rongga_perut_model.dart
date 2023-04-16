@@ -27,19 +27,22 @@ class PemeriksaanRonggaPerutModel {
     this.lainLain,
   });
 
-  PemeriksaanRonggaPerutModel.fromJson(Map<String, dynamic> json) {
-    inspeksi = json['inspeksi'];
-    perkusi = json['perkusi'];
-    auskultasi = json['auskultasi'];
-    hati = json['hati'];
-    limpa = json['limpa'];
-    ginjalKiri = json['ginjalKiri'];
-    ballotementKiri = json['ballotementKiri'];
-    ginjalKanan = json['ginjalKanan'];
-    ballotementKanan = json['ballotementKanan'];
-    hernia = json['hernia'];
-    tumor = json['tumor'];
-    lainLain = json['lainLain'];
+  factory PemeriksaanRonggaPerutModel.fromJson(
+      String? id, Map<String, dynamic> json) {
+    return PemeriksaanRonggaPerutModel(
+      inspeksi: json['inspeksi'],
+      perkusi: json['perkusi'],
+      auskultasi: json['auskultasi'],
+      hati: json['hati'],
+      limpa: json['limpa'],
+      ginjalKiri: json['ginjalKiri'],
+      ballotementKiri: json['ballotementKiri'],
+      ginjalKanan: json['ginjalKanan'],
+      ballotementKanan: json['ballotementKanan'],
+      hernia: json['hernia'],
+      tumor: json['tumor'],
+      lainLain: json['lainLain'],
+    );
   }
 
   Map<String, dynamic> toJson() {

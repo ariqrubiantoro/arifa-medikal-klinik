@@ -9,7 +9,7 @@ class PemeriksaanTHTModel {
     this.kerongkongan,
   });
 
-  factory PemeriksaanTHTModel.fromJson(Map<String, dynamic> json) =>
+  factory PemeriksaanTHTModel.fromJson(String? id, Map<String, dynamic> json) =>
       PemeriksaanTHTModel(
         telinga: Telinga.fromJson(json["telinga"]),
         hidung: Hidung.fromJson(json["hidung"]),
