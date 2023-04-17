@@ -19,22 +19,22 @@ class PemeriksaanTHT extends StatefulWidget {
 }
 
 class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
-  Question _questTelinga1 = Question.ya;
-  Question _questTelinga2 = Question.ya;
-  Question _questTelinga3 = Question.ya;
-  Question _questTelinga4 = Question.ya;
-  Question _questTelinga5 = Question.ya;
-  Question _questTelinga6 = Question.ya;
+  int _questTelinga1 = 0;
+  int _questTelinga2 = 0;
+  int _questTelinga3 = 0;
+  int _questTelinga4 = 0;
+  int _questTelinga5 = 0;
+  int _questTelinga6 = 0;
 
-  Question _questHidung1 = Question.tidak;
-  Question _questHidung2 = Question.ya;
-  Question _questHidung3 = Question.ya;
+  int _questHidung1 = 0;
+  int _questHidung2 = 0;
+  int _questHidung3 = 0;
 
-  Question _questKerongkongan1 = Question.ya;
-  Question _questKerongkongan2 = Question.ya;
-  Question _questKerongkongan3 = Question.ya;
-  Question _questKerongkongan4 = Question.ya;
-  Question _questKerongkongan5 = Question.tidak;
+  int _questKerongkongan1 = 0;
+  int _questKerongkongan2 = 0;
+  int _questKerongkongan3 = 0;
+  int _questKerongkongan4 = 0;
+  int _questKerongkongan5 = 0;
 
   bool tapTelinga = false;
   bool tapHidung = false;
@@ -47,15 +47,32 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
   String telingaKanan = "Normal";
   String serumenKanan = "Tidak Ada";
 
+  final tympKiriF = TextEditingController();
+  final tympKananF = TextEditingController();
+  final telingaKiriF = TextEditingController();
+  final serumenKiriF = TextEditingController();
+  final telingaKananF = TextEditingController();
+  final serumenKananF = TextEditingController();
+
   String pilek = "Tidak Ada";
   String lidah = "Normal";
   String lainlainHidung = "Normal";
+
+  final pilekF = TextEditingController();
+  final lidahF = TextEditingController();
+  final lainlainHidungF = TextEditingController();
 
   String tonsilKanan = "Normal";
   String tonsilKiri = "Normal";
   String pharing = "Normal";
   String tiroid = "Normal";
   String lainlainKerongkongan = "Tidak Ada";
+
+  final tonsilKanaF = TextEditingController();
+  final tonsilKiriF = TextEditingController();
+  final pharingF = TextEditingController();
+  final tiroidF = TextEditingController();
+  final lainlainKerongkonganF = TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
@@ -229,10 +246,6 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     ),
                   ),
                   InkWell(
-                    // onTap: () => Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) {
-                    //   return PemeriksaanRonggaDada();
-                    // })),
                     onTap: saveButton,
                     child: Container(
                       padding:
@@ -272,7 +285,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questTelinga1,
                 onChanged: (value) {
                   setState(() {
@@ -283,7 +296,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Normal", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questTelinga1,
                 onChanged: (value) {
                   setState(() {
@@ -293,6 +306,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questTelinga1 = 0;
+                    });
+                  },
+                  controller: tympKiriF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -302,7 +336,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questTelinga2,
                 onChanged: (value) {
                   setState(() {
@@ -313,7 +347,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Normal", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questTelinga2,
                 onChanged: (value) {
                   setState(() {
@@ -323,6 +357,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questTelinga2 = 0;
+                    });
+                  },
+                  controller: tympKananF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -333,7 +388,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questTelinga3,
                 onChanged: (value) {
                   setState(() {
@@ -344,7 +399,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Normal", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questTelinga3,
                 onChanged: (value) {
                   setState(() {
@@ -354,6 +409,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questTelinga3 = 0;
+                    });
+                  },
+                  controller: telingaKiriF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -363,19 +439,18 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questTelinga4,
                 onChanged: (value) {
                   setState(() {
                     _questTelinga4 = value!;
                     serumenKiri = "Ada";
-                    print(_questTelinga4.name);
                   });
                 },
               ),
               textDefault("Ada", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questTelinga4,
                 onChanged: (value) {
                   setState(() {
@@ -385,6 +460,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Ada", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questTelinga4 = 0;
+                    });
+                  },
+                  controller: serumenKiriF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -395,7 +491,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questTelinga5,
                 onChanged: (value) {
                   setState(() {
@@ -406,7 +502,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Normal", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questTelinga5,
                 onChanged: (value) {
                   setState(() {
@@ -416,6 +512,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questTelinga5 = 0;
+                    });
+                  },
+                  controller: telingaKananF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -425,7 +542,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questTelinga6,
                 onChanged: (value) {
                   setState(() {
@@ -436,7 +553,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Ada", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questTelinga6,
                 onChanged: (value) {
                   setState(() {
@@ -446,6 +563,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Ada", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questTelinga6 = 0;
+                    });
+                  },
+                  controller: serumenKananF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
         ],
@@ -466,7 +604,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questHidung1,
                 onChanged: (value) {
                   setState(() {
@@ -477,7 +615,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Ya", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questHidung1,
                 onChanged: (value) {
                   setState(() {
@@ -487,6 +625,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Ada", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questHidung1 = 0;
+                    });
+                  },
+                  controller: pilekF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -496,7 +655,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questHidung2,
                 onChanged: (value) {
                   setState(() {
@@ -507,7 +666,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Normal", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questHidung2,
                 onChanged: (value) {
                   setState(() {
@@ -517,6 +676,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questHidung2 = 0;
+                    });
+                  },
+                  controller: lidahF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -526,7 +706,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questHidung3,
                 onChanged: (value) {
                   setState(() {
@@ -537,7 +717,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Normal", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questHidung3,
                 onChanged: (value) {
                   setState(() {
@@ -547,6 +727,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questHidung3 = 0;
+                    });
+                  },
+                  controller: lainlainHidungF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -570,7 +771,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questKerongkongan1,
                 onChanged: (value) {
                   setState(() {
@@ -581,7 +782,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Normal", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questKerongkongan1,
                 onChanged: (value) {
                   setState(() {
@@ -591,6 +792,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questKerongkongan1 = 0;
+                    });
+                  },
+                  controller: tonsilKanaF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -600,7 +822,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questKerongkongan2,
                 onChanged: (value) {
                   setState(() {
@@ -611,7 +833,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Normal", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questKerongkongan2,
                 onChanged: (value) {
                   setState(() {
@@ -621,6 +843,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questKerongkongan2 = 0;
+                    });
+                  },
+                  controller: tonsilKiriF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -630,7 +873,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questKerongkongan3,
                 onChanged: (value) {
                   setState(() {
@@ -641,7 +884,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Normal", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questKerongkongan3,
                 onChanged: (value) {
                   setState(() {
@@ -651,6 +894,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questKerongkongan3 = 0;
+                    });
+                  },
+                  controller: pharingF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -660,7 +924,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questKerongkongan4,
                 onChanged: (value) {
                   setState(() {
@@ -671,7 +935,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Normal", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questKerongkongan4,
                 onChanged: (value) {
                   setState(() {
@@ -681,6 +945,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questKerongkongan4 = 0;
+                    });
+                  },
+                  controller: tiroidF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -690,7 +975,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questKerongkongan5,
                 onChanged: (value) {
                   setState(() {
@@ -701,7 +986,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
               ),
               textDefault("Ada", Colors.black, 14, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questKerongkongan5,
                 onChanged: (value) {
                   setState(() {
@@ -711,6 +996,27 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 },
               ),
               textDefault("Tidak Ada", Colors.black, 14, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questKerongkongan5 = 0;
+                    });
+                  },
+                  controller: lainlainKerongkonganF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -722,32 +1028,51 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
   }
 
   void saveButton() async {
+    tympKiri = tympKiriF.text != "" ? tympKiriF.text : tympKiri;
+    tympKanan = tympKananF.text != "" ? tympKananF.text : tympKanan;
+    telingaKiri = telingaKiriF.text != "" ? telingaKiriF.text : telingaKiri;
+    serumenKiri = serumenKiriF.text != "" ? serumenKiriF.text : serumenKiri;
+    telingaKanan = telingaKananF.text != "" ? telingaKananF.text : telingaKanan;
+    serumenKanan = serumenKananF.text != "" ? serumenKananF.text : serumenKanan;
+
+    pilek = pilekF.text != "" ? pilekF.text : pilek;
+    lidah = lidahF.text != "" ? lidahF.text : lidah;
+    lainlainHidung =
+        lainlainHidungF.text != "" ? lainlainHidungF.text : lainlainHidung;
+
+    tonsilKanan = tonsilKanaF.text != "" ? tonsilKanaF.text : tonsilKanan;
+    tonsilKiri = tonsilKiriF.text != "" ? tonsilKiriF.text : tonsilKiri;
+    pharing = pharingF.text != "" ? pharingF.text : pharing;
+    tiroid = tiroidF.text != "" ? tiroidF.text : tiroid;
+    lainlainKerongkongan = lainlainKerongkonganF.text != ""
+        ? lainlainKerongkonganF.text
+        : lainlainKerongkongan;
+
+    lidah = lidahF.text != "" ? lidahF.text : lidah;
+    lidah = lidahF.text != "" ? lidahF.text : lidah;
+    lidah = lidahF.text != "" ? lidahF.text : lidah;
+    lidah = lidahF.text != "" ? lidahF.text : lidah;
+
     PemeriksaanTHTModel data = PemeriksaanTHTModel(
       telinga: Telinga(
-        membranTympKiri:
-            _questTelinga1.name == "ya" ? "Normal" : "Tidak Normal",
-        membranTympKanan:
-            _questTelinga2.name == "ya" ? "Normal" : "Tidak Normal",
-        penyakitTelingaKiri:
-            _questTelinga3.name == "ya" ? "Normal" : "Tidak Normal",
-        serumenKiri: _questTelinga4.name == "ya" ? "Ada" : "Tidak Ada",
-        penyakitTelingaKanan:
-            _questTelinga5.name == "ya" ? "Normal" : "Tidak Normal",
-        serumenKanan: _questTelinga6.name == "ya" ? "Ada" : "Tidak Ada",
+        membranTympKiri: tympKiri,
+        membranTympKanan: tympKanan,
+        penyakitTelingaKiri: telingaKiri,
+        serumenKiri: serumenKiri,
+        penyakitTelingaKanan: telingaKanan,
+        serumenKanan: serumenKanan,
       ),
       hidung: Hidung(
-        pilekTersumbat: _questHidung1.name == "ya" ? "Normal" : "Tidak Ada",
-        lidah: _questHidung2.name == "ya" ? "Normal" : "Tidak Normal",
-        lainLain: _questHidung3.name == "ya" ? "Normal" : "Tidak Normal",
+        pilekTersumbat: pilek,
+        lidah: lidah,
+        lainLain: lainlainHidung,
       ),
       kerongkongan: Kerongkongan(
-        tonsilKanan:
-            _questKerongkongan1.name == "ya" ? "Normal" : "Tidak Normal",
-        tonsilKiri:
-            _questKerongkongan2.name == "ya" ? "Normal" : "Tidak Normal",
-        pharing: _questKerongkongan3.name == "ya" ? "Normal" : "Tidak Normal",
-        tiroid: _questKerongkongan4.name == "ya" ? "Normal" : "Tidak Normal",
-        lainLain: _questKerongkongan5.name == "ya" ? "Ada" : "Tidak Ada",
+        tonsilKanan: tonsilKanan,
+        tonsilKiri: tonsilKiri,
+        pharing: pharing,
+        tiroid: tiroid,
+        lainLain: lainlainKerongkongan,
       ),
     );
 
