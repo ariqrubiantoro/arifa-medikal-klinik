@@ -1,13 +1,13 @@
 class PemeriksaanUmumModel {
-  int? tinggiBadan;
-  int? beratBadan;
-  int? beratBadanIdeal;
-  int? imt;
-  int? lingkarPerut;
-  int? tekananDarah;
-  int? denyutNadi;
-  int? pernapasan;
-  int? suhu;
+  String? tinggiBadan;
+  String? beratBadan;
+  String? beratBadanIdeal;
+  String? imt;
+  String? lingkarPerut;
+  String? tekananDarah;
+  String? denyutNadi;
+  String? pernapasan;
+  String? suhu;
 
   PemeriksaanUmumModel({
     this.tinggiBadan,

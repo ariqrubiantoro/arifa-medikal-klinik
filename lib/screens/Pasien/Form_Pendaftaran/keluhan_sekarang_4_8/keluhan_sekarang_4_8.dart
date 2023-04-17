@@ -338,7 +338,7 @@ class _KeluhanSekarang4State extends State<KeluhanSekarang4> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    // onTap: () => showDialogProfil(),
+                    onTap: () => Navigator.of(context).pop(),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
