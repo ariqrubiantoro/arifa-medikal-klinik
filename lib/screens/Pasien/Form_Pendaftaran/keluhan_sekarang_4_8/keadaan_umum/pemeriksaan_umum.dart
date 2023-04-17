@@ -392,15 +392,15 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
 
   void saveButton() async {
     PemeriksaanUmumModel data = PemeriksaanUmumModel(
-      tinggiBadan: int.parse(tinggiBadan.text),
-      beratBadan: int.parse(beratBadan.text),
-      beratBadanIdeal: int.parse(beratBadanIdeal.text),
-      imt: int.parse(imt.text),
-      lingkarPerut: int.parse(lingkaranPerut.text),
-      tekananDarah: int.parse(tekananDarah.text),
-      denyutNadi: int.parse(denyutNadi.text),
-      pernapasan: int.parse(pernapasan.text),
-      suhu: int.parse(suhu.text),
+      tinggiBadan: tinggiBadan.text,
+      beratBadan: beratBadan.text,
+      beratBadanIdeal: beratBadanIdeal.text,
+      imt: imt.text,
+      lingkarPerut: lingkaranPerut.text,
+      tekananDarah: tekananDarah.text,
+      denyutNadi: denyutNadi.text,
+      pernapasan: pernapasan.text,
+      suhu: suhu.text,
     );
 
     await firestore.setPemeriksaanUmum(

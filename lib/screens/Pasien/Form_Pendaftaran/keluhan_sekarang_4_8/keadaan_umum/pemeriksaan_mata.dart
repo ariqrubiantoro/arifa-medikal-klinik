@@ -24,16 +24,18 @@ class PemeriksaanMata extends StatefulWidget {
 
 class _PemeriksaanMataState extends State<PemeriksaanMata> {
   FirebaseFirestoreService firstore = FirebaseFirestoreService();
-  QuestYaNo _questKacamata = QuestYaNo.tidak;
+  int _questKacamata = 0;
   QuestRabun _questKondisi = QuestRabun.jauh;
-  QuestYaNo _questOlahraga = QuestYaNo.tidak;
-  QuestYaNo _questButa = QuestYaNo.tidak;
-  QuestYaNo _questPenMata = QuestYaNo.tidak;
-  QuestNormal _questKonjungtiva = QuestNormal.tidak;
-  QuestNormal _questSklera = QuestNormal.tidak;
+  int _questOlahraga = 0;
+  int _questButa = 0;
+  int _questPenMata = 0;
+  int _questKonjungtiva = 0;
+  int _questSklera = 0;
 
   final osKiri = TextEditingController();
   final osKanan = TextEditingController();
+
+  bool boolKondisi = false;
 
   String kacamata = "Tidak";
   String kondisi = "Rabun Jauh";
@@ -42,6 +44,13 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
   String penMata = "Tidak";
   String konjungtiva = "Tidak Normal";
   String sklera = "Tidak Normal";
+
+  final kacamataF = TextEditingController();
+  final olahragaF = TextEditingController();
+  final butaF = TextEditingController();
+  final penMataF = TextEditingController();
+  final konjungtivaF = TextEditingController();
+  final skleraF = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -100,68 +109,95 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                     Row(
                       children: <Widget>[
                         Radio(
-                          value: QuestYaNo.ya,
+                          value: 1,
                           groupValue: _questKacamata,
                           onChanged: (value) {
                             setState(() {
                               _questKacamata = value!;
                               kacamata = "Ya";
+                              boolKondisi = true;
                             });
                           },
                         ),
                         textDefault("Ya", Colors.black, 14, FontWeight.normal),
                         Radio(
-                          value: QuestYaNo.tidak,
+                          value: 2,
                           groupValue: _questKacamata,
                           onChanged: (value) {
                             setState(() {
                               _questKacamata = value!;
                               kacamata = "Tidak";
+                              boolKondisi = false;
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 14, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _questKacamata = 0;
+                                boolKondisi = false;
+                              });
+                            },
+                            controller: kacamataF,
+                            maxLength: 15,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
                       ],
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        textDefault(
-                            "Kondisi", Colors.black, 14, FontWeight.bold),
-                        Row(
-                          children: <Widget>[
-                            Radio(
-                              value: QuestRabun.dekat,
-                              groupValue: _questKondisi,
-                              onChanged: (value) {
-                                setState(() {
-                                  _questKondisi = value!;
-                                  kondisi = "Rabun Dekat";
-                                });
-                              },
-                            ),
-                            textDefault("Rabun Dekat", Colors.black, 14,
-                                FontWeight.normal),
-                            Radio(
-                              value: QuestRabun.jauh,
-                              groupValue: _questKondisi,
-                              onChanged: (value) {
-                                setState(() {
-                                  _questKondisi = value!;
-                                  kondisi = "Rabun Jauh";
-                                });
-                              },
-                            ),
-                            textDefault("Rabun Jauh", Colors.black, 14,
-                                FontWeight.normal),
-                          ],
-                        ),
-                      ],
-                    ),
+                    boolKondisi
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              textDefault(
+                                  "Kondisi", Colors.black, 14, FontWeight.bold),
+                              Row(
+                                children: <Widget>[
+                                  Radio(
+                                    value: QuestRabun.dekat,
+                                    groupValue: _questKondisi,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _questKondisi = value!;
+                                        kondisi = "Rabun Dekat";
+                                      });
+                                    },
+                                  ),
+                                  textDefault("Rabun Dekat", Colors.black, 14,
+                                      FontWeight.normal),
+                                  Radio(
+                                    value: QuestRabun.jauh,
+                                    groupValue: _questKondisi,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _questKondisi = value!;
+                                        kondisi = "Rabun Jauh";
+                                      });
+                                    },
+                                  ),
+                                  textDefault("Rabun Jauh", Colors.black, 14,
+                                      FontWeight.normal),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Container(),
                     Row(
                       children: [
                         Container(
@@ -222,7 +258,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                     Row(
                       children: <Widget>[
                         Radio(
-                          value: QuestYaNo.ya,
+                          value: 1,
                           groupValue: _questOlahraga,
                           onChanged: (value) {
                             setState(() {
@@ -233,7 +269,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                         ),
                         textDefault("Ya", Colors.black, 14, FontWeight.normal),
                         Radio(
-                          value: QuestYaNo.tidak,
+                          value: 2,
                           groupValue: _questOlahraga,
                           onChanged: (value) {
                             setState(() {
@@ -244,6 +280,28 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                         ),
                         textDefault(
                             "Tidak", Colors.black, 14, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _questOlahraga = 0;
+                              });
+                            },
+                            controller: olahragaF,
+                            maxLength: 15,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
                       ],
                     ),
                     SizedBox(
@@ -254,7 +312,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                     Row(
                       children: <Widget>[
                         Radio(
-                          value: QuestYaNo.ya,
+                          value: 1,
                           groupValue: _questButa,
                           onChanged: (value) {
                             setState(() {
@@ -265,7 +323,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                         ),
                         textDefault("Ya", Colors.black, 14, FontWeight.normal),
                         Radio(
-                          value: QuestYaNo.tidak,
+                          value: 2,
                           groupValue: _questButa,
                           onChanged: (value) {
                             setState(() {
@@ -276,6 +334,28 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                         ),
                         textDefault(
                             "Tidak", Colors.black, 14, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _questButa = 0;
+                              });
+                            },
+                            controller: butaF,
+                            maxLength: 15,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
                       ],
                     ),
                     SizedBox(
@@ -286,7 +366,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                     Row(
                       children: <Widget>[
                         Radio(
-                          value: QuestYaNo.ya,
+                          value: 1,
                           groupValue: _questPenMata,
                           onChanged: (value) {
                             setState(() {
@@ -297,7 +377,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                         ),
                         textDefault("Ya", Colors.black, 14, FontWeight.normal),
                         Radio(
-                          value: QuestYaNo.tidak,
+                          value: 2,
                           groupValue: _questPenMata,
                           onChanged: (value) {
                             setState(() {
@@ -308,6 +388,28 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                         ),
                         textDefault(
                             "Tidak", Colors.black, 14, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _questPenMata = 0;
+                              });
+                            },
+                            controller: penMataF,
+                            maxLength: 15,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
                       ],
                     ),
                     SizedBox(
@@ -318,7 +420,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                     Row(
                       children: <Widget>[
                         Radio(
-                          value: QuestNormal.normal,
+                          value: 1,
                           groupValue: _questKonjungtiva,
                           onChanged: (value) {
                             setState(() {
@@ -330,7 +432,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                         textDefault(
                             "Normal", Colors.black, 14, FontWeight.normal),
                         Radio(
-                          value: QuestNormal.tidak,
+                          value: 2,
                           groupValue: _questKonjungtiva,
                           onChanged: (value) {
                             setState(() {
@@ -341,6 +443,28 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                         ),
                         textDefault("Tidak Normal", Colors.black, 14,
                             FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _questKonjungtiva = 0;
+                              });
+                            },
+                            controller: konjungtivaF,
+                            maxLength: 15,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
                       ],
                     ),
                     SizedBox(
@@ -350,7 +474,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                     Row(
                       children: <Widget>[
                         Radio(
-                          value: QuestNormal.normal,
+                          value: 1,
                           groupValue: _questSklera,
                           onChanged: (value) {
                             setState(() {
@@ -362,7 +486,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                         textDefault(
                             "Normal", Colors.black, 14, FontWeight.normal),
                         Radio(
-                          value: QuestNormal.tidak,
+                          value: 2,
                           groupValue: _questSklera,
                           onChanged: (value) {
                             setState(() {
@@ -373,6 +497,28 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                         ),
                         textDefault("Tidak Normal", Colors.black, 14,
                             FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _questSklera = 0;
+                              });
+                            },
+                            controller: skleraF,
+                            maxLength: 15,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
                       ],
                     ),
                     SizedBox(
@@ -437,6 +583,13 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
   }
 
   void saveButton() {
+    kacamata = kacamataF.text != "" ? kacamataF.text : kacamata;
+    olahraga = olahragaF.text != "" ? olahragaF.text : olahraga;
+    buta = butaF.text != "" ? butaF.text : buta;
+    penMata = penMataF.text != "" ? penMataF.text : penMata;
+    konjungtiva = konjungtivaF.text != "" ? konjungtivaF.text : konjungtiva;
+    sklera = skleraF.text != "" ? skleraF.text : sklera;
+
     PemeriksaanMataModel data = PemeriksaanMataModel(
       kacaMata: kacamata,
       kondisi: kondisi,
