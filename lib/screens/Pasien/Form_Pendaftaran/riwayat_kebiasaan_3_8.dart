@@ -148,7 +148,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                               });
                             },
                             controller: merokokF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -174,7 +174,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
-                                    height: 30,
+                                    height: 35,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),
                                     decoration: BoxDecoration(
@@ -205,7 +205,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
-                                    height: 30,
+                                    height: 35,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),
                                     decoration: BoxDecoration(
@@ -236,7 +236,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
-                                    height: 30,
+                                    height: 35,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),
                                     decoration: BoxDecoration(
@@ -306,7 +306,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                               });
                             },
                             controller: mirasF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -329,7 +329,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
-                                    height: 30,
+                                    height: 35,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),
                                     decoration: BoxDecoration(
@@ -360,7 +360,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
-                                    height: 30,
+                                    height: 35,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),
                                     decoration: BoxDecoration(
@@ -391,7 +391,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
-                                    height: 30,
+                                    height: 35,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),
                                     decoration: BoxDecoration(
@@ -457,7 +457,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                               });
                             },
                             controller: olahragaF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),

@@ -323,7 +323,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: tympKiriF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -374,7 +374,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: tympKananF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -426,7 +426,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: telingaKiriF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -477,7 +477,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: serumenKiriF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -529,7 +529,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: telingaKananF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -580,7 +580,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: serumenKananF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -642,7 +642,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: pilekF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -693,7 +693,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: lidahF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -744,7 +744,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: lainlainHidungF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -809,7 +809,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: tonsilKanaF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -860,7 +860,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: tonsilKiriF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -911,7 +911,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: pharingF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -962,7 +962,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: tiroidF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -1013,7 +1013,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: lainlainKerongkonganF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))

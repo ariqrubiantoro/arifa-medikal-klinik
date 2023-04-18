@@ -20,16 +20,16 @@ class PemeriksaanKelenjarGetah extends StatefulWidget {
 }
 
 class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
-  Question _quest1 = Question.ya;
-  Question _quest2 = Question.ya;
-  Question _quest3 = Question.ya;
-  Question _quest4 = Question.ya;
-  Question _quest5 = Question.ya;
-  Question _quest6 = Question.ya;
-  Question _quest7 = Question.ya;
-  Question _quest8 = Question.ya;
-  Question _quest9 = Question.ya;
-  Question _quest10 = Question.ya;
+  int _quest1 = 0;
+  int _quest2 = 0;
+  int _quest3 = 0;
+  int _quest4 = 0;
+  int _quest5 = 0;
+  int _quest6 = 0;
+  int _quest7 = 0;
+  int _quest8 = 0;
+  int _quest9 = 0;
+  int _quest10 = 0;
 
   String cervicalKiri = "Normal";
   String cervicalKanan = "Normal";
@@ -41,6 +41,17 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
   String infraKanan = "Normal";
   String inguinalKiri = "Normal";
   String inguinalKanan = "Normal";
+
+  final cervicalKiriF = TextEditingController();
+  final cervicalKananF = TextEditingController();
+  final axilaKiriF = TextEditingController();
+  final axilaKananF = TextEditingController();
+  final supraKiriF = TextEditingController();
+  final supraKananF = TextEditingController();
+  final infraKiriF = TextEditingController();
+  final infraKananF = TextEditingController();
+  final inguinalKiriF = TextEditingController();
+  final inguinalKananF = TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
@@ -100,7 +111,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                   Row(
                     children: <Widget>[
                       Radio(
-                        value: Question.ya,
+                        value: 1,
                         groupValue: _quest1,
                         onChanged: (value) {
                           setState(() {
@@ -112,7 +123,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       textDefault(
                           "Normal", Colors.black, 13, FontWeight.normal),
                       Radio(
-                        value: Question.tidak,
+                        value: 2,
                         groupValue: _quest1,
                         onChanged: (value) {
                           setState(() {
@@ -123,6 +134,27 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       ),
                       textDefault(
                           "Tidak Normal", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 45,
+                        padding: EdgeInsets.only(left: 5),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          onTap: () {
+                            setState(() {
+                              _quest1 = 0;
+                            });
+                          },
+                          controller: cervicalKiriF,
+                          maxLength: 10,
+                          decoration: InputDecoration(border: InputBorder.none),
+                        ),
+                      ))
                     ],
                   ),
                   SizedBox(
@@ -133,7 +165,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                   Row(
                     children: <Widget>[
                       Radio(
-                        value: Question.ya,
+                        value: 1,
                         groupValue: _quest2,
                         onChanged: (value) {
                           setState(() {
@@ -145,7 +177,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       textDefault(
                           "Normal", Colors.black, 13, FontWeight.normal),
                       Radio(
-                        value: Question.tidak,
+                        value: 2,
                         groupValue: _quest2,
                         onChanged: (value) {
                           setState(() {
@@ -156,6 +188,27 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       ),
                       textDefault(
                           "Tidak Normal", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 45,
+                        padding: EdgeInsets.only(left: 5),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          onTap: () {
+                            setState(() {
+                              _quest2 = 0;
+                            });
+                          },
+                          controller: cervicalKananF,
+                          maxLength: 10,
+                          decoration: InputDecoration(border: InputBorder.none),
+                        ),
+                      ))
                     ],
                   ),
                   SizedBox(
@@ -165,7 +218,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                   Row(
                     children: <Widget>[
                       Radio(
-                        value: Question.ya,
+                        value: 1,
                         groupValue: _quest3,
                         onChanged: (value) {
                           setState(() {
@@ -177,7 +230,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       textDefault(
                           "Normal", Colors.black, 13, FontWeight.normal),
                       Radio(
-                        value: Question.tidak,
+                        value: 2,
                         groupValue: _quest3,
                         onChanged: (value) {
                           setState(() {
@@ -188,6 +241,27 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       ),
                       textDefault(
                           "Tidak Normal", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 45,
+                        padding: EdgeInsets.only(left: 5),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          onTap: () {
+                            setState(() {
+                              _quest3 = 0;
+                            });
+                          },
+                          controller: axilaKiriF,
+                          maxLength: 10,
+                          decoration: InputDecoration(border: InputBorder.none),
+                        ),
+                      ))
                     ],
                   ),
                   SizedBox(
@@ -197,7 +271,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                   Row(
                     children: <Widget>[
                       Radio(
-                        value: Question.ya,
+                        value: 1,
                         groupValue: _quest4,
                         onChanged: (value) {
                           setState(() {
@@ -209,7 +283,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       textDefault(
                           "Normal", Colors.black, 13, FontWeight.normal),
                       Radio(
-                        value: Question.tidak,
+                        value: 2,
                         groupValue: _quest4,
                         onChanged: (value) {
                           setState(() {
@@ -220,6 +294,27 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       ),
                       textDefault(
                           "Tidak Normal", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 45,
+                        padding: EdgeInsets.only(left: 5),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          onTap: () {
+                            setState(() {
+                              _quest4 = 0;
+                            });
+                          },
+                          controller: axilaKananF,
+                          maxLength: 10,
+                          decoration: InputDecoration(border: InputBorder.none),
+                        ),
+                      ))
                     ],
                   ),
                   SizedBox(
@@ -230,7 +325,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                   Row(
                     children: <Widget>[
                       Radio(
-                        value: Question.ya,
+                        value: 1,
                         groupValue: _quest5,
                         onChanged: (value) {
                           setState(() {
@@ -242,7 +337,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       textDefault(
                           "Normal", Colors.black, 13, FontWeight.normal),
                       Radio(
-                        value: Question.tidak,
+                        value: 2,
                         groupValue: _quest5,
                         onChanged: (value) {
                           setState(() {
@@ -253,6 +348,27 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       ),
                       textDefault(
                           "Tidak Normal", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 45,
+                        padding: EdgeInsets.only(left: 5),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          onTap: () {
+                            setState(() {
+                              _quest5 = 0;
+                            });
+                          },
+                          controller: supraKiriF,
+                          maxLength: 10,
+                          decoration: InputDecoration(border: InputBorder.none),
+                        ),
+                      ))
                     ],
                   ),
                   SizedBox(
@@ -263,7 +379,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                   Row(
                     children: <Widget>[
                       Radio(
-                        value: Question.ya,
+                        value: 1,
                         groupValue: _quest6,
                         onChanged: (value) {
                           setState(() {
@@ -275,7 +391,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       textDefault(
                           "Normal", Colors.black, 13, FontWeight.normal),
                       Radio(
-                        value: Question.tidak,
+                        value: 2,
                         groupValue: _quest6,
                         onChanged: (value) {
                           setState(() {
@@ -286,6 +402,27 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       ),
                       textDefault(
                           "Tidak Normal", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 45,
+                        padding: EdgeInsets.only(left: 5),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          onTap: () {
+                            setState(() {
+                              _quest6 = 0;
+                            });
+                          },
+                          controller: supraKananF,
+                          maxLength: 10,
+                          decoration: InputDecoration(border: InputBorder.none),
+                        ),
+                      ))
                     ],
                   ),
                   SizedBox(
@@ -296,7 +433,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                   Row(
                     children: <Widget>[
                       Radio(
-                        value: Question.ya,
+                        value: 1,
                         groupValue: _quest7,
                         onChanged: (value) {
                           setState(() {
@@ -308,7 +445,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       textDefault(
                           "Normal", Colors.black, 13, FontWeight.normal),
                       Radio(
-                        value: Question.tidak,
+                        value: 2,
                         groupValue: _quest7,
                         onChanged: (value) {
                           setState(() {
@@ -319,6 +456,27 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       ),
                       textDefault(
                           "Tidak Normal", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 45,
+                        padding: EdgeInsets.only(left: 5),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          onTap: () {
+                            setState(() {
+                              _quest7 = 0;
+                            });
+                          },
+                          controller: infraKiriF,
+                          maxLength: 10,
+                          decoration: InputDecoration(border: InputBorder.none),
+                        ),
+                      ))
                     ],
                   ),
                   SizedBox(
@@ -329,7 +487,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                   Row(
                     children: <Widget>[
                       Radio(
-                        value: Question.ya,
+                        value: 1,
                         groupValue: _quest8,
                         onChanged: (value) {
                           setState(() {
@@ -341,7 +499,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       textDefault(
                           "Normal", Colors.black, 13, FontWeight.normal),
                       Radio(
-                        value: Question.tidak,
+                        value: 2,
                         groupValue: _quest8,
                         onChanged: (value) {
                           setState(() {
@@ -352,6 +510,27 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       ),
                       textDefault(
                           "Tidak Normal", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 45,
+                        padding: EdgeInsets.only(left: 5),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          onTap: () {
+                            setState(() {
+                              _quest8 = 0;
+                            });
+                          },
+                          controller: infraKananF,
+                          maxLength: 10,
+                          decoration: InputDecoration(border: InputBorder.none),
+                        ),
+                      ))
                     ],
                   ),
                   SizedBox(
@@ -362,7 +541,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                   Row(
                     children: <Widget>[
                       Radio(
-                        value: Question.ya,
+                        value: 1,
                         groupValue: _quest9,
                         onChanged: (value) {
                           setState(() {
@@ -374,7 +553,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       textDefault(
                           "Normal", Colors.black, 13, FontWeight.normal),
                       Radio(
-                        value: Question.tidak,
+                        value: 2,
                         groupValue: _quest9,
                         onChanged: (value) {
                           setState(() {
@@ -385,6 +564,27 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       ),
                       textDefault(
                           "Tidak Normal", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 45,
+                        padding: EdgeInsets.only(left: 5),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          onTap: () {
+                            setState(() {
+                              _quest9 = 0;
+                            });
+                          },
+                          controller: inguinalKiriF,
+                          maxLength: 10,
+                          decoration: InputDecoration(border: InputBorder.none),
+                        ),
+                      ))
                     ],
                   ),
                   SizedBox(
@@ -395,7 +595,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                   Row(
                     children: <Widget>[
                       Radio(
-                        value: Question.ya,
+                        value: 1,
                         groupValue: _quest10,
                         onChanged: (value) {
                           setState(() {
@@ -407,7 +607,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       textDefault(
                           "Normal", Colors.black, 13, FontWeight.normal),
                       Radio(
-                        value: Question.tidak,
+                        value: 2,
                         groupValue: _quest10,
                         onChanged: (value) {
                           setState(() {
@@ -418,6 +618,27 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                       ),
                       textDefault(
                           "Tidak Normal", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 45,
+                        padding: EdgeInsets.only(left: 5),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          onTap: () {
+                            setState(() {
+                              _quest10 = 0;
+                            });
+                          },
+                          controller: inguinalKananF,
+                          maxLength: 10,
+                          decoration: InputDecoration(border: InputBorder.none),
+                        ),
+                      ))
                     ],
                   ),
                   SizedBox(
@@ -479,6 +700,19 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
   }
 
   saveButton() async {
+    cervicalKiri = cervicalKiriF.text != "" ? cervicalKiriF.text : cervicalKiri;
+    cervicalKanan =
+        cervicalKananF.text != "" ? cervicalKananF.text : cervicalKanan;
+    axilaKiri = axilaKiriF.text != "" ? axilaKiriF.text : axilaKiri;
+    axilaKanan = axilaKananF.text != "" ? axilaKananF.text : axilaKanan;
+    supraKiri = supraKiriF.text != "" ? supraKiriF.text : supraKiri;
+    supraKanan = supraKananF.text != "" ? supraKananF.text : supraKanan;
+    infraKiri = infraKiriF.text != "" ? infraKiriF.text : infraKiri;
+    infraKanan = infraKananF.text != "" ? infraKananF.text : infraKanan;
+    inguinalKiri = inguinalKiriF.text != "" ? inguinalKiriF.text : inguinalKiri;
+    inguinalKanan =
+        inguinalKananF.text != "" ? inguinalKananF.text : inguinalKanan;
+
     PemeriksaanKelenjarGetahModel data = PemeriksaanKelenjarGetahModel(
       cervicalKanan: cervicalKanan,
       cervicalKiri: cervicalKiri,

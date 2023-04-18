@@ -157,7 +157,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: darahTinggiF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -212,7 +212,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: paruF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -266,7 +266,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: asamLambungF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -319,7 +319,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: alergiF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -373,7 +373,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: riwayatOperasiF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -427,7 +427,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: riwayatKecelakaanF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -481,7 +481,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: riwayatRawatrsF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -534,7 +534,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: hepatitisF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -588,7 +588,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: kencingManisF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -642,7 +642,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: patahTulangF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
