@@ -145,7 +145,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: atasKananF,
-                          maxLength: 15,
+                          maxLength: 10,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -198,7 +198,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: atasKiriF,
-                          maxLength: 15,
+                          maxLength: 10,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -251,7 +251,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: bawahKananF,
-                          maxLength: 15,
+                          maxLength: 10,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -304,7 +304,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: bawahKiriF,
-                          maxLength: 15,
+                          maxLength: 10,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -358,7 +358,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: sembabKananF,
-                          maxLength: 15,
+                          maxLength: 10,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -412,7 +412,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: sembabKiriF,
-                          maxLength: 15,
+                          maxLength: 10,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -465,7 +465,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: cacatKananF,
-                          maxLength: 15,
+                          maxLength: 10,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -518,7 +518,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: cacatKiriF,
-                          maxLength: 15,
+                          maxLength: 10,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))

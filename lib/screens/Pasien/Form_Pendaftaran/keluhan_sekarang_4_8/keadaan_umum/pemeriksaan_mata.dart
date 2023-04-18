@@ -151,7 +151,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               });
                             },
                             controller: kacamataF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -205,10 +205,10 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           child: textDefault("Visus Os (Kiri)", Colors.black,
                               16, FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 13, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 30,
+                          height: 35,
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -219,7 +219,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               decoration:
                                   InputDecoration(border: InputBorder.none)),
                         ),
-                        textDefault(" (Tanpa lensa koreksi)", Colors.black, 14,
+                        textDefault(" (Tanpa lensa koreksi)", Colors.black, 12,
                             FontWeight.normal),
                       ],
                     ),
@@ -233,10 +233,10 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           child: textDefault("Visus Os (Kanan)", Colors.black,
                               16, FontWeight.normal),
                         ),
-                        textDefault(":  ", Colors.black, 14, FontWeight.normal),
+                        textDefault(":  ", Colors.black, 13, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 30,
+                          height: 35,
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -247,7 +247,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               decoration:
                                   InputDecoration(border: InputBorder.none)),
                         ),
-                        textDefault(" (Tanpa lensa koreksi)", Colors.black, 14,
+                        textDefault(" (Tanpa lensa koreksi)", Colors.black, 12,
                             FontWeight.normal),
                       ],
                     ),
@@ -297,7 +297,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               });
                             },
                             controller: olahragaF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -351,7 +351,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               });
                             },
                             controller: butaF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -405,7 +405,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               });
                             },
                             controller: penMataF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -460,7 +460,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               });
                             },
                             controller: konjungtivaF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -514,7 +514,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               });
                             },
                             controller: skleraF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -590,6 +590,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
     konjungtiva = konjungtivaF.text != "" ? konjungtivaF.text : konjungtiva;
     sklera = skleraF.text != "" ? skleraF.text : sklera;
 
+    kondisi = boolKondisi ? kondisi : "";
     PemeriksaanMataModel data = PemeriksaanMataModel(
       kacaMata: kacamata,
       kondisi: kondisi,

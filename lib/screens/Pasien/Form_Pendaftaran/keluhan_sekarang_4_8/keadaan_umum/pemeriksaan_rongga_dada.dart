@@ -290,7 +290,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: batasJantungF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -341,7 +341,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: auskultasiF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -392,7 +392,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: iktusKordisF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -443,7 +443,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: bunyiJantungF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -494,7 +494,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: bunyiNafasF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -545,7 +545,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: lainlainJantungF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -610,7 +610,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: inpeksiKananF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -661,7 +661,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: inpeksiKiriF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -712,7 +712,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: palpasiKananF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -763,7 +763,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: palpasiKiriF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -814,7 +814,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: perkusiKananF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -865,7 +865,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: perkusiKiriF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -916,7 +916,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: auskultasiKananF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -967,7 +967,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: auskultasiKiriF,
-                  maxLength: 15,
+                  maxLength: 10,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))

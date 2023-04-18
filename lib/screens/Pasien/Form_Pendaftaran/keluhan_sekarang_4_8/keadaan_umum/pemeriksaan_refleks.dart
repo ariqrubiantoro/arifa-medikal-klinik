@@ -19,13 +19,17 @@ class PemeriksaanRefleks extends StatefulWidget {
 }
 
 class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
-  Question _quest1 = Question.ya;
-  Question _quest2 = Question.ya;
-  Question _quest3 = Question.ya;
+  int _quest1 = 0;
+  int _quest2 = 0;
+  int _quest3 = 0;
 
   String strPupil = "Normal";
   String strPatella = "Normal";
   String strAchilles = "Normal";
+
+  final strPupilF = TextEditingController();
+  final strPatellaF = TextEditingController();
+  final strAchillesF = TextEditingController();
 
   final bicepsKanan = TextEditingController();
   final bicepsKiri = TextEditingController();
@@ -158,7 +162,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
         Row(
           children: <Widget>[
             Radio(
-              value: Question.ya,
+              value: 1,
               groupValue: _quest1,
               onChanged: (value) {
                 setState(() {
@@ -169,7 +173,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
             ),
             textDefault("Normal", Colors.black, 13, FontWeight.normal),
             Radio(
-              value: Question.tidak,
+              value: 2,
               groupValue: _quest1,
               onChanged: (value) {
                 setState(() {
@@ -179,6 +183,27 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
               },
             ),
             textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+                child: Container(
+              height: 45,
+              padding: EdgeInsets.only(left: 5),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5)),
+              child: TextFormField(
+                onTap: () {
+                  setState(() {
+                    _quest1 = 0;
+                  });
+                },
+                controller: strPupilF,
+                maxLength: 10,
+                decoration: InputDecoration(border: InputBorder.none),
+              ),
+            ))
           ],
         ),
         SizedBox(
@@ -245,7 +270,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
         Row(
           children: <Widget>[
             Radio(
-              value: Question.ya,
+              value: 1,
               groupValue: _quest2,
               onChanged: (value) {
                 setState(() {
@@ -256,7 +281,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
             ),
             textDefault("Normal", Colors.black, 13, FontWeight.normal),
             Radio(
-              value: Question.tidak,
+              value: 2,
               groupValue: _quest2,
               onChanged: (value) {
                 setState(() {
@@ -266,6 +291,27 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
               },
             ),
             textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+                child: Container(
+              height: 45,
+              padding: EdgeInsets.only(left: 5),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5)),
+              child: TextFormField(
+                onTap: () {
+                  setState(() {
+                    _quest2 = 0;
+                  });
+                },
+                controller: strPatellaF,
+                maxLength: 10,
+                decoration: InputDecoration(border: InputBorder.none),
+              ),
+            ))
           ],
         ),
         SizedBox(
@@ -332,7 +378,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
         Row(
           children: <Widget>[
             Radio(
-              value: Question.ya,
+              value: 1,
               groupValue: _quest3,
               onChanged: (value) {
                 setState(() {
@@ -343,7 +389,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
             ),
             textDefault("Normal", Colors.black, 13, FontWeight.normal),
             Radio(
-              value: Question.tidak,
+              value: 2,
               groupValue: _quest3,
               onChanged: (value) {
                 setState(() {
@@ -353,6 +399,27 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
               },
             ),
             textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+                child: Container(
+              height: 45,
+              padding: EdgeInsets.only(left: 5),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5)),
+              child: TextFormField(
+                onTap: () {
+                  setState(() {
+                    _quest3 = 0;
+                  });
+                },
+                controller: strAchillesF,
+                maxLength: 10,
+                decoration: InputDecoration(border: InputBorder.none),
+              ),
+            ))
           ],
         ),
         SizedBox(
@@ -412,6 +479,10 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
   }
 
   saveButton() async {
+    strPupil = strPupilF.text != "" ? strPupilF.text : strPupil;
+    strPatella = strPatellaF.text != "" ? strPatellaF.text : strPatella;
+    strAchilles = strAchillesF.text != "" ? strAchillesF.text : strAchilles;
+
     PemeriksaanRefleksModel data = PemeriksaanRefleksModel(
       pupil: PupilModel(
         pupil: strPupil,

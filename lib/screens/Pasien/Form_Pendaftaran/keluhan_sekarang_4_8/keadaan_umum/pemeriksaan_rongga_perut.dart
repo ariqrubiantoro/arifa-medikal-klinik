@@ -156,7 +156,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: inpeksiF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -229,7 +229,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: auskultasiF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -283,7 +283,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: hatiF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -337,7 +337,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: limpaF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -391,8 +391,8 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                                 _quest5 = 0;
                               });
                             },
-                            controller: limpaF,
-                            maxLength: 15,
+                            controller: ginjalKiriF,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -466,7 +466,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: ginjalKananF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -539,7 +539,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: herniaF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -593,7 +593,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: tumorF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -647,7 +647,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: lainlainF,
-                            maxLength: 15,
+                            maxLength: 10,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -713,6 +713,16 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
   }
 
   void saveButton() async {
+    inpeksi = inpeksiF.text != "" ? inpeksiF.text : inpeksi;
+    auskultasi = auskultasiF.text != "" ? auskultasiF.text : auskultasi;
+    hati = hatiF.text != "" ? hatiF.text : hati;
+    limpa = limpaF.text != "" ? limpaF.text : limpa;
+    ginjalKiri = ginjalKiriF.text != "" ? ginjalKiriF.text : ginjalKiri;
+    ginjalKanan = ginjalKananF.text != "" ? ginjalKananF.text : ginjalKanan;
+    hernia = herniaF.text != "" ? herniaF.text : hernia;
+    tumor = tumorF.text != "" ? tumorF.text : tumor;
+    lainlain = lainlainF.text != "" ? lainlainF.text : lainlain;
+
     PemeriksaanRonggaPerutModel data = PemeriksaanRonggaPerutModel(
       inspeksi: inpeksi,
       perkusi: perkusi.text,

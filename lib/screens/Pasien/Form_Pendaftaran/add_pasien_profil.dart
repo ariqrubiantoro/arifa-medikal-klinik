@@ -304,6 +304,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(10)),
                         child: TextFormField(
+                          keyboardType: TextInputType.number,
                           controller: nohpC,
                           decoration: InputDecoration(border: InputBorder.none),
                         )),
