@@ -19,21 +19,21 @@ class PemeriksaanRonggaDada extends StatefulWidget {
 }
 
 class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
-  Question _questJantung1 = Question.ya;
-  Question _questJantung2 = Question.ya;
-  Question _questJantung3 = Question.ya;
-  Question _questJantung4 = Question.ya;
-  Question _questJantung5 = Question.ya;
-  Question _questJantung6 = Question.ya;
+  int _questJantung1 = 0;
+  int _questJantung2 = 0;
+  int _questJantung3 = 0;
+  int _questJantung4 = 0;
+  int _questJantung5 = 0;
+  int _questJantung6 = 0;
 
-  Question _questParu1 = Question.ya;
-  Question _questParu2 = Question.ya;
-  Question _questParu3 = Question.ya;
-  Question _questParu4 = Question.ya;
-  Question _questParu5 = Question.ya;
-  Question _questParu6 = Question.ya;
-  Question _questParu7 = Question.ya;
-  Question _questParu8 = Question.ya;
+  int _questParu1 = 0;
+  int _questParu2 = 0;
+  int _questParu3 = 0;
+  int _questParu4 = 0;
+  int _questParu5 = 0;
+  int _questParu6 = 0;
+  int _questParu7 = 0;
+  int _questParu8 = 0;
 
   String batasJantung = "Normal";
   String auskultasi = "Normal";
@@ -41,6 +41,13 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
   String bunyiJantung = "Normal";
   String bunyiNafas = "Ada";
   String lainlainJantung = "Normal";
+
+  final batasJantungF = TextEditingController();
+  final auskultasiF = TextEditingController();
+  final iktusKordisF = TextEditingController();
+  final bunyiJantungF = TextEditingController();
+  final bunyiNafasF = TextEditingController();
+  final lainlainJantungF = TextEditingController();
 
   String inpeksiKanan = "Normal";
   String inpeksiKiri = "Normal";
@@ -50,6 +57,15 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
   String perkusiKiri = "Normal";
   String auskultasiKanan = "Normal";
   String auskultasiKiri = "Normal";
+
+  final inpeksiKananF = TextEditingController();
+  final inpeksiKiriF = TextEditingController();
+  final palpasiKananF = TextEditingController();
+  final palpasiKiriF = TextEditingController();
+  final perkusiKananF = TextEditingController();
+  final perkusiKiriF = TextEditingController();
+  final auskultasiKananF = TextEditingController();
+  final auskultasiKiriF = TextEditingController();
 
   bool tapJantung = false;
   bool tapParu = false;
@@ -236,7 +252,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questJantung1,
                 onChanged: (value) {
                   setState(() {
@@ -245,9 +261,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questJantung1,
                 onChanged: (value) {
                   setState(() {
@@ -256,7 +272,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questJantung1 = 0;
+                    });
+                  },
+                  controller: batasJantungF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -266,7 +303,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questJantung2,
                 onChanged: (value) {
                   setState(() {
@@ -275,9 +312,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questJantung2,
                 onChanged: (value) {
                   setState(() {
@@ -286,7 +323,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questJantung2 = 0;
+                    });
+                  },
+                  controller: auskultasiF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -296,7 +354,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questJantung3,
                 onChanged: (value) {
                   setState(() {
@@ -305,9 +363,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questJantung3,
                 onChanged: (value) {
                   setState(() {
@@ -316,7 +374,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questJantung3 = 0;
+                    });
+                  },
+                  controller: iktusKordisF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -326,7 +405,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questJantung4,
                 onChanged: (value) {
                   setState(() {
@@ -335,9 +414,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questJantung4,
                 onChanged: (value) {
                   setState(() {
@@ -346,7 +425,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questJantung4 = 0;
+                    });
+                  },
+                  controller: bunyiJantungF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -356,7 +456,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questJantung5,
                 onChanged: (value) {
                   setState(() {
@@ -365,9 +465,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Ada", Colors.black, 14, FontWeight.normal),
+              textDefault("Ada", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questJantung5,
                 onChanged: (value) {
                   setState(() {
@@ -376,7 +476,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Ada", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Ada", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questJantung5 = 0;
+                    });
+                  },
+                  controller: bunyiNafasF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -386,7 +507,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questJantung6,
                 onChanged: (value) {
                   setState(() {
@@ -395,9 +516,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questJantung6,
                 onChanged: (value) {
                   setState(() {
@@ -406,7 +527,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questJantung6 = 0;
+                    });
+                  },
+                  controller: lainlainJantungF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -430,7 +572,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questParu1,
                 onChanged: (value) {
                   setState(() {
@@ -439,9 +581,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questParu1,
                 onChanged: (value) {
                   setState(() {
@@ -450,7 +592,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questParu1 = 0;
+                    });
+                  },
+                  controller: inpeksiKananF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -460,7 +623,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questParu2,
                 onChanged: (value) {
                   setState(() {
@@ -469,9 +632,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questParu2,
                 onChanged: (value) {
                   setState(() {
@@ -480,7 +643,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questParu2 = 0;
+                    });
+                  },
+                  controller: inpeksiKiriF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -490,7 +674,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questParu3,
                 onChanged: (value) {
                   setState(() {
@@ -499,9 +683,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questParu3,
                 onChanged: (value) {
                   setState(() {
@@ -510,7 +694,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questParu3 = 0;
+                    });
+                  },
+                  controller: palpasiKananF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -520,7 +725,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questParu4,
                 onChanged: (value) {
                   setState(() {
@@ -529,9 +734,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questParu4,
                 onChanged: (value) {
                   setState(() {
@@ -540,7 +745,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questParu4 = 0;
+                    });
+                  },
+                  controller: palpasiKiriF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -550,7 +776,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questParu5,
                 onChanged: (value) {
                   setState(() {
@@ -559,9 +785,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questParu5,
                 onChanged: (value) {
                   setState(() {
@@ -570,7 +796,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questParu5 = 0;
+                    });
+                  },
+                  controller: perkusiKananF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -580,7 +827,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questParu6,
                 onChanged: (value) {
                   setState(() {
@@ -589,9 +836,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questParu6,
                 onChanged: (value) {
                   setState(() {
@@ -600,7 +847,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questParu6 = 0;
+                    });
+                  },
+                  controller: perkusiKiriF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -610,7 +878,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questParu7,
                 onChanged: (value) {
                   setState(() {
@@ -619,9 +887,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questParu7,
                 onChanged: (value) {
                   setState(() {
@@ -630,7 +898,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questParu7 = 0;
+                    });
+                  },
+                  controller: auskultasiKananF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -640,7 +929,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
           Row(
             children: <Widget>[
               Radio(
-                value: Question.ya,
+                value: 1,
                 groupValue: _questParu8,
                 onChanged: (value) {
                   setState(() {
@@ -649,9 +938,9 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
-                value: Question.tidak,
+                value: 2,
                 groupValue: _questParu8,
                 onChanged: (value) {
                   setState(() {
@@ -660,7 +949,28 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                height: 45,
+                padding: EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {
+                      _questParu8 = 0;
+                    });
+                  },
+                  controller: auskultasiKiriF,
+                  maxLength: 15,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ))
             ],
           ),
           SizedBox(
@@ -672,25 +982,43 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
   }
 
   void saveButton() async {
+    batasJantung = batasJantungF.text != "" ? batasJantungF.text : batasJantung;
+    auskultasi = auskultasiF.text != "" ? auskultasiF.text : auskultasi;
+    iktusKordis = iktusKordisF.text != "" ? iktusKordisF.text : iktusKordis;
+    bunyiJantung = bunyiJantungF.text != "" ? bunyiJantungF.text : bunyiJantung;
+    bunyiNafas = bunyiNafasF.text != "" ? bunyiNafasF.text : bunyiNafas;
+    lainlainJantung =
+        lainlainJantungF.text != "" ? lainlainJantungF.text : lainlainJantung;
+
+    inpeksiKanan = inpeksiKananF.text != "" ? inpeksiKananF.text : inpeksiKanan;
+    inpeksiKiri = inpeksiKiriF.text != "" ? inpeksiKiriF.text : inpeksiKiri;
+    palpasiKanan = palpasiKananF.text != "" ? palpasiKananF.text : palpasiKanan;
+    palpasiKiri = palpasiKiriF.text != "" ? palpasiKiriF.text : palpasiKiri;
+    perkusiKanan = perkusiKananF.text != "" ? perkusiKananF.text : perkusiKanan;
+    perkusiKiri = perkusiKiriF.text != "" ? perkusiKiriF.text : perkusiKiri;
+    auskultasiKanan =
+        auskultasiKananF.text != "" ? auskultasiKananF.text : auskultasiKanan;
+    auskultasiKiri =
+        auskultasiKiriF.text != "" ? auskultasiKiriF.text : auskultasiKiri;
+
     PemeriksaanRonggaDadaModel data = PemeriksaanRonggaDadaModel(
       jantung: JantungModel(
-        batasBatasJantung:
-            _questJantung1.name == "ya" ? "Normal" : "Tidak Normal",
-        auskultasi: _questJantung2.name == "ya" ? "Normal" : "Tidak Normal",
-        iktusKordis: _questJantung3.name == "ya" ? "Normal" : "Tidak Normal",
-        bunyiJantung: _questJantung4.name == "ya" ? "Normal" : "Tidak Normal",
-        bunyuNafas: _questJantung5.name == "ya" ? "Normal" : "Tidak Normal",
-        lainLain: _questJantung6.name == "ya" ? "Normal" : "Tidak Normal",
+        batasBatasJantung: batasJantung,
+        auskultasi: auskultasi,
+        iktusKordis: iktusKordis,
+        bunyiJantung: bunyiJantung,
+        bunyuNafas: bunyiNafas,
+        lainLain: lainlainJantung,
       ),
       paru: ParuModel(
-        inspeksiKanan: _questParu1.name == "ya" ? "Normal" : "Tidak Normal",
-        inspeksiKiri: _questParu2.name == "ya" ? "Normal" : "Tidak Normal",
-        palpasiKanan: _questParu3.name == "ya" ? "Normal" : "Tidak Normal",
-        palpasiKiri: _questParu4.name == "ya" ? "Normal" : "Tidak Normal",
-        perkusiKanan: _questParu5.name == "ya" ? "Normal" : "Tidak Normal",
-        perkusiKiri: _questParu6.name == "ya" ? "Normal" : "Tidak Normal",
-        auskultasiKanan: _questParu7.name == "ya" ? "Normal" : "Tidak Normal",
-        auskultasiKiri: _questParu8.name == "ya" ? "Normal" : "Tidak Normal",
+        inspeksiKanan: inpeksiKanan,
+        inspeksiKiri: inpeksiKiri,
+        palpasiKanan: palpasiKanan,
+        palpasiKiri: palpasiKiri,
+        perkusiKanan: perkusiKanan,
+        perkusiKiri: perkusiKiri,
+        auskultasiKanan: auskultasiKanan,
+        auskultasiKiri: auskultasiKiri,
       ),
     );
 

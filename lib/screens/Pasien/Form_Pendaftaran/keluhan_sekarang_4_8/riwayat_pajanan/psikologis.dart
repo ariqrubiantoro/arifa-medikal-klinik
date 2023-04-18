@@ -107,7 +107,7 @@ class _PsikologisState extends State<Psikologis> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest1,
@@ -119,7 +119,7 @@ class _PsikologisState extends State<Psikologis> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -142,7 +142,7 @@ class _PsikologisState extends State<Psikologis> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest2,
@@ -154,7 +154,7 @@ class _PsikologisState extends State<Psikologis> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -174,7 +174,7 @@ class _PsikologisState extends State<Psikologis> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest3,
@@ -186,7 +186,7 @@ class _PsikologisState extends State<Psikologis> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -206,7 +206,7 @@ class _PsikologisState extends State<Psikologis> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest4,
@@ -218,7 +218,7 @@ class _PsikologisState extends State<Psikologis> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -238,7 +238,7 @@ class _PsikologisState extends State<Psikologis> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest5,
@@ -250,7 +250,7 @@ class _PsikologisState extends State<Psikologis> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -270,7 +270,7 @@ class _PsikologisState extends State<Psikologis> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest6,
@@ -282,7 +282,7 @@ class _PsikologisState extends State<Psikologis> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -302,7 +302,7 @@ class _PsikologisState extends State<Psikologis> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: Question.tidak,
                           groupValue: _quest7,
@@ -314,7 +314,7 @@ class _PsikologisState extends State<Psikologis> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(

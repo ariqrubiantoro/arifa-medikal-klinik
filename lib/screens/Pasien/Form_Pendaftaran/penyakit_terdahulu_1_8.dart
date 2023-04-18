@@ -127,7 +127,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest,
@@ -139,7 +139,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -181,7 +181,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest2,
@@ -194,7 +194,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -236,7 +236,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest3,
@@ -248,7 +248,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -289,7 +289,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest4,
@@ -301,7 +301,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -343,7 +343,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest5,
@@ -355,7 +355,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -397,7 +397,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest6,
@@ -409,7 +409,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -451,7 +451,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest7,
@@ -463,7 +463,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -504,7 +504,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest8,
@@ -516,7 +516,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -558,7 +558,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest9,
@@ -570,7 +570,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -612,7 +612,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest10,
@@ -624,7 +624,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),

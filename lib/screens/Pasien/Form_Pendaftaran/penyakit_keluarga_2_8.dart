@@ -136,7 +136,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -181,7 +181,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -225,7 +225,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -268,7 +268,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -312,7 +312,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -355,7 +355,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -398,7 +398,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -441,7 +441,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -484,7 +484,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                     SizedBox(
@@ -527,7 +527,7 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
                           },
                         ),
                         textDefault(
-                            "Tidak Ada", Colors.black, 14, FontWeight.normal),
+                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
                       ],
                     ),
                   ],

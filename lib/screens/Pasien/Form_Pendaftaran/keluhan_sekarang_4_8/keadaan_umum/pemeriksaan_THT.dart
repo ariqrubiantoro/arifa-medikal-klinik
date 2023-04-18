@@ -294,7 +294,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questTelinga1,
@@ -305,7 +305,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -345,7 +345,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questTelinga2,
@@ -356,7 +356,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -397,7 +397,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questTelinga3,
@@ -408,7 +408,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -448,7 +448,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Ada", Colors.black, 14, FontWeight.normal),
+              textDefault("Ada", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questTelinga4,
@@ -459,7 +459,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Ada", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Ada", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -500,7 +500,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questTelinga5,
@@ -511,7 +511,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -551,7 +551,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Ada", Colors.black, 14, FontWeight.normal),
+              textDefault("Ada", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questTelinga6,
@@ -562,7 +562,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Ada", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Ada", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -613,7 +613,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Ya", Colors.black, 14, FontWeight.normal),
+              textDefault("Ya", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questHidung1,
@@ -624,7 +624,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Ada", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Ada", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -664,7 +664,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questHidung2,
@@ -675,7 +675,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -715,7 +715,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questHidung3,
@@ -726,7 +726,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -780,7 +780,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questKerongkongan1,
@@ -791,7 +791,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -831,7 +831,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questKerongkongan2,
@@ -842,7 +842,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -882,7 +882,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questKerongkongan3,
@@ -893,7 +893,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -933,7 +933,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Normal", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questKerongkongan4,
@@ -944,7 +944,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),
@@ -984,7 +984,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Ada", Colors.black, 14, FontWeight.normal),
+              textDefault("Ada", Colors.black, 13, FontWeight.normal),
               Radio(
                 value: 2,
                 groupValue: _questKerongkongan5,
@@ -995,7 +995,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                   });
                 },
               ),
-              textDefault("Tidak Ada", Colors.black, 14, FontWeight.normal),
+              textDefault("Tidak Ada", Colors.black, 13, FontWeight.normal),
               SizedBox(
                 width: 10,
               ),

@@ -97,7 +97,7 @@ class _BiologiState extends State<Biologi> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest1,
@@ -108,7 +108,7 @@ class _BiologiState extends State<Biologi> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -128,7 +128,7 @@ class _BiologiState extends State<Biologi> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest2,
@@ -139,7 +139,7 @@ class _BiologiState extends State<Biologi> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -159,7 +159,7 @@ class _BiologiState extends State<Biologi> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest3,
@@ -170,7 +170,7 @@ class _BiologiState extends State<Biologi> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -190,7 +190,7 @@ class _BiologiState extends State<Biologi> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest4,
@@ -201,7 +201,7 @@ class _BiologiState extends State<Biologi> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(

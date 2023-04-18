@@ -119,7 +119,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _questKacamata,
@@ -132,7 +132,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -219,7 +219,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               decoration:
                                   InputDecoration(border: InputBorder.none)),
                         ),
-                        textDefault(" (Tanpa lensa koreksi)", Colors.black, 12,
+                        textDefault(" (Tanpa lensa koreksi)", Colors.black, 14,
                             FontWeight.normal),
                       ],
                     ),
@@ -247,7 +247,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               decoration:
                                   InputDecoration(border: InputBorder.none)),
                         ),
-                        textDefault(" (Tanpa lensa koreksi)", Colors.black, 12,
+                        textDefault(" (Tanpa lensa koreksi)", Colors.black, 14,
                             FontWeight.normal),
                       ],
                     ),
@@ -267,7 +267,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _questOlahraga,
@@ -279,7 +279,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -321,7 +321,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _questButa,
@@ -333,7 +333,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -375,7 +375,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _questPenMata,
@@ -387,7 +387,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -430,7 +430,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           },
                         ),
                         textDefault(
-                            "Normal", Colors.black, 14, FontWeight.normal),
+                            "Normal", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _questKonjungtiva,
@@ -441,7 +441,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                             });
                           },
                         ),
-                        textDefault("Tidak Normal", Colors.black, 14,
+                        textDefault("Tidak Normal", Colors.black, 13,
                             FontWeight.normal),
                         SizedBox(
                           width: 10,
@@ -484,7 +484,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           },
                         ),
                         textDefault(
-                            "Normal", Colors.black, 14, FontWeight.normal),
+                            "Normal", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _questSklera,
@@ -495,7 +495,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                             });
                           },
                         ),
-                        textDefault("Tidak Normal", Colors.black, 14,
+                        textDefault("Tidak Normal", Colors.black, 13,
                             FontWeight.normal),
                         SizedBox(
                           width: 10,

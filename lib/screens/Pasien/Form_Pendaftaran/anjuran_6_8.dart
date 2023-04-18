@@ -92,7 +92,7 @@ class _Anjuran6State extends State<Anjuran6> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest1,
@@ -103,7 +103,7 @@ class _Anjuran6State extends State<Anjuran6> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -126,7 +126,7 @@ class _Anjuran6State extends State<Anjuran6> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest2,
@@ -137,7 +137,7 @@ class _Anjuran6State extends State<Anjuran6> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(

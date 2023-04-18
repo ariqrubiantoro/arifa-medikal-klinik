@@ -167,7 +167,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                 });
               },
             ),
-            textDefault("Normal", Colors.black, 14, FontWeight.normal),
+            textDefault("Normal", Colors.black, 13, FontWeight.normal),
             Radio(
               value: Question.tidak,
               groupValue: _quest1,
@@ -178,7 +178,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                 });
               },
             ),
-            textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+            textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
           ],
         ),
         SizedBox(
@@ -254,7 +254,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                 });
               },
             ),
-            textDefault("Normal", Colors.black, 14, FontWeight.normal),
+            textDefault("Normal", Colors.black, 13, FontWeight.normal),
             Radio(
               value: Question.tidak,
               groupValue: _quest2,
@@ -265,7 +265,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                 });
               },
             ),
-            textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+            textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
           ],
         ),
         SizedBox(
@@ -341,7 +341,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                 });
               },
             ),
-            textDefault("Normal", Colors.black, 14, FontWeight.normal),
+            textDefault("Normal", Colors.black, 13, FontWeight.normal),
             Radio(
               value: Question.tidak,
               groupValue: _quest3,
@@ -352,7 +352,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                 });
               },
             ),
-            textDefault("Tidak Normal", Colors.black, 14, FontWeight.normal),
+            textDefault("Tidak Normal", Colors.black, 13, FontWeight.normal),
           ],
         ),
         SizedBox(
