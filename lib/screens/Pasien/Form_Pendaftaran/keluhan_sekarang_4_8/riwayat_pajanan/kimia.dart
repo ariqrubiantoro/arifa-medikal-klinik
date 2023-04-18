@@ -109,7 +109,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest1,
@@ -120,7 +120,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -140,7 +140,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest2,
@@ -151,7 +151,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -170,7 +170,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest3,
@@ -181,7 +181,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -201,7 +201,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest4,
@@ -212,7 +212,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -232,7 +232,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest5,
@@ -243,7 +243,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -263,7 +263,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest6,
@@ -274,7 +274,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -294,7 +294,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest7,
@@ -305,7 +305,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -325,7 +325,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest8,
@@ -336,7 +336,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -355,7 +355,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest9,
@@ -366,7 +366,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(
@@ -386,7 +386,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
                       Radio(
                         value: Question.tidak,
                         groupValue: _quest10,
@@ -397,7 +397,7 @@ class _KimiaState extends State<Kimia> {
                           });
                         },
                       ),
-                      textDefault("Tidak", Colors.black, 14, FontWeight.normal),
+                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
                     ],
                   ),
                   SizedBox(

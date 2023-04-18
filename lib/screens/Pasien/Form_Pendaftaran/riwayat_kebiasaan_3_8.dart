@@ -116,7 +116,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest,
@@ -129,7 +129,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -274,7 +274,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest2,
@@ -287,7 +287,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),
@@ -427,7 +427,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                             });
                           },
                         ),
-                        textDefault("Ya", Colors.black, 14, FontWeight.normal),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
                         Radio(
                           value: 2,
                           groupValue: _quest3,
@@ -439,7 +439,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                           },
                         ),
                         textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.normal),
+                            "Tidak", Colors.black, 13, FontWeight.normal),
                         SizedBox(
                           width: 10,
                         ),

@@ -394,7 +394,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: textDefault(
-                            "Tidak", Colors.black, 14, FontWeight.bold),
+                            "Tidak", Colors.black, 13, FontWeight.bold),
                       )),
                 )),
                 SizedBox(
