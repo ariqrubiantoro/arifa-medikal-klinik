@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../components/colors/color.dart';
 import '../../../components/widget/text.dart';
 
-enum Question { ya, tidak }
+enum Question { ya, tidak, none }
 
 class KesimpulanKelayakan7 extends StatefulWidget {
   const KesimpulanKelayakan7({this.idPasien, super.key});
@@ -28,6 +28,13 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
   String layakBekerjaDenganCatatan = "Tidak";
   String layakBekerjaDenganPenyesuaian = "Tidak";
   String layakUntukBekerja = "Tidak";
+  TextEditingController layakBekerjaTanpaCatatanController =
+      TextEditingController();
+  TextEditingController layakBekerjaDenganCatatanController =
+      TextEditingController();
+  TextEditingController layakBekerjaDenganPenyesuaianController =
+      TextEditingController();
+  TextEditingController layakUntukBekerjaController = TextEditingController();
 
   final cardiovaskuler = TextEditingController();
 
@@ -95,6 +102,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                           setState(() {
                             _quest1 = value!;
                             layakBekerjaTanpaCatatan = "Ya";
+                            layakBekerjaTanpaCatatanController.text = "";
                           });
                         },
                       ),
@@ -106,10 +114,34 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                           setState(() {
                             _quest1 = value!;
                             layakBekerjaTanpaCatatan = "Tidak";
+                            layakBekerjaTanpaCatatanController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest1 = Question.none;
+                              });
+                            },
+                            controller: layakBekerjaTanpaCatatanController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -129,6 +161,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                           setState(() {
                             _quest2 = value!;
                             layakBekerjaDenganCatatan = "Ya";
+                            layakBekerjaDenganCatatanController.text = "";
                           });
                         },
                       ),
@@ -140,10 +173,34 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                           setState(() {
                             _quest2 = value!;
                             layakBekerjaDenganCatatan = "Tidak";
+                            layakBekerjaDenganCatatanController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest2 = Question.none;
+                              });
+                            },
+                            controller: layakBekerjaDenganCatatanController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -163,6 +220,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                           setState(() {
                             _quest3 = value!;
                             layakBekerjaDenganPenyesuaian = "Ya";
+                            layakBekerjaDenganPenyesuaianController.text = "";
                           });
                         },
                       ),
@@ -174,10 +232,34 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                           setState(() {
                             _quest3 = value!;
                             layakBekerjaDenganPenyesuaian = "Tidak";
+                            layakBekerjaDenganPenyesuaianController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest3 = Question.none;
+                              });
+                            },
+                            controller: layakBekerjaDenganPenyesuaianController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -194,6 +276,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                           setState(() {
                             _quest4 = value!;
                             layakUntukBekerja = "Ya";
+                            layakUntukBekerjaController.text = "";
                           });
                         },
                       ),
@@ -205,10 +288,34 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                           setState(() {
                             _quest4 = value!;
                             layakUntukBekerja = "Tidak";
+                            layakUntukBekerjaController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest4 = Question.none;
+                              });
+                            },
+                            controller: layakUntukBekerjaController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -286,10 +393,19 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
 
   saveButton() async {
     KelayakanKerjaModel data = KelayakanKerjaModel(
-      layakBekerjaSesuaiPosisi: layakBekerjaTanpaCatatan,
-      layakBekerjaDenganCatatan: layakBekerjaDenganCatatan,
-      layakBekerjaDenganPenyesuaian: layakBekerjaDenganPenyesuaian,
-      layakuntukBekerja: layakUntukBekerja,
+      layakBekerjaSesuaiPosisi: layakBekerjaTanpaCatatanController.text != ""
+          ? layakBekerjaTanpaCatatanController.text
+          : layakBekerjaTanpaCatatan,
+      layakBekerjaDenganCatatan: layakBekerjaDenganCatatanController.text != ""
+          ? layakBekerjaDenganCatatanController.text
+          : layakBekerjaDenganCatatan,
+      layakBekerjaDenganPenyesuaian:
+          layakBekerjaDenganPenyesuaianController.text != ""
+              ? layakBekerjaDenganPenyesuaianController.text
+              : layakBekerjaDenganPenyesuaian,
+      layakuntukBekerja: layakUntukBekerjaController.text != ""
+          ? layakUntukBekerjaController.text
+          : layakUntukBekerja,
       resikoCardioVascular: cardiovaskuler.text,
     );
 

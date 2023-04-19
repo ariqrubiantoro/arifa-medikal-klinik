@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../components/colors/color.dart';
 import '../../../components/widget/text.dart';
 
-enum Question { ya, tidak }
+enum Question { ya, tidak, none }
 
 class KesimpulanDerajat8 extends StatefulWidget {
   const KesimpulanDerajat8({this.idPasien, super.key});
@@ -34,6 +34,15 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
   String str5 = "Tidak";
   String str6 = "Tidak";
   String str7 = "Tidak";
+
+  TextEditingController str1Controller = TextEditingController();
+  TextEditingController str2Controller = TextEditingController();
+  TextEditingController str3Controller = TextEditingController();
+  TextEditingController str4Controller = TextEditingController();
+  TextEditingController str5Controller = TextEditingController();
+  TextEditingController str6Controller = TextEditingController();
+  TextEditingController str7Controller = TextEditingController();
+
   final FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
   @override
@@ -87,6 +96,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest1 = value!;
                             str1 = "Ya";
+                            str1Controller.text = "";
                           });
                         },
                       ),
@@ -98,10 +108,34 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest1 = value!;
                             str1 = "Tidak";
+                            str1Controller.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest1 = Question.none;
+                              });
+                            },
+                            controller: str1Controller,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -118,6 +152,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest2 = value!;
                             str2 = "Ya";
+                            str2Controller.text = "";
                           });
                         },
                       ),
@@ -129,10 +164,34 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest2 = value!;
                             str2 = "Tidak";
+                            str2Controller.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest2 = Question.none;
+                              });
+                            },
+                            controller: str2Controller,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -152,6 +211,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest3 = value!;
                             str3 = "Ya";
+                            str3Controller.text = "";
                           });
                         },
                       ),
@@ -163,10 +223,34 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest3 = value!;
                             str3 = "Tidak";
+                            str3Controller.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest3 = Question.none;
+                              });
+                            },
+                            controller: str3Controller,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -186,6 +270,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest4 = value!;
                             str4 = "Ya";
+                            str4Controller.text = "";
                           });
                         },
                       ),
@@ -197,10 +282,34 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest4 = value!;
                             str4 = "Tidak";
+                            str4Controller.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest4 = Question.none;
+                              });
+                            },
+                            controller: str4Controller,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -220,6 +329,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest5 = value!;
                             str5 = "Ya";
+                            str5Controller.text = "";
                           });
                         },
                       ),
@@ -231,10 +341,34 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest5 = value!;
                             str5 = "Tidak";
+                            str5Controller.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest5 = Question.none;
+                              });
+                            },
+                            controller: str5Controller,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -254,6 +388,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest6 = value!;
                             str6 = "Ya";
+                            str6Controller.text = "";
                           });
                         },
                       ),
@@ -265,10 +400,34 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest6 = value!;
                             str6 = "Tidak";
+                            str6Controller.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest6 = Question.none;
+                              });
+                            },
+                            controller: str6Controller,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -288,6 +447,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest7 = value!;
                             str7 = "Ya";
+                            str7Controller.text = "";
                           });
                         },
                       ),
@@ -299,10 +459,34 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                           setState(() {
                             _quest7 = value!;
                             str7 = "Tidak";
+                            str7Controller.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest7 = Question.none;
+                              });
+                            },
+                            controller: str7Controller,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -426,13 +610,20 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
 
   saveButton() async {
     KesimpulanDerajatKesehatanModel data = KesimpulanDerajatKesehatanModel(
-        ditemukanKelainanMedis: str1,
-        ditemukanKelainanYangTidakSerius: str2,
-        ditemukanKelainanResikoKesehatanRendah: str3,
-        ditemukanKelainanResikoKesehatanSedang: str4,
-        ditemukanKelainanResikoKesehatanTinggi: str5,
-        ditemukanKelainanMenyebabkanKeterbatasan: str6,
-        tidakDapatBekerja: str7);
+      ditemukanKelainanMedis:
+          str1Controller.text != "" ? str1Controller.text : str1,
+      ditemukanKelainanYangTidakSerius:
+          str2Controller.text != "" ? str2Controller.text : str2,
+      ditemukanKelainanResikoKesehatanRendah:
+          str3Controller.text != "" ? str3Controller.text : str3,
+      ditemukanKelainanResikoKesehatanSedang:
+          str4Controller.text != "" ? str4Controller.text : str4,
+      ditemukanKelainanResikoKesehatanTinggi:
+          str5Controller.text != "" ? str5Controller.text : str5,
+      ditemukanKelainanMenyebabkanKeterbatasan:
+          str6Controller.text != "" ? str6Controller.text : str6,
+      tidakDapatBekerja: str7Controller.text != "" ? str7Controller.text : str7,
+    );
 
     firestore
         .setKesimpulanDerajatKesehatan(
