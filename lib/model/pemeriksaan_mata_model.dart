@@ -2,8 +2,8 @@ class PemeriksaanMataModel {
   String? id;
   String? kacaMata;
   String? kondisi;
-  int? visusKiri;
-  int? visusKanan;
+  String? visusKiri;
+  String? visusKanan;
   String? olahraga;
   String? butaWarna;
   String? penyakitMata;

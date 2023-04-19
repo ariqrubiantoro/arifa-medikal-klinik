@@ -289,6 +289,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questTelinga1,
                 onChanged: (value) {
                   setState(() {
+                    tympKiriF.text = "";
                     _questTelinga1 = value!;
                     tympKiri = "Normal";
                   });
@@ -300,6 +301,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questTelinga1,
                 onChanged: (value) {
                   setState(() {
+                    tympKiriF.text = "";
                     _questTelinga1 = value!;
                     tympKiri = "Tidak Normal";
                   });
@@ -340,6 +342,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questTelinga2,
                 onChanged: (value) {
                   setState(() {
+                    tympKananF.text = "";
                     _questTelinga2 = value!;
                     tympKanan = "Normal";
                   });
@@ -351,6 +354,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questTelinga2,
                 onChanged: (value) {
                   setState(() {
+                    tympKananF.text = "";
                     _questTelinga2 = value!;
                     tympKanan = "Tidak Normal";
                   });
@@ -392,6 +396,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questTelinga3,
                 onChanged: (value) {
                   setState(() {
+                    telingaKiriF.text = "";
                     _questTelinga3 = value!;
                     telingaKiri = "Normal";
                   });
@@ -403,6 +408,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questTelinga3,
                 onChanged: (value) {
                   setState(() {
+                    telingaKiriF.text = "";
                     _questTelinga3 = value!;
                     telingaKiri = "Tidak Normal";
                   });
@@ -443,6 +449,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questTelinga4,
                 onChanged: (value) {
                   setState(() {
+                    serumenKiriF.text = "";
                     _questTelinga4 = value!;
                     serumenKiri = "Ada";
                   });
@@ -454,6 +461,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questTelinga4,
                 onChanged: (value) {
                   setState(() {
+                    serumenKiriF.text = "";
                     _questTelinga4 = value!;
                     serumenKiri = "Tidak Ada";
                   });
@@ -495,6 +503,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questTelinga5,
                 onChanged: (value) {
                   setState(() {
+                    telingaKananF.text = "";
                     _questTelinga5 = value!;
                     telingaKanan = "Normal";
                   });
@@ -506,6 +515,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questTelinga5,
                 onChanged: (value) {
                   setState(() {
+                    telingaKananF.text = "";
                     _questTelinga5 = value!;
                     telingaKanan = "Tidak Normal";
                   });
@@ -546,6 +556,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questTelinga6,
                 onChanged: (value) {
                   setState(() {
+                    serumenKananF.text = "";
                     _questTelinga6 = value!;
                     serumenKanan = "Ada";
                   });
@@ -557,6 +568,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questTelinga6,
                 onChanged: (value) {
                   setState(() {
+                    serumenKananF.text = "";
                     _questTelinga6 = value!;
                     serumenKanan = "Tidak Ada";
                   });
@@ -608,6 +620,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questHidung1,
                 onChanged: (value) {
                   setState(() {
+                    pilekF.text = "";
                     _questHidung1 = value!;
                     pilek = "Ya";
                   });
@@ -619,6 +632,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questHidung1,
                 onChanged: (value) {
                   setState(() {
+                    pilekF.text = "";
                     _questHidung1 = value!;
                     pilek = "Tidak Ada";
                   });
@@ -659,6 +673,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questHidung2,
                 onChanged: (value) {
                   setState(() {
+                    lidahF.text = "";
                     _questHidung2 = value!;
                     lidah = "Normal";
                   });
@@ -670,6 +685,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questHidung2,
                 onChanged: (value) {
                   setState(() {
+                    lidahF.text = "";
                     _questHidung2 = value!;
                     lidah = "Tidak Normal";
                   });
@@ -710,6 +726,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questHidung3,
                 onChanged: (value) {
                   setState(() {
+                    lainlainHidungF.text = "";
                     _questHidung3 = value!;
                     lainlainHidung = "Normal";
                   });
@@ -721,6 +738,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questHidung3,
                 onChanged: (value) {
                   setState(() {
+                    lainlainHidungF.text = "";
                     _questHidung3 = value!;
                     lainlainHidung = "Tidak Normal";
                   });
@@ -775,6 +793,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questKerongkongan1,
                 onChanged: (value) {
                   setState(() {
+                    tonsilKanaF.text = "";
                     _questKerongkongan1 = value!;
                     tonsilKanan = "Normal";
                   });
@@ -786,6 +805,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questKerongkongan1,
                 onChanged: (value) {
                   setState(() {
+                    tonsilKanaF.text = "";
                     _questKerongkongan1 = value!;
                     tonsilKanan = "Tidak Normal";
                   });
@@ -826,6 +846,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questKerongkongan2,
                 onChanged: (value) {
                   setState(() {
+                    tonsilKiriF.text = "";
                     _questKerongkongan2 = value!;
                     tonsilKiri = "Normal";
                   });
@@ -837,6 +858,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questKerongkongan2,
                 onChanged: (value) {
                   setState(() {
+                    tonsilKiriF.text = "";
                     _questKerongkongan2 = value!;
                     tonsilKiri = "Tidak Normal";
                   });
@@ -877,6 +899,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questKerongkongan3,
                 onChanged: (value) {
                   setState(() {
+                    pharingF.text = "";
                     _questKerongkongan3 = value!;
                     pharing = "Normal";
                   });
@@ -888,6 +911,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questKerongkongan3,
                 onChanged: (value) {
                   setState(() {
+                    pharingF.text = "";
                     _questKerongkongan3 = value!;
                     pharing = "Tidak Normal";
                   });
@@ -928,6 +952,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questKerongkongan4,
                 onChanged: (value) {
                   setState(() {
+                    tiroidF.text = "";
                     _questKerongkongan4 = value!;
                     tiroid = "Normal";
                   });
@@ -939,6 +964,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questKerongkongan4,
                 onChanged: (value) {
                   setState(() {
+                    tiroidF.text = "";
                     _questKerongkongan4 = value!;
                     tiroid = "Tidak Normal";
                   });
@@ -979,6 +1005,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questKerongkongan5,
                 onChanged: (value) {
                   setState(() {
+                    lainlainKerongkonganF.text = "";
                     _questKerongkongan5 = value!;
                     lainlainKerongkongan = "Ada";
                   });
@@ -990,6 +1017,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                 groupValue: _questKerongkongan5,
                 onChanged: (value) {
                   setState(() {
+                    lainlainKerongkonganF.text = "";
                     _questKerongkongan5 = value!;
                     lainlainKerongkongan = "Tidak Ada";
                   });

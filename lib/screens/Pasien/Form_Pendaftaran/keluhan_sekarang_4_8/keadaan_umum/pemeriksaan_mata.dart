@@ -113,6 +113,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           groupValue: _questKacamata,
                           onChanged: (value) {
                             setState(() {
+                              kacamataF.text = "";
                               _questKacamata = value!;
                               kacamata = "Ya";
                               boolKondisi = true;
@@ -125,6 +126,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           groupValue: _questKacamata,
                           onChanged: (value) {
                             setState(() {
+                              kacamataF.text = "";
                               _questKacamata = value!;
                               kacamata = "Tidak";
                               boolKondisi = false;
@@ -262,6 +264,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           groupValue: _questOlahraga,
                           onChanged: (value) {
                             setState(() {
+                              olahragaF.text = "";
                               _questOlahraga = value!;
                               olahraga = "Ya";
                             });
@@ -273,6 +276,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           groupValue: _questOlahraga,
                           onChanged: (value) {
                             setState(() {
+                              olahragaF.text = "";
                               _questOlahraga = value!;
                               olahraga = "Tidak";
                             });
@@ -316,6 +320,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           groupValue: _questButa,
                           onChanged: (value) {
                             setState(() {
+                              butaF.text = "";
                               _questButa = value!;
                               buta = "Ya";
                             });
@@ -327,6 +332,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           groupValue: _questButa,
                           onChanged: (value) {
                             setState(() {
+                              butaF.text = "";
                               _questButa = value!;
                               buta = "Tidak";
                             });
@@ -370,6 +376,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           groupValue: _questPenMata,
                           onChanged: (value) {
                             setState(() {
+                              penMataF.text = "";
                               _questPenMata = value!;
                               penMata = "Ya";
                             });
@@ -381,6 +388,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           groupValue: _questPenMata,
                           onChanged: (value) {
                             setState(() {
+                              penMataF.text = "";
                               _questPenMata = value!;
                               penMata = "Tidak";
                             });
@@ -424,6 +432,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           groupValue: _questKonjungtiva,
                           onChanged: (value) {
                             setState(() {
+                              konjungtivaF.text = "";
                               _questKonjungtiva = value!;
                               penMata = "Normal";
                             });
@@ -436,6 +445,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           groupValue: _questKonjungtiva,
                           onChanged: (value) {
                             setState(() {
+                              konjungtivaF.text = "";
                               _questKonjungtiva = value!;
                               penMata = "Tidak Normal";
                             });
@@ -478,6 +488,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           groupValue: _questSklera,
                           onChanged: (value) {
                             setState(() {
+                              skleraF.text = "";
                               _questSklera = value!;
                               sklera = "Normal";
                             });
@@ -490,6 +501,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           groupValue: _questSklera,
                           onChanged: (value) {
                             setState(() {
+                              skleraF.text = "";
                               _questSklera = value!;
                               sklera = "Tidak Normal";
                             });
@@ -594,8 +606,8 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
     PemeriksaanMataModel data = PemeriksaanMataModel(
       kacaMata: kacamata,
       kondisi: kondisi,
-      visusKiri: int.parse(osKiri.text),
-      visusKanan: int.parse(osKanan.text),
+      visusKiri: osKiri.text,
+      visusKanan: osKanan.text,
       olahraga: olahraga,
       butaWarna: buta,
       penyakitMata: penMata,
