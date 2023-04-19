@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../components/colors/color.dart';
 import '../../../components/widget/text.dart';
 
-enum Question { ya, tidak }
+enum Question { ya, tidak, none }
 
 class Anjuran6 extends StatefulWidget {
   const Anjuran6({this.idPasien, super.key});
@@ -24,6 +24,9 @@ class _Anjuran6State extends State<Anjuran6> {
 
   String konsumsiAir = "Tidak";
   String olahragaTeratur = "Tidak";
+
+  TextEditingController konsumsiAirController = TextEditingController();
+  TextEditingController olahragaTeraturController = TextEditingController();
 
   final FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
@@ -89,6 +92,7 @@ class _Anjuran6State extends State<Anjuran6> {
                           setState(() {
                             _quest1 = value!;
                             konsumsiAir = "Ya";
+                            konsumsiAirController.text = "";
                           });
                         },
                       ),
@@ -100,10 +104,34 @@ class _Anjuran6State extends State<Anjuran6> {
                           setState(() {
                             _quest1 = value!;
                             konsumsiAir = "Tidak";
+                            konsumsiAirController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest1 = Question.none;
+                              });
+                            },
+                            controller: konsumsiAirController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -123,6 +151,7 @@ class _Anjuran6State extends State<Anjuran6> {
                           setState(() {
                             _quest2 = value!;
                             olahragaTeratur = "Ya";
+                            olahragaTeraturController.text = "";
                           });
                         },
                       ),
@@ -134,10 +163,34 @@ class _Anjuran6State extends State<Anjuran6> {
                           setState(() {
                             _quest2 = value!;
                             olahragaTeratur = "Tidak";
+                            olahragaTeraturController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest2 = Question.none;
+                              });
+                            },
+                            controller: olahragaTeraturController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -200,8 +253,12 @@ class _Anjuran6State extends State<Anjuran6> {
 
   saveButton() async {
     AjuranModel data = AjuranModel(
-      konsumsiAir: konsumsiAir,
-      olahragaTeratur: olahragaTeratur,
+      konsumsiAir: konsumsiAirController.text != ""
+          ? konsumsiAirController.text
+          : konsumsiAir,
+      olahragaTeratur: olahragaTeraturController.text != ""
+          ? olahragaTeraturController.text
+          : olahragaTeratur,
     );
 
     firestore.setAjuran(ajuran: data, idPasien: widget.idPasien!);
