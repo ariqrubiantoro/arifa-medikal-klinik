@@ -6,6 +6,7 @@ import 'package:arifa_medikal_klink_3/model/biologi_model.dart';
 import 'package:arifa_medikal_klink_3/model/kesimpulan_derajat_kesehatan.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_kelenjar_getah_model.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
+import 'package:arifa_medikal_klink_3/screens/menu_utama.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -4294,7 +4295,23 @@ class _DetailPasienState extends State<DetailPasien> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Review Hasil MCU')),
+      appBar: AppBar(
+        title: Text('Review Hasil MCU'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                firestore
+                    .deletePasien(widget.pasienSnapshots.id)
+                    .then((value) => Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MenuUtama(),
+                        ),
+                        (route) => false));
+              },
+              icon: Icon(Icons.delete))
+        ],
+      ),
       body: Container(
           width: double.infinity,
           child: Column(
