@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
 
-enum Question { ya, tidak }
+enum Question { ya, tidak, none }
 
 class Fisik extends StatefulWidget {
   const Fisik({this.idPasien, super.key});
@@ -36,6 +36,15 @@ class _FisikState extends State<Fisik> {
   String getaranLokal = "Tidak";
   String getaranTubuh = "Tidak";
   String ketinggian = "Tidak";
+
+  TextEditingController kebisinganController = TextEditingController();
+  TextEditingController suhuPanasController = TextEditingController();
+  TextEditingController suhuDinginController = TextEditingController();
+  TextEditingController radiasiBukanPengionController = TextEditingController();
+  TextEditingController radiasiPengionController = TextEditingController();
+  TextEditingController getaranLokalController = TextEditingController();
+  TextEditingController getaranTubuhController = TextEditingController();
+  TextEditingController ketinggianController = TextEditingController();
 
   final lainlain = TextEditingController();
 
@@ -102,6 +111,7 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest1 = value!;
                             kebisingan = "Ya";
+                            kebisinganController.text = "";
                           });
                         },
                       ),
@@ -113,10 +123,34 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest1 = value!;
                             kebisingan = "Tidak";
+                            kebisinganController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest1 = Question.none;
+                              });
+                            },
+                            controller: kebisinganController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -132,6 +166,7 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest2 = value!;
                             suhuPanas = "Ya";
+                            suhuPanasController.text = "";
                           });
                         },
                       ),
@@ -143,10 +178,34 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest2 = value!;
                             suhuPanas = "Tidak";
+                            suhuPanasController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest2 = Question.none;
+                              });
+                            },
+                            controller: suhuPanasController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -162,6 +221,7 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest3 = value!;
                             suhuDingin = "Ya";
+                            suhuDinginController.text = "";
                           });
                         },
                       ),
@@ -173,10 +233,34 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest3 = value!;
                             suhuDingin = "Tidak";
+                            suhuDinginController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest3 = Question.none;
+                              });
+                            },
+                            controller: suhuDinginController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -196,6 +280,7 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest4 = value!;
                             radiasiBukanPengion = "Ya";
+                            radiasiBukanPengionController.text = "";
                           });
                         },
                       ),
@@ -207,10 +292,34 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest4 = value!;
                             radiasiBukanPengion = "Tidak";
+                            radiasiBukanPengionController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest4 = Question.none;
+                              });
+                            },
+                            controller: radiasiBukanPengionController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -227,6 +336,7 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest5 = value!;
                             radiasiPengion = "Ya";
+                            radiasiPengionController.text = "";
                           });
                         },
                       ),
@@ -238,10 +348,34 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest5 = value!;
                             radiasiPengion = "Tidak";
+                            radiasiPengionController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest5 = Question.none;
+                              });
+                            },
+                            controller: radiasiPengionController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -258,6 +392,7 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest6 = value!;
                             getaranLokal = "Ya";
+                            getaranLokalController.text = "";
                           });
                         },
                       ),
@@ -269,10 +404,34 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest6 = value!;
                             getaranLokal = "Tidak";
+                            getaranLokalController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest6 = Question.none;
+                              });
+                            },
+                            controller: getaranLokalController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -289,6 +448,7 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest7 = value!;
                             getaranTubuh = "Ya";
+                            getaranTubuhController.text = "";
                           });
                         },
                       ),
@@ -300,10 +460,34 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest7 = value!;
                             getaranTubuh = "Tidak";
+                            getaranTubuhController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest7 = Question.none;
+                              });
+                            },
+                            controller: getaranTubuhController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -319,6 +503,7 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest8 = value!;
                             ketinggian = "Ya";
+                            ketinggianController.text = "";
                           });
                         },
                       ),
@@ -330,10 +515,34 @@ class _FisikState extends State<Fisik> {
                           setState(() {
                             _quest8 = value!;
                             ketinggian = "Tidak";
+                            ketinggianController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest8 = Question.none;
+                              });
+                            },
+                            controller: ketinggianController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -409,14 +618,29 @@ class _FisikState extends State<Fisik> {
 
   saveButton() async {
     FisikModel data = FisikModel(
-      kebisingan: kebisingan,
-      suhuPanas: suhuPanas,
-      suhuDingin: suhuDingin,
-      radiasiBukanPengion: radiasiBukanPengion,
-      radiasiPengion: radiasiPengion,
-      getaranLokal: getaranLokal,
-      getaranSeluruhTubuh: getaranTubuh,
-      ketinggian: ketinggian,
+      kebisingan: kebisinganController.text != ""
+          ? kebisinganController.text
+          : kebisingan,
+      suhuPanas:
+          suhuPanasController.text != "" ? suhuPanasController.text : suhuPanas,
+      suhuDingin: suhuDinginController.text != ""
+          ? suhuDinginController.text
+          : suhuDingin,
+      radiasiBukanPengion: radiasiBukanPengionController.text != ""
+          ? radiasiBukanPengionController.text
+          : radiasiBukanPengion,
+      radiasiPengion: radiasiPengionController.text != ""
+          ? radiasiPengionController.text
+          : radiasiPengion,
+      getaranLokal: getaranLokalController.text != ""
+          ? getaranLokalController.text
+          : getaranLokal,
+      getaranSeluruhTubuh: getaranTubuhController.text != ""
+          ? getaranTubuhController.text
+          : getaranTubuh,
+      ketinggian: ketinggianController.text != ""
+          ? ketinggianController.text
+          : ketinggian,
       lainLain: lainlain.text,
     );
 

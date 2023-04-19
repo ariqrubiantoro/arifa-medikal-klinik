@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
 
-enum Question { ya, tidak }
+enum Question { ya, tidak, none }
 
 class Kimia extends StatefulWidget {
   const Kimia({this.pasienId, super.key});
@@ -40,6 +40,17 @@ class _KimiaState extends State<Kimia> {
   String cairanPembersih = "Tidak";
   String pestisida = "Tidak";
   String uapLogam = "Tidak";
+
+  TextEditingController debuAnorganikController = TextEditingController();
+  TextEditingController debuOrganikController = TextEditingController();
+  TextEditingController asapController = TextEditingController();
+  TextEditingController logamBeratController = TextEditingController();
+  TextEditingController pelarutOrganikController = TextEditingController();
+  TextEditingController iritanAsamController = TextEditingController();
+  TextEditingController iritanBasaController = TextEditingController();
+  TextEditingController cairanPembersihController = TextEditingController();
+  TextEditingController pestisidaController = TextEditingController();
+  TextEditingController uapLogamController = TextEditingController();
 
   final lainlain = TextEditingController();
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
@@ -106,6 +117,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest1 = value!;
                             debuAnorganik = "Ya";
+                            debuAnorganikController.
                           });
                         },
                       ),
@@ -121,6 +133,29 @@ class _KimiaState extends State<Kimia> {
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest1 = Question.none;
+                              });
+                            },
+                            controller: debuAnorganikController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -152,6 +187,29 @@ class _KimiaState extends State<Kimia> {
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest2 = Question.none;
+                              });
+                            },
+                            controller: debuOrganikController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -182,6 +240,29 @@ class _KimiaState extends State<Kimia> {
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest3 = Question.none;
+                              });
+                            },
+                            controller: asapController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -213,6 +294,29 @@ class _KimiaState extends State<Kimia> {
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest4 = Question.none;
+                              });
+                            },
+                            controller: logamBeratController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -244,6 +348,29 @@ class _KimiaState extends State<Kimia> {
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest5 = Question.none;
+                              });
+                            },
+                            controller: pelarutOrganikController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -275,6 +402,29 @@ class _KimiaState extends State<Kimia> {
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest6 = Question.none;
+                              });
+                            },
+                            controller: iritanAsamController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -306,6 +456,29 @@ class _KimiaState extends State<Kimia> {
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest7 = Question.none;
+                              });
+                            },
+                            controller: iritanBasaController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -337,6 +510,29 @@ class _KimiaState extends State<Kimia> {
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest8 = Question.none;
+                              });
+                            },
+                            controller: cairanPembersihController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -367,6 +563,29 @@ class _KimiaState extends State<Kimia> {
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest9 = Question.none;
+                              });
+                            },
+                            controller: pestisidaController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -398,6 +617,29 @@ class _KimiaState extends State<Kimia> {
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest10 = Question.none;
+                              });
+                            },
+                            controller: uapLogamController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -473,16 +715,32 @@ class _KimiaState extends State<Kimia> {
 
   saveButton() async {
     KimiaModel data = KimiaModel(
-      debuAnorganik: debuAnorganik,
-      debuOrganik: debuOrganik,
-      asap: asap,
-      logamBerat: logamBerat,
-      pelarutOrganik: pelarutOrganik,
-      iritanAsam: iritanAsam,
-      iritanBasa: iritanBasa,
-      cairanPembersih: cairanPembersih,
-      pestisida: pestisida,
-      uapLogam: uapLogam,
+      debuAnorganik: debuAnorganikController.text != ""
+          ? debuAnorganikController.text
+          : debuAnorganik,
+      debuOrganik: debuOrganikController.text != ""
+          ? debuOrganikController.text
+          : debuOrganik,
+      asap: asapController.text != "" ? asapController.text : asap,
+      logamBerat: logamBeratController.text != ""
+          ? logamBeratController.text
+          : logamBerat,
+      pelarutOrganik: pelarutOrganikController.text != ""
+          ? pelarutOrganikController.text
+          : pelarutOrganik,
+      iritanAsam: iritanAsamController.text != ""
+          ? iritanAsamController.text
+          : iritanAsam,
+      iritanBasa: iritanBasaController.text != ""
+          ? iritanBasaController.text
+          : iritanBasa,
+      cairanPembersih: cairanPembersihController.text != ""
+          ? cairanPembersihController.text
+          : cairanPembersih,
+      pestisida:
+          pestisidaController.text != "" ? pestisidaController.text : pestisida,
+      uapLogam:
+          uapLogamController.text != "" ? uapLogamController.text : uapLogam,
       lainLain: lainlain.text,
     );
 
