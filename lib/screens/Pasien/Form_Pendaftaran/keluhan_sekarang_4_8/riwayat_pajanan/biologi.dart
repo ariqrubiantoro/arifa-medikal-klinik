@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
 
-enum Question { ya, tidak }
+enum Question { ya, tidak, none }
 
 class Biologi extends StatefulWidget {
   const Biologi({this.idPasien, super.key});
@@ -29,6 +29,11 @@ class _BiologiState extends State<Biologi> {
   String nyamuk = "Tidak";
   String limbah = "Tidak";
   final lainlain = TextEditingController();
+
+  TextEditingController bakteriController = TextEditingController();
+  TextEditingController darahController = TextEditingController();
+  TextEditingController nyamukController = TextEditingController();
+  TextEditingController limbahController = TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
@@ -94,6 +99,7 @@ class _BiologiState extends State<Biologi> {
                           setState(() {
                             _quest1 = value!;
                             bakteri = "Ya";
+                            bakteriController.text = "";
                           });
                         },
                       ),
@@ -105,10 +111,34 @@ class _BiologiState extends State<Biologi> {
                           setState(() {
                             _quest1 = value!;
                             bakteri = "Tidak";
+                            bakteriController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest1 = Question.none;
+                              });
+                            },
+                            controller: bakteriController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -125,6 +155,7 @@ class _BiologiState extends State<Biologi> {
                           setState(() {
                             _quest2 = value!;
                             darah = "Ya";
+                            darahController.text = "";
                           });
                         },
                       ),
@@ -136,10 +167,34 @@ class _BiologiState extends State<Biologi> {
                           setState(() {
                             _quest2 = value!;
                             darah = "Tidak";
+                            darahController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest2 = Question.none;
+                              });
+                            },
+                            controller: darahController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -156,6 +211,7 @@ class _BiologiState extends State<Biologi> {
                           setState(() {
                             _quest3 = value!;
                             nyamuk = "Ya";
+                            nyamukController.text = "";
                           });
                         },
                       ),
@@ -167,10 +223,34 @@ class _BiologiState extends State<Biologi> {
                           setState(() {
                             _quest3 = value!;
                             nyamuk = "Tidak";
+                            nyamukController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest3 = Question.none;
+                              });
+                            },
+                            controller: nyamukController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -187,6 +267,7 @@ class _BiologiState extends State<Biologi> {
                           setState(() {
                             _quest4 = value!;
                             limbah = "Ya";
+                            limbahController.text = "";
                           });
                         },
                       ),
@@ -198,10 +279,34 @@ class _BiologiState extends State<Biologi> {
                           setState(() {
                             _quest4 = value!;
                             limbah = "Tidak";
+                            limbahController.text = "";
                           });
                         },
                       ),
                       textDefault("Tidak", Colors.black, 13, FontWeight.normal),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest4 = Question.none;
+                              });
+                            },
+                            controller: limbahController,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -277,10 +382,10 @@ class _BiologiState extends State<Biologi> {
 
   saveButton() async {
     BiologiModel data = BiologiModel(
-      bakteri: bakteri,
-      darah: darah,
-      nyamuk: nyamuk,
-      limbah: limbah,
+      bakteri: bakteriController.text != "" ? bakteriController.text : bakteri,
+      darah: darahController.text != "" ? darahController.text : darah,
+      nyamuk: nyamukController.text != "" ? nyamukController.text : nyamuk,
+      limbah: limbahController.text != "" ? limbahController.text : limbah,
       lainLain: lainlain.text,
     );
 

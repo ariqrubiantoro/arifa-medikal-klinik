@@ -138,23 +138,25 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         width: 10,
                       ),
                       Expanded(
-                          child: Container(
-                        height: 45,
-                        padding: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                          onTap: () {
-                            setState(() {
-                              _quest1 = 0;
-                            });
-                          },
-                          controller: cervicalKiriF,
-                          maxLength: 10,
-                          decoration: InputDecoration(border: InputBorder.none),
+                        child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest1 = 0;
+                              });
+                            },
+                            controller: cervicalKiriF,
+                            maxLength: 10,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
                         ),
-                      ))
+                      )
                     ],
                   ),
                   SizedBox(
