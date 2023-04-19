@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
 
-enum Question { ya, tidak }
+enum Question { ya, tidak, none }
 
 class Psikologis extends StatefulWidget {
   const Psikologis({this.idPasien, super.key});
@@ -36,6 +36,16 @@ class _PsikologisState extends State<Psikologis> {
   String konflikDalamKeluarga = "Tidak";
 
   final lainlain = TextEditingController();
+
+  TextEditingController bebanKerjaController = TextEditingController();
+  TextEditingController pekerjaanTidakSesuaiController =
+      TextEditingController();
+  TextEditingController ketidakjelasanTugasController = TextEditingController();
+  TextEditingController hambatanJenjangController = TextEditingController();
+  TextEditingController bekerjaGiliranController = TextEditingController();
+  TextEditingController konflikDenganTemanController = TextEditingController();
+  TextEditingController konflikDalamKeluargaController =
+      TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
@@ -104,6 +114,7 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest1 = value!;
                               bebanKerja = "Ya";
+                              bebanKerjaController.text = "";
                             });
                           },
                         ),
@@ -115,11 +126,35 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest1 = value!;
                               bebanKerja = "Tidak";
+                              bebanKerjaController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest1 = Question.none;
+                                });
+                              },
+                              controller: bebanKerjaController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -139,6 +174,7 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest2 = value!;
                               pekerjaanTidakSesuai = "Ya";
+                              pekerjaanTidakSesuaiController.text = "";
                             });
                           },
                         ),
@@ -150,11 +186,35 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest2 = value!;
                               pekerjaanTidakSesuai = "Tidak";
+                              pekerjaanTidakSesuaiController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest2 = Question.none;
+                                });
+                              },
+                              controller: pekerjaanTidakSesuaiController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -171,6 +231,7 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest3 = value!;
                               ketidakjelasanTugas = "Ya";
+                              ketidakjelasanTugasController.text = "";
                             });
                           },
                         ),
@@ -182,11 +243,35 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest3 = value!;
                               ketidakjelasanTugas = "Tidak";
+                              ketidakjelasanTugasController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest3 = Question.none;
+                                });
+                              },
+                              controller: ketidakjelasanTugasController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -203,6 +288,7 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest4 = value!;
                               hambatanJenjang = "Ya";
+                              hambatanJenjangController.text = "";
                             });
                           },
                         ),
@@ -214,11 +300,35 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest4 = value!;
                               hambatanJenjang = "Tidak";
+                              hambatanJenjangController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest4 = Question.none;
+                                });
+                              },
+                              controller: hambatanJenjangController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -235,6 +345,7 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest5 = value!;
                               bekerjaGiliran = "Ya";
+                              bekerjaGiliranController.text = "";
                             });
                           },
                         ),
@@ -246,11 +357,35 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest5 = value!;
                               bekerjaGiliran = "Tidak";
+                              bekerjaGiliranController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest5 = Question.none;
+                                });
+                              },
+                              controller: bekerjaGiliranController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -267,6 +402,7 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest6 = value!;
                               konflikDenganTeman = "Ya";
+                              konflikDenganTemanController.text = "";
                             });
                           },
                         ),
@@ -278,11 +414,35 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest6 = value!;
                               konflikDenganTeman = "Tidak";
+                              konflikDenganTemanController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest6 = Question.none;
+                                });
+                              },
+                              controller: konflikDenganTemanController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -299,6 +459,7 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest7 = value!;
                               konflikDalamKeluarga = "Ya";
+                              konflikDalamKeluargaController.text = "";
                             });
                           },
                         ),
@@ -310,11 +471,35 @@ class _PsikologisState extends State<Psikologis> {
                             setState(() {
                               _quest7 = value!;
                               konflikDalamKeluarga = "Tidak";
+                              konflikDalamKeluargaController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest7 = Question.none;
+                                });
+                              },
+                              controller: konflikDalamKeluargaController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -390,13 +575,27 @@ class _PsikologisState extends State<Psikologis> {
 
   saveButton() async {
     PsikologiModel data = PsikologiModel(
-      bebanKerja: bebanKerja,
-      pekerjaanTidakSesuai: pekerjaanTidakSesuai,
-      ketidakjelasanTugas: ketidakjelasanTugas,
-      hamabatanJenjangKarir: hambatanJenjang,
-      shift: bekerjaGiliran,
-      konflikRekanKerja: konflikDenganTeman,
-      konflikKeluarga: konflikDalamKeluarga,
+      bebanKerja: bebanKerjaController.text != ""
+          ? bebanKerjaController.text
+          : bebanKerja,
+      pekerjaanTidakSesuai: pekerjaanTidakSesuaiController.text != ""
+          ? pekerjaanTidakSesuaiController.text
+          : pekerjaanTidakSesuai,
+      ketidakjelasanTugas: ketidakjelasanTugasController.text != ""
+          ? ketidakjelasanTugasController.text
+          : ketidakjelasanTugas,
+      hamabatanJenjangKarir: hambatanJenjangController.text != ""
+          ? hambatanJenjangController.text
+          : hambatanJenjang,
+      shift: bekerjaGiliranController.text != ""
+          ? bekerjaGiliranController.text
+          : bekerjaGiliran,
+      konflikRekanKerja: konflikDenganTemanController.text != ""
+          ? konflikDenganTemanController.text
+          : konflikDenganTeman,
+      konflikKeluarga: konflikDalamKeluargaController.text != ""
+          ? konflikDalamKeluargaController.text
+          : konflikDalamKeluarga,
       lainLain: lainlain.text,
     );
 

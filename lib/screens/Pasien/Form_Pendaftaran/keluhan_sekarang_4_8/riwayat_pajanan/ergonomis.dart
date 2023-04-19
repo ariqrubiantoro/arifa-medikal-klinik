@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
 
-enum Question { ya, tidak }
+enum Question { ya, tidak, none }
 
 class Ergonomis extends StatefulWidget {
   const Ergonomis({this.idPasien, super.key});
@@ -36,6 +36,14 @@ class _ErgonomisState extends State<Ergonomis> {
   String bekerjaDenganLayar = "Tidak";
 
   final lainlain = TextEditingController();
+
+  TextEditingController gerakanBerulangController = TextEditingController();
+  TextEditingController angkatAngkutBeratController = TextEditingController();
+  TextEditingController dudukLamaController = TextEditingController();
+  TextEditingController berdiriLamaController = TextEditingController();
+  TextEditingController posisiTubuhController = TextEditingController();
+  TextEditingController pencahayaanController = TextEditingController();
+  TextEditingController bekerjaDenganLayarController = TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
@@ -101,6 +109,7 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest1 = value!;
                               gerakanBerulang = "Ya";
+                              gerakanBerulangController.text = "";
                             });
                           },
                         ),
@@ -112,11 +121,35 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest1 = value!;
                               gerakanBerulang = "Tidak";
+                              gerakanBerulangController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest1 = Question.none;
+                                });
+                              },
+                              controller: gerakanBerulangController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -133,6 +166,7 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest2 = value!;
                               angkatAngkutBerat = "Ya";
+                              angkatAngkutBeratController.text = "";
                             });
                           },
                         ),
@@ -144,11 +178,35 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest2 = value!;
                               angkatAngkutBerat = "Tidak";
+                              angkatAngkutBeratController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest2 = Question.none;
+                                });
+                              },
+                              controller: angkatAngkutBeratController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -165,6 +223,7 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest3 = value!;
                               dudukLama = "Ya";
+                              dudukLamaController.text = "";
                             });
                           },
                         ),
@@ -176,11 +235,35 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest3 = value!;
                               dudukLama = "Tidak";
+                              dudukLamaController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest3 = Question.none;
+                                });
+                              },
+                              controller: dudukLamaController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -197,6 +280,7 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest4 = value!;
                               berdiriLama = "Ya";
+                              berdiriLamaController.text = "";
                             });
                           },
                         ),
@@ -208,11 +292,35 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest4 = value!;
                               berdiriLama = "Tidak";
+                              berdiriLamaController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest4 = Question.none;
+                                });
+                              },
+                              controller: berdiriLamaController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -229,6 +337,7 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest5 = value!;
                               posisiTubuh = "Ya";
+                              posisiTubuhController.text = "";
                             });
                           },
                         ),
@@ -240,11 +349,35 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest5 = value!;
                               posisiTubuh = "Tidak";
+                              posisiTubuhController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest5 = Question.none;
+                                });
+                              },
+                              controller: posisiTubuhController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -261,6 +394,7 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest6 = value!;
                               pencahayaan = "Ya";
+                              pencahayaanController.text = "";
                             });
                           },
                         ),
@@ -272,11 +406,35 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest6 = value!;
                               pencahayaan = "Tidak";
+                              pencahayaanController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest6 = Question.none;
+                                });
+                              },
+                              controller: pencahayaanController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -296,6 +454,7 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest7 = value!;
                               bekerjaDenganLayar = "Ya";
+                              bekerjaDenganLayarController.text = "";
                             });
                           },
                         ),
@@ -307,11 +466,35 @@ class _ErgonomisState extends State<Ergonomis> {
                             setState(() {
                               _quest7 = value!;
                               bekerjaDenganLayar = "Tidak";
+                              bekerjaDenganLayarController.text = "";
                             });
                           },
                         ),
                         textDefault(
                             "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest7 = Question.none;
+                                });
+                              },
+                              controller: bekerjaDenganLayarController,
+                              maxLength: 10,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -387,13 +570,26 @@ class _ErgonomisState extends State<Ergonomis> {
 
   saveButton() async {
     ErgonomisModel data = ErgonomisModel(
-      gerakanBerulang: gerakanBerulang,
-      angkatBerat: angkatAngkutBerat,
-      dudukLama: dudukLama,
-      berdiriLama: berdiriLama,
-      posisiTubuh: posisiTubuh,
-      pencahayaanTidakSesuai: pencahayaan,
-      bekerjaDenganLayar: bekerjaDenganLayar,
+      gerakanBerulang: gerakanBerulangController.text != ""
+          ? gerakanBerulangController.text
+          : gerakanBerulang,
+      angkatBerat: angkatAngkutBeratController.text != ""
+          ? angkatAngkutBeratController.text
+          : angkatAngkutBerat,
+      dudukLama:
+          dudukLamaController.text != "" ? dudukLamaController.text : dudukLama,
+      berdiriLama: berdiriLamaController.text != ""
+          ? berdiriLamaController.text
+          : berdiriLama,
+      posisiTubuh: posisiTubuhController.text != ""
+          ? posisiTubuhController.text
+          : posisiTubuh,
+      pencahayaanTidakSesuai: pencahayaanController.text != ""
+          ? pencahayaanController.text
+          : pencahayaan,
+      bekerjaDenganLayar: bekerjaDenganLayarController.text != ""
+          ? bekerjaDenganLayarController.text
+          : bekerjaDenganLayar,
       lainLain: lainlain.text,
     );
 

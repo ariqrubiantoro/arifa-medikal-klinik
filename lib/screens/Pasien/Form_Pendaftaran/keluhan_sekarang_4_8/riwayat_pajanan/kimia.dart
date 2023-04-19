@@ -117,7 +117,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest1 = value!;
                             debuAnorganik = "Ya";
-                            debuAnorganikController.
+                            debuAnorganikController.text = "";
                           });
                         },
                       ),
@@ -129,6 +129,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest1 = value!;
                             debuAnorganik = "Tidak";
+                            debuAnorganikController.text = "";
                           });
                         },
                       ),
@@ -172,6 +173,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest2 = value!;
                             debuOrganik = "Ya";
+                            debuOrganikController.text = "";
                           });
                         },
                       ),
@@ -183,6 +185,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest2 = value!;
                             debuOrganik = "Tidak";
+                            debuOrganikController.text = "";
                           });
                         },
                       ),
@@ -225,6 +228,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest3 = value!;
                             asap = "Ya";
+                            asapController.text = "";
                           });
                         },
                       ),
@@ -236,6 +240,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest3 = value!;
                             asap = "Tidak";
+                            asapController.text = "";
                           });
                         },
                       ),
@@ -279,6 +284,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest4 = value!;
                             logamBerat = "Ya";
+                            logamBeratController.text = "";
                           });
                         },
                       ),
@@ -290,6 +296,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest4 = value!;
                             logamBerat = "Tidak";
+                            logamBeratController.text = "";
                           });
                         },
                       ),
@@ -333,6 +340,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest5 = value!;
                             pelarutOrganik = "Ya";
+                            pelarutOrganikController.text = "";
                           });
                         },
                       ),
@@ -344,6 +352,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest5 = value!;
                             pelarutOrganik = "Tidak";
+                            pelarutOrganikController.text = "";
                           });
                         },
                       ),
@@ -387,6 +396,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest6 = value!;
                             iritanAsam = "Ya";
+                            iritanAsamController.text = "";
                           });
                         },
                       ),
@@ -398,6 +408,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest6 = value!;
                             iritanAsam = "Tidak";
+                            iritanAsamController.text = "";
                           });
                         },
                       ),
@@ -441,6 +452,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest7 = value!;
                             iritanBasa = "Ya";
+                            iritanBasaController.text = "";
                           });
                         },
                       ),
@@ -452,6 +464,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest7 = value!;
                             iritanBasa = "Tidak";
+                            iritanBasaController.text = "";
                           });
                         },
                       ),
@@ -495,6 +508,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest8 = value!;
                             cairanPembersih = "Ya";
+                            cairanPembersihController.text = "";
                           });
                         },
                       ),
@@ -506,6 +520,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest8 = value!;
                             cairanPembersih = "Tidak";
+                            cairanPembersihController.text = "";
                           });
                         },
                       ),
@@ -548,6 +563,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest9 = value!;
                             pestisida = "Ya";
+                            pestisidaController.text = "";
                           });
                         },
                       ),
@@ -559,6 +575,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest9 = value!;
                             pestisida = "Tidak";
+                            pestisidaController.text = "";
                           });
                         },
                       ),
@@ -602,6 +619,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest10 = value!;
                             uapLogam = "Ya";
+                            uapLogamController.text = "";
                           });
                         },
                       ),
@@ -613,6 +631,7 @@ class _KimiaState extends State<Kimia> {
                           setState(() {
                             _quest10 = value!;
                             uapLogam = "Tidak";
+                            uapLogamController.text = "";
                           });
                         },
                       ),
