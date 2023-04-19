@@ -597,4 +597,102 @@ class FirebaseFirestoreService {
           snapshot.id, snapshot.data() as Map<String, dynamic>);
     }
   }
+
+  Future<dynamic> deletePasien(String idPasien) async {
+    await firestore.collection('pasien').doc(idPasien).delete();
+    await firestore.collection('penyakitTerdahulu').doc(idPasien).delete();
+    await firestore.collection('riwayatKebiasaan').doc(idPasien).delete();
+    await firestore.collection('penyakitKeluarga').doc(idPasien).delete();
+    await firestore.collection('pemeriksaan').doc(idPasien).delete();
+    await firestore
+        .collection('kesimpulanDerajatKesehatan')
+        .doc(idPasien)
+        .delete();
+    await firestore.collection('kelayakanKerja').doc(idPasien).delete();
+    await firestore.collection('ajuran').doc(idPasien).delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanUmum')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanTHT')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanRonggaPerut')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanRonggaDada')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanRefleks')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanMata')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanKelenjarGetah')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanGentalia')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanAnggotaGerak')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('biologi')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('ergonomis')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('fisik')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('kimia')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('psikologi')
+        .doc(idPasien)
+        .delete();
+  }
 }
