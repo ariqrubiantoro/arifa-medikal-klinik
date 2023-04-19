@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/add_pasien_profil.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_THT.dart';
@@ -25,6 +27,7 @@ import 'package:arifa_medikal_klink_3/screens/formulir/form1.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../components/widget/text.dart';
 import '../model/ajuran_model.dart';
 import '../model/biologi_model.dart';
 import '../model/ergonomis_model.dart';
@@ -130,14 +133,11 @@ class _MenuUtamaState extends State<MenuUtama> {
             itemBuilder: (context, index) {
               final DocumentSnapshot pasienSnapshots =
                   pasienSnapshot.data!.docs[index];
-              return GestureDetector(
+              return InkWell(
                 onTap: () {
                   cekData(pasienSnapshots.id, pasienSnapshots);
-                  // Navigator.of(context)
-                  //     .push(MaterialPageRoute(builder: (context) {
-                  //   return DetailPasien(pasienSnapshots: pasienSnapshots);
-                  // }));
                 },
+                onLongPress: () => showDialogDelete(pasienSnapshots.id),
                 child: Card(
                   child: Column(children: [
                     Text(pasienSnapshots['namaPasien']),
@@ -147,42 +147,91 @@ class _MenuUtamaState extends State<MenuUtama> {
               );
             },
           );
-          // return ListView(
-          //     children:
-          //         pasienSnapshot.data!.docs.map((DocumentSnapshot document) {
-          //   Map<String, dynamic> data =
-          //       document.data()! as Map<String, dynamic>;
-          //   return GestureDetector(
-          //     onTap: () {
-          //       Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => DetailPasien()));
-          //     },
-          //     child: Card(
-          //       child: Column(
-          //           crossAxisAlignment: CrossAxisAlignment.center,
-          //           children: [
-          //             Text(
-          //               data['namaPasien'],
-          //             ),
-          //             Text(data['NIK']),
-          //             Text(data['umur'])
-          //           ]),
-          //     ),
-          //   );
-          // }).toList());
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-          //   return Form1();
-          // }));
           Navigator.of(context).push(MaterialPageRoute(builder: (_) {
             return AddPasienProfil();
           }));
         },
         child: Icon(Icons.add),
       ),
+    );
+  }
+
+  void showDialogDelete(String id) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          actionsPadding: EdgeInsets.all(10),
+          title: Container(
+            child: Icon(
+              Icons.delete_outline,
+              color: Colors.red,
+              size: 70,
+            ),
+          ),
+          content: Text(
+            "Apakah Anda yakin ingin\nmenghapus data?",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontFamily: 'poppins',
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
+          ),
+          actions: <Widget>[
+            Row(
+              children: [
+                Expanded(
+                    child: InkWell(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Center(
+                        child: textDefault(
+                            "Tidak", Colors.black, 13, FontWeight.bold),
+                      )),
+                )),
+                SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                    child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      firestore.deletePasien(id);
+                      Navigator.of(context).pop();
+                      // .then((value) => Navigator.pushAndRemoveUntil(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => MenuUtama(),
+                      //     ),
+                      //     (route) => false));
+                    });
+                  },
+                  child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Center(
+                        child: textDefault(
+                            "Ya, Hapus", Colors.white, 14, FontWeight.bold),
+                      )),
+                )),
+              ],
+            )
+          ],
+        );
+      },
     );
   }
 
