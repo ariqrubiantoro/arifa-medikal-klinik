@@ -211,7 +211,7 @@ class _MenuUtamaState extends State<MenuUtama> {
     _kesimpulanDerajatKesehatan =
         await firestore.getKesimpulanDerajatKesehatan(id);
 
-    setState(() {});
+    // setState(() {});
 
     if (_penyakitTerdahulu == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
