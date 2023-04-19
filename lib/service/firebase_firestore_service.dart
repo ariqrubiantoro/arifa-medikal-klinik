@@ -45,13 +45,17 @@ class FirebaseFirestoreService {
     return penyakitTerdahulu;
   }
 
-  Future<PenyakitTerdahuluModel> getPenyakitTerdahulu(String idPasien) async {
+  Future<PenyakitTerdahuluModel?> getPenyakitTerdahulu(String idPasien) async {
     DocumentReference doc =
         firestore.collection('penyakitTerdahulu').doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
 
-    return PenyakitTerdahuluModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PenyakitTerdahuluModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<PenyakitKeluargaModel> setPenyakitKeluarga(
@@ -64,13 +68,16 @@ class FirebaseFirestoreService {
     return penyakitKeluarga;
   }
 
-  Future<PenyakitKeluargaModel> getPenyakitKeluarga(String idPasien) async {
+  Future<PenyakitKeluargaModel?> getPenyakitKeluarga(String idPasien) async {
     DocumentReference doc =
         firestore.collection('penyakitKeluarga').doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return PenyakitKeluargaModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PenyakitKeluargaModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<RiwayatKebiasaanModel> setRiwayatKebiasaan(
@@ -83,16 +90,17 @@ class FirebaseFirestoreService {
     return riwayatKebiasaan;
   }
 
-  Future<RiwayatKebiasaanModel> getRiwayatKebiasaan(String idPasien) async {
+  Future<RiwayatKebiasaanModel?> getRiwayatKebiasaan(String idPasien) async {
     DocumentReference doc =
         firestore.collection('riwayatKebiasaan').doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
 
-    RiwayatKebiasaanModel data = RiwayatKebiasaanModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
-    print("meroko ${data.merokok!.batang}");
-
-    return data;
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return RiwayatKebiasaanModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<PemeriksaanUmumModel> setPemeriksaanUmum(
@@ -109,7 +117,7 @@ class FirebaseFirestoreService {
     return pemeriksaanUmum;
   }
 
-  Future<PemeriksaanUmumModel> getPemeriksaanUmum(String idPasien) async {
+  Future<PemeriksaanUmumModel?> getPemeriksaanUmum(String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
         .doc('keadaanUmum')
@@ -117,8 +125,12 @@ class FirebaseFirestoreService {
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
 
-    return PemeriksaanUmumModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PemeriksaanUmumModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<PemeriksaanMataModel> setPemeriksaanMata(
@@ -135,16 +147,19 @@ class FirebaseFirestoreService {
     return pemeriksaanMata;
   }
 
-  Future<PemeriksaanMataModel> getPemeriksaanMata(String idPasien) async {
+  Future<PemeriksaanMataModel?> getPemeriksaanMata(String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
         .doc('keadaanUmum')
         .collection('pemeriksaanMata')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return PemeriksaanMataModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PemeriksaanMataModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<PemeriksaanTHTModel> setPemeriksaanTHT(
@@ -161,16 +176,19 @@ class FirebaseFirestoreService {
     return pemeriksaanTHT;
   }
 
-  Future<PemeriksaanTHTModel> getPemeriksaanTHT(String idPasien) async {
+  Future<PemeriksaanTHTModel?> getPemeriksaanTHT(String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
         .doc('keadaanUmum')
         .collection('pemeriksaanTHT')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return PemeriksaanTHTModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PemeriksaanTHTModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<PemeriksaanRonggaDadaModel> setPemeriksaanRonggaDada(
@@ -187,7 +205,7 @@ class FirebaseFirestoreService {
     return pemeriksaanRonggaDada;
   }
 
-  Future<PemeriksaanRonggaDadaModel> getPemeriksaanRonggaDada(
+  Future<PemeriksaanRonggaDadaModel?> getPemeriksaanRonggaDada(
       String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
@@ -195,9 +213,12 @@ class FirebaseFirestoreService {
         .collection('pemeriksaanRonggaDada')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return PemeriksaanRonggaDadaModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PemeriksaanRonggaDadaModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<PemeriksaanRonggaPerutModel> setPemeriksaanRonggaPerut(
@@ -214,7 +235,7 @@ class FirebaseFirestoreService {
     return pemeriksaanRonggaPerut;
   }
 
-  Future<PemeriksaanRonggaPerutModel> getPemeriksaanRonggaPerut(
+  Future<PemeriksaanRonggaPerutModel?> getPemeriksaanRonggaPerut(
       String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
@@ -222,9 +243,12 @@ class FirebaseFirestoreService {
         .collection('pemeriksaanRonggaPerut')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return PemeriksaanRonggaPerutModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PemeriksaanRonggaPerutModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<PemeriksaanGentaliaModel> setPemeriksaanGentalia(
@@ -241,7 +265,7 @@ class FirebaseFirestoreService {
     return pemeriksaanGentalia;
   }
 
-  Future<PemeriksaanGentaliaModel> getPemeriksaanGentalia(
+  Future<PemeriksaanGentaliaModel?> getPemeriksaanGentalia(
       String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
@@ -249,9 +273,12 @@ class FirebaseFirestoreService {
         .collection('pemeriksaanGentalia')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return PemeriksaanGentaliaModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PemeriksaanGentaliaModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<PemeriksaanAnggotaGerakModel> setPemeriksaanAnggotaGerak(
@@ -268,7 +295,7 @@ class FirebaseFirestoreService {
     return pemeriksaanAnggotaGerak;
   }
 
-  Future<PemeriksaanAnggotaGerakModel> getPemeriksaanAnggotaGerak(
+  Future<PemeriksaanAnggotaGerakModel?> getPemeriksaanAnggotaGerak(
       String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
@@ -276,9 +303,12 @@ class FirebaseFirestoreService {
         .collection('pemeriksaanAnggotaGerak')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return PemeriksaanAnggotaGerakModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PemeriksaanAnggotaGerakModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<PemeriksaanRefleksModel> setPemeriksaanRefleks(
@@ -295,16 +325,20 @@ class FirebaseFirestoreService {
     return pemeriksaanRefleks;
   }
 
-  Future<PemeriksaanRefleksModel> getPemeriksaanRefleks(String idPasien) async {
+  Future<PemeriksaanRefleksModel?> getPemeriksaanRefleks(
+      String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
         .doc('keadaanUmum')
         .collection('pemeriksaanRefleks')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return PemeriksaanRefleksModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PemeriksaanRefleksModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<PemeriksaanKelenjarGetahModel> setPemeriksaanKelenjarGetah(
@@ -321,7 +355,7 @@ class FirebaseFirestoreService {
     return pemeriksaanKelenjarGetah;
   }
 
-  Future<PemeriksaanKelenjarGetahModel> getPemeriksaanKelenjarGetah(
+  Future<PemeriksaanKelenjarGetahModel?> getPemeriksaanKelenjarGetah(
       String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
@@ -329,9 +363,12 @@ class FirebaseFirestoreService {
         .collection('pemeriksaanKelenjarGetah')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return PemeriksaanKelenjarGetahModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PemeriksaanKelenjarGetahModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<FisikModel> setFisik(
@@ -347,16 +384,19 @@ class FirebaseFirestoreService {
     return fisik;
   }
 
-  Future<FisikModel> getFisik(String idPasien) async {
+  Future<FisikModel?> getFisik(String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
         .doc('riwayatPajananPadaPekerjaan')
         .collection('fisik')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return FisikModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return FisikModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<KimiaModel> setKimia(
@@ -372,16 +412,19 @@ class FirebaseFirestoreService {
     return kimia;
   }
 
-  Future<KimiaModel> getKimia(String idPasien) async {
+  Future<KimiaModel?> getKimia(String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
         .doc('riwayatPajananPadaPekerjaan')
         .collection('kimia')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return KimiaModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return KimiaModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<BiologiModel> setBiologi(
@@ -397,16 +440,19 @@ class FirebaseFirestoreService {
     return biologi;
   }
 
-  Future<BiologiModel> getBiologi(String idPasien) async {
+  Future<BiologiModel?> getBiologi(String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
         .doc('riwayatPajananPadaPekerjaan')
         .collection('biologi')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return BiologiModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return BiologiModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<PsikologiModel> setPsikologi(
@@ -422,16 +468,19 @@ class FirebaseFirestoreService {
     return psikologi;
   }
 
-  Future<PsikologiModel> getPsikologi(String idPasien) async {
+  Future<PsikologiModel?> getPsikologi(String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
         .doc('riwayatPajananPadaPekerjaan')
         .collection('psikologi')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return PsikologiModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PsikologiModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<ErgonomisModel> setErgonomis(
@@ -447,16 +496,19 @@ class FirebaseFirestoreService {
     return ergonomis;
   }
 
-  Future<ErgonomisModel> getErgonomis(String idPasien) async {
+  Future<ErgonomisModel?> getErgonomis(String idPasien) async {
     DocumentReference doc = firestore
         .collection('keluhan')
         .doc('riwayatPajananPadaPekerjaan')
         .collection('ergonomis')
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return ErgonomisModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return ErgonomisModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<PemeriksaanModel> setPemeriksaan(
@@ -468,12 +520,15 @@ class FirebaseFirestoreService {
     return pemeriksaan;
   }
 
-  Future<PemeriksaanModel> getPemeriksaan(String idPasien) async {
+  Future<PemeriksaanModel?> getPemeriksaan(String idPasien) async {
     DocumentReference doc = firestore.collection('pemeriksaan').doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return PemeriksaanModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return PemeriksaanModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<AjuranModel> setAjuran(
@@ -485,12 +540,15 @@ class FirebaseFirestoreService {
     return ajuran;
   }
 
-  Future<AjuranModel> getAjuran(String idPasien) async {
+  Future<AjuranModel?> getAjuran(String idPasien) async {
     DocumentReference doc = firestore.collection('ajuran').doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return AjuranModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return AjuranModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<KelayakanKerjaModel> setKelayakanKerja(
@@ -504,13 +562,16 @@ class FirebaseFirestoreService {
     return kelayakanKerja;
   }
 
-  Future<KelayakanKerjaModel> getKelayakanKerja(String idPasien) async {
+  Future<KelayakanKerjaModel?> getKelayakanKerja(String idPasien) async {
     DocumentReference doc =
         firestore.collection('kelayakanKerja').doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return KelayakanKerjaModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return KelayakanKerjaModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 
   Future<KesimpulanDerajatKesehatanModel> setKesimpulanDerajatKesehatan(
@@ -524,13 +585,16 @@ class FirebaseFirestoreService {
     return kesimpulanDerajatKesehatan;
   }
 
-  Future<KesimpulanDerajatKesehatanModel> getKesimpulanDerajatKesehatan(
+  Future<KesimpulanDerajatKesehatanModel?> getKesimpulanDerajatKesehatan(
       String idPasien) async {
     DocumentReference doc =
         firestore.collection('kesimpulanDerajatKesehatan').doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
-
-    return KesimpulanDerajatKesehatanModel.fromJson(
-        snapshot.id, snapshot.data() as Map<String, dynamic>);
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return KesimpulanDerajatKesehatanModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
   }
 }

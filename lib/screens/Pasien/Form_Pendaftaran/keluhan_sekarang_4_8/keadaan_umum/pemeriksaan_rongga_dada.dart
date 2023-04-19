@@ -256,6 +256,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questJantung1,
                 onChanged: (value) {
                   setState(() {
+                    batasJantungF.text = "";
                     _questJantung1 = value!;
                     batasJantung = "Normal";
                   });
@@ -267,6 +268,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questJantung1,
                 onChanged: (value) {
                   setState(() {
+                    batasJantungF.text = "";
                     _questJantung1 = value!;
                     batasJantung = "Tidak Normal";
                   });
@@ -307,6 +309,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questJantung2,
                 onChanged: (value) {
                   setState(() {
+                    auskultasiF.text = "";
                     _questJantung2 = value!;
                     auskultasi = "Normal";
                   });
@@ -318,6 +321,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questJantung2,
                 onChanged: (value) {
                   setState(() {
+                    auskultasiF.text = "";
                     _questJantung2 = value!;
                     auskultasi = "Tidak Normal";
                   });
@@ -358,6 +362,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questJantung3,
                 onChanged: (value) {
                   setState(() {
+                    iktusKordisF.text = "";
                     _questJantung3 = value!;
                     iktusKordis = "Normal";
                   });
@@ -369,6 +374,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questJantung3,
                 onChanged: (value) {
                   setState(() {
+                    iktusKordisF.text = "";
                     _questJantung3 = value!;
                     iktusKordis = "Tidak Normal";
                   });
@@ -409,6 +415,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questJantung4,
                 onChanged: (value) {
                   setState(() {
+                    bunyiJantungF.text = "";
                     _questJantung4 = value!;
                     bunyiJantung = "Normal";
                   });
@@ -420,6 +427,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questJantung4,
                 onChanged: (value) {
                   setState(() {
+                    bunyiJantungF.text = "";
                     _questJantung4 = value!;
                     bunyiJantung = "Tidak Normal";
                   });
@@ -460,6 +468,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questJantung5,
                 onChanged: (value) {
                   setState(() {
+                    bunyiNafasF.text = "";
                     _questJantung5 = value!;
                     bunyiNafas = "Ada";
                   });
@@ -471,6 +480,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questJantung5,
                 onChanged: (value) {
                   setState(() {
+                    bunyiNafasF.text = "";
                     _questJantung5 = value!;
                     bunyiNafas = "Tidak Ada";
                   });
@@ -511,6 +521,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questJantung6,
                 onChanged: (value) {
                   setState(() {
+                    lainlainJantungF.text = "";
                     _questJantung6 = value!;
                     bunyiNafas = "Normal";
                   });
@@ -522,6 +533,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questJantung6,
                 onChanged: (value) {
                   setState(() {
+                    lainlainJantungF.text = "";
                     _questJantung6 = value!;
                     bunyiNafas = "Tidak Normal";
                   });
@@ -576,6 +588,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu1,
                 onChanged: (value) {
                   setState(() {
+                    inpeksiKananF.text = "";
                     _questParu1 = value!;
                     inpeksiKanan = "Normal";
                   });
@@ -587,6 +600,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu1,
                 onChanged: (value) {
                   setState(() {
+                    inpeksiKananF.text = "";
                     _questParu1 = value!;
                     inpeksiKanan = "Tidak Normal";
                   });
@@ -627,6 +641,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu2,
                 onChanged: (value) {
                   setState(() {
+                    inpeksiKiriF.text = "";
                     _questParu2 = value!;
                     inpeksiKiri = "Normal";
                   });
@@ -638,6 +653,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu2,
                 onChanged: (value) {
                   setState(() {
+                    inpeksiKiriF.text = "";
                     _questParu2 = value!;
                     inpeksiKiri = "Tidak Normal";
                   });
@@ -678,6 +694,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu3,
                 onChanged: (value) {
                   setState(() {
+                    palpasiKananF.text = "";
                     _questParu3 = value!;
                     palpasiKanan = "Normal";
                   });
@@ -689,6 +706,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu3,
                 onChanged: (value) {
                   setState(() {
+                    palpasiKananF.text = "";
                     _questParu3 = value!;
                     palpasiKanan = "Tidak Normal";
                   });
@@ -729,6 +747,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu4,
                 onChanged: (value) {
                   setState(() {
+                    palpasiKiriF.text = "";
                     _questParu4 = value!;
                     palpasiKiri = "Normal";
                   });
@@ -740,6 +759,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu4,
                 onChanged: (value) {
                   setState(() {
+                    palpasiKiriF.text = "";
                     _questParu4 = value!;
                     palpasiKiri = "Tidak Normal";
                   });
@@ -780,6 +800,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu5,
                 onChanged: (value) {
                   setState(() {
+                    perkusiKananF.text = "";
                     _questParu5 = value!;
                     perkusiKanan = "Normal";
                   });
@@ -791,6 +812,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu5,
                 onChanged: (value) {
                   setState(() {
+                    perkusiKananF.text = "";
                     _questParu5 = value!;
                     perkusiKanan = "Tidak Normal";
                   });
@@ -831,6 +853,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu6,
                 onChanged: (value) {
                   setState(() {
+                    perkusiKiriF.text = "";
                     _questParu6 = value!;
                     perkusiKiri = "Normal";
                   });
@@ -842,6 +865,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu6,
                 onChanged: (value) {
                   setState(() {
+                    perkusiKiriF.text = "";
                     _questParu6 = value!;
                     perkusiKiri = "Tidak Normal";
                   });
@@ -882,6 +906,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu7,
                 onChanged: (value) {
                   setState(() {
+                    auskultasiKananF.text = "";
                     _questParu7 = value!;
                     auskultasiKanan = "Normal";
                   });
@@ -893,6 +918,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu7,
                 onChanged: (value) {
                   setState(() {
+                    auskultasiKananF.text = "";
                     _questParu7 = value!;
                     auskultasiKanan = "Tidak Normal";
                   });
@@ -933,6 +959,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu8,
                 onChanged: (value) {
                   setState(() {
+                    auskultasiKiriF.text = "";
                     _questParu8 = value!;
                     auskultasiKiri = "Normal";
                   });
@@ -944,6 +971,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                 groupValue: _questParu8,
                 onChanged: (value) {
                   setState(() {
+                    auskultasiKiriF.text = "";
                     _questParu8 = value!;
                     auskultasiKiri = "Tidak Normal";
                   });

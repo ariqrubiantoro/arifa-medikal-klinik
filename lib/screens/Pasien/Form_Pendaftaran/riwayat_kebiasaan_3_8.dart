@@ -111,6 +111,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                           onChanged: (value) {
                             setState(() {
                               _quest = value!;
+                              merokokF.text = "";
                               merokok = "Ya";
                               visibleFormMeroko = true;
                             });
@@ -122,6 +123,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                           groupValue: _quest,
                           onChanged: (value) {
                             setState(() {
+                              merokokF.text = "";
                               _quest = value!;
                               merokok = "Tidak";
                               visibleFormMeroko = false;
@@ -268,6 +270,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                           groupValue: _quest2,
                           onChanged: (value) {
                             setState(() {
+                              mirasF.text = "";
                               _quest2 = value!;
                               miras = "Ya";
                               visibleFormMiras = true;
@@ -280,6 +283,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                           groupValue: _quest2,
                           onChanged: (value) {
                             setState(() {
+                              mirasF.text = "";
                               _quest2 = value!;
                               miras = "Tidak";
                               visibleFormMiras = false;
@@ -422,6 +426,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                           groupValue: _quest3,
                           onChanged: (value) {
                             setState(() {
+                              olahragaF.text = "";
                               _quest3 = value!;
                               olahraga = "Ya";
                             });
@@ -433,6 +438,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                           groupValue: _quest3,
                           onChanged: (value) {
                             setState(() {
+                              olahragaF.text = "";
                               _quest3 = value!;
                               olahraga = "Tidak";
                             });

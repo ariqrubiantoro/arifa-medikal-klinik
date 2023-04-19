@@ -119,6 +119,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           onChanged: (value) {
                             setState(() {
                               _quest1 = value!;
+                              inpeksiF.text = "";
                               inpeksi = "Normal";
                               print("inpeksi = $inpeksi");
                             });
@@ -131,6 +132,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest1,
                           onChanged: (value) {
                             setState(() {
+                              inpeksiF.text = "";
                               _quest1 = value!;
                               inpeksi = "Tidak Normal";
                               print("inpeksi = $inpeksi");
@@ -193,6 +195,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest2,
                           onChanged: (value) {
                             setState(() {
+                              auskultasiF.text = "";
                               _quest2 = value!;
                               auskultasi = "Normal";
                             });
@@ -205,6 +208,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest2,
                           onChanged: (value) {
                             setState(() {
+                              auskultasiF.text = "";
                               _quest2 = value!;
                               auskultasi = "Tidak Normal";
                             });
@@ -247,6 +251,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest3,
                           onChanged: (value) {
                             setState(() {
+                              hatiF.text = "";
                               _quest3 = value!;
                               hati = "Normal";
                             });
@@ -259,6 +264,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest3,
                           onChanged: (value) {
                             setState(() {
+                              hatiF.text = "";
                               _quest3 = value!;
                               hati = "Tidak Normal";
                             });
@@ -301,6 +307,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest4,
                           onChanged: (value) {
                             setState(() {
+                              limpaF.text = "";
                               _quest4 = value!;
                               limpa = "Normal";
                             });
@@ -313,6 +320,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest4,
                           onChanged: (value) {
                             setState(() {
+                              limpaF.text = "";
                               _quest4 = value!;
                               limpa = "Tidak Normal";
                             });
@@ -356,6 +364,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest5,
                           onChanged: (value) {
                             setState(() {
+                              ginjalKiriF.text = "";
                               _quest5 = value!;
                               ginjalKiri = "Normal";
                             });
@@ -368,6 +377,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest5,
                           onChanged: (value) {
                             setState(() {
+                              ginjalKiriF.text = "";
                               _quest5 = value!;
                               ginjalKiri = "Tidak Normal";
                             });
@@ -430,6 +440,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest6,
                           onChanged: (value) {
                             setState(() {
+                              ginjalKananF.text = "";
                               _quest6 = value!;
                               ginjalKanan = "Normal";
                             });
@@ -442,6 +453,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest6,
                           onChanged: (value) {
                             setState(() {
+                              ginjalKananF.text = "";
                               _quest6 = value!;
                               ginjalKanan = "Tidak Normal";
                             });
@@ -503,6 +515,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest7,
                           onChanged: (value) {
                             setState(() {
+                              herniaF.text = "";
                               _quest7 = value!;
                               hernia = "Normal";
                             });
@@ -515,6 +528,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest7,
                           onChanged: (value) {
                             setState(() {
+                              herniaF.text = "";
                               _quest7 = value!;
                               hernia = "Tidak Normal";
                             });
@@ -557,6 +571,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest8,
                           onChanged: (value) {
                             setState(() {
+                              tumorF.text = "";
                               _quest8 = value!;
                               tumor = "Normal";
                             });
@@ -569,6 +584,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest8,
                           onChanged: (value) {
                             setState(() {
+                              tumorF.text = "";
                               _quest8 = value!;
                               tumor = "Tidak Normal";
                             });
@@ -611,6 +627,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest9,
                           onChanged: (value) {
                             setState(() {
+                              lainlainF.text = "";
                               _quest9 = value!;
                               lainlain = "Normal";
                             });
@@ -623,6 +640,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                           groupValue: _quest9,
                           onChanged: (value) {
                             setState(() {
+                              lainlainF.text = "";
                               _quest9 = value!;
                               lainlain = "Tidak Normal";
                             });

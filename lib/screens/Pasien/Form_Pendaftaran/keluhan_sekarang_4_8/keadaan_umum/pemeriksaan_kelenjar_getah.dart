@@ -115,6 +115,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest1,
                         onChanged: (value) {
                           setState(() {
+                            cervicalKiriF.text = "";
                             _quest1 = value!;
                             cervicalKiri = "Normal";
                           });
@@ -127,6 +128,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest1,
                         onChanged: (value) {
                           setState(() {
+                            cervicalKiriF.text = "";
                             _quest1 = value!;
                             cervicalKiri = "Tidak Normal";
                           });
@@ -171,6 +173,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest2,
                         onChanged: (value) {
                           setState(() {
+                            cervicalKananF.text = "";
                             _quest2 = value!;
                             cervicalKanan = "Normal";
                           });
@@ -183,6 +186,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest2,
                         onChanged: (value) {
                           setState(() {
+                            cervicalKananF.text = "";
                             _quest2 = value!;
                             cervicalKanan = "Tidak Normal";
                           });
@@ -224,6 +228,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest3,
                         onChanged: (value) {
                           setState(() {
+                            axilaKiriF.text = "";
                             _quest3 = value!;
                             axilaKiri = "Normal";
                           });
@@ -236,6 +241,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest3,
                         onChanged: (value) {
                           setState(() {
+                            axilaKiriF.text = "";
                             _quest3 = value!;
                             axilaKiri = "Tidak Normal";
                           });
@@ -277,6 +283,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest4,
                         onChanged: (value) {
                           setState(() {
+                            axilaKananF.text = "";
                             _quest4 = value!;
                             axilaKanan = "Normal";
                           });
@@ -289,6 +296,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest4,
                         onChanged: (value) {
                           setState(() {
+                            axilaKananF.text = "";
                             _quest4 = value!;
                             axilaKanan = "Tidak Normal";
                           });
@@ -331,6 +339,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest5,
                         onChanged: (value) {
                           setState(() {
+                            supraKiriF.text = "";
                             _quest5 = value!;
                             supraKiri = "Normal";
                           });
@@ -343,6 +352,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest5,
                         onChanged: (value) {
                           setState(() {
+                            supraKiriF.text = "";
                             _quest5 = value!;
                             supraKiri = "Tidak Normal";
                           });
@@ -385,6 +395,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest6,
                         onChanged: (value) {
                           setState(() {
+                            supraKananF.text = "";
                             _quest6 = value!;
                             supraKanan = "Normal";
                           });
@@ -397,6 +408,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest6,
                         onChanged: (value) {
                           setState(() {
+                            supraKananF.text = "";
                             _quest6 = value!;
                             supraKanan = "Tidak Normal";
                           });
@@ -439,6 +451,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest7,
                         onChanged: (value) {
                           setState(() {
+                            infraKiriF.text = "";
                             _quest7 = value!;
                             infraKiri = "Normal";
                           });
@@ -451,6 +464,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest7,
                         onChanged: (value) {
                           setState(() {
+                            infraKiriF.text = "";
                             _quest7 = value!;
                             infraKiri = "Tidak Normal";
                           });
@@ -493,6 +507,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest8,
                         onChanged: (value) {
                           setState(() {
+                            infraKananF.text = "";
                             _quest8 = value!;
                             infraKanan = "Normal";
                           });
@@ -505,6 +520,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest8,
                         onChanged: (value) {
                           setState(() {
+                            infraKananF.text = "";
                             _quest8 = value!;
                             infraKanan = "Tidak Normal";
                           });
@@ -547,6 +563,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest9,
                         onChanged: (value) {
                           setState(() {
+                            inguinalKiriF.text = "";
                             _quest9 = value!;
                             inguinalKiri = "Normal";
                           });
@@ -559,6 +576,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest9,
                         onChanged: (value) {
                           setState(() {
+                            inguinalKiriF.text = "";
                             _quest9 = value!;
                             inguinalKiri = "Tidak Normal";
                           });
@@ -601,6 +619,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest10,
                         onChanged: (value) {
                           setState(() {
+                            inguinalKananF.text = "";
                             _quest10 = value!;
                             inguinalKanan = "Normal";
                           });
@@ -613,6 +632,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         groupValue: _quest10,
                         onChanged: (value) {
                           setState(() {
+                            inguinalKananF.text = "";
                             _quest10 = value!;
                             inguinalKanan = "Tidak Normal";
                           });

@@ -34,17 +34,6 @@ class PemeriksaanModel {
       paru: json['paru'],
     );
   }
-  // PemeriksaanModel.fromJson(Map<String, dynamic> json) {
-  //   pemeriksaanFisik = json['pemeriksaan_fisik'];
-  //   pemeriksaanGigiMulut = json['pemeriksaan_gigi_mulut'];
-  //   pemeriksaanAudioMetri = json['pemeriksaan_audio_metri'];
-  //   pemeriksaanSpirometri = json['pemeriksaan_spirometri'];
-  //   pemeriksaanTreadmill = json['pemeriksaan_treadmill'];
-  //   pemeriksaanLaboratorium = json['pemeriksaan_laboratorium'];
-  //   pemeriksaanXrayJantung = json['pemeriksaan_xray_jantung'];
-  //   paru = json['paru'];
-  // }
-
   Map<String, dynamic> toJson() {
     return {
       'pemeriksaan_fisik': pemeriksaanFisik,

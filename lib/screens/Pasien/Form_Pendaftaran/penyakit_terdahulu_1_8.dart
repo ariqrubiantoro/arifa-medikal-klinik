@@ -124,6 +124,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                             setState(() {
                               _quest = value!;
                               darahTinggi = "Ya";
+                              darahTinggiF.text = "";
                             });
                           },
                         ),
@@ -135,6 +136,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                             setState(() {
                               _quest = value!;
                               darahTinggi = "Tidak Ada";
+                              darahTinggiF.text = "";
                             });
                           },
                         ),
@@ -177,6 +179,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           onChanged: (value) {
                             setState(() {
                               _quest2 = value!;
+                              paruF.text = "";
                               paru = "Ya";
                             });
                           },
@@ -187,6 +190,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest2,
                           onChanged: (value) {
                             setState(() {
+                              paruF.text = "";
                               _quest2 = value!;
                               paru = "Tidak Ada";
                               print(paru);
@@ -231,6 +235,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest3,
                           onChanged: (value) {
                             setState(() {
+                              asamLambungF.text = "";
                               _quest3 = value!;
                               asamLambung = "Ya";
                             });
@@ -243,6 +248,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           onChanged: (value) {
                             setState(() {
                               _quest3 = value!;
+                              asamLambungF.text = "";
                               asamLambung = "Tidak Ada";
                             });
                           },
@@ -285,6 +291,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           onChanged: (value) {
                             setState(() {
                               _quest4 = value!;
+                              alergiF.text = "";
                               alergi = "Ya";
                             });
                           },
@@ -295,6 +302,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest4,
                           onChanged: (value) {
                             setState(() {
+                              alergiF.text = "";
                               _quest4 = value!;
                               alergi = "Tidak Ada";
                             });
@@ -338,6 +346,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest5,
                           onChanged: (value) {
                             setState(() {
+                              riwayatOperasiF.text = "";
                               _quest5 = value!;
                               riwayatOperasi = "Ya";
                             });
@@ -349,6 +358,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest5,
                           onChanged: (value) {
                             setState(() {
+                              riwayatOperasiF.text = "";
                               _quest5 = value!;
                               riwayatOperasi = "Tidak Ada";
                             });
@@ -392,6 +402,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest6,
                           onChanged: (value) {
                             setState(() {
+                              riwayatKecelakaanF.text = "";
                               _quest6 = value!;
                               riwayatKecelakaan = "Ya";
                             });
@@ -403,6 +414,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest6,
                           onChanged: (value) {
                             setState(() {
+                              riwayatKecelakaanF.text = "";
                               _quest6 = value!;
                               riwayatKecelakaan = "Tidak Ada";
                             });
@@ -446,6 +458,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest7,
                           onChanged: (value) {
                             setState(() {
+                              riwayatRawatrsF.text = "";
                               _quest7 = value!;
                               riwayatRawatrs = "Ya";
                             });
@@ -457,6 +470,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest7,
                           onChanged: (value) {
                             setState(() {
+                              riwayatRawatrsF.text = "";
                               _quest7 = value!;
                               riwayatRawatrs = "Tidak Ada";
                             });
@@ -499,6 +513,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest8,
                           onChanged: (value) {
                             setState(() {
+                              hepatitisF.text = "";
                               _quest8 = value!;
                               hepatitis = "Ya";
                             });
@@ -510,6 +525,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest8,
                           onChanged: (value) {
                             setState(() {
+                              hepatitisF.text = "";
                               _quest8 = value!;
                               hepatitis = "Tidak Ada";
                             });
@@ -553,6 +569,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest9,
                           onChanged: (value) {
                             setState(() {
+                              kencingManisF.text = "";
                               _quest9 = value!;
                               kencingManis = "Ya";
                             });
@@ -564,6 +581,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest9,
                           onChanged: (value) {
                             setState(() {
+                              kencingManisF.text = "";
                               _quest9 = value!;
                               kencingManis = "Tidak Ada";
                             });
@@ -607,6 +625,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest10,
                           onChanged: (value) {
                             setState(() {
+                              patahTulangF.text = "";
                               _quest10 = value!;
                               patahTulang = "Ya";
                             });
@@ -618,6 +637,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           groupValue: _quest10,
                           onChanged: (value) {
                             setState(() {
+                              patahTulangF.text = "";
                               _quest10 = value!;
                               patahTulang = "Tidak Ada";
                             });

@@ -166,6 +166,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
               groupValue: _quest1,
               onChanged: (value) {
                 setState(() {
+                  strPupilF.text = "";
                   _quest1 = value!;
                   strPupil = "Normal";
                 });
@@ -177,6 +178,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
               groupValue: _quest1,
               onChanged: (value) {
                 setState(() {
+                  strPupilF.text = "";
                   _quest1 = value!;
                   strPupil = "Tidak Normal";
                 });
@@ -274,6 +276,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
               groupValue: _quest2,
               onChanged: (value) {
                 setState(() {
+                  strPatellaF.text = "";
                   _quest2 = value!;
                   strPatella = "Normal";
                 });
@@ -285,6 +288,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
               groupValue: _quest2,
               onChanged: (value) {
                 setState(() {
+                  strPatellaF.text = "";
                   _quest2 = value!;
                   strPatella = "Tidak Normal";
                 });
@@ -382,6 +386,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
               groupValue: _quest3,
               onChanged: (value) {
                 setState(() {
+                  strAchillesF.text = "";
                   _quest3 = value!;
                   strAchilles = "Normal";
                 });
@@ -393,6 +398,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
               groupValue: _quest3,
               onChanged: (value) {
                 setState(() {
+                  strAchillesF.text = "";
                   _quest3 = value!;
                   strAchilles = "Tidak Normal";
                 });

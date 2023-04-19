@@ -109,6 +109,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest1,
                         onChanged: (value) {
                           setState(() {
+                            atasKananF.text = "";
                             _quest1 = value!;
                             atasKanan = "Normal";
                           });
@@ -121,6 +122,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest1,
                         onChanged: (value) {
                           setState(() {
+                            atasKananF.text = "";
                             _quest1 = value!;
                             atasKanan = "Tidak Normal";
                           });
@@ -162,6 +164,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest2,
                         onChanged: (value) {
                           setState(() {
+                            atasKiriF.text = "";
                             _quest2 = value!;
                             atasKiri = "Normal";
                           });
@@ -174,6 +177,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest2,
                         onChanged: (value) {
                           setState(() {
+                            atasKiriF.text = "";
                             _quest2 = value!;
                             atasKiri = "Tidak Normal";
                           });
@@ -215,6 +219,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest3,
                         onChanged: (value) {
                           setState(() {
+                            bawahKananF.text = "";
                             _quest3 = value!;
                             bawahKanan = "Normal";
                           });
@@ -227,6 +232,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest3,
                         onChanged: (value) {
                           setState(() {
+                            bawahKananF.text = "";
                             _quest3 = value!;
                             bawahKanan = "Tidak Normal";
                           });
@@ -268,6 +274,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest4,
                         onChanged: (value) {
                           setState(() {
+                            bawahKiriF.text = "";
                             _quest4 = value!;
                             bawahKiri = "Normal";
                           });
@@ -280,6 +287,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest4,
                         onChanged: (value) {
                           setState(() {
+                            bawahKiriF.text = "";
                             _quest4 = value!;
                             bawahKiri = "Tidak Normal";
                           });
@@ -322,6 +330,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest5,
                         onChanged: (value) {
                           setState(() {
+                            sembabKananF.text = "";
                             _quest5 = value!;
                             sembabKanan = "Normal";
                           });
@@ -334,6 +343,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest5,
                         onChanged: (value) {
                           setState(() {
+                            sembabKananF.text = "";
                             _quest5 = value!;
                             sembabKanan = "Tidak Normal";
                           });
@@ -376,6 +386,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest6,
                         onChanged: (value) {
                           setState(() {
+                            sembabKiriF.text = "";
                             _quest6 = value!;
                             sembabKiri = "Normal";
                           });
@@ -388,6 +399,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest6,
                         onChanged: (value) {
                           setState(() {
+                            sembabKiriF.text = "";
                             _quest6 = value!;
                             sembabKiri = "Tidak Normal";
                           });
@@ -429,6 +441,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest7,
                         onChanged: (value) {
                           setState(() {
+                            cacatKananF.text = "";
                             _quest7 = value!;
                             cacatKanan = "Normal";
                           });
@@ -441,6 +454,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest7,
                         onChanged: (value) {
                           setState(() {
+                            cacatKananF.text = "";
                             _quest7 = value!;
                             cacatKanan = "Tidak Normal";
                           });
@@ -482,6 +496,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest8,
                         onChanged: (value) {
                           setState(() {
+                            cacatKiriF.text = "";
                             _quest8 = value!;
                             cacatKiri = "Normal";
                           });
@@ -494,6 +509,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                         groupValue: _quest8,
                         onChanged: (value) {
                           setState(() {
+                            cacatKiriF.text = "";
                             _quest8 = value!;
                             cacatKiri = "Tidak Normal";
                           });
