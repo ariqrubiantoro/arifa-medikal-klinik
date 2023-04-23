@@ -54,11 +54,11 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAl_lZbRiZ0_LJFTghc4b9J_9uRq9xLa18',
-    appId: '1:635068110518:android:22fc793778d730d4db3817',
-    messagingSenderId: '635068110518',
-    projectId: 'arifa-medikal-klinik',
-    storageBucket: 'arifa-medikal-klinik.appspot.com',
+    apiKey: 'AIzaSyDGkCmmjYa6MQpnrxwrn7IshpdzOLR2UWs',
+    appId: '1:603088810081:android:249b74d705f17a52f3fa20',
+    messagingSenderId: '603088810081',
+    projectId: 'arifa-medikal-klinik-c8675',
+    storageBucket: 'arifa-medikal-klinik-c8675.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '635068110518',
     projectId: 'arifa-medikal-klinik',
     storageBucket: 'arifa-medikal-klinik.appspot.com',
-    iosClientId: '635068110518-unv2h39mb96ok9dusr5areoro56g0icl.apps.googleusercontent.com',
+    iosClientId:
+        '635068110518-unv2h39mb96ok9dusr5areoro56g0icl.apps.googleusercontent.com',
     iosBundleId: 'com.example.arifaMedikalKlink3',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '635068110518',
     projectId: 'arifa-medikal-klinik',
     storageBucket: 'arifa-medikal-klinik.appspot.com',
-    iosClientId: '635068110518-unv2h39mb96ok9dusr5areoro56g0icl.apps.googleusercontent.com',
+    iosClientId:
+        '635068110518-unv2h39mb96ok9dusr5areoro56g0icl.apps.googleusercontent.com',
     iosBundleId: 'com.example.arifaMedikalKlink3',
   );
 }

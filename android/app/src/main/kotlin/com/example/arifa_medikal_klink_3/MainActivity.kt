@@ -1,4 +1,4 @@
-package com.example.arifa_medikal_klink_3
+package arifa.medikal.klinik
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.arifa_medikal_klink_3">
+    package="arifa.medikal.klinik">
    <application
-        android:label="arifa_medikal_klink_3"
+        android:label="Arifa Medikal Klinik"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/logo_arifa">
         <activity
             android:name=".MainActivity"
             android:exported="true"
