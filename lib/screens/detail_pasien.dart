@@ -10,7 +10,7 @@ import 'package:arifa_medikal_klink_3/screens/menu_utama.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -4290,7 +4290,7 @@ class _DetailPasienState extends State<DetailPasien> {
       final file =
           File('${dir.path}/Hasil MCU ${widget.pasienSnapshots['namaPasien']}');
       // await OpenFilex.open(file.path);
-      await OpenFile.open(file.path);
+      await OpenFilex.open(file.path);
       await file.writeAsBytes(bytes);
     }
 
