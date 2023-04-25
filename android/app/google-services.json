@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "603088810081",
+    "firebase_url": "https://arifa-medikal-klinik-c8675-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "arifa-medikal-klinik-c8675",
     "storage_bucket": "arifa-medikal-klinik-c8675.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "603088810081-s6h1pl85itao5s4r704mp03flk7a9ivb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "arifa.medikal.klinik",
+            "certificate_hash": "609eccf412f6e4024e312d3edec6e0d48301fc42"
+          }
+        },
         {
           "client_id": "603088810081-euc44nb6svdqdi9b3jo0jb0rrg1tud52.apps.googleusercontent.com",
           "client_type": 3
