@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>635068110518-unv2h39mb96ok9dusr5areoro56g0icl.apps.googleusercontent.com</string>
+	<string>603088810081-90d8jc392gbcgi2rb2j0d79dvemvhb60.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.635068110518-unv2h39mb96ok9dusr5areoro56g0icl</string>
+	<string>com.googleusercontent.apps.603088810081-90d8jc392gbcgi2rb2j0d79dvemvhb60</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>603088810081-s6h1pl85itao5s4r704mp03flk7a9ivb.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDJZ-op1LYq60X8Hc2UTsmKCq7M55CySek</string>
+	<string>AIzaSyCytATR_qHSfwMqbC6_9ha1nImongZrzi8</string>
 	<key>GCM_SENDER_ID</key>
-	<string>635068110518</string>
+	<string>603088810081</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.arifaMedikalKlink3</string>
+	<string>arifa.medikal.klinik</string>
 	<key>PROJECT_ID</key>
-	<string>arifa-medikal-klinik</string>
+	<string>arifa-medikal-klinik-c8675</string>
 	<key>STORAGE_BUCKET</key>
-	<string>arifa-medikal-klinik.appspot.com</string>
+	<string>arifa-medikal-klinik-c8675.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:635068110518:ios:07d1f1a5d80d2741db3817</string>
+	<string>1:603088810081:ios:0513116ad500d610f3fa20</string>
+	<key>DATABASE_URL</key>
+	<string>https://arifa-medikal-klinik-c8675-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>
 </plist>
