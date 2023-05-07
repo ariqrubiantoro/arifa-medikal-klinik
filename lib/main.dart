@@ -2,13 +2,30 @@ import 'package:arifa_medikal_klink_3/screens/auth_screen.dart';
 import 'package:arifa_medikal_klink_3/screens/menu_utama.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      // options: DefaultFirebaseOptions.currentPlatform,
-      );
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+        options: FirebaseOptions(
+      apiKey: 'AIzaSyDGkCmmjYa6MQpnrxwrn7IshpdzOLR2UWs',
+      appId: '1:603088810081:android:249b74d705f17a52f3fa20',
+      messagingSenderId: '603088810081',
+      projectId: 'arifa-medikal-klinik-c8675',
+      storageBucket: 'arifa-medikal-klinik-c8675.appspot.com',
+    ));
+  } else {
+    await Firebase.initializeApp(
+        options: FirebaseOptions(
+      apiKey: 'AIzaSyDGkCmmjYa6MQpnrxwrn7IshpdzOLR2UWs',
+      appId: '1:603088810081:android:249b74d705f17a52f3fa20',
+      messagingSenderId: '603088810081',
+      projectId: 'arifa-medikal-klinik-c8675',
+      storageBucket: 'arifa-medikal-klinik-c8675.appspot.com',
+    ));
+  }
   runApp(const MyApp());
 }
 
