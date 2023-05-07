@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:math';
+
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_umum_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_mata.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
@@ -27,6 +30,21 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
   final denyutNadi = TextEditingController();
   final pernapasan = TextEditingController();
   final suhu = TextEditingController();
+  String jenisKelamin = "";
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  void getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      jenisKelamin = prefs.getString('jenisKelamin')!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +106,6 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 30,
                           padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
@@ -96,6 +113,55 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           ),
                           child: TextFormField(
                               controller: tinggiBadan,
+                              onChanged: (value) async {
+                                if (value.isNotEmpty) {
+                                  if (beratBadan.text != "") {
+                                    if (jenisKelamin == 'Pria') {
+                                      setState(() {
+                                        int tinggi = int.parse(value);
+                                        int berat = int.parse(beratBadan.text);
+                                        double bmi =
+                                            berat / pow(tinggi / 100, 2);
+
+                                        double ideal = tinggi -
+                                            100 -
+                                            ((tinggi - 100) * 10 / 100);
+
+                                        imt.text = bmi.toStringAsFixed(2);
+                                        beratBadanIdeal.text =
+                                            ideal.toStringAsFixed(1);
+
+                                        print(
+                                            'berat badan ideal = ${beratBadanIdeal.text}');
+                                      });
+                                    } else {
+                                      setState(() {
+                                        int tinggi = int.parse(value);
+                                        int berat = int.parse(beratBadan.text);
+                                        double bmi =
+                                            berat / pow(tinggi / 100, 2);
+
+                                        double ideal = tinggi -
+                                            100 -
+                                            ((tinggi - 100) * 15 / 100);
+
+                                        imt.text = bmi.toStringAsFixed(2);
+                                        beratBadanIdeal.text =
+                                            ideal.toStringAsFixed(1);
+                                      });
+                                    }
+                                  } else {
+                                    setState(() {
+                                      imt.text = "";
+                                    });
+                                  }
+                                } else {
+                                  setState(() {
+                                    imt.text = "";
+                                    beratBadanIdeal.text = "";
+                                  });
+                                }
+                              },
                               keyboardType: TextInputType.number,
                               decoration:
                                   InputDecoration(border: InputBorder.none)),
@@ -116,7 +182,6 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 30,
                           padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
@@ -124,6 +189,48 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           ),
                           child: TextFormField(
                               controller: beratBadan,
+                              onChanged: (value) {
+                                if (value.isNotEmpty) {
+                                  if (tinggiBadan.text != "") {
+                                    if (jenisKelamin == 'Pria') {
+                                      setState(() {
+                                        int tinggi =
+                                            int.parse(tinggiBadan.text);
+                                        int berat = int.parse(value);
+                                        double bmi =
+                                            berat / pow(tinggi / 100, 2);
+                                        double ideal = tinggi -
+                                            100 -
+                                            ((tinggi - 100) * 10 / 100);
+
+                                        imt.text = bmi.toStringAsFixed(2);
+                                        beratBadanIdeal.text =
+                                            ideal.toStringAsFixed(1);
+                                      });
+                                    } else {
+                                      setState(() {
+                                        int tinggi =
+                                            int.parse(tinggiBadan.text);
+                                        int berat = int.parse(value);
+                                        double bmi =
+                                            berat / pow(tinggi / 100, 2);
+
+                                        double ideal = tinggi -
+                                            100 -
+                                            ((tinggi - 100) * 15 / 100);
+
+                                        imt.text = bmi.toStringAsFixed(2);
+                                        beratBadanIdeal.text =
+                                            ideal.toStringAsFixed(1);
+                                      });
+                                    }
+                                  }
+                                } else {
+                                  setState(() {
+                                    imt.text = "";
+                                  });
+                                }
+                              },
                               keyboardType: TextInputType.number,
                               decoration:
                                   InputDecoration(border: InputBorder.none)),
@@ -139,18 +246,18 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 150,
                           child: textDefault("Berat Badan Ideal", Colors.black,
-                              16, FontWeight.normal),
+                              14, FontWeight.normal),
                         ),
                         textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 30,
                           padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: TextFormField(
+                              readOnly: true,
                               controller: beratBadanIdeal,
                               keyboardType: TextInputType.number,
                               decoration:
@@ -172,13 +279,13 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 30,
                           padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: TextFormField(
+                              readOnly: true,
                               controller: imt,
                               keyboardType: TextInputType.number,
                               decoration:
@@ -194,12 +301,11 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 150,
                           child: textDefault("Lingkaran Perut", Colors.black,
-                              16, FontWeight.normal),
+                              14, FontWeight.normal),
                         ),
                         textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 30,
                           padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
@@ -227,7 +333,6 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 30,
                           padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
@@ -256,7 +361,6 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 30,
                           padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
@@ -280,12 +384,11 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         Container(
                           width: 150,
                           child: textDefault("Frek. Pernafasan", Colors.black,
-                              16, FontWeight.normal),
+                              14, FontWeight.normal),
                         ),
                         textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 30,
                           padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
@@ -314,7 +417,6 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         textDefault(":  ", Colors.black, 14, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 30,
                           padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
@@ -355,7 +457,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                       ),
                       child: Center(
                         child: textDefault(
-                            "Kembali", blueDefault, 16, FontWeight.normal),
+                            "Kembali", blueDefault, 14, FontWeight.normal),
                       ),
                     ),
                   ),
@@ -377,7 +479,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                           ]),
                       child: Center(
                         child: textDefault(
-                            "Selanjutnya", Colors.white, 16, FontWeight.normal),
+                            "Selanjutnya", Colors.white, 14, FontWeight.normal),
                       ),
                     ),
                   )

@@ -40,7 +40,9 @@ dependencies:
   firebase_core: ^2.8.0
   pdf: ^3.9.0
   path_provider: ^2.0.14
+  shared_preferences: ^2.1.0
   open_filex: ^4.3.2
+  age_calculator: ^1.0.0
   # open_file: ^3.2.1
   intl: ^0.17.0
   # open_filex: ^4.3.2

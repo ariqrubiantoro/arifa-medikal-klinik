@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
+import 'package:age_calculator/age_calculator.dart';
 import 'package:arifa_medikal_klink_3/components/alert/alert.dart';
 import 'package:arifa_medikal_klink_3/components/colors/color.dart';
 import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/add_pasien_profil_success.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../components/widget/text.dart';
 import '../../../service/firebase_firestore_service.dart';
@@ -19,6 +21,7 @@ class AddPasienProfil extends StatefulWidget {
 
 class _AddPasienProfilState extends State<AddPasienProfil> {
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  DateTime birthday = DateTime.now();
   final namaC = TextEditingController();
   final nikC = TextEditingController();
   final alamatC = TextEditingController();
@@ -43,7 +46,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
     if (picked != null) {
       setState(() {
         tglPemeriksaanC.text =
-            DateFormat("dd MMMM yyyy").format(picked).toString();
+            DateFormat("dd-MM-yyyy").format(picked).toString();
       });
     }
   }
@@ -56,9 +59,23 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
         lastDate: DateTime(2101));
     if (picked != null) {
       setState(() {
-        tglLahirC.text = DateFormat("dd MMMM yyyy").format(picked).toString();
+        birthday = picked;
+        calAge(birthday);
+        tglLahirC.text = DateFormat("dd-MM-yyyy").format(picked).toString();
       });
     }
+  }
+
+  DateDuration calAge(DateTime birthDate) {
+    DateTime cekAge = birthday; //DateTime(1997, 3, 5);
+
+    DateDuration duration;
+
+    // Find out your age as of today's date 2021-03-08
+    duration = AgeCalculator.age(birthday);
+    umurC.text =
+        "${duration.years} Tahun ${duration.months} Bulan ${duration.days} Hari";
+    return duration;
   }
 
   @override
@@ -252,6 +269,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(10)),
                         child: TextFormField(
+                          readOnly: true,
                           controller: umurC,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(border: InputBorder.none),
@@ -432,6 +450,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
   }
 
   void saveButton() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     PasienModel pasien = PasienModel(
       nama: namaC.text,
       jenisKelamin: jkStr,
@@ -448,6 +467,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
     );
 
     firestore.setPasien(pasien);
+    prefs.setString('jenisKelamin', jkStr);
 
     Navigator.push(
       context,

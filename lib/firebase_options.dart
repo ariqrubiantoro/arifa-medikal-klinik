@@ -44,13 +44,11 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCUfypH2AMOQJiug5zW15Qc0S47mJ-FbXw',
-    appId: '1:635068110518:web:7041b190d298c30fdb3817',
-    messagingSenderId: '635068110518',
-    projectId: 'arifa-medikal-klinik',
-    authDomain: 'arifa-medikal-klinik.firebaseapp.com',
-    storageBucket: 'arifa-medikal-klinik.appspot.com',
-    measurementId: 'G-1LK2RYTDC2',
+    apiKey: 'AIzaSyDGkCmmjYa6MQpnrxwrn7IshpdzOLR2UWs',
+    appId: '1:603088810081:android:249b74d705f17a52f3fa20',
+    messagingSenderId: '603088810081',
+    projectId: 'arifa-medikal-klinik-c8675',
+    storageBucket: 'arifa-medikal-klinik-c8675.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
