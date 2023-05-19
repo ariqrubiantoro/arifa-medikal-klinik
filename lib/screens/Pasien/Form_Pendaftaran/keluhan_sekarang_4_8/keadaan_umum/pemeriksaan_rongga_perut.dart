@@ -52,6 +52,159 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
   final perkusi = TextEditingController();
   final ballotementKiri = TextEditingController();
   final ballotementKanan = TextEditingController();
+  PemeriksaanRonggaPerutModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getPemeriksaanRonggaPerut(widget.idPasien!);
+    if (data != null) {
+      perkusi.text = data!.perkusi!;
+
+      ballotementKanan.text = data!.ballotementKanan!;
+      ballotementKiri.text = data!.ballotementKiri!;
+      setState(() {});
+
+      if (data!.inspeksi == "Normal") {
+        setState(() {
+          inpeksi = data!.inspeksi!;
+          _quest1 = 1;
+        });
+      } else if (data!.inspeksi == "Tidak Normal") {
+        setState(() {
+          inpeksi = data!.inspeksi!;
+          _quest1 = 2;
+        });
+      } else if (data!.inspeksi == "") {
+      } else {
+        inpeksiF.text = data!.inspeksi!;
+      }
+
+      if (data!.auskultasi == "Normal") {
+        setState(() {
+          auskultasi = data!.auskultasi!;
+          _quest2 = 1;
+        });
+      } else if (data!.auskultasi == "Tidak Normal") {
+        setState(() {
+          auskultasi = data!.auskultasi!;
+          _quest2 = 2;
+        });
+      } else if (data!.auskultasi == "") {
+      } else {
+        auskultasiF.text = data!.auskultasi!;
+      }
+
+      if (data!.hati == "Normal") {
+        setState(() {
+          hati = data!.hati!;
+          _quest3 = 1;
+        });
+      } else if (data!.hati == "Tidak Normal") {
+        setState(() {
+          hati = data!.hati!;
+          _quest3 = 2;
+        });
+      } else if (data!.hati == "") {
+      } else {
+        hatiF.text = data!.hati!;
+      }
+
+      if (data!.limpa == "Normal") {
+        setState(() {
+          limpa = data!.limpa!;
+          _quest4 = 1;
+        });
+      } else if (data!.limpa == "Tidak Normal") {
+        setState(() {
+          limpa = data!.limpa!;
+          _quest4 = 2;
+        });
+      } else if (data!.limpa == "") {
+      } else {
+        limpaF.text = data!.limpa!;
+      }
+
+      if (data!.ginjalKiri == "Normal") {
+        setState(() {
+          ginjalKiri = data!.ginjalKiri!;
+          _quest5 = 1;
+        });
+      } else if (data!.ginjalKiri == "Tidak Normal") {
+        setState(() {
+          ginjalKiri = data!.ginjalKiri!;
+          _quest5 = 2;
+        });
+      } else if (data!.ginjalKiri == "") {
+      } else {
+        ginjalKiriF.text = data!.ginjalKiri!;
+      }
+
+      if (data!.ginjalKanan == "Normal") {
+        setState(() {
+          ginjalKanan = data!.ginjalKanan!;
+          _quest6 = 1;
+        });
+      } else if (data!.ginjalKanan == "Tidak Normal") {
+        setState(() {
+          ginjalKanan = data!.ginjalKanan!;
+          _quest6 = 2;
+        });
+      } else if (data!.ginjalKanan == "") {
+      } else {
+        ginjalKananF.text = data!.ginjalKanan!;
+      }
+
+      if (data!.hernia == "Normal") {
+        setState(() {
+          hernia = data!.hernia!;
+          _quest7 = 1;
+        });
+      } else if (data!.hernia == "Tidak Normal") {
+        setState(() {
+          hernia = data!.hernia!;
+          _quest7 = 2;
+        });
+      } else if (data!.hernia == "") {
+      } else {
+        herniaF.text = data!.hernia!;
+      }
+
+      if (data!.tumor == "Normal") {
+        setState(() {
+          tumor = data!.tumor!;
+          _quest8 = 1;
+        });
+      } else if (data!.tumor == "Tidak Normal") {
+        setState(() {
+          tumor = data!.tumor!;
+          _quest8 = 2;
+        });
+      } else if (data!.tumor == "") {
+      } else {
+        tumorF.text = data!.tumor!;
+      }
+
+      if (data!.lainLain == "Normal") {
+        setState(() {
+          lainlain = data!.lainLain!;
+          _quest9 = 1;
+        });
+      } else if (data!.lainLain == "Tidak Normal") {
+        setState(() {
+          lainlain = data!.lainLain!;
+          _quest9 = 2;
+        });
+      } else if (data!.lainLain == "") {
+      } else {
+        lainlainF.text = data!.lainLain!;
+      }
+    }
+  }
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
   @override
@@ -158,7 +311,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: inpeksiF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -233,7 +386,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: auskultasiF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -289,7 +442,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: hatiF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -345,7 +498,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: limpaF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -402,7 +555,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: ginjalKiriF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -478,7 +631,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: ginjalKananF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -553,7 +706,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: herniaF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -609,7 +762,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: tumorF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -665,7 +818,7 @@ class _PemeriksaanRonggaPerutState extends State<PemeriksaanRonggaPerut> {
                               });
                             },
                             controller: lainlainF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),

@@ -43,6 +43,8 @@ dependencies:
   shared_preferences: ^2.1.0
   open_filex: ^4.3.2
   age_calculator: ^1.0.0
+  image_picker: ^0.8.7+4
+  image_picker_web: ^3.0.0+1
   # open_file: ^3.2.1
   intl: ^0.17.0
   # open_filex: ^4.3.2

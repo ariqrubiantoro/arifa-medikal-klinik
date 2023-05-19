@@ -51,6 +51,143 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
   final penMataF = TextEditingController();
   final konjungtivaF = TextEditingController();
   final skleraF = TextEditingController();
+  PemeriksaanMataModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firstore.getPemeriksaanMata(widget.idPasien!);
+    if (data != null) {
+      if (data!.kacaMata! == "Ya") {
+        setState(() {
+          kacamata = data!.kacaMata!;
+          _questKacamata = 1;
+          boolKondisi = true;
+        });
+      } else if (data!.kacaMata! == "Tidak") {
+        setState(() {
+          kacamata = data!.kacaMata!;
+          _questKacamata = 2;
+          boolKondisi = false;
+        });
+      } else if (data!.kacaMata! == "") {
+        setState(() {});
+      } else {
+        setState(() {
+          kacamataF.text = data!.kacaMata!;
+          _questKacamata = 0;
+        });
+      }
+
+      if (data!.kondisi! == "Rabun Dekat") {
+        setState(() {
+          kondisi = "Rabun Dekat";
+        });
+      }
+      setState(() {
+        osKiri.text = data!.visusKiri!;
+        osKanan.text = data!.visusKanan!;
+      });
+      if (data!.olahraga! == "Ya") {
+        setState(() {
+          olahraga = data!.olahraga!;
+          _questOlahraga = 1;
+        });
+      } else if (data!.olahraga! == "Tidak") {
+        setState(() {
+          olahraga = data!.olahraga!;
+          _questOlahraga = 2;
+        });
+      } else if (data!.olahraga! == "") {
+        setState(() {});
+      } else {
+        setState(() {
+          olahragaF.text = data!.olahraga!;
+          _questOlahraga = 0;
+        });
+      }
+
+      if (data!.butaWarna! == "Ya") {
+        setState(() {
+          buta = data!.butaWarna!;
+          _questButa = 1;
+        });
+      } else if (data!.butaWarna! == "Tidak") {
+        setState(() {
+          buta = data!.butaWarna!;
+          _questButa = 2;
+        });
+      } else if (data!.butaWarna! == "") {
+        setState(() {});
+      } else {
+        setState(() {
+          butaF.text = data!.butaWarna!;
+          _questButa = 0;
+        });
+      }
+
+      if (data!.penyakitMata! == "Ya") {
+        setState(() {
+          penMata = data!.penyakitMata!;
+          _questPenMata = 1;
+        });
+      } else if (data!.penyakitMata! == "Tidak") {
+        setState(() {
+          penMata = data!.penyakitMata!;
+          _questPenMata = 2;
+        });
+      } else if (data!.penyakitMata! == "") {
+        setState(() {});
+      } else {
+        setState(() {
+          penMataF.text = data!.penyakitMata!;
+          _questPenMata = 0;
+        });
+      }
+
+      if (data!.konjungtiva! == "Normal") {
+        setState(() {
+          konjungtiva = data!.konjungtiva!;
+          _questKonjungtiva = 1;
+        });
+      } else if (data!.konjungtiva! == "Tidak Normal") {
+        setState(() {
+          konjungtiva = data!.konjungtiva!;
+          _questKonjungtiva = 2;
+        });
+      } else if (data!.konjungtiva! == "") {
+        setState(() {});
+      } else {
+        setState(() {
+          konjungtivaF.text = data!.konjungtiva!;
+          _questKonjungtiva = 0;
+        });
+      }
+
+      if (data!.sklera! == "Normal") {
+        setState(() {
+          sklera = data!.sklera!;
+          _questSklera = 1;
+        });
+      } else if (data!.sklera! == "Tidak Normal") {
+        setState(() {
+          sklera = data!.sklera!;
+          _questSklera = 2;
+        });
+      } else if (data!.sklera! == "") {
+        setState(() {});
+      } else {
+        setState(() {
+          skleraF.text = data!.sklera!;
+          _questSklera = 0;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +290,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               });
                             },
                             controller: kacamataF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -210,7 +347,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                         textDefault(":  ", Colors.black, 13, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 35,
+                          // height: 35,
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -238,7 +375,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                         textDefault(":  ", Colors.black, 13, FontWeight.normal),
                         Container(
                           width: 80,
-                          height: 35,
+                          // height: 35,
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(5),
@@ -301,7 +438,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               });
                             },
                             controller: olahragaF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -357,7 +494,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               });
                             },
                             controller: butaF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -413,7 +550,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               });
                             },
                             controller: penMataF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -470,7 +607,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               });
                             },
                             controller: konjungtivaF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -526,7 +663,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               });
                             },
                             controller: skleraF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),

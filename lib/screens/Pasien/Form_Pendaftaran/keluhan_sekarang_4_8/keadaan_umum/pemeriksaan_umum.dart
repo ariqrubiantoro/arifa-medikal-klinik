@@ -31,6 +31,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
   final pernapasan = TextEditingController();
   final suhu = TextEditingController();
   String jenisKelamin = "";
+  PemeriksaanUmumModel? data;
 
   @override
   void initState() {
@@ -40,9 +41,22 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
 
   void getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      jenisKelamin = prefs.getString('jenisKelamin')!;
-    });
+    data = await firestore.getPemeriksaanUmum(widget.idPasien!);
+
+    if (data != null) {
+      setState(() {
+        tinggiBadan.text = data!.tinggiBadan!;
+        beratBadan.text = data!.beratBadan!;
+        beratBadanIdeal.text = data!.beratBadanIdeal!;
+        imt.text = data!.imt!;
+        lingkaranPerut.text = data!.lingkarPerut!;
+        tekananDarah.text = data!.tekananDarah!;
+        denyutNadi.text = data!.denyutNadi!;
+        pernapasan.text = data!.pernapasan!;
+        suhu.text = data!.suhu!;
+        jenisKelamin = prefs.getString('jenisKelamin')!;
+      });
+    }
   }
 
   @override

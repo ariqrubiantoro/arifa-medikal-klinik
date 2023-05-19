@@ -19,23 +19,23 @@ class Fisik extends StatefulWidget {
 }
 
 class _FisikState extends State<Fisik> {
-  Question _quest1 = Question.tidak;
-  Question _quest2 = Question.tidak;
-  Question _quest3 = Question.tidak;
-  Question _quest4 = Question.tidak;
-  Question _quest5 = Question.tidak;
-  Question _quest6 = Question.tidak;
-  Question _quest7 = Question.tidak;
-  Question _quest8 = Question.tidak;
+  Question _quest1 = Question.none;
+  Question _quest2 = Question.none;
+  Question _quest3 = Question.none;
+  Question _quest4 = Question.none;
+  Question _quest5 = Question.none;
+  Question _quest6 = Question.none;
+  Question _quest7 = Question.none;
+  Question _quest8 = Question.none;
 
-  String kebisingan = "Tidak";
-  String suhuPanas = "Tidak";
-  String suhuDingin = "Tidak";
-  String radiasiBukanPengion = "Tidak";
-  String radiasiPengion = "Tidak";
-  String getaranLokal = "Tidak";
-  String getaranTubuh = "Tidak";
-  String ketinggian = "Tidak";
+  String kebisingan = "";
+  String suhuPanas = "";
+  String suhuDingin = "";
+  String radiasiBukanPengion = "";
+  String radiasiPengion = "";
+  String getaranLokal = "";
+  String getaranTubuh = "";
+  String ketinggian = "";
 
   TextEditingController kebisinganController = TextEditingController();
   TextEditingController suhuPanasController = TextEditingController();
@@ -49,6 +49,141 @@ class _FisikState extends State<Fisik> {
   final lainlain = TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  FisikModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getFisik(widget.idPasien!);
+    if (data != null) {
+      setState(() {
+        lainlain.text = data!.lainLain!;
+      });
+      if (data!.kebisingan == "Ya") {
+        setState(() {
+          kebisingan = data!.kebisingan!;
+          _quest1 = Question.ya;
+        });
+      } else if (data!.kebisingan == "Tidak") {
+        setState(() {
+          kebisingan = data!.kebisingan!;
+          _quest1 = Question.tidak;
+        });
+      } else if (data!.kebisingan == "") {
+      } else {
+        kebisinganController.text = data!.kebisingan!;
+      }
+
+      if (data!.suhuPanas == "Ya") {
+        setState(() {
+          suhuPanas = data!.suhuPanas!;
+          _quest2 = Question.ya;
+        });
+      } else if (data!.suhuPanas == "Tidak") {
+        setState(() {
+          suhuPanas = data!.suhuPanas!;
+          _quest2 = Question.tidak;
+        });
+      } else if (data!.suhuPanas == "") {
+      } else {
+        suhuPanasController.text = data!.suhuPanas!;
+      }
+
+      if (data!.suhuDingin == "Ya") {
+        setState(() {
+          suhuDingin = data!.suhuDingin!;
+          _quest3 = Question.ya;
+        });
+      } else if (data!.suhuDingin == "Tidak") {
+        setState(() {
+          suhuDingin = data!.suhuDingin!;
+          _quest3 = Question.tidak;
+        });
+      } else if (data!.suhuDingin == "") {
+      } else {
+        suhuDinginController.text = data!.suhuDingin!;
+      }
+
+      if (data!.radiasiBukanPengion == "Ya") {
+        setState(() {
+          radiasiBukanPengion = data!.radiasiBukanPengion!;
+          _quest4 = Question.ya;
+        });
+      } else if (data!.radiasiBukanPengion == "Tidak") {
+        setState(() {
+          radiasiBukanPengion = data!.radiasiBukanPengion!;
+          _quest4 = Question.tidak;
+        });
+      } else if (data!.radiasiBukanPengion == "") {
+      } else {
+        radiasiBukanPengionController.text = data!.radiasiBukanPengion!;
+      }
+
+      if (data!.radiasiPengion == "Ya") {
+        setState(() {
+          radiasiPengion = data!.radiasiPengion!;
+          _quest5 = Question.ya;
+        });
+      } else if (data!.radiasiPengion == "Tidak") {
+        setState(() {
+          radiasiPengion = data!.radiasiPengion!;
+          _quest5 = Question.tidak;
+        });
+      } else if (data!.radiasiPengion == "") {
+      } else {
+        radiasiPengionController.text = data!.radiasiPengion!;
+      }
+
+      if (data!.getaranLokal == "Ya") {
+        setState(() {
+          getaranLokal = data!.getaranLokal!;
+          _quest6 = Question.ya;
+        });
+      } else if (data!.getaranLokal == "Tidak") {
+        setState(() {
+          getaranLokal = data!.getaranLokal!;
+          _quest6 = Question.tidak;
+        });
+      } else if (data!.getaranLokal == "") {
+      } else {
+        getaranLokalController.text = data!.getaranLokal!;
+      }
+
+      if (data!.getaranSeluruhTubuh == "Ya") {
+        setState(() {
+          getaranTubuh = data!.getaranSeluruhTubuh!;
+          _quest7 = Question.ya;
+        });
+      } else if (data!.getaranSeluruhTubuh == "Tidak") {
+        setState(() {
+          getaranTubuh = data!.getaranSeluruhTubuh!;
+          _quest7 = Question.tidak;
+        });
+      } else if (data!.getaranSeluruhTubuh == "") {
+      } else {
+        getaranTubuhController.text = data!.getaranSeluruhTubuh!;
+      }
+
+      if (data!.ketinggian == "Ya") {
+        setState(() {
+          ketinggian = data!.ketinggian!;
+          _quest8 = Question.ya;
+        });
+      } else if (data!.ketinggian == "Tidak") {
+        setState(() {
+          ketinggian = data!.ketinggian!;
+          _quest8 = Question.tidak;
+        });
+      } else if (data!.ketinggian == "") {
+      } else {
+        ketinggianController.text = data!.ketinggian!;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +280,7 @@ class _FisikState extends State<Fisik> {
                               });
                             },
                             controller: kebisinganController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -200,7 +335,7 @@ class _FisikState extends State<Fisik> {
                               });
                             },
                             controller: suhuPanasController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -255,7 +390,7 @@ class _FisikState extends State<Fisik> {
                               });
                             },
                             controller: suhuDinginController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -314,7 +449,7 @@ class _FisikState extends State<Fisik> {
                               });
                             },
                             controller: radiasiBukanPengionController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -370,7 +505,7 @@ class _FisikState extends State<Fisik> {
                               });
                             },
                             controller: radiasiPengionController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -426,7 +561,7 @@ class _FisikState extends State<Fisik> {
                               });
                             },
                             controller: getaranLokalController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -482,7 +617,7 @@ class _FisikState extends State<Fisik> {
                               });
                             },
                             controller: getaranTubuhController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -537,7 +672,7 @@ class _FisikState extends State<Fisik> {
                               });
                             },
                             controller: ketinggianController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),

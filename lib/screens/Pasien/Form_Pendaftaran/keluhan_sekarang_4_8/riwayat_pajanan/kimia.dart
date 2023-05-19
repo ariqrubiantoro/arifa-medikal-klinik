@@ -19,27 +19,27 @@ class Kimia extends StatefulWidget {
 }
 
 class _KimiaState extends State<Kimia> {
-  Question _quest1 = Question.tidak;
-  Question _quest2 = Question.tidak;
-  Question _quest3 = Question.tidak;
-  Question _quest4 = Question.tidak;
-  Question _quest5 = Question.tidak;
-  Question _quest6 = Question.tidak;
-  Question _quest7 = Question.tidak;
-  Question _quest8 = Question.tidak;
-  Question _quest9 = Question.tidak;
-  Question _quest10 = Question.tidak;
+  Question _quest1 = Question.none;
+  Question _quest2 = Question.none;
+  Question _quest3 = Question.none;
+  Question _quest4 = Question.none;
+  Question _quest5 = Question.none;
+  Question _quest6 = Question.none;
+  Question _quest7 = Question.none;
+  Question _quest8 = Question.none;
+  Question _quest9 = Question.none;
+  Question _quest10 = Question.none;
 
-  String debuAnorganik = "Tidak";
-  String debuOrganik = "Tidak";
-  String asap = "Tidak";
-  String logamBerat = "Tidak";
-  String pelarutOrganik = "Tidak";
-  String iritanAsam = "Tidak";
-  String iritanBasa = "Tidak";
-  String cairanPembersih = "Tidak";
-  String pestisida = "Tidak";
-  String uapLogam = "Tidak";
+  String debuAnorganik = "";
+  String debuOrganik = "";
+  String asap = "";
+  String logamBerat = "";
+  String pelarutOrganik = "";
+  String iritanAsam = "";
+  String iritanBasa = "";
+  String cairanPembersih = "";
+  String pestisida = "";
+  String uapLogam = "";
 
   TextEditingController debuAnorganikController = TextEditingController();
   TextEditingController debuOrganikController = TextEditingController();
@@ -54,6 +54,171 @@ class _KimiaState extends State<Kimia> {
 
   final lainlain = TextEditingController();
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  KimiaModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getKimia(widget.pasienId!);
+    if (data != null) {
+      setState(() {
+        lainlain.text = data!.lainLain!;
+      });
+      if (data!.debuAnorganik == "Ya") {
+        setState(() {
+          debuAnorganik = data!.debuAnorganik!;
+          _quest1 = Question.ya;
+        });
+      } else if (data!.debuAnorganik == "Tidak") {
+        setState(() {
+          debuAnorganik = data!.debuAnorganik!;
+          _quest1 = Question.tidak;
+        });
+      } else if (data!.debuAnorganik == "") {
+      } else {
+        debuAnorganikController.text = data!.debuAnorganik!;
+      }
+
+      if (data!.debuOrganik == "Ya") {
+        setState(() {
+          debuOrganik = data!.debuOrganik!;
+          _quest2 = Question.ya;
+        });
+      } else if (data!.debuOrganik == "Tidak") {
+        setState(() {
+          debuOrganik = data!.debuOrganik!;
+          _quest2 = Question.tidak;
+        });
+      } else if (data!.debuOrganik == "") {
+      } else {
+        debuOrganikController.text = data!.debuOrganik!;
+      }
+
+      if (data!.asap == "Ya") {
+        setState(() {
+          asap = data!.asap!;
+          _quest3 = Question.ya;
+        });
+      } else if (data!.asap == "Tidak") {
+        setState(() {
+          asap = data!.asap!;
+          _quest3 = Question.tidak;
+        });
+      } else if (data!.asap == "") {
+      } else {
+        asapController.text = data!.asap!;
+      }
+
+      if (data!.logamBerat == "Ya") {
+        setState(() {
+          logamBerat = data!.logamBerat!;
+          _quest4 = Question.ya;
+        });
+      } else if (data!.logamBerat == "Tidak") {
+        setState(() {
+          logamBerat = data!.logamBerat!;
+          _quest4 = Question.tidak;
+        });
+      } else if (data!.logamBerat == "") {
+      } else {
+        logamBeratController.text = data!.logamBerat!;
+      }
+
+      if (data!.pelarutOrganik == "Ya") {
+        setState(() {
+          pelarutOrganik = data!.pelarutOrganik!;
+          _quest5 = Question.ya;
+        });
+      } else if (data!.pelarutOrganik == "Tidak") {
+        setState(() {
+          pelarutOrganik = data!.pelarutOrganik!;
+          _quest5 = Question.tidak;
+        });
+      } else if (data!.pelarutOrganik == "") {
+      } else {
+        pelarutOrganikController.text = data!.pelarutOrganik!;
+      }
+
+      if (data!.iritanAsam == "Ya") {
+        setState(() {
+          iritanAsam = data!.iritanAsam!;
+          _quest6 = Question.ya;
+        });
+      } else if (data!.iritanAsam == "Tidak") {
+        setState(() {
+          iritanAsam = data!.iritanAsam!;
+          _quest6 = Question.tidak;
+        });
+      } else if (data!.iritanAsam == "") {
+      } else {
+        iritanAsamController.text = data!.iritanAsam!;
+      }
+
+      if (data!.iritanBasa == "Ya") {
+        setState(() {
+          iritanBasa = data!.iritanBasa!;
+          _quest7 = Question.ya;
+        });
+      } else if (data!.iritanBasa == "Tidak") {
+        setState(() {
+          iritanBasa = data!.iritanBasa!;
+          _quest7 = Question.tidak;
+        });
+      } else if (data!.iritanBasa == "") {
+      } else {
+        iritanBasaController.text = data!.iritanBasa!;
+      }
+
+      if (data!.cairanPembersih == "Ya") {
+        setState(() {
+          cairanPembersih = data!.cairanPembersih!;
+          _quest8 = Question.ya;
+        });
+      } else if (data!.cairanPembersih == "Tidak") {
+        setState(() {
+          cairanPembersih = data!.cairanPembersih!;
+          _quest8 = Question.tidak;
+        });
+      } else if (data!.cairanPembersih == "") {
+      } else {
+        cairanPembersihController.text = data!.cairanPembersih!;
+      }
+
+      if (data!.pestisida == "Ya") {
+        setState(() {
+          pestisida = data!.pestisida!;
+          _quest9 = Question.ya;
+        });
+      } else if (data!.pestisida == "Tidak") {
+        setState(() {
+          pestisida = data!.pestisida!;
+          _quest9 = Question.tidak;
+        });
+      } else if (data!.pestisida == "") {
+      } else {
+        pestisidaController.text = data!.pestisida!;
+      }
+
+      if (data!.uapLogam == "Ya") {
+        setState(() {
+          uapLogam = data!.uapLogam!;
+          _quest10 = Question.ya;
+        });
+      } else if (data!.uapLogam == "Tidak") {
+        setState(() {
+          uapLogam = data!.uapLogam!;
+          _quest10 = Question.tidak;
+        });
+      } else if (data!.uapLogam == "") {
+      } else {
+        uapLogamController.text = data!.uapLogam!;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +316,7 @@ class _KimiaState extends State<Kimia> {
                               });
                             },
                             controller: debuAnorganikController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -207,7 +372,7 @@ class _KimiaState extends State<Kimia> {
                               });
                             },
                             controller: debuOrganikController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -262,7 +427,7 @@ class _KimiaState extends State<Kimia> {
                               });
                             },
                             controller: asapController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -318,7 +483,7 @@ class _KimiaState extends State<Kimia> {
                               });
                             },
                             controller: logamBeratController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -374,7 +539,7 @@ class _KimiaState extends State<Kimia> {
                               });
                             },
                             controller: pelarutOrganikController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -430,7 +595,7 @@ class _KimiaState extends State<Kimia> {
                               });
                             },
                             controller: iritanAsamController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -486,7 +651,7 @@ class _KimiaState extends State<Kimia> {
                               });
                             },
                             controller: iritanBasaController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -542,7 +707,7 @@ class _KimiaState extends State<Kimia> {
                               });
                             },
                             controller: cairanPembersihController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -597,7 +762,7 @@ class _KimiaState extends State<Kimia> {
                               });
                             },
                             controller: pestisidaController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -653,7 +818,7 @@ class _KimiaState extends State<Kimia> {
                               });
                             },
                             controller: uapLogamController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),

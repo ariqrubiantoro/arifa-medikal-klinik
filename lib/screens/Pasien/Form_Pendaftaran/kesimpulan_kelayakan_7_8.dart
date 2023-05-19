@@ -136,7 +136,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                               });
                             },
                             controller: layakBekerjaTanpaCatatanController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -195,7 +195,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                               });
                             },
                             controller: layakBekerjaDenganCatatanController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -254,7 +254,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                               });
                             },
                             controller: layakBekerjaDenganPenyesuaianController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -310,7 +310,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                               });
                             },
                             controller: layakUntukBekerjaController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),

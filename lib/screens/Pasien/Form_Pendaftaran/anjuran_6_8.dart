@@ -126,7 +126,7 @@ class _Anjuran6State extends State<Anjuran6> {
                               });
                             },
                             controller: konsumsiAirController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -185,7 +185,7 @@ class _Anjuran6State extends State<Anjuran6> {
                               });
                             },
                             controller: olahragaTeraturController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),

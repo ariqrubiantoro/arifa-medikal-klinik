@@ -39,6 +39,77 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
   final babinskyKiri = TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  PemeriksaanRefleksModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getPemeriksaanRefleks(widget.idPasien!);
+    if (data != null) {
+      setState(() {
+        bicepsKanan.text = data!.pupil!.bicepsKanan!;
+        bicepsKiri.text = data!.pupil!.bicepsKiri!;
+        tricepsKanan.text = data!.patella!.tricepsKanan!;
+        tricepsKiri.text = data!.patella!.tricepsKiri!;
+        babinskyKanan.text = data!.achilles!.babinskiKanan!;
+        babinskyKiri.text = data!.achilles!.babinskiKiri!;
+      });
+      if (data!.pupil!.pupil! == "Normal") {
+        setState(() {
+          strPupil = data!.pupil!.pupil!;
+          _quest1 = 1;
+        });
+      } else if (data!.pupil!.pupil! == "Tidak Normal") {
+        setState(() {
+          strPupil = data!.pupil!.pupil!;
+          _quest1 = 2;
+        });
+      } else if (data!.pupil!.pupil! == "") {
+      } else {
+        setState(() {
+          strPupilF.text = data!.pupil!.pupil!;
+        });
+      }
+
+      if (data!.patella!.patella! == "Normal") {
+        setState(() {
+          strPatella = data!.patella!.patella!;
+          _quest2 = 1;
+        });
+      } else if (data!.patella!.patella! == "Tidak Normal") {
+        setState(() {
+          strPatella = data!.patella!.patella!;
+          _quest2 = 2;
+        });
+      } else if (data!.patella!.patella! == "") {
+      } else {
+        setState(() {
+          strPatellaF.text = data!.patella!.patella!;
+        });
+      }
+
+      if (data!.achilles!.acciles! == "Normal") {
+        setState(() {
+          strAchilles = data!.achilles!.acciles!;
+          _quest3 = 1;
+        });
+      } else if (data!.achilles!.acciles! == "Tidak Normal") {
+        setState(() {
+          strAchilles = data!.achilles!.acciles!;
+          _quest3 = 2;
+        });
+      } else if (data!.achilles!.acciles! == "") {
+      } else {
+        setState(() {
+          strAchillesF.text = data!.achilles!.acciles!;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -202,7 +273,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                   });
                 },
                 controller: strPupilF,
-                maxLength: 10,
+                maxLength: 12,
                 decoration: InputDecoration(border: InputBorder.none),
               ),
             ))
@@ -221,7 +292,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
             textDefault(":  ", Colors.black, 14, FontWeight.normal),
             Expanded(
               child: Container(
-                height: 30,
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(5),
@@ -247,7 +318,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
             textDefault(":  ", Colors.black, 14, FontWeight.normal),
             Expanded(
               child: Container(
-                height: 30,
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(5),
@@ -312,7 +383,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                   });
                 },
                 controller: strPatellaF,
-                maxLength: 10,
+                maxLength: 12,
                 decoration: InputDecoration(border: InputBorder.none),
               ),
             ))
@@ -331,7 +402,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
             textDefault(":  ", Colors.black, 14, FontWeight.normal),
             Expanded(
               child: Container(
-                height: 30,
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(5),
@@ -357,7 +428,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
             textDefault(":  ", Colors.black, 14, FontWeight.normal),
             Expanded(
               child: Container(
-                height: 30,
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(5),
@@ -422,7 +493,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
                   });
                 },
                 controller: strAchillesF,
-                maxLength: 10,
+                maxLength: 12,
                 decoration: InputDecoration(border: InputBorder.none),
               ),
             ))
@@ -441,7 +512,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
             textDefault(":  ", Colors.black, 14, FontWeight.normal),
             Expanded(
               child: Container(
-                height: 30,
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(5),
@@ -467,7 +538,7 @@ class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
             textDefault(":  ", Colors.black, 14, FontWeight.normal),
             Expanded(
               child: Container(
-                height: 30,
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(5),

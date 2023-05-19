@@ -25,6 +25,26 @@ class _PemeriksaanGentaliaState extends State<PemeriksaanGentalia> {
   final efidymis = TextEditingController();
   final ekskresi = TextEditingController();
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  PemeriksaanGentaliaModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getPemeriksaanGentalia(widget.idPasien!);
+    if (data != null) {
+      hernia.text = data!.hernia!;
+      hemorhoid.text = data!.hemorhoid!;
+      sikatriks.text = data!.sikatriks!;
+      spincter.text = data!.spincter!;
+      efidymis.text = data!.efidymisTestisProstat!;
+      ekskresi.text = data!.ekskresi!;
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

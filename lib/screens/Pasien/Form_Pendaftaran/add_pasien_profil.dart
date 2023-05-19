@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, use_build_context_synchronously
 
 import 'package:age_calculator/age_calculator.dart';
 import 'package:arifa_medikal_klink_3/components/alert/alert.dart';
 import 'package:arifa_medikal_klink_3/components/colors/color.dart';
 import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/add_pasien_profil_success.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,6 +37,22 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
   int idJk = 0;
 
   var jkStr = "";
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('namaUser') != null) {
+      setState(() {
+        namaC.text = prefs.getString('namaUser')!;
+        nikC.text = prefs.getString('nikUser')!;
+      });
+    }
+  }
 
   Future<void> selectTanggalPemeriksaan(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -469,12 +486,18 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
     firestore.setPasien(pasien);
     prefs.setString('jenisKelamin', jkStr);
 
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) {
+    //     return AddPasienProfilSucces(
+    //       idPasien: pasien.id,
+    //     );
+    //   }),
+    // );
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
-        return AddPasienProfilSucces(
-          idPasien: pasien.id,
-        );
+        return MenuForm(idPasien: pasien.id!);
       }),
     );
   }

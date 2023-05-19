@@ -71,6 +71,256 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
   bool tapParu = false;
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  PemeriksaanRonggaDadaModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getPemeriksaanRonggaDada(widget.idPasien!);
+    if (data != null) {
+      if (data!.jantung!.batasBatasJantung! == 'Normal') {
+        setState(() {
+          batasJantung = "Normal";
+          _questJantung1 = 1;
+        });
+      } else if (data!.jantung!.batasBatasJantung! == 'Tidak Normal') {
+        setState(() {
+          batasJantung = "Tidak Normal";
+          _questJantung1 = 2;
+        });
+      } else if (data!.jantung!.batasBatasJantung! == '') {
+      } else {
+        setState(() {
+          batasJantungF.text = data!.jantung!.batasBatasJantung!;
+        });
+      }
+
+      if (data!.jantung!.auskultasi! == 'Normal') {
+        setState(() {
+          auskultasi = "Normal";
+          _questJantung2 = 1;
+        });
+      } else if (data!.jantung!.auskultasi! == 'Tidak Normal') {
+        setState(() {
+          auskultasi = "Tidak Normal";
+          _questJantung2 = 2;
+        });
+      } else if (data!.jantung!.auskultasi! == '') {
+      } else {
+        setState(() {
+          auskultasiF.text = data!.jantung!.auskultasi!;
+        });
+      }
+    }
+
+    if (data!.jantung!.iktusKordis! == 'Normal') {
+      setState(() {
+        iktusKordis = "Normal";
+        _questJantung3 = 1;
+      });
+    } else if (data!.jantung!.iktusKordis! == 'Tidak Normal') {
+      setState(() {
+        iktusKordis = "Tidak Normal";
+        _questJantung3 = 2;
+      });
+    } else if (data!.jantung!.iktusKordis! == '') {
+    } else {
+      setState(() {
+        iktusKordisF.text = data!.jantung!.iktusKordis!;
+      });
+    }
+
+    if (data!.jantung!.bunyiJantung! == 'Normal') {
+      setState(() {
+        bunyiJantung = "Normal";
+        _questJantung4 = 1;
+      });
+    } else if (data!.jantung!.bunyiJantung! == 'Tidak Normal') {
+      setState(() {
+        bunyiJantung = "Tidak Normal";
+        _questJantung4 = 2;
+      });
+    } else if (data!.jantung!.bunyiJantung! == '') {
+    } else {
+      setState(() {
+        bunyiJantungF.text = data!.jantung!.bunyiJantung!;
+      });
+    }
+
+    if (data!.jantung!.bunyuNafas! == 'Ada') {
+      setState(() {
+        bunyiNafas = "Ada";
+        _questJantung5 = 1;
+      });
+    } else if (data!.jantung!.bunyuNafas! == 'Tidak Ada') {
+      setState(() {
+        bunyiNafas = "Tidak Ada";
+        _questJantung5 = 2;
+      });
+    } else if (data!.jantung!.bunyuNafas! == '') {
+    } else {
+      setState(() {
+        bunyiNafasF.text = data!.jantung!.bunyuNafas!;
+      });
+    }
+
+    if (data!.jantung!.lainLain! == 'Normal') {
+      setState(() {
+        lainlainJantung = "Normal";
+        _questJantung6 = 1;
+      });
+    } else if (data!.jantung!.lainLain! == 'Tidak Normal') {
+      setState(() {
+        lainlainJantung = "Tidak Normal";
+        _questJantung6 = 2;
+      });
+    } else if (data!.jantung!.lainLain! == '') {
+    } else {
+      setState(() {
+        lainlainJantungF.text = data!.jantung!.lainLain!;
+      });
+    }
+
+    if (data!.paru!.inspeksiKanan! == 'Normal') {
+      setState(() {
+        inpeksiKanan = "Normal";
+        _questParu1 = 1;
+      });
+    } else if (data!.paru!.inspeksiKanan! == 'Tidak Normal') {
+      setState(() {
+        inpeksiKanan = "Tidak Normal";
+        _questParu1 = 2;
+      });
+    } else if (data!.paru!.inspeksiKanan! == '') {
+    } else {
+      setState(() {
+        inpeksiKananF.text = data!.paru!.inspeksiKanan!;
+      });
+    }
+
+    if (data!.paru!.inspeksiKiri! == 'Normal') {
+      setState(() {
+        inpeksiKiri = "Normal";
+        _questParu2 = 1;
+      });
+    } else if (data!.paru!.inspeksiKiri! == 'Tidak Normal') {
+      setState(() {
+        inpeksiKiri = "Tidak Normal";
+        _questParu2 = 2;
+      });
+    } else if (data!.paru!.inspeksiKiri! == '') {
+    } else {
+      setState(() {
+        inpeksiKiriF.text = data!.paru!.inspeksiKiri!;
+      });
+    }
+
+    if (data!.paru!.palpasiKanan! == 'Normal') {
+      setState(() {
+        palpasiKanan = "Normal";
+        _questParu3 = 1;
+      });
+    } else if (data!.paru!.palpasiKanan! == 'Tidak Normal') {
+      setState(() {
+        palpasiKanan = "Tidak Normal";
+        _questParu3 = 2;
+      });
+    } else if (data!.paru!.palpasiKanan! == '') {
+    } else {
+      setState(() {
+        palpasiKananF.text = data!.paru!.palpasiKanan!;
+      });
+    }
+
+    if (data!.paru!.palpasiKiri! == 'Normal') {
+      setState(() {
+        palpasiKiri = "Normal";
+        _questParu4 = 1;
+      });
+    } else if (data!.paru!.palpasiKiri! == 'Tidak Normal') {
+      setState(() {
+        palpasiKiri = "Tidak Normal";
+        _questParu4 = 2;
+      });
+    } else if (data!.paru!.palpasiKiri! == '') {
+    } else {
+      setState(() {
+        palpasiKiriF.text = data!.paru!.palpasiKiri!;
+      });
+    }
+
+    if (data!.paru!.perkusiKanan! == 'Normal') {
+      setState(() {
+        perkusiKanan = "Normal";
+        _questParu5 = 1;
+      });
+    } else if (data!.paru!.perkusiKanan! == 'Tidak Normal') {
+      setState(() {
+        perkusiKanan = "Tidak Normal";
+        _questParu5 = 2;
+      });
+    } else if (data!.paru!.perkusiKanan! == '') {
+    } else {
+      setState(() {
+        perkusiKananF.text = data!.paru!.perkusiKanan!;
+      });
+    }
+
+    if (data!.paru!.perkusiKiri! == 'Normal') {
+      setState(() {
+        perkusiKiri = "Normal";
+        _questParu6 = 1;
+      });
+    } else if (data!.paru!.perkusiKiri! == 'Tidak Normal') {
+      setState(() {
+        perkusiKiri = "Tidak Normal";
+        _questParu6 = 2;
+      });
+    } else if (data!.paru!.perkusiKiri! == '') {
+    } else {
+      setState(() {
+        perkusiKiriF.text = data!.paru!.perkusiKiri!;
+      });
+    }
+
+    if (data!.paru!.auskultasiKanan! == 'Normal') {
+      setState(() {
+        auskultasi = "Normal";
+        _questParu7 = 1;
+      });
+    } else if (data!.paru!.auskultasiKanan! == 'Tidak Normal') {
+      setState(() {
+        auskultasi = "Tidak Normal";
+        _questParu7 = 2;
+      });
+    } else if (data!.paru!.auskultasiKanan! == '') {
+    } else {
+      setState(() {
+        auskultasiF.text = data!.paru!.auskultasiKanan!;
+      });
+    }
+
+    if (data!.paru!.auskultasiKiri! == 'Normal') {
+      setState(() {
+        auskultasiKiri = "Normal";
+        _questParu8 = 1;
+      });
+    } else if (data!.paru!.auskultasiKiri! == 'Tidak Normal') {
+      setState(() {
+        auskultasiKiri = "Tidak Normal";
+        _questParu8 = 2;
+      });
+    } else if (data!.paru!.auskultasiKiri! == '') {
+    } else {
+      setState(() {
+        auskultasiKiriF.text = data!.paru!.auskultasiKiri!;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +542,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: batasJantungF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -345,7 +595,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: auskultasiF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -398,7 +648,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: iktusKordisF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -451,7 +701,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: bunyiJantungF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -504,7 +754,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: bunyiNafasF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -557,7 +807,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: lainlainJantungF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -624,7 +874,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: inpeksiKananF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -677,7 +927,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: inpeksiKiriF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -730,7 +980,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: palpasiKananF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -783,7 +1033,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: palpasiKiriF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -836,7 +1086,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: perkusiKananF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -889,7 +1139,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: perkusiKiriF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -942,7 +1192,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: auskultasiKananF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -995,7 +1245,7 @@ class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
                     });
                   },
                   controller: auskultasiKiriF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))

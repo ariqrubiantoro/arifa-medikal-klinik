@@ -19,10 +19,10 @@ class Biologi extends StatefulWidget {
 }
 
 class _BiologiState extends State<Biologi> {
-  Question _quest1 = Question.tidak;
-  Question _quest2 = Question.tidak;
-  Question _quest3 = Question.tidak;
-  Question _quest4 = Question.tidak;
+  Question _quest1 = Question.none;
+  Question _quest2 = Question.none;
+  Question _quest3 = Question.none;
+  Question _quest4 = Question.none;
 
   String bakteri = "Tidak";
   String darah = "Tidak";
@@ -36,6 +36,81 @@ class _BiologiState extends State<Biologi> {
   TextEditingController limbahController = TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  BiologiModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getBiologi(widget.idPasien!);
+    if (data != null) {
+      setState(() {
+        lainlain.text = data!.lainLain!;
+      });
+      if (data!.bakteri == "Ya") {
+        setState(() {
+          bakteri = data!.bakteri!;
+          _quest1 = Question.ya;
+        });
+      } else if (data!.bakteri == "Tidak") {
+        setState(() {
+          bakteri = data!.bakteri!;
+          _quest1 = Question.tidak;
+        });
+      } else if (data!.bakteri == "") {
+      } else {
+        bakteriController.text = data!.bakteri!;
+      }
+
+      if (data!.darah == "Ya") {
+        setState(() {
+          darah = data!.darah!;
+          _quest2 = Question.ya;
+        });
+      } else if (data!.darah == "Tidak") {
+        setState(() {
+          darah = data!.darah!;
+          _quest2 = Question.tidak;
+        });
+      } else if (data!.darah == "") {
+      } else {
+        darahController.text = data!.darah!;
+      }
+
+      if (data!.nyamuk == "Ya") {
+        setState(() {
+          nyamuk = data!.nyamuk!;
+          _quest3 = Question.ya;
+        });
+      } else if (data!.nyamuk == "Tidak") {
+        setState(() {
+          nyamuk = data!.nyamuk!;
+          _quest3 = Question.tidak;
+        });
+      } else if (data!.nyamuk == "") {
+      } else {
+        nyamukController.text = data!.nyamuk!;
+      }
+
+      if (data!.limbah == "Ya") {
+        setState(() {
+          limbah = data!.limbah!;
+          _quest4 = Question.ya;
+        });
+      } else if (data!.limbah == "Tidak") {
+        setState(() {
+          limbah = data!.limbah!;
+          _quest4 = Question.tidak;
+        });
+      } else if (data!.limbah == "") {
+      } else {
+        limbahController.text = data!.limbah!;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +208,7 @@ class _BiologiState extends State<Biologi> {
                               });
                             },
                             controller: bakteriController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -189,7 +264,7 @@ class _BiologiState extends State<Biologi> {
                               });
                             },
                             controller: darahController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -245,7 +320,7 @@ class _BiologiState extends State<Biologi> {
                               });
                             },
                             controller: nyamukController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -301,7 +376,7 @@ class _BiologiState extends State<Biologi> {
                               });
                             },
                             controller: limbahController,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),

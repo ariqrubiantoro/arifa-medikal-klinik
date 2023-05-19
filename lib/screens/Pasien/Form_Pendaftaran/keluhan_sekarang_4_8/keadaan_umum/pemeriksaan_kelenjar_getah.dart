@@ -54,6 +54,168 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
   final inguinalKananF = TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  PemeriksaanKelenjarGetahModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getPemeriksaanKelenjarGetah(widget.idPasien!);
+    if (data != null) {
+      if (data!.cervicalKiri == "Normal") {
+        setState(() {
+          cervicalKiri = data!.cervicalKiri!;
+          _quest1 = 1;
+        });
+      } else if (data!.cervicalKiri == "Tidak Normal") {
+        setState(() {
+          cervicalKiri = data!.cervicalKiri!;
+          _quest1 = 2;
+        });
+      } else if (data!.cervicalKiri == "") {
+      } else {
+        cervicalKiriF.text = data!.cervicalKiri!;
+      }
+
+      if (data!.cervicalKanan == "Normal") {
+        setState(() {
+          cervicalKanan = data!.cervicalKanan!;
+          _quest2 = 1;
+        });
+      } else if (data!.cervicalKanan == "Tidak Normal") {
+        setState(() {
+          cervicalKanan = data!.cervicalKanan!;
+          _quest2 = 2;
+        });
+      } else if (data!.cervicalKanan == "") {
+      } else {
+        cervicalKananF.text = data!.cervicalKanan!;
+      }
+
+      if (data!.axilaKiri == "Normal") {
+        setState(() {
+          axilaKiri = data!.axilaKiri!;
+          _quest3 = 1;
+        });
+      } else if (data!.axilaKiri == "Tidak Normal") {
+        setState(() {
+          axilaKiri = data!.axilaKiri!;
+          _quest3 = 2;
+        });
+      } else if (data!.axilaKiri == "") {
+      } else {
+        axilaKiriF.text = data!.axilaKiri!;
+      }
+
+      if (data!.axilaKanan == "Normal") {
+        setState(() {
+          axilaKanan = data!.axilaKanan!;
+          _quest4 = 1;
+        });
+      } else if (data!.axilaKanan == "Tidak Normal") {
+        setState(() {
+          axilaKanan = data!.axilaKanan!;
+          _quest4 = 2;
+        });
+      } else if (data!.axilaKanan == "") {
+      } else {
+        axilaKananF.text = data!.axilaKanan!;
+      }
+
+      if (data!.supraclaviculaKiri == "Normal") {
+        setState(() {
+          supraKiri = data!.supraclaviculaKiri!;
+          _quest5 = 1;
+        });
+      } else if (data!.supraclaviculaKiri == "Tidak Normal") {
+        setState(() {
+          supraKiri = data!.supraclaviculaKiri!;
+          _quest5 = 2;
+        });
+      } else if (data!.supraclaviculaKiri == "") {
+      } else {
+        supraKiriF.text = data!.supraclaviculaKiri!;
+      }
+
+      if (data!.supraclaviculaKanan == "Normal") {
+        setState(() {
+          supraKanan = data!.supraclaviculaKanan!;
+          _quest6 = 1;
+        });
+      } else if (data!.supraclaviculaKanan == "Tidak Normal") {
+        setState(() {
+          supraKanan = data!.supraclaviculaKanan!;
+          _quest6 = 2;
+        });
+      } else if (data!.supraclaviculaKanan == "") {
+      } else {
+        supraKananF.text = data!.supraclaviculaKanan!;
+      }
+
+      if (data!.infraclaviculaKiri == "Normal") {
+        setState(() {
+          infraKiri = data!.infraclaviculaKiri!;
+          _quest7 = 1;
+        });
+      } else if (data!.infraclaviculaKiri == "Tidak Normal") {
+        setState(() {
+          infraKiri = data!.infraclaviculaKiri!;
+          _quest7 = 2;
+        });
+      } else if (data!.infraclaviculaKiri == "") {
+      } else {
+        infraKiriF.text = data!.infraclaviculaKiri!;
+      }
+
+      if (data!.infraclaviculaKanan == "Normal") {
+        setState(() {
+          infraKanan = data!.infraclaviculaKanan!;
+          _quest8 = 1;
+        });
+      } else if (data!.infraclaviculaKanan == "Tidak Normal") {
+        setState(() {
+          infraKanan = data!.infraclaviculaKanan!;
+          _quest8 = 2;
+        });
+      } else if (data!.infraclaviculaKanan == "") {
+      } else {
+        infraKananF.text = data!.infraclaviculaKanan!;
+      }
+
+      if (data!.inguinalKiri == "Normal") {
+        setState(() {
+          inguinalKiri = data!.inguinalKiri!;
+          _quest9 = 1;
+        });
+      } else if (data!.inguinalKiri == "Tidak Normal") {
+        setState(() {
+          inguinalKiri = data!.inguinalKiri!;
+          _quest9 = 2;
+        });
+      } else if (data!.inguinalKiri == "") {
+      } else {
+        inguinalKiriF.text = data!.inguinalKiri!;
+      }
+
+      if (data!.inguinalKanan == "Normal") {
+        setState(() {
+          inguinalKanan = data!.inguinalKanan!;
+          _quest10 = 1;
+        });
+      } else if (data!.inguinalKanan == "Tidak Normal") {
+        setState(() {
+          inguinalKanan = data!.inguinalKanan!;
+          _quest10 = 2;
+        });
+      } else if (data!.inguinalKanan == "") {
+      } else {
+        inguinalKananF.text = data!.inguinalKanan!;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +315,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                               });
                             },
                             controller: cervicalKiriF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -211,7 +373,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                             });
                           },
                           controller: cervicalKananF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -266,7 +428,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                             });
                           },
                           controller: axilaKiriF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -321,7 +483,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                             });
                           },
                           controller: axilaKananF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -377,7 +539,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                             });
                           },
                           controller: supraKiriF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -433,7 +595,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                             });
                           },
                           controller: supraKananF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -489,7 +651,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                             });
                           },
                           controller: infraKiriF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -545,7 +707,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                             });
                           },
                           controller: infraKananF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -601,7 +763,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                             });
                           },
                           controller: inguinalKiriF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -657,7 +819,7 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                             });
                           },
                           controller: inguinalKananF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))

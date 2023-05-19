@@ -43,6 +43,188 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
   String hermorhid = "Tidak Ada";
   String kanker = "Tidak Ada";
   String jantung = "Tidak Ada";
+  PenyakitKeluargaModel? _data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    _data = await firestore.getPenyakitKeluarga(widget.idPasien!);
+    if (_data != null) {
+      if (_data!.kencingManis! == "Ayah") {
+        setState(() {
+          kencingManis = _data!.kencingManis!;
+          _quest = Question.ayah;
+        });
+      } else if (_data!.kencingManis! == "Ibu") {
+        setState(() {
+          kencingManis = _data!.kencingManis!;
+          _quest = Question.ibu;
+        });
+      } else if (_data!.kencingManis! == "Tidak Ada") {
+        setState(() {
+          kencingManis = _data!.kencingManis!;
+          _quest = Question.tidak;
+        });
+      }
+
+      if (_data!.darahTinggi! == "Ayah") {
+        setState(() {
+          darahTinggi = _data!.darahTinggi!;
+          _quest2 = Question.ayah;
+        });
+      } else if (_data!.darahTinggi! == "Ibu") {
+        setState(() {
+          darahTinggi = _data!.darahTinggi!;
+          _quest2 = Question.ibu;
+        });
+      } else if (_data!.darahTinggi! == "Tidak Ada") {
+        setState(() {
+          darahTinggi = _data!.darahTinggi!;
+          _quest2 = Question.tidak;
+        });
+      }
+
+      if (_data!.asamLambung! == "Ayah") {
+        setState(() {
+          asamLambung = _data!.asamLambung!;
+          _quest3 = Question.ayah;
+        });
+      } else if (_data!.asamLambung! == "Ibu") {
+        setState(() {
+          asamLambung = _data!.asamLambung!;
+          _quest3 = Question.ibu;
+        });
+      } else if (_data!.asamLambung! == "Tidak Ada") {
+        setState(() {
+          asamLambung = _data!.asamLambung!;
+          _quest3 = Question.tidak;
+        });
+      }
+
+      if (_data!.alergi! == "Ayah") {
+        setState(() {
+          alergi = _data!.alergi!;
+          _quest4 = Question.ayah;
+        });
+      } else if (_data!.alergi! == "Ibu") {
+        setState(() {
+          alergi = _data!.alergi!;
+          _quest4 = Question.ibu;
+        });
+      } else if (_data!.alergi! == "Tidak Ada") {
+        setState(() {
+          alergi = _data!.alergi!;
+          _quest4 = Question.tidak;
+        });
+      }
+
+      if (_data!.paru! == "Ayah") {
+        setState(() {
+          paru = _data!.paru!;
+          _quest5 = Question.ayah;
+        });
+      } else if (_data!.paru! == "Ibu") {
+        setState(() {
+          paru = _data!.paru!;
+          _quest5 = Question.ibu;
+        });
+      } else if (_data!.paru! == "Tidak Ada") {
+        setState(() {
+          paru = _data!.paru!;
+          _quest5 = Question.tidak;
+        });
+      }
+
+      if (_data!.stroke! == "Ayah") {
+        setState(() {
+          stroke = _data!.stroke!;
+          _quest6 = Question.ayah;
+        });
+      } else if (_data!.stroke! == "Ibu") {
+        setState(() {
+          stroke = _data!.stroke!;
+          _quest6 = Question.ibu;
+        });
+      } else if (_data!.stroke! == "Tidak Ada") {
+        setState(() {
+          stroke = _data!.stroke!;
+          _quest6 = Question.tidak;
+        });
+      }
+
+      if (_data!.ginjal! == "Ayah") {
+        setState(() {
+          ginjal = _data!.ginjal!;
+          _quest7 = Question.ayah;
+        });
+      } else if (_data!.ginjal! == "Ibu") {
+        setState(() {
+          ginjal = _data!.ginjal!;
+          _quest7 = Question.ibu;
+        });
+      } else if (_data!.ginjal! == "Tidak Ada") {
+        setState(() {
+          ginjal = _data!.ginjal!;
+          _quest7 = Question.tidak;
+        });
+      }
+
+      if (_data!.hemorhoid! == "Ayah") {
+        setState(() {
+          hermorhid = _data!.hemorhoid!;
+          _quest8 = Question.ayah;
+        });
+      } else if (_data!.hemorhoid! == "Ibu") {
+        setState(() {
+          hermorhid = _data!.hemorhoid!;
+          _quest8 = Question.ibu;
+        });
+      } else if (_data!.hemorhoid! == "Tidak Ada") {
+        setState(() {
+          hermorhid = _data!.hemorhoid!;
+          _quest8 = Question.tidak;
+        });
+      }
+
+      if (_data!.kanker! == "Ayah") {
+        setState(() {
+          kanker = _data!.kanker!;
+          _quest9 = Question.ayah;
+        });
+      } else if (_data!.kanker! == "Ibu") {
+        setState(() {
+          kanker = _data!.kanker!;
+          _quest9 = Question.ibu;
+        });
+      } else if (_data!.kanker! == "Tidak Ada") {
+        setState(() {
+          kanker = _data!.kanker!;
+          _quest9 = Question.tidak;
+        });
+      }
+
+      if (_data!.jantung! == "Ayah") {
+        setState(() {
+          jantung = _data!.jantung!;
+          _quest10 = Question.ayah;
+        });
+      } else if (_data!.jantung! == "Ibu") {
+        setState(() {
+          jantung = _data!.jantung!;
+          _quest10 = Question.ibu;
+        });
+      } else if (_data!.jantung! == "Tidak Ada") {
+        setState(() {
+          jantung = _data!.jantung!;
+          _quest10 = Question.tidak;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

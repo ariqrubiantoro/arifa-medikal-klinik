@@ -48,6 +48,138 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
   final cacatKiriF = TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  PemeriksaanAnggotaGerakModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getPemeriksaanAnggotaGerak(widget.idPasien!);
+    if (data != null) {
+      if (data!.atasKanan == "Normal") {
+        setState(() {
+          atasKanan = data!.atasKanan!;
+          _quest1 = 1;
+        });
+      } else if (data!.atasKanan == "Tidak Normal") {
+        setState(() {
+          atasKanan = data!.atasKanan!;
+          _quest1 = 2;
+        });
+      } else if (data!.atasKanan == "") {
+      } else {
+        atasKananF.text = data!.atasKanan!;
+      }
+
+      if (data!.atasKiri == "Normal") {
+        setState(() {
+          atasKiri = data!.atasKiri!;
+          _quest2 = 1;
+        });
+      } else if (data!.atasKiri == "Tidak Normal") {
+        setState(() {
+          atasKiri = data!.atasKiri!;
+          _quest2 = 2;
+        });
+      } else if (data!.atasKiri == "") {
+      } else {
+        atasKiriF.text = data!.atasKiri!;
+      }
+
+      if (data!.bawahKanan == "Normal") {
+        setState(() {
+          bawahKanan = data!.bawahKanan!;
+          _quest3 = 1;
+        });
+      } else if (data!.bawahKanan == "Tidak Normal") {
+        setState(() {
+          bawahKanan = data!.bawahKanan!;
+          _quest3 = 2;
+        });
+      } else if (data!.bawahKanan == "") {
+      } else {
+        bawahKananF.text = data!.bawahKanan!;
+      }
+
+      if (data!.bawahKiri == "Normal") {
+        setState(() {
+          bawahKiri = data!.bawahKiri!;
+          _quest4 = 1;
+        });
+      } else if (data!.bawahKiri == "Tidak Normal") {
+        setState(() {
+          bawahKiri = data!.bawahKiri!;
+          _quest4 = 2;
+        });
+      } else if (data!.bawahKiri == "") {
+      } else {
+        bawahKiriF.text = data!.bawahKiri!;
+      }
+
+      if (data!.sembabOedemKanan == "Normal") {
+        setState(() {
+          sembabKanan = data!.sembabOedemKanan!;
+          _quest5 = 1;
+        });
+      } else if (data!.sembabOedemKanan == "Tidak Normal") {
+        setState(() {
+          sembabKanan = data!.sembabOedemKanan!;
+          _quest5 = 2;
+        });
+      } else if (data!.sembabOedemKanan == "") {
+      } else {
+        sembabKananF.text = data!.sembabOedemKanan!;
+      }
+
+      if (data!.sembabOedemKiri == "Normal") {
+        setState(() {
+          sembabKiri = data!.sembabOedemKiri!;
+          _quest6 = 1;
+        });
+      } else if (data!.sembabOedemKiri == "Tidak Normal") {
+        setState(() {
+          sembabKiri = data!.sembabOedemKiri!;
+          _quest6 = 2;
+        });
+      } else if (data!.sembabOedemKiri == "") {
+      } else {
+        sembabKiriF.text = data!.sembabOedemKiri!;
+      }
+
+      if (data!.cacatKanan == "Normal") {
+        setState(() {
+          cacatKanan = data!.cacatKanan!;
+          _quest7 = 1;
+        });
+      } else if (data!.cacatKanan == "Tidak Normal") {
+        setState(() {
+          cacatKanan = data!.cacatKanan!;
+          _quest7 = 2;
+        });
+      } else if (data!.cacatKanan == "") {
+      } else {
+        cacatKananF.text = data!.cacatKanan!;
+      }
+
+      if (data!.cacatKiri == "Normal") {
+        setState(() {
+          cacatKiri = data!.cacatKiri!;
+          _quest8 = 1;
+        });
+      } else if (data!.cacatKiri == "Tidak Normal") {
+        setState(() {
+          cacatKiri = data!.cacatKiri!;
+          _quest8 = 2;
+        });
+      } else if (data!.cacatKiri == "") {
+      } else {
+        cacatKiriF.text = data!.cacatKiri!;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +279,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: atasKananF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -202,7 +334,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: atasKiriF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -257,7 +389,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: bawahKananF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -312,7 +444,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: bawahKiriF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -368,7 +500,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: sembabKananF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -424,7 +556,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: sembabKiriF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -479,7 +611,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: cacatKananF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))
@@ -534,7 +666,7 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
                             });
                           },
                           controller: cacatKiriF,
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ))

@@ -4,6 +4,7 @@ import 'package:arifa_medikal_klink_3/components/colors/color.dart';
 import 'package:arifa_medikal_klink_3/components/widget/text.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_keluarga_2_8.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:flutter/material.dart';
 
 import '../../../service/firebase_firestore_service.dart';
@@ -52,6 +53,238 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
   final hepatitisF = TextEditingController();
   final kencingManisF = TextEditingController();
   final patahTulangF = TextEditingController();
+  PenyakitTerdahuluModel? _data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    _data = await firestore.getPenyakitTerdahulu(widget.idPasien!);
+    if (_data != null) {
+      if (_data!.darahTinggi! == "Ya") {
+        setState(() {
+          darahTinggi = _data!.darahTinggi!;
+          _quest = 1;
+        });
+      } else if (_data!.darahTinggi! == "Tidak Ada") {
+        setState(() {
+          darahTinggi = _data!.darahTinggi!;
+          _quest = 2;
+        });
+      } else if (_data!.darahTinggi! == "") {
+        setState(() {
+          darahTinggi = "";
+          darahTinggiF.text = "";
+          _quest = 0;
+        });
+      } else {
+        setState(() {
+          darahTinggiF.text = _data!.darahTinggi!;
+        });
+      }
+
+      if (_data!.paru! == "Ya") {
+        setState(() {
+          paru = _data!.paru!;
+          _quest2 = 1;
+        });
+      } else if (_data!.paru! == "Tidak Ada") {
+        setState(() {
+          paru = _data!.paru!;
+          _quest2 = 2;
+        });
+      } else if (_data!.paru! == "") {
+        setState(() {
+          paru = "";
+          paruF.text = "";
+          _quest2 = 0;
+        });
+      } else {
+        setState(() {
+          paruF.text = _data!.paru!;
+        });
+      }
+
+      if (_data!.asamLambung! == "Ya") {
+        setState(() {
+          asamLambung = _data!.asamLambung!;
+          _quest3 = 1;
+        });
+      } else if (_data!.asamLambung! == "Tidak Ada") {
+        setState(() {
+          asamLambung = _data!.asamLambung!;
+          _quest3 = 2;
+        });
+      } else if (_data!.asamLambung! == "") {
+        setState(() {
+          asamLambung = "";
+          asamLambungF.text = "";
+          _quest3 = 0;
+        });
+      } else {
+        setState(() {
+          asamLambungF.text = _data!.asamLambung!;
+        });
+      }
+
+      if (_data!.alergi! == "Ya") {
+        setState(() {
+          alergi = _data!.alergi!;
+          _quest4 = 1;
+        });
+      } else if (_data!.alergi! == "Tidak Ada") {
+        setState(() {
+          alergi = _data!.alergi!;
+          _quest4 = 2;
+        });
+      } else if (_data!.alergi! == "") {
+        setState(() {
+          alergi = "";
+          alergiF.text = "";
+          _quest4 = 0;
+        });
+      } else {
+        setState(() {
+          alergiF.text = _data!.alergi!;
+        });
+      }
+
+      if (_data!.riwayatOperasi! == "Ya") {
+        setState(() {
+          riwayatOperasi = _data!.riwayatOperasi!;
+          _quest5 = 1;
+        });
+      } else if (_data!.riwayatOperasi! == "Tidak Ada") {
+        setState(() {
+          riwayatOperasi = _data!.riwayatOperasi!;
+          _quest5 = 2;
+        });
+      } else if (_data!.riwayatOperasi! == "") {
+        setState(() {
+          riwayatOperasi = "";
+          riwayatOperasiF.text = "";
+          _quest5 = 0;
+        });
+      } else {
+        setState(() {
+          riwayatOperasiF.text = _data!.riwayatOperasi!;
+        });
+      }
+
+      if (_data!.riwayatKecelakaan! == "Ya") {
+        setState(() {
+          riwayatKecelakaan = _data!.riwayatKecelakaan!;
+          _quest6 = 1;
+        });
+      } else if (_data!.riwayatKecelakaan! == "Tidak Ada") {
+        setState(() {
+          riwayatKecelakaan = _data!.riwayatKecelakaan!;
+          _quest6 = 2;
+        });
+      } else if (_data!.riwayatKecelakaan! == "") {
+        setState(() {
+          riwayatKecelakaan = "";
+          riwayatKecelakaanF.text = "";
+          _quest6 = 0;
+        });
+      } else {
+        setState(() {
+          riwayatKecelakaanF.text = _data!.riwayatKecelakaan!;
+        });
+      }
+
+      if (_data!.riwayatRawatRs! == "Ya") {
+        setState(() {
+          riwayatRawatrs = _data!.riwayatRawatRs!;
+          _quest7 = 1;
+        });
+      } else if (_data!.riwayatRawatRs! == "Tidak Ada") {
+        setState(() {
+          riwayatRawatrs = _data!.riwayatRawatRs!;
+          _quest7 = 2;
+        });
+      } else if (_data!.riwayatRawatRs! == "") {
+        setState(() {
+          riwayatRawatrs = "";
+          riwayatRawatrsF.text = "";
+          _quest7 = 0;
+        });
+      } else {
+        setState(() {
+          riwayatRawatrsF.text = _data!.riwayatRawatRs!;
+        });
+      }
+
+      if (_data!.hepatitis! == "Ya") {
+        setState(() {
+          hepatitis = _data!.hepatitis!;
+          _quest8 = 1;
+        });
+      } else if (_data!.hepatitis! == "Tidak Ada") {
+        setState(() {
+          hepatitis = _data!.hepatitis!;
+          _quest8 = 2;
+        });
+      } else if (_data!.hepatitis! == "") {
+        setState(() {
+          hepatitis = "";
+          hepatitisF.text = "";
+          _quest8 = 0;
+        });
+      } else {
+        setState(() {
+          hepatitisF.text = _data!.hepatitis!;
+        });
+      }
+
+      if (_data!.kencingManis! == "Ya") {
+        setState(() {
+          kencingManis = _data!.kencingManis!;
+          _quest9 = 1;
+        });
+      } else if (_data!.kencingManis! == "Tidak Ada") {
+        setState(() {
+          kencingManis = _data!.kencingManis!;
+          _quest9 = 2;
+        });
+      } else if (_data!.kencingManis! == "") {
+        setState(() {
+          kencingManis = "";
+          kencingManisF.text = "";
+          _quest9 = 0;
+        });
+      } else {
+        setState(() {
+          kencingManisF.text = _data!.kencingManis!;
+        });
+      }
+
+      if (_data!.patahTulang! == "Ya") {
+        setState(() {
+          patahTulang = _data!.patahTulang!;
+          _quest10 = 1;
+        });
+      } else if (_data!.patahTulang! == "Tidak Ada") {
+        setState(() {
+          patahTulang = _data!.patahTulang!;
+          _quest10 = 2;
+        });
+      } else if (_data!.patahTulang! == "") {
+        setState(() {
+          patahTulang = "";
+          patahTulangF.text = "";
+          _quest10 = 0;
+        });
+      } else {
+        setState(() {
+          patahTulangF.text = _data!.patahTulang!;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +292,30 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
       appBar: AppBar(
         backgroundColor: blueDefault,
         automaticallyImplyLeading: false,
-        title: Row(children: [
-          Icon(Icons.arrow_back),
-          SizedBox(
-            width: 30,
+        title:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          InkWell(
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return MenuForm(idPasien: widget.idPasien!);
+              }));
+            },
+            child: Row(
+              children: [
+                Icon(Icons.arrow_back),
+                SizedBox(
+                  width: 5,
+                ),
+                textDefault("Menu Form", Colors.white, 14, FontWeight.normal),
+              ],
+            ),
           ),
           textDefault(
-              "Riwayat Penyakit Terdahulu", Colors.white, 16, FontWeight.bold)
+              "Riwayat Penyakit Terdahulu", Colors.white, 16, FontWeight.bold),
+          SizedBox(
+            width: 5,
+          ),
         ]),
       ),
       body: Container(
@@ -159,7 +409,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: darahTinggiF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -216,7 +466,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: paruF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -272,7 +522,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: asamLambungF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -327,7 +577,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: alergiF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -383,7 +633,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: riwayatOperasiF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -439,7 +689,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: riwayatKecelakaanF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -495,7 +745,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: riwayatRawatrsF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -550,7 +800,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: hepatitisF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -606,7 +856,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: kencingManisF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -662,7 +912,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                               });
                             },
                             controller: patahTulangF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -681,7 +931,10 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    onTap: () => Navigator.of(context).pop(),
+                    onTap: () => Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return MenuForm(idPasien: widget.idPasien!);
+                    })),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),

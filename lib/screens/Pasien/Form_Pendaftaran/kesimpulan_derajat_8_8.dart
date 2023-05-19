@@ -130,7 +130,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                               });
                             },
                             controller: str1Controller,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -186,7 +186,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                               });
                             },
                             controller: str2Controller,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -245,7 +245,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                               });
                             },
                             controller: str3Controller,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -304,7 +304,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                               });
                             },
                             controller: str4Controller,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -363,7 +363,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                               });
                             },
                             controller: str5Controller,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -422,7 +422,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                               });
                             },
                             controller: str6Controller,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -481,7 +481,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                               });
                             },
                             controller: str7Controller,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),

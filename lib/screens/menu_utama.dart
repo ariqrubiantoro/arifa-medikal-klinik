@@ -27,6 +27,7 @@ import 'package:arifa_medikal_klink_3/screens/formulir/form1.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../components/widget/text.dart';
 import '../model/ajuran_model.dart';
 import '../model/biologi_model.dart';
@@ -135,7 +136,8 @@ class _MenuUtamaState extends State<MenuUtama> {
                   pasienSnapshot.data!.docs[index];
               return InkWell(
                 onTap: () {
-                  cekData(pasienSnapshots.id, pasienSnapshots);
+                  cekData(pasienSnapshots.id, "${pasienSnapshots['NIK']}",
+                      pasienSnapshots);
                 },
                 onLongPress: () => showDialogDelete(pasienSnapshots.id),
                 child: Card(
@@ -235,14 +237,28 @@ class _MenuUtamaState extends State<MenuUtama> {
     );
   }
 
-  cekData(String id, DocumentSnapshot pasienSnapshots) async {
+  cekData(String id, String nik, DocumentSnapshot pasienSnapshots) async {
+    Map<String, dynamic>? userMap;
+    String idPasien = "";
+    String nohpCek = "";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final db = FirebaseFirestore.instance;
+    await db
+        .collection('pasien')
+        .where('NIK', isEqualTo: nik)
+        .get()
+        .then((value) {
+      setState(() {
+        userMap = value.docs[0].data();
+        nohpCek = userMap!['no_hp'];
+      });
+    });
     _penyakitTerdahulu = await firestore.getPenyakitTerdahulu(id);
     _penyakitKeluarga = await firestore.getPenyakitKeluarga(id);
     _riwayatKebiasaan = await firestore.getRiwayatKebiasaan(id);
     _pemeriksaanUmum = await firestore.getPemeriksaanUmum(id);
     _pemeriksaanMata = await firestore.getPemeriksaanMata(id);
     _pemeriksaanTHT = await firestore.getPemeriksaanTHT(id);
-
     _pemeriksaanRonggaDada = await firestore.getPemeriksaanRonggaDada(id);
     _pemeriksaanRonggaPerut = await firestore.getPemeriksaanRonggaPerut(id);
     _pemeriksaanGentalia = await firestore.getPemeriksaanGentalia(id);
@@ -261,8 +277,14 @@ class _MenuUtamaState extends State<MenuUtama> {
         await firestore.getKesimpulanDerajatKesehatan(id);
 
     // setState(() {});
+    if (nohpCek == "") {
+      prefs.setString('namaUser', userMap!['namaPasien']);
+      prefs.setString('nikUser', userMap!['NIK']);
 
-    if (_penyakitTerdahulu == null) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+        return AddPasienProfil();
+      }));
+    } else if (_penyakitTerdahulu == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
         return PenyakitTerdahulu1(
           idPasien: id,

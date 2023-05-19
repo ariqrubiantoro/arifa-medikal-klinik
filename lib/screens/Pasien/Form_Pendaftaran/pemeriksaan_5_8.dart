@@ -1,10 +1,18 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_model.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_fisik.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
 import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
-
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_audiometri.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_gigi_mulut.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_jantung.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_laboratorium.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_mata.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_paru.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_spirometri.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_treadmill.dart';
 import '../../../components/colors/color.dart';
 import '../../../components/widget/text.dart';
 
@@ -314,10 +322,48 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
 
     firestore.setPemeriksaan(pemeriksaan: data, idPasien: widget.idPasien!);
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return Anjuran6(
-        idPasien: widget.idPasien,
-      );
-    }));
+    if (fisik.text != "") {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HasilPemeriksaanFisik(
+          idPasien: widget.idPasien!,
+        );
+      }));
+    } else if (mata.text != "") {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HasilPemeriksaanMata(idPasien: widget.idPasien!);
+      }));
+    } else if (gigiMulut.text != "") {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HasilPemeriksaanGigiMulut(idPasien: widget.idPasien!);
+      }));
+    } else if (audiometri.text != "") {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HasilPemeriksaanAudiometri(idPasien: widget.idPasien!);
+      }));
+    } else if (spirometri.text != "") {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HasilPemeriksaanSpirometri(idPasien: widget.idPasien!);
+      }));
+    } else if (treadmill.text != "") {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HasilPemeriksaanTreadmill(idPasien: widget.idPasien!);
+      }));
+    } else if (laboratorium.text != "") {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HasilPemeriksaanLaboratorium(idPasien: widget.idPasien!);
+      }));
+    } else if (jantung.text != "") {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HasilPemeriksaanJantung(idPasien: widget.idPasien!);
+      }));
+    } else if (paru.text != "") {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HasilPemeriksaanParu(idPasien: widget.idPasien!);
+      }));
+    } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return Anjuran6(idPasien: widget.idPasien);
+      }));
+    }
   }
 }

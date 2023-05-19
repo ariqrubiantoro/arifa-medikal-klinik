@@ -1,3 +1,4 @@
+import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_model.dart';
 import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_anggota_gerak_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_gentalia_model.dart';
@@ -8,6 +9,7 @@ import 'package:arifa_medikal_klink_3/model/penyakit_keluarga_mode.dart';
 import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
 import 'package:arifa_medikal_klink_3/model/psikologi_model.dart';
 import 'package:arifa_medikal_klink_3/model/riwayat_kebiasaan_model.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_fisik.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../model/ajuran_model.dart';
@@ -527,6 +529,276 @@ class FirebaseFirestoreService {
       return null;
     } else {
       return PemeriksaanModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<HasilPemeriksaanModel> setHasilPemeriksaanFisik(
+      {required HasilPemeriksaanModel pemeriksaan,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Fisik")
+        .doc(idPasien);
+
+    await doc.set(pemeriksaan.toJson());
+
+    return pemeriksaan;
+  }
+
+  Future<HasilPemeriksaanModel?> getHasilPemeriksaanFisik(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Fisik")
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return HasilPemeriksaanModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<HasilPemeriksaanModel> setHasilPemeriksaanMata(
+      {required HasilPemeriksaanModel pemeriksaan,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Mata")
+        .doc(idPasien);
+
+    await doc.set(pemeriksaan.toJson());
+
+    return pemeriksaan;
+  }
+
+  Future<HasilPemeriksaanModel?> getHasilPemeriksaanMata(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Mata")
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return HasilPemeriksaanModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<HasilPemeriksaanModel> setHasilPemeriksaanGigi(
+      {required HasilPemeriksaanModel pemeriksaan,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Gigi")
+        .doc(idPasien);
+
+    await doc.set(pemeriksaan.toJson());
+
+    return pemeriksaan;
+  }
+
+  Future<HasilPemeriksaanModel?> getHasilPemeriksaanGigi(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Gigi")
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return HasilPemeriksaanModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<HasilPemeriksaanModel> setHasilPemeriksaanAudiometri(
+      {required HasilPemeriksaanModel pemeriksaan,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Audiometri")
+        .doc(idPasien);
+
+    await doc.set(pemeriksaan.toJson());
+
+    return pemeriksaan;
+  }
+
+  Future<HasilPemeriksaanModel?> getHasilPemeriksaanAudiometri(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Audiometri")
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return HasilPemeriksaanModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<HasilPemeriksaanModel> setHasilPemeriksaanSpirometri(
+      {required HasilPemeriksaanModel pemeriksaan,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Spirometri")
+        .doc(idPasien);
+
+    await doc.set(pemeriksaan.toJson());
+
+    return pemeriksaan;
+  }
+
+  Future<HasilPemeriksaanModel?> getHasilPemeriksaanSpirometri(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Spirometri")
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return HasilPemeriksaanModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<HasilPemeriksaanModel> setHasilPemeriksaanTreadmill(
+      {required HasilPemeriksaanModel pemeriksaan,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Treadmill")
+        .doc(idPasien);
+
+    await doc.set(pemeriksaan.toJson());
+
+    return pemeriksaan;
+  }
+
+  Future<HasilPemeriksaanModel?> getHasilPemeriksaanTreadmill(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Treadmill")
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return HasilPemeriksaanModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<HasilPemeriksaanModel> setHasilPemeriksaanLaboratorium(
+      {required HasilPemeriksaanModel pemeriksaan,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Laboratorium")
+        .doc(idPasien);
+
+    await doc.set(pemeriksaan.toJson());
+
+    return pemeriksaan;
+  }
+
+  Future<HasilPemeriksaanModel?> getHasilPemeriksaanLaboratorium(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Laboratorium")
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return HasilPemeriksaanModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<HasilPemeriksaanModel> setHasilPemeriksaanJantung(
+      {required HasilPemeriksaanModel pemeriksaan,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Jantung")
+        .doc(idPasien);
+
+    await doc.set(pemeriksaan.toJson());
+
+    return pemeriksaan;
+  }
+
+  Future<HasilPemeriksaanModel?> getHasilPemeriksaanJantung(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Jantung")
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return HasilPemeriksaanModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<HasilPemeriksaanModel> setHasilPemeriksaanParu(
+      {required HasilPemeriksaanModel pemeriksaan,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Paru")
+        .doc(idPasien);
+
+    await doc.set(pemeriksaan.toJson());
+
+    return pemeriksaan;
+  }
+
+  Future<HasilPemeriksaanModel?> getHasilPemeriksaanParu(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Paru")
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return HasilPemeriksaanModel.fromJson(
           snapshot.id, snapshot.data() as Map<String, dynamic>);
     }
   }

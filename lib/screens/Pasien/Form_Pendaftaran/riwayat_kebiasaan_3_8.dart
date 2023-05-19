@@ -42,6 +42,119 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
   final lamaMiras = TextEditingController();
   final banyakGelasMiras = TextEditingController();
   final banyakBotolMiras = TextEditingController();
+  RiwayatKebiasaanModel? _data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    _data = await firestore.getRiwayatKebiasaan(widget.idPasien!);
+    if (_data != null) {
+      if (_data!.strMerokok == "Ya") {
+        setState(() {
+          merokok = _data!.strMerokok!;
+          _quest = 1;
+          visibleFormMeroko = true;
+        });
+      } else if (_data!.strMerokok == "Tidak") {
+        setState(() {
+          merokok = _data!.strMerokok!;
+          _quest = 2;
+          visibleFormMeroko = false;
+        });
+      } else if (_data!.strMerokok == "") {
+      } else {
+        setState(() {
+          merokokF.text = _data!.strMerokok!;
+          visibleFormMeroko = false;
+        });
+      }
+
+      if (_data!.merokok!.lama! == "") {
+      } else {
+        setState(() {
+          lamaMerokok.text = _data!.merokok!.lama!;
+        });
+      }
+
+      if (_data!.merokok!.batang! == "") {
+      } else {
+        setState(() {
+          banyakBatangMerokok.text = _data!.merokok!.batang!;
+        });
+      }
+
+      if (_data!.merokok!.bungkus! == "") {
+      } else {
+        setState(() {
+          banyakBungkusMerokok.text = _data!.merokok!.bungkus!;
+        });
+      }
+
+      //
+
+      if (_data!.strMiras == "Ya") {
+        setState(() {
+          miras = _data!.strMiras!;
+          _quest2 = 1;
+          visibleFormMiras = true;
+        });
+      } else if (_data!.strMiras == "Tidak") {
+        setState(() {
+          miras = _data!.strMiras!;
+          _quest2 = 2;
+          visibleFormMiras = false;
+        });
+      } else if (_data!.strMiras == "") {
+      } else {
+        setState(() {
+          mirasF.text = _data!.strMiras!;
+          visibleFormMiras = false;
+        });
+      }
+
+      if (_data!.miras!.lama! == "") {
+      } else {
+        setState(() {
+          lamaMiras.text = _data!.miras!.lama!;
+        });
+      }
+
+      if (_data!.miras!.gelas! == "") {
+      } else {
+        setState(() {
+          banyakGelasMiras.text = _data!.miras!.gelas!;
+        });
+      }
+
+      if (_data!.miras!.botol! == "") {
+      } else {
+        setState(() {
+          banyakBotolMiras.text = _data!.miras!.botol!;
+        });
+      }
+
+      if (_data!.olahraga! == "Ya") {
+        setState(() {
+          olahraga = _data!.olahraga!;
+          _quest3 = 1;
+        });
+      } else if (_data!.olahraga! == "Tidak") {
+        setState(() {
+          olahraga = _data!.olahraga!;
+          _quest3 = 2;
+        });
+      } else if (_data!.olahraga! == "") {
+      } else {
+        setState(() {
+          olahragaF.text = _data!.olahraga!;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +263,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                               });
                             },
                             controller: merokokF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -176,7 +289,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
-                                    height: 35,
+                                    // height: 35,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),
                                     decoration: BoxDecoration(
@@ -207,7 +320,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
-                                    height: 35,
+                                    // height: 35,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),
                                     decoration: BoxDecoration(
@@ -238,7 +351,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
-                                    height: 35,
+                                    // height: 35,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),
                                     decoration: BoxDecoration(
@@ -310,7 +423,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                               });
                             },
                             controller: mirasF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
@@ -333,7 +446,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
-                                    height: 35,
+                                    // height: 35,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),
                                     decoration: BoxDecoration(
@@ -364,7 +477,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
-                                    height: 35,
+                                    // height: 35,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),
                                     decoration: BoxDecoration(
@@ -395,7 +508,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                                       FontWeight.normal),
                                   Container(
                                     width: 70,
-                                    height: 35,
+                                    // height: 35,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),
                                     decoration: BoxDecoration(
@@ -463,7 +576,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
                               });
                             },
                             controller: olahragaF,
-                            maxLength: 10,
+                            maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),

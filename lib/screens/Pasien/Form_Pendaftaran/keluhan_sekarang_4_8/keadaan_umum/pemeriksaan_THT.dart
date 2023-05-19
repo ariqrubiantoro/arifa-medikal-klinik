@@ -75,6 +75,255 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
   final lainlainKerongkonganF = TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  PemeriksaanTHTModel? data;
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getPemeriksaanTHT(widget.idPasien!);
+    if (data != null) {
+      if (data!.telinga!.membranTympKiri == "Normal") {
+        setState(() {
+          tympKiri = "Normal";
+          _questTelinga1 = 1;
+        });
+      } else if (data!.telinga!.membranTympKiri == "Tidak Normal") {
+        setState(() {
+          tympKiri = "Tidak Normal";
+          _questTelinga1 = 2;
+        });
+      } else if (data!.telinga!.membranTympKiri == "") {
+      } else {
+        setState(() {
+          tympKiriF.text = data!.telinga!.membranTympKiri!;
+        });
+      }
+
+      if (data!.telinga!.membranTympKanan == "Normal") {
+        setState(() {
+          tympKanan = "Normal";
+          _questTelinga2 = 1;
+        });
+      } else if (data!.telinga!.membranTympKanan == "Tidak Normal") {
+        setState(() {
+          tympKanan = "Tidak Normal";
+          _questTelinga2 = 2;
+        });
+      } else if (data!.telinga!.membranTympKanan == "") {
+      } else {
+        setState(() {
+          tympKananF.text = data!.telinga!.membranTympKanan!;
+        });
+      }
+
+      if (data!.telinga!.penyakitTelingaKiri == "Normal") {
+        setState(() {
+          telingaKiri = "Normal";
+          _questTelinga3 = 1;
+        });
+      } else if (data!.telinga!.penyakitTelingaKiri == "Tidak Normal") {
+        setState(() {
+          telingaKiri = "Tidak Normal";
+          _questTelinga3 = 2;
+        });
+      } else if (data!.telinga!.penyakitTelingaKiri == "") {
+      } else {
+        setState(() {
+          telingaKiriF.text = data!.telinga!.penyakitTelingaKiri!;
+        });
+      }
+
+      if (data!.telinga!.serumenKiri == "Ada") {
+        setState(() {
+          serumenKiri = "Ada";
+          _questTelinga4 = 1;
+        });
+      } else if (data!.telinga!.serumenKiri == "Tidak Ada") {
+        setState(() {
+          serumenKiri = "Tidak Ada";
+          _questTelinga4 = 2;
+        });
+      } else if (data!.telinga!.serumenKiri == "") {
+      } else {
+        setState(() {
+          serumenKiriF.text = data!.telinga!.serumenKiri!;
+        });
+      }
+
+      if (data!.telinga!.penyakitTelingaKanan == "Normal") {
+        setState(() {
+          telingaKanan = "Normal";
+          _questTelinga5 = 1;
+        });
+      } else if (data!.telinga!.penyakitTelingaKanan == "Tidak Normal") {
+        setState(() {
+          telingaKanan = "Tidak Normal";
+          _questTelinga5 = 2;
+        });
+      } else if (data!.telinga!.penyakitTelingaKanan == "") {
+      } else {
+        setState(() {
+          telingaKananF.text = data!.telinga!.penyakitTelingaKanan!;
+        });
+      }
+
+      if (data!.telinga!.serumenKanan == "Ada") {
+        setState(() {
+          serumenKanan = "Ada";
+          _questTelinga6 = 1;
+        });
+      } else if (data!.telinga!.serumenKanan == "Tidak Ada") {
+        setState(() {
+          serumenKanan = "Tidak Ada";
+          _questTelinga6 = 2;
+        });
+      } else if (data!.telinga!.serumenKanan == "") {
+      } else {
+        setState(() {
+          serumenKananF.text = data!.telinga!.serumenKanan!;
+        });
+      }
+
+      if (data!.hidung!.pilekTersumbat == "Ya") {
+        setState(() {
+          pilek = "Ya";
+          _questHidung1 = 1;
+        });
+      } else if (data!.hidung!.pilekTersumbat == "Tidak Ada") {
+        setState(() {
+          pilek = "Tidak Ada";
+          _questHidung1 = 2;
+        });
+      } else if (data!.hidung!.pilekTersumbat == "") {
+      } else {
+        setState(() {
+          pilekF.text = data!.hidung!.pilekTersumbat!;
+        });
+      }
+
+      if (data!.hidung!.lidah == "Normal") {
+        setState(() {
+          lidah = "Normal";
+          _questHidung2 = 1;
+        });
+      } else if (data!.hidung!.lidah == "Tidak Normal") {
+        setState(() {
+          lidah = "Tidak Normal";
+          _questHidung2 = 2;
+        });
+      } else if (data!.hidung!.lidah == "") {
+      } else {
+        setState(() {
+          lidahF.text = data!.hidung!.lidah!;
+        });
+      }
+
+      if (data!.hidung!.lainLain == "Normal") {
+        setState(() {
+          lainlainHidung = "Normal";
+          _questHidung3 = 1;
+        });
+      } else if (data!.hidung!.lainLain == "Tidak Normal") {
+        setState(() {
+          lainlainHidung = "Tidak Normal";
+          _questHidung3 = 2;
+        });
+      } else if (data!.hidung!.lainLain == "") {
+      } else {
+        setState(() {
+          lainlainHidungF.text = data!.hidung!.lainLain!;
+        });
+      }
+
+      if (data!.kerongkongan!.tonsilKanan == "Normal") {
+        setState(() {
+          tonsilKanan = "Normal";
+          _questKerongkongan1 = 1;
+        });
+      } else if (data!.kerongkongan!.tonsilKanan == "Tidak Normal") {
+        setState(() {
+          tonsilKanan = "Tidak Normal";
+          _questKerongkongan1 = 2;
+        });
+      } else if (data!.kerongkongan!.tonsilKanan == "") {
+      } else {
+        setState(() {
+          tonsilKanaF.text = data!.kerongkongan!.tonsilKanan!;
+        });
+      }
+
+      if (data!.kerongkongan!.tonsilKiri == "Normal") {
+        setState(() {
+          tonsilKiri = "Normal";
+          _questKerongkongan2 = 1;
+        });
+      } else if (data!.kerongkongan!.tonsilKiri == "Tidak Normal") {
+        setState(() {
+          tonsilKiri = "Tidak Normal";
+          _questKerongkongan2 = 2;
+        });
+      } else if (data!.kerongkongan!.tonsilKiri == "") {
+      } else {
+        setState(() {
+          tonsilKiriF.text = data!.kerongkongan!.tonsilKiri!;
+        });
+      }
+
+      if (data!.kerongkongan!.pharing == "Normal") {
+        setState(() {
+          pharing = "Normal";
+          _questKerongkongan3 = 1;
+        });
+      } else if (data!.kerongkongan!.pharing == "Tidak Normal") {
+        setState(() {
+          pharing = "Tidak Normal";
+          _questKerongkongan3 = 2;
+        });
+      } else if (data!.kerongkongan!.pharing == "") {
+      } else {
+        setState(() {
+          pharingF.text = data!.kerongkongan!.pharing!;
+        });
+      }
+
+      if (data!.kerongkongan!.tiroid == "Normal") {
+        setState(() {
+          tiroid = "Normal";
+          _questKerongkongan4 = 1;
+        });
+      } else if (data!.kerongkongan!.tiroid == "Tidak Normal") {
+        setState(() {
+          tiroid = "Tidak Normal";
+          _questKerongkongan4 = 2;
+        });
+      } else if (data!.kerongkongan!.tiroid == "") {
+      } else {
+        setState(() {
+          tiroidF.text = data!.kerongkongan!.tiroid!;
+        });
+      }
+
+      if (data!.kerongkongan!.lainLain == "Ada") {
+        setState(() {
+          lainlainKerongkongan = "Ada";
+          _questKerongkongan5 = 1;
+        });
+      } else if (data!.kerongkongan!.lainLain == "Tidak Ada") {
+        setState(() {
+          lainlainKerongkongan = "Tidak Ada";
+          _questKerongkongan5 = 2;
+        });
+      } else if (data!.kerongkongan!.lainLain == "") {
+      } else {
+        setState(() {
+          lainlainKerongkonganF.text = data!.kerongkongan!.lainLain!;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -325,7 +574,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: tympKiriF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -378,7 +627,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: tympKananF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -432,7 +681,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: telingaKiriF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -485,7 +734,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: serumenKiriF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -539,7 +788,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: telingaKananF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -592,7 +841,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: serumenKananF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -656,7 +905,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: pilekF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -709,7 +958,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: lidahF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -762,7 +1011,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: lainlainHidungF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -829,7 +1078,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: tonsilKanaF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -882,7 +1131,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: tonsilKiriF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -935,7 +1184,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: pharingF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -988,7 +1237,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: tiroidF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))
@@ -1041,7 +1290,7 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                     });
                   },
                   controller: lainlainKerongkonganF,
-                  maxLength: 10,
+                  maxLength: 12,
                   decoration: InputDecoration(border: InputBorder.none),
                 ),
               ))

@@ -19,21 +19,21 @@ class Ergonomis extends StatefulWidget {
 }
 
 class _ErgonomisState extends State<Ergonomis> {
-  Question _quest1 = Question.tidak;
-  Question _quest2 = Question.tidak;
-  Question _quest3 = Question.tidak;
-  Question _quest4 = Question.tidak;
-  Question _quest5 = Question.tidak;
-  Question _quest6 = Question.tidak;
-  Question _quest7 = Question.tidak;
+  Question _quest1 = Question.none;
+  Question _quest2 = Question.none;
+  Question _quest3 = Question.none;
+  Question _quest4 = Question.none;
+  Question _quest5 = Question.none;
+  Question _quest6 = Question.none;
+  Question _quest7 = Question.none;
 
-  String gerakanBerulang = "Tidak";
-  String angkatAngkutBerat = "Tidak";
-  String dudukLama = "Tidak";
-  String berdiriLama = "Tidak";
-  String posisiTubuh = "Tidak";
-  String pencahayaan = "Tidak";
-  String bekerjaDenganLayar = "Tidak";
+  String gerakanBerulang = "";
+  String angkatAngkutBerat = "";
+  String dudukLama = "";
+  String berdiriLama = "";
+  String posisiTubuh = "";
+  String pencahayaan = "";
+  String bekerjaDenganLayar = "";
 
   final lainlain = TextEditingController();
 
@@ -46,6 +46,18 @@ class _ErgonomisState extends State<Ergonomis> {
   TextEditingController bekerjaDenganLayarController = TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  ErgonomisModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getErgonomis(widget.idPasien!);
+    if (data != null) {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +156,7 @@ class _ErgonomisState extends State<Ergonomis> {
                                 });
                               },
                               controller: gerakanBerulangController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
@@ -201,7 +213,7 @@ class _ErgonomisState extends State<Ergonomis> {
                                 });
                               },
                               controller: angkatAngkutBeratController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
@@ -258,7 +270,7 @@ class _ErgonomisState extends State<Ergonomis> {
                                 });
                               },
                               controller: dudukLamaController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
@@ -315,7 +327,7 @@ class _ErgonomisState extends State<Ergonomis> {
                                 });
                               },
                               controller: berdiriLamaController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
@@ -372,7 +384,7 @@ class _ErgonomisState extends State<Ergonomis> {
                                 });
                               },
                               controller: posisiTubuhController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
@@ -429,7 +441,7 @@ class _ErgonomisState extends State<Ergonomis> {
                                 });
                               },
                               controller: pencahayaanController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
@@ -489,7 +501,7 @@ class _ErgonomisState extends State<Ergonomis> {
                                 });
                               },
                               controller: bekerjaDenganLayarController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),

@@ -19,21 +19,21 @@ class Psikologis extends StatefulWidget {
 }
 
 class _PsikologisState extends State<Psikologis> {
-  Question _quest1 = Question.tidak;
-  Question _quest2 = Question.tidak;
-  Question _quest3 = Question.tidak;
-  Question _quest4 = Question.tidak;
-  Question _quest5 = Question.tidak;
-  Question _quest6 = Question.tidak;
-  Question _quest7 = Question.tidak;
+  Question _quest1 = Question.none;
+  Question _quest2 = Question.none;
+  Question _quest3 = Question.none;
+  Question _quest4 = Question.none;
+  Question _quest5 = Question.none;
+  Question _quest6 = Question.none;
+  Question _quest7 = Question.none;
 
-  String bebanKerja = "Tidak";
-  String pekerjaanTidakSesuai = "Tidak";
-  String ketidakjelasanTugas = "Tidak";
-  String hambatanJenjang = "Tidak";
-  String bekerjaGiliran = "Tidak";
-  String konflikDenganTeman = "Tidak";
-  String konflikDalamKeluarga = "Tidak";
+  String bebanKerja = "";
+  String pekerjaanTidakSesuai = "";
+  String ketidakjelasanTugas = "";
+  String hambatanJenjang = "";
+  String bekerjaGiliran = "";
+  String konflikDenganTeman = "";
+  String konflikDalamKeluarga = "";
 
   final lainlain = TextEditingController();
 
@@ -48,6 +48,126 @@ class _PsikologisState extends State<Psikologis> {
       TextEditingController();
 
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  PsikologiModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getPsikologi(widget.idPasien!);
+    if (data != null) {
+      setState(() {
+        lainlain.text = data!.lainLain!;
+      });
+      if (data!.bebanKerja == "Ya") {
+        setState(() {
+          bebanKerja = data!.bebanKerja!;
+          _quest1 = Question.ya;
+        });
+      } else if (data!.bebanKerja == "Tidak") {
+        setState(() {
+          bebanKerja = data!.bebanKerja!;
+          _quest1 = Question.tidak;
+        });
+      } else if (data!.bebanKerja == "") {
+      } else {
+        bebanKerjaController.text = data!.bebanKerja!;
+      }
+
+      if (data!.pekerjaanTidakSesuai == "Ya") {
+        setState(() {
+          pekerjaanTidakSesuai = data!.pekerjaanTidakSesuai!;
+          _quest2 = Question.ya;
+        });
+      } else if (data!.pekerjaanTidakSesuai == "Tidak") {
+        setState(() {
+          pekerjaanTidakSesuai = data!.pekerjaanTidakSesuai!;
+          _quest2 = Question.tidak;
+        });
+      } else if (data!.pekerjaanTidakSesuai == "") {
+      } else {
+        pekerjaanTidakSesuaiController.text = data!.pekerjaanTidakSesuai!;
+      }
+    }
+
+    if (data!.ketidakjelasanTugas == "Ya") {
+      setState(() {
+        ketidakjelasanTugas = data!.ketidakjelasanTugas!;
+        _quest3 = Question.ya;
+      });
+    } else if (data!.ketidakjelasanTugas == "Tidak") {
+      setState(() {
+        ketidakjelasanTugas = data!.ketidakjelasanTugas!;
+        _quest3 = Question.tidak;
+      });
+    } else if (data!.ketidakjelasanTugas == "") {
+    } else {
+      ketidakjelasanTugasController.text = data!.ketidakjelasanTugas!;
+    }
+
+    if (data!.hamabatanJenjangKarir == "Ya") {
+      setState(() {
+        hambatanJenjang = data!.hamabatanJenjangKarir!;
+        _quest4 = Question.ya;
+      });
+    } else if (data!.hamabatanJenjangKarir == "Tidak") {
+      setState(() {
+        hambatanJenjang = data!.hamabatanJenjangKarir!;
+        _quest4 = Question.tidak;
+      });
+    } else if (data!.hamabatanJenjangKarir == "") {
+    } else {
+      hambatanJenjangController.text = data!.hamabatanJenjangKarir!;
+    }
+
+    if (data!.shift == "Ya") {
+      setState(() {
+        bekerjaGiliran = data!.shift!;
+        _quest5 = Question.ya;
+      });
+    } else if (data!.shift == "Tidak") {
+      setState(() {
+        bekerjaGiliran = data!.shift!;
+        _quest5 = Question.tidak;
+      });
+    } else if (data!.shift == "") {
+    } else {
+      bekerjaGiliranController.text = data!.shift!;
+    }
+
+    if (data!.konflikRekanKerja == "Ya") {
+      setState(() {
+        konflikDenganTeman = data!.konflikRekanKerja!;
+        _quest6 = Question.ya;
+      });
+    } else if (data!.konflikRekanKerja == "Tidak") {
+      setState(() {
+        konflikDenganTeman = data!.konflikRekanKerja!;
+        _quest6 = Question.tidak;
+      });
+    } else if (data!.konflikRekanKerja == "") {
+    } else {
+      konflikDenganTemanController.text = data!.konflikRekanKerja!;
+    }
+
+    if (data!.konflikKeluarga == "Ya") {
+      setState(() {
+        konflikDalamKeluarga = data!.konflikKeluarga!;
+        _quest7 = Question.ya;
+      });
+    } else if (data!.konflikKeluarga == "Tidak") {
+      setState(() {
+        konflikDalamKeluarga = data!.konflikKeluarga!;
+        _quest7 = Question.tidak;
+      });
+    } else if (data!.konflikKeluarga == "") {
+    } else {
+      konflikDalamKeluargaController.text = data!.konflikKeluarga!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +269,7 @@ class _PsikologisState extends State<Psikologis> {
                                 });
                               },
                               controller: bebanKerjaController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
@@ -209,7 +329,7 @@ class _PsikologisState extends State<Psikologis> {
                                 });
                               },
                               controller: pekerjaanTidakSesuaiController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
@@ -266,7 +386,7 @@ class _PsikologisState extends State<Psikologis> {
                                 });
                               },
                               controller: ketidakjelasanTugasController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
@@ -323,7 +443,7 @@ class _PsikologisState extends State<Psikologis> {
                                 });
                               },
                               controller: hambatanJenjangController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
@@ -380,7 +500,7 @@ class _PsikologisState extends State<Psikologis> {
                                 });
                               },
                               controller: bekerjaGiliranController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
@@ -437,7 +557,7 @@ class _PsikologisState extends State<Psikologis> {
                                 });
                               },
                               controller: konflikDenganTemanController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
@@ -494,7 +614,7 @@ class _PsikologisState extends State<Psikologis> {
                                 });
                               },
                               controller: konflikDalamKeluargaController,
-                              maxLength: 10,
+                              maxLength: 12,
                               decoration:
                                   InputDecoration(border: InputBorder.none),
                             ),
