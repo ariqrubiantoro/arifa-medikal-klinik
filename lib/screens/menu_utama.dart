@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables
 
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/add_pasien_profil.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
@@ -22,6 +22,7 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaa
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_keluarga_2_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_terdahulu_1_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/riwayat_kebiasaan_3_8.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:arifa_medikal_klink_3/screens/detail_pasien.dart';
 import 'package:arifa_medikal_klink_3/screens/formulir/form1.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -87,7 +88,7 @@ class _MenuUtamaState extends State<MenuUtama> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Main Menu'),
+        title: textDefault("Main Menu", Colors.white, 18, FontWeight.bold),
         actions: [
           DropdownButton(
             items: [
@@ -140,11 +141,34 @@ class _MenuUtamaState extends State<MenuUtama> {
                       pasienSnapshots);
                 },
                 onLongPress: () => showDialogDelete(pasienSnapshots.id),
-                child: Card(
-                  child: Column(children: [
-                    Text(pasienSnapshots['namaPasien']),
-                    Text(pasienSnapshots['NIK'])
-                  ]),
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(color: Colors.grey, blurRadius: 1)
+                      ]),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.person_outline_rounded,
+                        size: 40,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            textDefault(pasienSnapshots['namaPasien'],
+                                Colors.black, 14, FontWeight.normal),
+                            textDefault(pasienSnapshots['NIK'], Colors.black,
+                                14, FontWeight.normal)
+                          ]),
+                    ],
+                  ),
                 ),
               );
             },
@@ -277,136 +301,131 @@ class _MenuUtamaState extends State<MenuUtama> {
         await firestore.getKesimpulanDerajatKesehatan(id);
 
     // setState(() {});
-    if (nohpCek == "") {
-      prefs.setString('namaUser', userMap!['namaPasien']);
+    if (userMap!['namaPasien'] == "") {
       prefs.setString('nikUser', userMap!['NIK']);
-
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return AddPasienProfil();
-      }));
     } else if (_penyakitTerdahulu == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PenyakitTerdahulu1(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_penyakitKeluarga == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PenyakitKeluarga(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_riwayatKebiasaan == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return RiwwayatKebiasaan3(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_pemeriksaanUmum == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PemeriksaanUmum(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_pemeriksaanMata == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PemeriksaanMata(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_pemeriksaanTHT == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PemeriksaanTHT(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_pemeriksaanRonggaDada == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PemeriksaanRonggaDada(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_pemeriksaanRonggaPerut == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PemeriksaanRonggaPerut(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_pemeriksaanGentalia == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PemeriksaanGentalia(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_pemeriksaanAnggotaGerak == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PemeriksaanAnggotaGerak(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_pemeriksaanRefleks == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PemeriksaanRefleks(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_pemeriksaanKelenjarGetah == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PemeriksaanKelenjarGetah(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_fisik == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return Fisik(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_kimia == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return Kimia(
-          pasienId: id,
+        return MenuForm(
+          idPasien: id,
         );
       }));
     } else if (_biologi == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return Biologi(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_psikologi == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return Psikologis(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_ergonomis == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return Ergonomis(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_pemeriksaan == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return Pemeriksaan5(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_ajuran == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return Anjuran6(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_kelayakanKerja == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return KesimpulanKelayakan7(
+        return MenuForm(
           idPasien: id,
         );
       }));
     } else if (_kesimpulanDerajatKesehatan == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return KesimpulanDerajat8(
+        return MenuForm(
           idPasien: id,
         );
       }));

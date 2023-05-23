@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
+import '../../../Menu_Form/menu_form.dart';
 
 enum Question { ya, tidak }
 
@@ -219,90 +220,184 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          backgroundColor: blueDefault,
-          title: textDefault("Keadaan Umum - Pemeriksaan Kelenjar Getah Bening",
-              Colors.white, 16, FontWeight.bold)),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Expanded(
-              child: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return MenuForm(idPasien: widget.idPasien!);
+        }));
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+            backgroundColor: blueDefault,
+            title: 
+             Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      textDefault("4/8", Colors.black, 14, FontWeight.bold)
-                    ],
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) {
+                        return MenuForm(idPasien: widget.idPasien!);
+                      }));
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.arrow_back),
+                      ],
+                    ),
                   ),
+            textDefault(
+                "Keadaan Umum - Pemeriksaan Kelenjar Getah Bening",
+                Colors.white,
+                16,
+                FontWeight.bold),
+                
                   SizedBox(
-                    height: 10,
+                    width: 5,
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        height: 10,
-                        width: 180,
-                        decoration: BoxDecoration(
-                            color: blueDefault,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                bottomLeft: Radius.circular(10))),
-                      ),
-                      Expanded(
+                ]),
+                
+                
+                ),
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+                child: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        textDefault("4/8", Colors.black, 14, FontWeight.bold)
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          height: 10,
+                          width: 180,
+                          decoration: BoxDecoration(
+                              color: blueDefault,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10))),
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 10,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[350],
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  bottomRight: Radius.circular(10))),
+                        )),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    textDefault(
+                        "Cervical Kiri", Colors.black, 14, FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: 1,
+                          groupValue: _quest1,
+                          onChanged: (value) {
+                            setState(() {
+                              cervicalKiriF.text = "";
+                              _quest1 = value!;
+                              cervicalKiri = "Normal";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Normal", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: 2,
+                          groupValue: _quest1,
+                          onChanged: (value) {
+                            setState(() {
+                              cervicalKiriF.text = "";
+                              _quest1 = value!;
+                              cervicalKiri = "Tidak Normal";
+                            });
+                          },
+                        ),
+                        textDefault("Tidak Normal", Colors.black, 13,
+                            FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
                           child: Container(
-                        height: 10,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[350],
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(10),
-                                bottomRight: Radius.circular(10))),
-                      )),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  textDefault(
-                      "Cervical Kiri", Colors.black, 14, FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: 1,
-                        groupValue: _quest1,
-                        onChanged: (value) {
-                          setState(() {
-                            cervicalKiriF.text = "";
-                            _quest1 = value!;
-                            cervicalKiri = "Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Normal", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: 2,
-                        groupValue: _quest1,
-                        onChanged: (value) {
-                          setState(() {
-                            cervicalKiriF.text = "";
-                            _quest1 = value!;
-                            cervicalKiri = "Tidak Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest1 = 0;
+                                });
+                              },
+                              controller: cervicalKiriF,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault(
+                        "Cervical Kanan", Colors.black, 14, FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: 1,
+                          groupValue: _quest2,
+                          onChanged: (value) {
+                            setState(() {
+                              cervicalKananF.text = "";
+                              _quest2 = value!;
+                              cervicalKanan = "Normal";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Normal", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: 2,
+                          groupValue: _quest2,
+                          onChanged: (value) {
+                            setState(() {
+                              cervicalKananF.text = "";
+                              _quest2 = value!;
+                              cervicalKanan = "Tidak Normal";
+                            });
+                          },
+                        ),
+                        textDefault("Tidak Normal", Colors.black, 13,
+                            FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
                           height: 45,
                           padding: EdgeInsets.only(left: 5),
                           decoration: BoxDecoration(
@@ -311,554 +406,486 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                           child: TextFormField(
                             onTap: () {
                               setState(() {
-                                _quest1 = 0;
+                                _quest2 = 0;
                               });
                             },
-                            controller: cervicalKiriF,
+                            controller: cervicalKananF,
                             maxLength: 12,
                             decoration:
                                 InputDecoration(border: InputBorder.none),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault(
-                      "Cervical Kanan", Colors.black, 14, FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: 1,
-                        groupValue: _quest2,
-                        onChanged: (value) {
-                          setState(() {
-                            cervicalKananF.text = "";
-                            _quest2 = value!;
-                            cervicalKanan = "Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Normal", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: 2,
-                        groupValue: _quest2,
-                        onChanged: (value) {
-                          setState(() {
-                            cervicalKananF.text = "";
-                            _quest2 = value!;
-                            cervicalKanan = "Tidak Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 45,
-                        padding: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                          onTap: () {
-                            setState(() {
-                              _quest2 = 0;
-                            });
-                          },
-                          controller: cervicalKananF,
-                          maxLength: 12,
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault("Axila Kiri", Colors.black, 14, FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: 1,
-                        groupValue: _quest3,
-                        onChanged: (value) {
-                          setState(() {
-                            axilaKiriF.text = "";
-                            _quest3 = value!;
-                            axilaKiri = "Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Normal", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: 2,
-                        groupValue: _quest3,
-                        onChanged: (value) {
-                          setState(() {
-                            axilaKiriF.text = "";
-                            _quest3 = value!;
-                            axilaKiri = "Tidak Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 45,
-                        padding: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                          onTap: () {
-                            setState(() {
-                              _quest3 = 0;
-                            });
-                          },
-                          controller: axilaKiriF,
-                          maxLength: 12,
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault("Axila Kanan", Colors.black, 14, FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: 1,
-                        groupValue: _quest4,
-                        onChanged: (value) {
-                          setState(() {
-                            axilaKananF.text = "";
-                            _quest4 = value!;
-                            axilaKanan = "Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Normal", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: 2,
-                        groupValue: _quest4,
-                        onChanged: (value) {
-                          setState(() {
-                            axilaKananF.text = "";
-                            _quest4 = value!;
-                            axilaKanan = "Tidak Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 45,
-                        padding: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                          onTap: () {
-                            setState(() {
-                              _quest4 = 0;
-                            });
-                          },
-                          controller: axilaKananF,
-                          maxLength: 12,
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault("Supra Clavicula Kiri", Colors.black, 14,
-                      FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: 1,
-                        groupValue: _quest5,
-                        onChanged: (value) {
-                          setState(() {
-                            supraKiriF.text = "";
-                            _quest5 = value!;
-                            supraKiri = "Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Normal", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: 2,
-                        groupValue: _quest5,
-                        onChanged: (value) {
-                          setState(() {
-                            supraKiriF.text = "";
-                            _quest5 = value!;
-                            supraKiri = "Tidak Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 45,
-                        padding: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                          onTap: () {
-                            setState(() {
-                              _quest5 = 0;
-                            });
-                          },
-                          controller: supraKiriF,
-                          maxLength: 12,
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault("Supra Clavicula Kanan", Colors.black, 14,
-                      FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: 1,
-                        groupValue: _quest6,
-                        onChanged: (value) {
-                          setState(() {
-                            supraKananF.text = "";
-                            _quest6 = value!;
-                            supraKanan = "Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Normal", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: 2,
-                        groupValue: _quest6,
-                        onChanged: (value) {
-                          setState(() {
-                            supraKananF.text = "";
-                            _quest6 = value!;
-                            supraKanan = "Tidak Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 45,
-                        padding: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                          onTap: () {
-                            setState(() {
-                              _quest6 = 0;
-                            });
-                          },
-                          controller: supraKananF,
-                          maxLength: 12,
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault("Infra Clavicula Kiri", Colors.black, 14,
-                      FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: 1,
-                        groupValue: _quest7,
-                        onChanged: (value) {
-                          setState(() {
-                            infraKiriF.text = "";
-                            _quest7 = value!;
-                            infraKiri = "Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Normal", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: 2,
-                        groupValue: _quest7,
-                        onChanged: (value) {
-                          setState(() {
-                            infraKiriF.text = "";
-                            _quest7 = value!;
-                            infraKiri = "Tidak Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 45,
-                        padding: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                          onTap: () {
-                            setState(() {
-                              _quest7 = 0;
-                            });
-                          },
-                          controller: infraKiriF,
-                          maxLength: 12,
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault("Infra Clavicula Kanan", Colors.black, 14,
-                      FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: 1,
-                        groupValue: _quest8,
-                        onChanged: (value) {
-                          setState(() {
-                            infraKananF.text = "";
-                            _quest8 = value!;
-                            infraKanan = "Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Normal", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: 2,
-                        groupValue: _quest8,
-                        onChanged: (value) {
-                          setState(() {
-                            infraKananF.text = "";
-                            _quest8 = value!;
-                            infraKanan = "Tidak Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 45,
-                        padding: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                          onTap: () {
-                            setState(() {
-                              _quest8 = 0;
-                            });
-                          },
-                          controller: infraKananF,
-                          maxLength: 12,
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault(
-                      "Inguinal Kiri", Colors.black, 14, FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: 1,
-                        groupValue: _quest9,
-                        onChanged: (value) {
-                          setState(() {
-                            inguinalKiriF.text = "";
-                            _quest9 = value!;
-                            inguinalKiri = "Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Normal", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: 2,
-                        groupValue: _quest9,
-                        onChanged: (value) {
-                          setState(() {
-                            inguinalKiriF.text = "";
-                            _quest9 = value!;
-                            inguinalKiri = "Tidak Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 45,
-                        padding: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                          onTap: () {
-                            setState(() {
-                              _quest9 = 0;
-                            });
-                          },
-                          controller: inguinalKiriF,
-                          maxLength: 12,
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault(
-                      "Inguinal Kanan", Colors.black, 14, FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: 1,
-                        groupValue: _quest10,
-                        onChanged: (value) {
-                          setState(() {
-                            inguinalKananF.text = "";
-                            _quest10 = value!;
-                            inguinalKanan = "Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Normal", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: 2,
-                        groupValue: _quest10,
-                        onChanged: (value) {
-                          setState(() {
-                            inguinalKananF.text = "";
-                            _quest10 = value!;
-                            inguinalKanan = "Tidak Normal";
-                          });
-                        },
-                      ),
-                      textDefault(
-                          "Tidak Normal", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 45,
-                        padding: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                          onTap: () {
-                            setState(() {
-                              _quest10 = 0;
-                            });
-                          },
-                          controller: inguinalKananF,
-                          maxLength: 12,
-                          decoration: InputDecoration(border: InputBorder.none),
-                        ),
-                      ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                ],
-              ),
-            ),
-          )),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 4)]),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                  onTap: () => Navigator.of(context).pop(),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                    margin: EdgeInsets.only(top: 10, bottom: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: blueDefault),
-                      borderRadius: BorderRadius.circular(10),
+                        ))
+                      ],
                     ),
-                    child: Center(
-                      child: textDefault(
-                          "Kembali", blueDefault, 16, FontWeight.normal),
+                    SizedBox(
+                      height: 5,
                     ),
-                  ),
+                    textDefault(
+                        "Axila Kiri", Colors.black, 14, FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: 1,
+                          groupValue: _quest3,
+                          onChanged: (value) {
+                            setState(() {
+                              axilaKiriF.text = "";
+                              _quest3 = value!;
+                              axilaKiri = "Normal";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Normal", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: 2,
+                          groupValue: _quest3,
+                          onChanged: (value) {
+                            setState(() {
+                              axilaKiriF.text = "";
+                              _quest3 = value!;
+                              axilaKiri = "Tidak Normal";
+                            });
+                          },
+                        ),
+                        textDefault("Tidak Normal", Colors.black, 13,
+                            FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest3 = 0;
+                              });
+                            },
+                            controller: axilaKiriF,
+                            maxLength: 12,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault(
+                        "Axila Kanan", Colors.black, 14, FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: 1,
+                          groupValue: _quest4,
+                          onChanged: (value) {
+                            setState(() {
+                              axilaKananF.text = "";
+                              _quest4 = value!;
+                              axilaKanan = "Normal";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Normal", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: 2,
+                          groupValue: _quest4,
+                          onChanged: (value) {
+                            setState(() {
+                              axilaKananF.text = "";
+                              _quest4 = value!;
+                              axilaKanan = "Tidak Normal";
+                            });
+                          },
+                        ),
+                        textDefault("Tidak Normal", Colors.black, 13,
+                            FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest4 = 0;
+                              });
+                            },
+                            controller: axilaKananF,
+                            maxLength: 12,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault("Supra Clavicula Kiri", Colors.black, 14,
+                        FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: 1,
+                          groupValue: _quest5,
+                          onChanged: (value) {
+                            setState(() {
+                              supraKiriF.text = "";
+                              _quest5 = value!;
+                              supraKiri = "Normal";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Normal", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: 2,
+                          groupValue: _quest5,
+                          onChanged: (value) {
+                            setState(() {
+                              supraKiriF.text = "";
+                              _quest5 = value!;
+                              supraKiri = "Tidak Normal";
+                            });
+                          },
+                        ),
+                        textDefault("Tidak Normal", Colors.black, 13,
+                            FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest5 = 0;
+                              });
+                            },
+                            controller: supraKiriF,
+                            maxLength: 12,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault("Supra Clavicula Kanan", Colors.black, 14,
+                        FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: 1,
+                          groupValue: _quest6,
+                          onChanged: (value) {
+                            setState(() {
+                              supraKananF.text = "";
+                              _quest6 = value!;
+                              supraKanan = "Normal";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Normal", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: 2,
+                          groupValue: _quest6,
+                          onChanged: (value) {
+                            setState(() {
+                              supraKananF.text = "";
+                              _quest6 = value!;
+                              supraKanan = "Tidak Normal";
+                            });
+                          },
+                        ),
+                        textDefault("Tidak Normal", Colors.black, 13,
+                            FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest6 = 0;
+                              });
+                            },
+                            controller: supraKananF,
+                            maxLength: 12,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault("Infra Clavicula Kiri", Colors.black, 14,
+                        FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: 1,
+                          groupValue: _quest7,
+                          onChanged: (value) {
+                            setState(() {
+                              infraKiriF.text = "";
+                              _quest7 = value!;
+                              infraKiri = "Normal";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Normal", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: 2,
+                          groupValue: _quest7,
+                          onChanged: (value) {
+                            setState(() {
+                              infraKiriF.text = "";
+                              _quest7 = value!;
+                              infraKiri = "Tidak Normal";
+                            });
+                          },
+                        ),
+                        textDefault("Tidak Normal", Colors.black, 13,
+                            FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest7 = 0;
+                              });
+                            },
+                            controller: infraKiriF,
+                            maxLength: 12,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault("Infra Clavicula Kanan", Colors.black, 14,
+                        FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: 1,
+                          groupValue: _quest8,
+                          onChanged: (value) {
+                            setState(() {
+                              infraKananF.text = "";
+                              _quest8 = value!;
+                              infraKanan = "Normal";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Normal", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: 2,
+                          groupValue: _quest8,
+                          onChanged: (value) {
+                            setState(() {
+                              infraKananF.text = "";
+                              _quest8 = value!;
+                              infraKanan = "Tidak Normal";
+                            });
+                          },
+                        ),
+                        textDefault("Tidak Normal", Colors.black, 13,
+                            FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest8 = 0;
+                              });
+                            },
+                            controller: infraKananF,
+                            maxLength: 12,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault(
+                        "Inguinal Kiri", Colors.black, 14, FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: 1,
+                          groupValue: _quest9,
+                          onChanged: (value) {
+                            setState(() {
+                              inguinalKiriF.text = "";
+                              _quest9 = value!;
+                              inguinalKiri = "Normal";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Normal", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: 2,
+                          groupValue: _quest9,
+                          onChanged: (value) {
+                            setState(() {
+                              inguinalKiriF.text = "";
+                              _quest9 = value!;
+                              inguinalKiri = "Tidak Normal";
+                            });
+                          },
+                        ),
+                        textDefault("Tidak Normal", Colors.black, 13,
+                            FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest9 = 0;
+                              });
+                            },
+                            controller: inguinalKiriF,
+                            maxLength: 12,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault(
+                        "Inguinal Kanan", Colors.black, 14, FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: 1,
+                          groupValue: _quest10,
+                          onChanged: (value) {
+                            setState(() {
+                              inguinalKananF.text = "";
+                              _quest10 = value!;
+                              inguinalKanan = "Normal";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Normal", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: 2,
+                          groupValue: _quest10,
+                          onChanged: (value) {
+                            setState(() {
+                              inguinalKananF.text = "";
+                              _quest10 = value!;
+                              inguinalKanan = "Tidak Normal";
+                            });
+                          },
+                        ),
+                        textDefault("Tidak Normal", Colors.black, 13,
+                            FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 45,
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {
+                                _quest10 = 0;
+                              });
+                            },
+                            controller: inguinalKananF,
+                            maxLength: 12,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ))
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                  ],
                 ),
-                InkWell(
-                  // onTap: () => Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) {
-                  //   return Fisik();
-                  // })),
+              ),
+            )),
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 2)]),
+                child: InkWell(
                   onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -871,14 +898,12 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
                         ]),
                     child: Center(
                       child: textDefault(
-                          "Selanjutnya", Colors.white, 16, FontWeight.normal),
+                          "Simpan", Colors.white, 16, FontWeight.normal),
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-        ],
+                ))
+          ],
+        ),
       ),
     );
   }
@@ -913,10 +938,8 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
     firestore.setPemeriksaanKelenjarGetah(
         pemeriksaanKelenjarGetah: data, idPasien: widget.idPasien!);
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return Fisik(
-        idPasien: widget.idPasien,
-      );
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      return MenuForm(idPasien: widget.idPasien!);
     }));
   }
 }

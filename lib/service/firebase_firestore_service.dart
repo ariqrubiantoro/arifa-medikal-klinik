@@ -1,3 +1,4 @@
+import 'package:arifa_medikal_klink_3/model/foto_lain_lain_model.dart';
 import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_model.dart';
 import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_anggota_gerak_model.dart';
@@ -870,6 +871,27 @@ class FirebaseFirestoreService {
     }
   }
 
+  Future<FotoLainLain> setFotoLainLain(
+      {required FotoLainLain fotoLain,
+      required String idPasien}) async {
+    DocumentReference doc = firestore.collection('fotoLainLain').doc(idPasien);
+
+    await doc.set(fotoLain.toJson());
+
+    return fotoLain;
+  }
+
+  Future<FotoLainLain?> getFotoLainLain(String idPasien) async {
+    DocumentReference doc = firestore.collection('fotoLainLain').doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return FotoLainLain.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
   Future<dynamic> deletePasien(String idPasien) async {
     await firestore.collection('pasien').doc(idPasien).delete();
     await firestore.collection('penyakitTerdahulu').doc(idPasien).delete();
@@ -966,5 +988,48 @@ class FirebaseFirestoreService {
         .collection('psikologi')
         .doc(idPasien)
         .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Audiometri")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Fisik")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Gigi")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Jantung")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Mata")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Paru")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Spirometri")
+        .doc(idPasien)
+        .delete();
+    await firestore.collection('fotoLainLain').doc(idPasien).delete();
   }
 }

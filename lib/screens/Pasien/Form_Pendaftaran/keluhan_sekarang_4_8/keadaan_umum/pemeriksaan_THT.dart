@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
+import '../../../Menu_Form/menu_form.dart';
 
 enum Question { ya, tidak }
 
@@ -327,174 +328,190 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-          backgroundColor: blueDefault,
-          title: textDefault("Keadaan Umum - Pemeriksaan THT", Colors.white, 16,
-              FontWeight.bold)),
-      body: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-                child: SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        textDefault("4/8", Colors.black, 14, FontWeight.bold)
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          height: 10,
-                          width: 180,
-                          decoration: BoxDecoration(
-                              color: blueDefault,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10))),
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 10,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[350],
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  bottomRight: Radius.circular(10))),
-                        )),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          tapTelinga = !tapTelinga;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 4)
-                            ]),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault(
-                                "Telinga", Colors.black, 14, FontWeight.bold),
-                            Icon(tapTelinga
-                                ? Icons.arrow_drop_up
-                                : Icons.arrow_drop_down)
-                          ],
-                        ),
-                      ),
-                    ),
-                    tapTelinga ? telinga() : Container(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          tapHidung = !tapHidung;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 4)
-                            ]),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault(
-                                "Hidung", Colors.black, 14, FontWeight.bold),
-                            Icon(tapHidung
-                                ? Icons.arrow_drop_up
-                                : Icons.arrow_drop_down)
-                          ],
-                        ),
-                      ),
-                    ),
-                    tapHidung ? hidung() : Container(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          tapKerongkongan = !tapKerongkongan;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 4)
-                            ]),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Kerongkongan", Colors.black, 14,
-                                FontWeight.bold),
-                            Icon(tapKerongkongan
-                                ? Icons.arrow_drop_up
-                                : Icons.arrow_drop_down)
-                          ],
-                        ),
-                      ),
-                    ),
-                    tapKerongkongan ? kerongkongan() : Container(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-              ),
-            )),
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 4)]),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return MenuForm(idPasien: widget.idPasien!);
+        }));
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+            backgroundColor: blueDefault,
+            title: 
+             Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
-                    onTap: () => Navigator.of(context).pop(),
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                      margin: EdgeInsets.only(top: 10, bottom: 10),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: blueDefault),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: textDefault(
-                            "Kembali", blueDefault, 16, FontWeight.normal),
-                      ),
+                    onTap: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) {
+                        return MenuForm(idPasien: widget.idPasien!);
+                      }));
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.arrow_back),
+                      ],
                     ),
                   ),
-                  InkWell(
+                
+
+            textDefault("Keadaan Umum - Pemeriksaan THT", Colors.white,
+                16, FontWeight.bold),
+
+                  SizedBox(
+                    width: 5,
+                  ),
+                ]),
+                
+                ),
+        body: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                  child: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          textDefault("4/8", Colors.black, 14, FontWeight.bold)
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            height: 10,
+                            width: 180,
+                            decoration: BoxDecoration(
+                                color: blueDefault,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10))),
+                          ),
+                          Expanded(
+                              child: Container(
+                            height: 10,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[350],
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    bottomRight: Radius.circular(10))),
+                          )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            tapTelinga = !tapTelinga;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 4)
+                              ]),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault(
+                                  "Telinga", Colors.black, 14, FontWeight.bold),
+                              Icon(tapTelinga
+                                  ? Icons.arrow_drop_up
+                                  : Icons.arrow_drop_down)
+                            ],
+                          ),
+                        ),
+                      ),
+                      tapTelinga ? telinga() : Container(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            tapHidung = !tapHidung;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 4)
+                              ]),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault(
+                                  "Hidung", Colors.black, 14, FontWeight.bold),
+                              Icon(tapHidung
+                                  ? Icons.arrow_drop_up
+                                  : Icons.arrow_drop_down)
+                            ],
+                          ),
+                        ),
+                      ),
+                      tapHidung ? hidung() : Container(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            tapKerongkongan = !tapKerongkongan;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 4)
+                              ]),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Kerongkongan", Colors.black, 14,
+                                  FontWeight.bold),
+                              Icon(tapKerongkongan
+                                  ? Icons.arrow_drop_up
+                                  : Icons.arrow_drop_down)
+                            ],
+                          ),
+                        ),
+                      ),
+                      tapKerongkongan ? kerongkongan() : Container(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              )),
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                    BoxShadow(color: Colors.grey, blurRadius: 2)
+                  ]),
+                  child: InkWell(
                     onTap: saveButton,
                     child: Container(
                       padding:
@@ -508,14 +525,12 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
                           ]),
                       child: Center(
                         child: textDefault(
-                            "Selanjutnya", Colors.white, 16, FontWeight.normal),
+                            "Simpan", Colors.white, 16, FontWeight.normal),
                       ),
                     ),
-                  )
-                ],
-              ),
-            )
-          ],
+                  ))
+            ],
+          ),
         ),
       ),
     );
@@ -1356,10 +1371,8 @@ class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
     firestore.setPemeriksaanTHT(
         pemeriksaanTHT: data, idPasien: widget.idPasien!);
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return PemeriksaanRonggaDada(
-        idPasien: widget.idPasien,
-      );
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      return MenuForm(idPasien: widget.idPasien!);
     }));
   }
 }

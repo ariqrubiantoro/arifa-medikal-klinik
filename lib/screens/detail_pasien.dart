@@ -23,6 +23,7 @@ import 'dart:html' as htmm;
 import '../model/ajuran_model.dart';
 import '../model/ergonomis_model.dart';
 import '../model/fisik_model.dart';
+import '../model/foto_lain_lain_model.dart';
 import '../model/kelayakan_kerja_model.dart';
 import '../model/kimia_model.dart';
 import '../model/pemeriksaan_anggota_gerak_model.dart';
@@ -80,6 +81,7 @@ class _DetailPasienState extends State<DetailPasien> {
   HasilPemeriksaanModel? _hasilLaboratorium;
   HasilPemeriksaanModel? _hasilJantung;
   HasilPemeriksaanModel? _hasilParu;
+  FotoLainLain? _fotoLainLain;
 
   String merokokLama = "";
   String merokokBanyak = "";
@@ -158,7 +160,7 @@ class _DetailPasienState extends State<DetailPasien> {
         await firestore.getHasilPemeriksaanJantung(widget.pasienSnapshots.id);
     _hasilParu =
         await firestore.getHasilPemeriksaanParu(widget.pasienSnapshots.id);
-
+    _fotoLainLain = await firestore.getFotoLainLain(widget.pasienSnapshots.id);
     if (_riwayatKebiasaan!.strMerokok == "Tidak") {
       merokokLama = ": -";
       merokokBanyak = ": -";
@@ -202,9 +204,21 @@ class _DetailPasienState extends State<DetailPasien> {
           await rootBundle.load('assets/images/footer.jpeg');
       final Uint8List footerImage = bytesImage2.buffer.asUint8List();
 
+      final ByteData bytesImagePolos1 =
+          await rootBundle.load('assets/images/headerpng.png');
+      final Uint8List headerImagePolos1 = bytesImagePolos1.buffer.asUint8List();
+
+      final ByteData bytesImagePolos2 =
+          await rootBundle.load('assets/images/footerpng.png');
+      final Uint8List footerImagePolos2 = bytesImagePolos2.buffer.asUint8List();
+
       final ByteData bytesImage3 =
           await rootBundle.load('assets/images/ttd.png');
       final Uint8List ttdDokter = bytesImage3.buffer.asUint8List();
+
+      final ByteData faviconByte =
+          await rootBundle.load('assets/images/icon_arifa.jpeg');
+      final Uint8List faviconImage = faviconByte.buffer.asUint8List();
 
       pdf.addPage(pw.MultiPage(
           pageFormat: PdfPageFormat.a4,
@@ -219,7 +233,7 @@ class _DetailPasienState extends State<DetailPasien> {
               child: pw.ClipRRect(
                 child: pw.Container(
                   child: pw.Image(
-                    pw.MemoryImage(headerImage),
+                    pw.MemoryImage(headerImagePolos1),
                     fit: pw.BoxFit.fill,
                   ),
                 ),
@@ -234,7 +248,7 @@ class _DetailPasienState extends State<DetailPasien> {
               child: pw.ClipRRect(
                 child: pw.Container(
                   child: pw.Image(
-                    pw.MemoryImage(footerImage),
+                    pw.MemoryImage(footerImagePolos2),
                     fit: pw.BoxFit.fill,
                   ),
                 ),
@@ -248,20 +262,46 @@ class _DetailPasienState extends State<DetailPasien> {
                       mainAxisAlignment: pw.MainAxisAlignment.center,
                       crossAxisAlignment: pw.CrossAxisAlignment.center,
                       children: [
-                    pw.SizedBox(height: 180),
+                    pw.SizedBox(height: 30),
+                    pw.Container(
+                      width: 180,
+                      height: 120,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(faviconImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),
+                    pw.SizedBox(height: 70),
                     pw.Text("Medical Check Up",
                         style: pw.TextStyle(
-                            fontSize: 40, fontWeight: pw.FontWeight.bold)),
+                            fontSize: 30, fontWeight: pw.FontWeight.bold)),
                     pw.SizedBox(height: 70),
                     pw.Text(widget.pasienSnapshots['namaPasien'],
                         style: pw.TextStyle(
-                            fontSize: 25, fontWeight: pw.FontWeight.bold)),
+                            fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                    pw.SizedBox(height: 20),
                     pw.Text(widget.pasienSnapshots['bagian'],
                         style: pw.TextStyle(
-                            fontSize: 25, fontWeight: pw.FontWeight.bold)),
+                            fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                    pw.SizedBox(height: 20),
                     pw.Text(widget.pasienSnapshots['perusahaan'],
                         style: pw.TextStyle(
-                            fontSize: 25, fontWeight: pw.FontWeight.bold))
+                            fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                    pw.SizedBox(height: 180),
+                    pw.Text(
+                        "Jln. Banda Aceh - Medan No.22 Desa Blang Pulo, Kecamatan Muara Satu, Kota Lhokseumawe",
+                        style: pw.TextStyle(
+                            fontSize: 11, fontWeight: pw.FontWeight.normal)),
+                    pw.Text(
+                        "Email: klinik_arifamedikal@yahoo.com | Website: www.arifamedikalklinik.com\nTelp: 0645-8451168, HP: 0852-6060-1909",
+                        textAlign: pw.TextAlign.center,
+                        style: pw.TextStyle(
+                            fontSize: 11, fontWeight: pw.FontWeight.normal)),
                   ]))
             ];
           }));
@@ -4237,7 +4277,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text("Dokter Pengirim",
+                                      pw.Text(_hasilFisik!.dokterApa!,
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text("Tanggal Pemeriksaan",
                                           style: pw.TextStyle(fontSize: 12)),
@@ -4247,7 +4287,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text(": dr. Rajab Saputra",
+                                      pw.Text(": ${_hasilFisik!.namaDokter!}",
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text(
                                           ": ${widget.pasienSnapshots['tanggal_pemeriksaan']}",
@@ -4363,7 +4403,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text("Dokter Pengirim",
+                                      pw.Text(_hasilMata!.dokterApa!,
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text("Tanggal Pemeriksaan",
                                           style: pw.TextStyle(fontSize: 12)),
@@ -4373,7 +4413,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text(": dr. Rajab Saputra",
+                                      pw.Text(": ${_hasilMata!.namaDokter!}",
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text(
                                           ": ${widget.pasienSnapshots['tanggal_pemeriksaan']}",
@@ -4489,7 +4529,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text("Dokter Pengirim",
+                                      pw.Text(_hasilGigiMulut!.dokterApa!,
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text("Tanggal Pemeriksaan",
                                           style: pw.TextStyle(fontSize: 12)),
@@ -4499,7 +4539,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text(": dr. Rajab Saputra",
+                                      pw.Text(
+                                          ": ${_hasilGigiMulut!.namaDokter!}",
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text(
                                           ": ${widget.pasienSnapshots['tanggal_pemeriksaan']}",
@@ -4615,7 +4656,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text("Dokter Pengirim",
+                                      pw.Text(_hasilAudiometri!.dokterApa!,
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text("Tanggal Pemeriksaan",
                                           style: pw.TextStyle(fontSize: 12)),
@@ -4625,7 +4666,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text(": dr. Rajab Saputra",
+                                      pw.Text(
+                                          ": ${_hasilAudiometri!.namaDokter!}",
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text(
                                           ": ${widget.pasienSnapshots['tanggal_pemeriksaan']}",
@@ -4741,7 +4783,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text("Dokter Pengirim",
+                                      pw.Text(_hasilSpirometri!.dokterApa!,
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text("Tanggal Pemeriksaan",
                                           style: pw.TextStyle(fontSize: 12)),
@@ -4751,7 +4793,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text(": dr. Rajab Saputra",
+                                      pw.Text(
+                                          ": ${_hasilSpirometri!.namaDokter!}",
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text(
                                           ": ${widget.pasienSnapshots['tanggal_pemeriksaan']}",
@@ -4867,7 +4910,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text("Dokter Pengirim",
+                                      pw.Text(_hasilTreadmill!.dokterApa!,
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text("Tanggal Pemeriksaan",
                                           style: pw.TextStyle(fontSize: 12)),
@@ -4877,7 +4920,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text(": dr. Rajab Saputra",
+                                      pw.Text(
+                                          ": ${_hasilTreadmill!.namaDokter!}",
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text(
                                           ": ${widget.pasienSnapshots['tanggal_pemeriksaan']}",
@@ -4993,7 +5037,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text("Dokter Pengirim",
+                                      pw.Text(_hasilLaboratorium!.dokterApa!,
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text("Tanggal Pemeriksaan",
                                           style: pw.TextStyle(fontSize: 12)),
@@ -5003,7 +5047,8 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text(": dr. Rajab Saputra",
+                                      pw.Text(
+                                          ": ${_hasilLaboratorium!.namaDokter!}",
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text(
                                           ": ${widget.pasienSnapshots['tanggal_pemeriksaan']}",
@@ -5119,7 +5164,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text("Dokter Pengirim",
+                                      pw.Text(_hasilJantung!.dokterApa!,
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text("Tanggal Pemeriksaan",
                                           style: pw.TextStyle(fontSize: 12)),
@@ -5129,7 +5174,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text(": dr. Rajab Saputra",
+                                      pw.Text(": ${_hasilJantung!.namaDokter!}",
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text(
                                           ": ${widget.pasienSnapshots['tanggal_pemeriksaan']}",
@@ -5245,7 +5290,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text("Dokter Pengirim",
+                                      pw.Text(_hasilParu!.dokterApa!,
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text("Tanggal Pemeriksaan",
                                           style: pw.TextStyle(fontSize: 12)),
@@ -5255,7 +5300,7 @@ class _DetailPasienState extends State<DetailPasien> {
                                     crossAxisAlignment:
                                         pw.CrossAxisAlignment.start,
                                     children: [
-                                      pw.Text(": dr. Rajab Saputra",
+                                      pw.Text(": ${_hasilParu!.namaDokter!}",
                                           style: pw.TextStyle(fontSize: 12)),
                                       pw.Text(
                                           ": ${widget.pasienSnapshots['tanggal_pemeriksaan']}",
@@ -5755,6 +5800,484 @@ class _DetailPasienState extends State<DetailPasien> {
                   ])
             ];
           }));
+
+      _fotoLainLain == null
+          ? null
+          : _fotoLainLain!.foto1 == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                        margin: pw.EdgeInsets.all(10),
+                        width: 600,
+                        height: 620,
+                        child: pw.Image(
+                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto2!)),
+                          fit: pw.BoxFit.fill,
+                        ),
+                      ),
+                    ];
+                  }));
+
+      _fotoLainLain == null
+          ? null
+          : _fotoLainLain!.foto2 == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                        margin: pw.EdgeInsets.all(10),
+                        width: 600,
+                        height: 620,
+                        child: pw.Image(
+                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto2!)),
+                          fit: pw.BoxFit.fill,
+                        ),
+                      ),
+                    ];
+                  }));
+
+      _fotoLainLain == null
+          ? null
+          : _fotoLainLain!.foto3 == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                        margin: pw.EdgeInsets.all(10),
+                        width: 600,
+                        height: 620,
+                        child: pw.Image(
+                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto3!)),
+                          fit: pw.BoxFit.fill,
+                        ),
+                      ),
+                    ];
+                  }));
+
+      _fotoLainLain == null
+          ? null
+          : _fotoLainLain!.foto4 == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                        margin: pw.EdgeInsets.all(10),
+                        width: 600,
+                        height: 620,
+                        child: pw.Image(
+                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto4!)),
+                          fit: pw.BoxFit.fill,
+                        ),
+                      ),
+                    ];
+                  }));
+
+      _fotoLainLain == null
+          ? null
+          : _fotoLainLain!.foto5 == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                        margin: pw.EdgeInsets.all(10),
+                        width: 600,
+                        height: 620,
+                        child: pw.Image(
+                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto5!)),
+                          fit: pw.BoxFit.fill,
+                        ),
+                      ),
+                    ];
+                  }));
+
+      _fotoLainLain == null
+          ? null
+          : _fotoLainLain!.foto6 == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                        margin: pw.EdgeInsets.all(10),
+                        width: 600,
+                        height: 620,
+                        child: pw.Image(
+                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto6!)),
+                          fit: pw.BoxFit.fill,
+                        ),
+                      ),
+                    ];
+                  }));
+
+      _fotoLainLain == null
+          ? null
+          : _fotoLainLain!.foto7 == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                        margin: pw.EdgeInsets.all(10),
+                        width: 600,
+                        height: 620,
+                        child: pw.Image(
+                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto7!)),
+                          fit: pw.BoxFit.fill,
+                        ),
+                      ),
+                    ];
+                  }));
+
+      _fotoLainLain == null
+          ? null
+          : _fotoLainLain!.foto8 == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                        margin: pw.EdgeInsets.all(10),
+                        width: 600,
+                        height: 620,
+                        child: pw.Image(
+                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto8!)),
+                          fit: pw.BoxFit.fill,
+                        ),
+                      ),
+                    ];
+                  }));
+
+      _fotoLainLain == null
+          ? null
+          : _fotoLainLain!.foto9 == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                        margin: pw.EdgeInsets.all(10),
+                        width: 600,
+                        height: 620,
+                        child: pw.Image(
+                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto9!)),
+                          fit: pw.BoxFit.fill,
+                        ),
+                      ),
+                    ];
+                  }));
+
       if (kIsWeb) {
         final bytes = await pdf.save();
         final blob = htmm.Blob([bytes], 'application/pdf');

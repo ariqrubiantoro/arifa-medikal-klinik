@@ -2,6 +2,7 @@
 
 import 'package:arifa_medikal_klink_3/model/kelayakan_kerja_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/kesimpulan_derajat_8_8.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
 
@@ -39,334 +40,443 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
   final cardiovaskuler = TextEditingController();
 
   final FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  KelayakanKerjaModel? data;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await firestore.getKelayakanKerja(widget.idPasien!);
+    if (data != null) {
+      setState(() {
+        cardiovaskuler.text = data!.resikoCardioVascular!;
+      });
+      if (data!.layakBekerjaSesuaiPosisi! == "Ya") {
+        setState(() {
+          layakBekerjaTanpaCatatan = data!.layakBekerjaSesuaiPosisi!;
+          _quest1 = Question.ya;
+        });
+      } else if (data!.layakBekerjaSesuaiPosisi! == "Tidak") {
+        setState(() {
+          layakBekerjaTanpaCatatan = data!.layakBekerjaSesuaiPosisi!;
+          _quest1 = Question.tidak;
+        });
+      }
+      if (data!.layakBekerjaSesuaiPosisi! == "") {
+      } else {
+        setState(() {
+          layakBekerjaTanpaCatatanController.text =
+              data!.layakBekerjaSesuaiPosisi!;
+        });
+      }
+
+      if (data!.layakBekerjaDenganCatatan! == "Ya") {
+        setState(() {
+          layakBekerjaDenganCatatan = data!.layakBekerjaDenganCatatan!;
+          _quest2 = Question.ya;
+        });
+      } else if (data!.layakBekerjaDenganCatatan! == "Tidak") {
+        setState(() {
+          layakBekerjaDenganCatatan = data!.layakBekerjaDenganCatatan!;
+          _quest2 = Question.tidak;
+        });
+      }
+      if (data!.layakBekerjaDenganCatatan! == "") {
+      } else {
+        setState(() {
+          layakBekerjaTanpaCatatanController.text =
+              data!.layakBekerjaDenganCatatan!;
+        });
+      }
+
+      if (data!.layakBekerjaDenganPenyesuaian! == "Ya") {
+        setState(() {
+          layakBekerjaDenganPenyesuaian = data!.layakBekerjaDenganPenyesuaian!;
+          _quest3 = Question.ya;
+        });
+      } else if (data!.layakBekerjaDenganPenyesuaian! == "Tidak") {
+        setState(() {
+          layakBekerjaDenganPenyesuaian = data!.layakBekerjaDenganPenyesuaian!;
+          _quest3 = Question.tidak;
+        });
+      }
+      if (data!.layakBekerjaDenganPenyesuaian! == "") {
+      } else {
+        setState(() {
+          layakBekerjaDenganPenyesuaianController.text =
+              data!.layakBekerjaDenganPenyesuaian!;
+        });
+      }
+
+      if (data!.layakuntukBekerja! == "Ya") {
+        setState(() {
+          layakUntukBekerja = data!.layakuntukBekerja!;
+          _quest4 = Question.ya;
+        });
+      } else if (data!.layakuntukBekerja! == "Tidak") {
+        setState(() {
+          layakUntukBekerja = data!.layakuntukBekerja!;
+          _quest4 = Question.tidak;
+        });
+      }
+      if (data!.layakuntukBekerja! == "") {
+      } else {
+        setState(() {
+          layakUntukBekerjaController.text = data!.layakuntukBekerja!;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          backgroundColor: blueDefault,
-          title: textDefault(
-              "Kesimpulan Kelayakan Kerja", Colors.white, 16, FontWeight.bold)),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Expanded(
-              child: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return MenuForm(idPasien: widget.idPasien!);
+        }));
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+            backgroundColor: blueDefault,
+            title:
+             Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      textDefault("7/8", Colors.black, 14, FontWeight.bold)
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        height: 10,
-                        width: 300,
-                        decoration: BoxDecoration(
-                            color: blueDefault,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                bottomLeft: Radius.circular(10))),
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 10,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[350],
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(10),
-                                bottomRight: Radius.circular(10))),
-                      )),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  textDefault("Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini",
-                      Colors.black, 14, FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: Question.ya,
-                        groupValue: _quest1,
-                        onChanged: (value) {
-                          setState(() {
-                            _quest1 = value!;
-                            layakBekerjaTanpaCatatan = "Ya";
-                            layakBekerjaTanpaCatatanController.text = "";
-                          });
-                        },
-                      ),
-                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: Question.tidak,
-                        groupValue: _quest1,
-                        onChanged: (value) {
-                          setState(() {
-                            _quest1 = value!;
-                            layakBekerjaTanpaCatatan = "Tidak";
-                            layakBekerjaTanpaCatatanController.text = "";
-                          });
-                        },
-                      ),
-                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest1 = Question.none;
-                              });
-                            },
-                            controller: layakBekerjaTanpaCatatanController,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault(
-                      "Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini, dengan Catatan",
-                      Colors.black,
-                      14,
-                      FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: Question.ya,
-                        groupValue: _quest2,
-                        onChanged: (value) {
-                          setState(() {
-                            _quest2 = value!;
-                            layakBekerjaDenganCatatan = "Ya";
-                            layakBekerjaDenganCatatanController.text = "";
-                          });
-                        },
-                      ),
-                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: Question.tidak,
-                        groupValue: _quest2,
-                        onChanged: (value) {
-                          setState(() {
-                            _quest2 = value!;
-                            layakBekerjaDenganCatatan = "Tidak";
-                            layakBekerjaDenganCatatanController.text = "";
-                          });
-                        },
-                      ),
-                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest2 = Question.none;
-                              });
-                            },
-                            controller: layakBekerjaDenganCatatanController,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault(
-                      "Layak Bekerja dengan Penyesuaian dan atau Pembatasan Kerja",
-                      Colors.black,
-                      14,
-                      FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: Question.ya,
-                        groupValue: _quest3,
-                        onChanged: (value) {
-                          setState(() {
-                            _quest3 = value!;
-                            layakBekerjaDenganPenyesuaian = "Ya";
-                            layakBekerjaDenganPenyesuaianController.text = "";
-                          });
-                        },
-                      ),
-                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: Question.tidak,
-                        groupValue: _quest3,
-                        onChanged: (value) {
-                          setState(() {
-                            _quest3 = value!;
-                            layakBekerjaDenganPenyesuaian = "Tidak";
-                            layakBekerjaDenganPenyesuaianController.text = "";
-                          });
-                        },
-                      ),
-                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest3 = Question.none;
-                              });
-                            },
-                            controller: layakBekerjaDenganPenyesuaianController,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault(
-                      "Layak untuk Bekerja", Colors.black, 14, FontWeight.bold),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        value: Question.ya,
-                        groupValue: _quest4,
-                        onChanged: (value) {
-                          setState(() {
-                            _quest4 = value!;
-                            layakUntukBekerja = "Ya";
-                            layakUntukBekerjaController.text = "";
-                          });
-                        },
-                      ),
-                      textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                      Radio(
-                        value: Question.tidak,
-                        groupValue: _quest4,
-                        onChanged: (value) {
-                          setState(() {
-                            _quest4 = value!;
-                            layakUntukBekerja = "Tidak";
-                            layakUntukBekerjaController.text = "";
-                          });
-                        },
-                      ),
-                      textDefault("Tidak", Colors.black, 13, FontWeight.normal),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest4 = Question.none;
-                              });
-                            },
-                            controller: layakUntukBekerjaController,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  textDefault("Resiko Cardiovaskuler", Colors.black, 14,
-                      FontWeight.bold),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: TextFormField(
-                      controller: cardiovaskuler,
-                      decoration: InputDecoration(border: InputBorder.none),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) {
+                        return MenuForm(idPasien: widget.idPasien!);
+                      }));
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.arrow_back),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          )),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 4)]),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                  onTap: () => Navigator.of(context).pop(),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                    margin: EdgeInsets.only(top: 10, bottom: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: blueDefault),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: textDefault(
-                          "Kembali", blueDefault, 16, FontWeight.normal),
-                    ),
+             textDefault("Kesimpulan Kelayakan Kerja", Colors.white, 16,
+                FontWeight.bold)
+            ,
+                  SizedBox(
+                    width: 5,
                   ),
+                ]),
+            
                 ),
-                InkWell(
-                  // onTap: () => Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) {
-                  //   return KesimpulanDerajat8();
-                  // })),
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+                child: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        textDefault("7/8", Colors.black, 14, FontWeight.bold)
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          height: 10,
+                          width: 300,
+                          decoration: BoxDecoration(
+                              color: blueDefault,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10))),
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 10,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[350],
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  bottomRight: Radius.circular(10))),
+                        )),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    textDefault(
+                        "Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini",
+                        Colors.black,
+                        14,
+                        FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: Question.ya,
+                          groupValue: _quest1,
+                          onChanged: (value) {
+                            setState(() {
+                              _quest1 = value!;
+                              layakBekerjaTanpaCatatan = "Ya";
+                              layakBekerjaTanpaCatatanController.text = "";
+                            });
+                          },
+                        ),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: Question.tidak,
+                          groupValue: _quest1,
+                          onChanged: (value) {
+                            setState(() {
+                              _quest1 = value!;
+                              layakBekerjaTanpaCatatan = "Tidak";
+                              layakBekerjaTanpaCatatanController.text = "";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest1 = Question.none;
+                                });
+                              },
+                              controller: layakBekerjaTanpaCatatanController,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault(
+                        "Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini, dengan Catatan",
+                        Colors.black,
+                        14,
+                        FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: Question.ya,
+                          groupValue: _quest2,
+                          onChanged: (value) {
+                            setState(() {
+                              _quest2 = value!;
+                              layakBekerjaDenganCatatan = "Ya";
+                              layakBekerjaDenganCatatanController.text = "";
+                            });
+                          },
+                        ),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: Question.tidak,
+                          groupValue: _quest2,
+                          onChanged: (value) {
+                            setState(() {
+                              _quest2 = value!;
+                              layakBekerjaDenganCatatan = "Tidak";
+                              layakBekerjaDenganCatatanController.text = "";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest2 = Question.none;
+                                });
+                              },
+                              controller: layakBekerjaDenganCatatanController,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault(
+                        "Layak Bekerja dengan Penyesuaian dan atau Pembatasan Kerja",
+                        Colors.black,
+                        14,
+                        FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: Question.ya,
+                          groupValue: _quest3,
+                          onChanged: (value) {
+                            setState(() {
+                              _quest3 = value!;
+                              layakBekerjaDenganPenyesuaian = "Ya";
+                              layakBekerjaDenganPenyesuaianController.text = "";
+                            });
+                          },
+                        ),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: Question.tidak,
+                          groupValue: _quest3,
+                          onChanged: (value) {
+                            setState(() {
+                              _quest3 = value!;
+                              layakBekerjaDenganPenyesuaian = "Tidak";
+                              layakBekerjaDenganPenyesuaianController.text = "";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest3 = Question.none;
+                                });
+                              },
+                              controller:
+                                  layakBekerjaDenganPenyesuaianController,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault("Layak untuk Bekerja", Colors.black, 14,
+                        FontWeight.bold),
+                    Row(
+                      children: <Widget>[
+                        Radio(
+                          value: Question.ya,
+                          groupValue: _quest4,
+                          onChanged: (value) {
+                            setState(() {
+                              _quest4 = value!;
+                              layakUntukBekerja = "Ya";
+                              layakUntukBekerjaController.text = "";
+                            });
+                          },
+                        ),
+                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
+                        Radio(
+                          value: Question.tidak,
+                          groupValue: _quest4,
+                          onChanged: (value) {
+                            setState(() {
+                              _quest4 = value!;
+                              layakUntukBekerja = "Tidak";
+                              layakUntukBekerjaController.text = "";
+                            });
+                          },
+                        ),
+                        textDefault(
+                            "Tidak", Colors.black, 13, FontWeight.normal),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest4 = Question.none;
+                                });
+                              },
+                              controller: layakUntukBekerjaController,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    textDefault("Resiko Cardiovaskuler", Colors.black, 14,
+                        FontWeight.bold),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextFormField(
+                        controller: cardiovaskuler,
+                        decoration: InputDecoration(border: InputBorder.none),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )),
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 2)]),
+                child: InkWell(
                   onTap: saveButton,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -379,14 +489,12 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                         ]),
                     child: Center(
                       child: textDefault(
-                          "Selanjutnya", Colors.white, 16, FontWeight.normal),
+                          "Simpan", Colors.white, 16, FontWeight.normal),
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-        ],
+                ))
+          ],
+        ),
       ),
     );
   }
@@ -409,14 +517,11 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
       resikoCardioVascular: cardiovaskuler.text,
     );
 
-    firestore
-        .setKelayakanKerja(kelayakanKerja: data, idPasien: widget.idPasien!)
-        .whenComplete(
-          () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return KesimpulanDerajat8(
-              idPasien: widget.idPasien,
-            );
-          })),
-        );
+    firestore.setKelayakanKerja(
+        kelayakanKerja: data, idPasien: widget.idPasien!);
+
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      return MenuForm(idPasien: widget.idPasien!);
+    }));
   }
 }

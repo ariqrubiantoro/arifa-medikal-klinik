@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_fisik.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/foto_lain_lain_view.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaan_5_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 import 'package:arifa_medikal_klink_3/screens/auth_screen.dart';
 import 'package:arifa_medikal_klink_3/screens/menu_utama.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,6 +43,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Arifa Medikal Klinik',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -48,11 +51,13 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, userSnapshot) {
             if (userSnapshot.hasData) {
-              // return MenuUtama();
+              // return PasienDetail();
+              return MenuUtama();
               // return Pemeriksaan5(
               //   idPasien: 'weOGL76aYRmBaoAItKpP',
               // );
-              return MenuForm(idPasien: "O4cVtyFtQ04GK2Lu6tiZ");
+              // return MenuForm(idPasien: "O4cVtyFtQ04GK2Lu6tiZ");
+              // return FotoLainLainView(idPasien: "O4cVtyFtQ04GK2Lu6tiZ");
             } else {
               return AuthScreen();
             }

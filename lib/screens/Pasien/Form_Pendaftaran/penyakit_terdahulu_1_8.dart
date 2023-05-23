@@ -288,674 +288,663 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: blueDefault,
-        automaticallyImplyLeading: false,
-        title:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          InkWell(
-            onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) {
-                return MenuForm(idPasien: widget.idPasien!);
-              }));
-            },
-            child: Row(
-              children: [
-                Icon(Icons.arrow_back),
-                SizedBox(
-                  width: 5,
-                ),
-                textDefault("Menu Form", Colors.white, 14, FontWeight.normal),
-              ],
-            ),
-          ),
-          textDefault(
-              "Riwayat Penyakit Terdahulu", Colors.white, 16, FontWeight.bold),
-          SizedBox(
-            width: 5,
-          ),
-        ]),
-      ),
-      body: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(20),
-                child: SingleChildScrollView(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        textDefault("1/8", Colors.black, 14, FontWeight.bold)
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          height: 10,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: blueDefault,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10))),
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 10,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[350],
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  bottomRight: Radius.circular(10))),
-                        )),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    textDefault(
-                        "Darah Tinggi", Colors.black, 14, FontWeight.bold),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: 1,
-                          groupValue: _quest,
-                          onChanged: (value) {
-                            setState(() {
-                              _quest = value!;
-                              darahTinggi = "Ya";
-                              darahTinggiF.text = "";
-                            });
-                          },
-                        ),
-                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                        Radio(
-                          value: 2,
-                          groupValue: _quest,
-                          onChanged: (value) {
-                            setState(() {
-                              _quest = value!;
-                              darahTinggi = "Tidak Ada";
-                              darahTinggiF.text = "";
-                            });
-                          },
-                        ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest = 0;
-                              });
-                            },
-                            controller: darahTinggiF,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    textDefault("Penyakit Paru (Asma, TBC, dll)", Colors.black,
-                        16, FontWeight.bold),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: 1,
-                          groupValue: _quest2,
-                          onChanged: (value) {
-                            setState(() {
-                              _quest2 = value!;
-                              paruF.text = "";
-                              paru = "Ya";
-                            });
-                          },
-                        ),
-                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                        Radio(
-                          value: 2,
-                          groupValue: _quest2,
-                          onChanged: (value) {
-                            setState(() {
-                              paruF.text = "";
-                              _quest2 = value!;
-                              paru = "Tidak Ada";
-                              print(paru);
-                            });
-                          },
-                        ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest2 = 0;
-                              });
-                            },
-                            controller: paruF,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    textDefault(
-                        "Asam Lambung", Colors.black, 14, FontWeight.bold),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: 1,
-                          groupValue: _quest3,
-                          onChanged: (value) {
-                            setState(() {
-                              asamLambungF.text = "";
-                              _quest3 = value!;
-                              asamLambung = "Ya";
-                            });
-                          },
-                        ),
-                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                        Radio(
-                          value: 2,
-                          groupValue: _quest3,
-                          onChanged: (value) {
-                            setState(() {
-                              _quest3 = value!;
-                              asamLambungF.text = "";
-                              asamLambung = "Tidak Ada";
-                            });
-                          },
-                        ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest3 = 0;
-                              });
-                            },
-                            controller: asamLambungF,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    textDefault("Alergi", Colors.black, 14, FontWeight.bold),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: 1,
-                          groupValue: _quest4,
-                          onChanged: (value) {
-                            setState(() {
-                              _quest4 = value!;
-                              alergiF.text = "";
-                              alergi = "Ya";
-                            });
-                          },
-                        ),
-                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                        Radio(
-                          value: 2,
-                          groupValue: _quest4,
-                          onChanged: (value) {
-                            setState(() {
-                              alergiF.text = "";
-                              _quest4 = value!;
-                              alergi = "Tidak Ada";
-                            });
-                          },
-                        ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest4 = 0;
-                              });
-                            },
-                            controller: alergiF,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    textDefault(
-                        "Riwayat Operasi", Colors.black, 14, FontWeight.bold),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: 1,
-                          groupValue: _quest5,
-                          onChanged: (value) {
-                            setState(() {
-                              riwayatOperasiF.text = "";
-                              _quest5 = value!;
-                              riwayatOperasi = "Ya";
-                            });
-                          },
-                        ),
-                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                        Radio(
-                          value: 2,
-                          groupValue: _quest5,
-                          onChanged: (value) {
-                            setState(() {
-                              riwayatOperasiF.text = "";
-                              _quest5 = value!;
-                              riwayatOperasi = "Tidak Ada";
-                            });
-                          },
-                        ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest5 = 0;
-                              });
-                            },
-                            controller: riwayatOperasiF,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    textDefault("Riwayat Kecelakaan", Colors.black, 14,
-                        FontWeight.bold),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: 1,
-                          groupValue: _quest6,
-                          onChanged: (value) {
-                            setState(() {
-                              riwayatKecelakaanF.text = "";
-                              _quest6 = value!;
-                              riwayatKecelakaan = "Ya";
-                            });
-                          },
-                        ),
-                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                        Radio(
-                          value: 2,
-                          groupValue: _quest6,
-                          onChanged: (value) {
-                            setState(() {
-                              riwayatKecelakaanF.text = "";
-                              _quest6 = value!;
-                              riwayatKecelakaan = "Tidak Ada";
-                            });
-                          },
-                        ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest6 = 0;
-                              });
-                            },
-                            controller: riwayatKecelakaanF,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    textDefault(
-                        "Riwayat Rawat RS", Colors.black, 14, FontWeight.bold),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: 1,
-                          groupValue: _quest7,
-                          onChanged: (value) {
-                            setState(() {
-                              riwayatRawatrsF.text = "";
-                              _quest7 = value!;
-                              riwayatRawatrs = "Ya";
-                            });
-                          },
-                        ),
-                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                        Radio(
-                          value: 2,
-                          groupValue: _quest7,
-                          onChanged: (value) {
-                            setState(() {
-                              riwayatRawatrsF.text = "";
-                              _quest7 = value!;
-                              riwayatRawatrs = "Tidak Ada";
-                            });
-                          },
-                        ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest7 = 0;
-                              });
-                            },
-                            controller: riwayatRawatrsF,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    textDefault("Hepatitis", Colors.black, 14, FontWeight.bold),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: 1,
-                          groupValue: _quest8,
-                          onChanged: (value) {
-                            setState(() {
-                              hepatitisF.text = "";
-                              _quest8 = value!;
-                              hepatitis = "Ya";
-                            });
-                          },
-                        ),
-                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                        Radio(
-                          value: 2,
-                          groupValue: _quest8,
-                          onChanged: (value) {
-                            setState(() {
-                              hepatitisF.text = "";
-                              _quest8 = value!;
-                              hepatitis = "Tidak Ada";
-                            });
-                          },
-                        ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest8 = 0;
-                              });
-                            },
-                            controller: hepatitisF,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    textDefault(
-                        "Kencing Manis", Colors.black, 14, FontWeight.bold),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: 1,
-                          groupValue: _quest9,
-                          onChanged: (value) {
-                            setState(() {
-                              kencingManisF.text = "";
-                              _quest9 = value!;
-                              kencingManis = "Ya";
-                            });
-                          },
-                        ),
-                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                        Radio(
-                          value: 2,
-                          groupValue: _quest9,
-                          onChanged: (value) {
-                            setState(() {
-                              kencingManisF.text = "";
-                              _quest9 = value!;
-                              kencingManis = "Tidak Ada";
-                            });
-                          },
-                        ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest9 = 0;
-                              });
-                            },
-                            controller: kencingManisF,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    textDefault("Patah Tulang (terpasang PEN)", Colors.black,
-                        16, FontWeight.bold),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: 1,
-                          groupValue: _quest10,
-                          onChanged: (value) {
-                            setState(() {
-                              patahTulangF.text = "";
-                              _quest10 = value!;
-                              patahTulang = "Ya";
-                            });
-                          },
-                        ),
-                        textDefault("Ya", Colors.black, 13, FontWeight.normal),
-                        Radio(
-                          value: 2,
-                          groupValue: _quest10,
-                          onChanged: (value) {
-                            setState(() {
-                              patahTulangF.text = "";
-                              _quest10 = value!;
-                              patahTulang = "Tidak Ada";
-                            });
-                          },
-                        ),
-                        textDefault(
-                            "Tidak Ada", Colors.black, 13, FontWeight.normal),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 45,
-                          padding: EdgeInsets.only(left: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: TextFormField(
-                            onTap: () {
-                              setState(() {
-                                _quest10 = 0;
-                              });
-                            },
-                            controller: patahTulangF,
-                            maxLength: 12,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
-                        ))
-                      ],
-                    ),
-                  ],
-                )),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return MenuForm(idPasien: widget.idPasien!);
+        }));
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: blueDefault,
+          automaticallyImplyLeading: false,
+          title:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            InkWell(
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return MenuForm(idPasien: widget.idPasien!);
+                }));
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.arrow_back),
+                ],
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 2)]),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                    onTap: () => Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) {
-                      return MenuForm(idPasien: widget.idPasien!);
-                    })),
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                      margin: EdgeInsets.only(top: 10, bottom: 10),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: blueDefault),
-                        borderRadius: BorderRadius.circular(10),
+            textDefault("Riwayat Penyakit Terdahulu", Colors.white, 16,
+                FontWeight.bold),
+            SizedBox(
+              width: 5,
+            ),
+          ]),
+        ),
+        body: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  child: SingleChildScrollView(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          textDefault("1/8", Colors.black, 14, FontWeight.bold)
+                        ],
                       ),
-                      child: Center(
-                        child: textDefault(
-                            "Kembali", blueDefault, 16, FontWeight.normal),
+                      SizedBox(
+                        height: 10,
                       ),
-                    ),
-                  ),
-                  InkWell(
-                    // onTap: () => Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) {
-                    //   return PenyakitKeluarga();
-                    // })),
+                      Row(
+                        children: [
+                          Container(
+                            height: 10,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                color: blueDefault,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10))),
+                          ),
+                          Expanded(
+                              child: Container(
+                            height: 10,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[350],
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    bottomRight: Radius.circular(10))),
+                          )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      textDefault(
+                          "Darah Tinggi", Colors.black, 14, FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Radio(
+                            value: 1,
+                            groupValue: _quest,
+                            onChanged: (value) {
+                              setState(() {
+                                _quest = value!;
+                                darahTinggi = "Ya";
+                                darahTinggiF.text = "";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Ya", Colors.black, 13, FontWeight.normal),
+                          Radio(
+                            value: 2,
+                            groupValue: _quest,
+                            onChanged: (value) {
+                              setState(() {
+                                _quest = value!;
+                                darahTinggi = "Tidak Ada";
+                                darahTinggiF.text = "";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Tidak Ada", Colors.black, 13, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest = 0;
+                                });
+                              },
+                              controller: darahTinggiF,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      textDefault("Penyakit Paru (Asma, TBC, dll)",
+                          Colors.black, 16, FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Radio(
+                            value: 1,
+                            groupValue: _quest2,
+                            onChanged: (value) {
+                              setState(() {
+                                _quest2 = value!;
+                                paruF.text = "";
+                                paru = "Ya";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Ya", Colors.black, 13, FontWeight.normal),
+                          Radio(
+                            value: 2,
+                            groupValue: _quest2,
+                            onChanged: (value) {
+                              setState(() {
+                                paruF.text = "";
+                                _quest2 = value!;
+                                paru = "Tidak Ada";
+                                print(paru);
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Tidak Ada", Colors.black, 13, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest2 = 0;
+                                });
+                              },
+                              controller: paruF,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      textDefault(
+                          "Asam Lambung", Colors.black, 14, FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Radio(
+                            value: 1,
+                            groupValue: _quest3,
+                            onChanged: (value) {
+                              setState(() {
+                                asamLambungF.text = "";
+                                _quest3 = value!;
+                                asamLambung = "Ya";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Ya", Colors.black, 13, FontWeight.normal),
+                          Radio(
+                            value: 2,
+                            groupValue: _quest3,
+                            onChanged: (value) {
+                              setState(() {
+                                _quest3 = value!;
+                                asamLambungF.text = "";
+                                asamLambung = "Tidak Ada";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Tidak Ada", Colors.black, 13, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest3 = 0;
+                                });
+                              },
+                              controller: asamLambungF,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      textDefault("Alergi", Colors.black, 14, FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Radio(
+                            value: 1,
+                            groupValue: _quest4,
+                            onChanged: (value) {
+                              setState(() {
+                                _quest4 = value!;
+                                alergiF.text = "";
+                                alergi = "Ya";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Ya", Colors.black, 13, FontWeight.normal),
+                          Radio(
+                            value: 2,
+                            groupValue: _quest4,
+                            onChanged: (value) {
+                              setState(() {
+                                alergiF.text = "";
+                                _quest4 = value!;
+                                alergi = "Tidak Ada";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Tidak Ada", Colors.black, 13, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest4 = 0;
+                                });
+                              },
+                              controller: alergiF,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      textDefault(
+                          "Riwayat Operasi", Colors.black, 14, FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Radio(
+                            value: 1,
+                            groupValue: _quest5,
+                            onChanged: (value) {
+                              setState(() {
+                                riwayatOperasiF.text = "";
+                                _quest5 = value!;
+                                riwayatOperasi = "Ya";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Ya", Colors.black, 13, FontWeight.normal),
+                          Radio(
+                            value: 2,
+                            groupValue: _quest5,
+                            onChanged: (value) {
+                              setState(() {
+                                riwayatOperasiF.text = "";
+                                _quest5 = value!;
+                                riwayatOperasi = "Tidak Ada";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Tidak Ada", Colors.black, 13, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest5 = 0;
+                                });
+                              },
+                              controller: riwayatOperasiF,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      textDefault("Riwayat Kecelakaan", Colors.black, 14,
+                          FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Radio(
+                            value: 1,
+                            groupValue: _quest6,
+                            onChanged: (value) {
+                              setState(() {
+                                riwayatKecelakaanF.text = "";
+                                _quest6 = value!;
+                                riwayatKecelakaan = "Ya";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Ya", Colors.black, 13, FontWeight.normal),
+                          Radio(
+                            value: 2,
+                            groupValue: _quest6,
+                            onChanged: (value) {
+                              setState(() {
+                                riwayatKecelakaanF.text = "";
+                                _quest6 = value!;
+                                riwayatKecelakaan = "Tidak Ada";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Tidak Ada", Colors.black, 13, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest6 = 0;
+                                });
+                              },
+                              controller: riwayatKecelakaanF,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      textDefault("Riwayat Rawat RS", Colors.black, 14,
+                          FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Radio(
+                            value: 1,
+                            groupValue: _quest7,
+                            onChanged: (value) {
+                              setState(() {
+                                riwayatRawatrsF.text = "";
+                                _quest7 = value!;
+                                riwayatRawatrs = "Ya";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Ya", Colors.black, 13, FontWeight.normal),
+                          Radio(
+                            value: 2,
+                            groupValue: _quest7,
+                            onChanged: (value) {
+                              setState(() {
+                                riwayatRawatrsF.text = "";
+                                _quest7 = value!;
+                                riwayatRawatrs = "Tidak Ada";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Tidak Ada", Colors.black, 13, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest7 = 0;
+                                });
+                              },
+                              controller: riwayatRawatrsF,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      textDefault(
+                          "Hepatitis", Colors.black, 14, FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Radio(
+                            value: 1,
+                            groupValue: _quest8,
+                            onChanged: (value) {
+                              setState(() {
+                                hepatitisF.text = "";
+                                _quest8 = value!;
+                                hepatitis = "Ya";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Ya", Colors.black, 13, FontWeight.normal),
+                          Radio(
+                            value: 2,
+                            groupValue: _quest8,
+                            onChanged: (value) {
+                              setState(() {
+                                hepatitisF.text = "";
+                                _quest8 = value!;
+                                hepatitis = "Tidak Ada";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Tidak Ada", Colors.black, 13, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest8 = 0;
+                                });
+                              },
+                              controller: hepatitisF,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      textDefault(
+                          "Kencing Manis", Colors.black, 14, FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Radio(
+                            value: 1,
+                            groupValue: _quest9,
+                            onChanged: (value) {
+                              setState(() {
+                                kencingManisF.text = "";
+                                _quest9 = value!;
+                                kencingManis = "Ya";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Ya", Colors.black, 13, FontWeight.normal),
+                          Radio(
+                            value: 2,
+                            groupValue: _quest9,
+                            onChanged: (value) {
+                              setState(() {
+                                kencingManisF.text = "";
+                                _quest9 = value!;
+                                kencingManis = "Tidak Ada";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Tidak Ada", Colors.black, 13, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest9 = 0;
+                                });
+                              },
+                              controller: kencingManisF,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      textDefault("Patah Tulang (terpasang PEN)", Colors.black,
+                          16, FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Radio(
+                            value: 1,
+                            groupValue: _quest10,
+                            onChanged: (value) {
+                              setState(() {
+                                patahTulangF.text = "";
+                                _quest10 = value!;
+                                patahTulang = "Ya";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Ya", Colors.black, 13, FontWeight.normal),
+                          Radio(
+                            value: 2,
+                            groupValue: _quest10,
+                            onChanged: (value) {
+                              setState(() {
+                                patahTulangF.text = "";
+                                _quest10 = value!;
+                                patahTulang = "Tidak Ada";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Tidak Ada", Colors.black, 13, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Container(
+                            height: 45,
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {
+                                setState(() {
+                                  _quest10 = 0;
+                                });
+                              },
+                              controller: patahTulangF,
+                              maxLength: 12,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ))
+                        ],
+                      ),
+                    ],
+                  )),
+                ),
+              ),
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                    BoxShadow(color: Colors.grey, blurRadius: 2)
+                  ]),
+                  child: InkWell(
                     onTap: saveButton,
-
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -968,14 +957,12 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           ]),
                       child: Center(
                         child: textDefault(
-                            "Selanjutnya", Colors.white, 16, FontWeight.normal),
+                            "Simpan", Colors.white, 16, FontWeight.normal),
                       ),
                     ),
-                  )
-                ],
-              ),
-            )
-          ],
+                  ))
+            ],
+          ),
         ),
       ),
     );
@@ -1012,9 +999,9 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
 
     firestore.setPenyakitTerdahulu(data, widget.idPasien!);
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return PenyakitKeluarga(
-        idPasien: widget.idPasien,
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      return MenuForm(
+        idPasien: widget.idPasien!,
       );
     }));
   }

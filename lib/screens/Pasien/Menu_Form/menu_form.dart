@@ -4,6 +4,7 @@ import 'package:arifa_medikal_klink_3/model/ajuran_model.dart';
 import 'package:arifa_medikal_klink_3/model/biologi_model.dart';
 import 'package:arifa_medikal_klink_3/model/ergonomis_model.dart';
 import 'package:arifa_medikal_klink_3/model/fisik_model.dart';
+import 'package:arifa_medikal_klink_3/model/foto_lain_lain_model.dart';
 import 'package:arifa_medikal_klink_3/model/kelayakan_kerja_model.dart';
 import 'package:arifa_medikal_klink_3/model/kesimpulan_derajat_kesehatan.dart';
 import 'package:arifa_medikal_klink_3/model/kimia_model.dart';
@@ -30,6 +31,7 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Peme
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_spirometri.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_treadmill.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/foto_lain_lain_view.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_THT.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_anggota_gerak.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_gentalia.dart';
@@ -50,6 +52,8 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaa
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_keluarga_2_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_terdahulu_1_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/riwayat_kebiasaan_3_8.dart';
+import 'package:arifa_medikal_klink_3/screens/detail_pasien.dart';
+import 'package:arifa_medikal_klink_3/screens/menu_utama.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/colors/color.dart';
@@ -99,6 +103,7 @@ class _MenuFormState extends State<MenuForm> {
   HasilPemeriksaanModel? _hasilLaboratorium;
   HasilPemeriksaanModel? _hasilJantung;
   HasilPemeriksaanModel? _hasilParu;
+  FotoLainLain? _fotoLainLain;
 
   bool boolPenyakitTerdahulu = false;
   bool boolPenyakitKeluarga = false;
@@ -132,6 +137,7 @@ class _MenuFormState extends State<MenuForm> {
   bool boolHasilLaboratorium = false;
   bool boolHasilJantung = false;
   bool boolHasilParu = false;
+  bool boolFotoLainLain = false;
 
   bool btnSimpan = false;
 
@@ -185,6 +191,7 @@ class _MenuFormState extends State<MenuForm> {
         await firestore.getHasilPemeriksaanLaboratorium(widget.idPasien);
     _hasilJantung = await firestore.getHasilPemeriksaanJantung(widget.idPasien);
     _hasilParu = await firestore.getHasilPemeriksaanParu(widget.idPasien);
+    _fotoLainLain = await firestore.getFotoLainLain(widget.idPasien);
 
     if (_hasilFisik != null) {
       setState(() {
@@ -337,6 +344,11 @@ class _MenuFormState extends State<MenuForm> {
         boolKesimpulanDerajat = true;
       });
     }
+    if (_fotoLainLain != null) {
+      setState(() {
+        boolFotoLainLain = true;
+      });
+    }
 
     if (boolPenyakitTerdahulu == true &&
         boolPenyakitKeluarga == true &&
@@ -369,1688 +381,1908 @@ class _MenuFormState extends State<MenuForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return WillPopScope(
+      onWillPop: () async {
+        dialogBack();
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: blueDefault,
           title:
-              textDefault(widget.idPasien, Colors.white, 16, FontWeight.bold)),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: isLoadingData
-            ? Center(
-                child: CircularProgressIndicator(
-                  color: blueDefault,
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            InkWell(
+              onTap: () {
+                dialogBack();
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.arrow_back),
+                ],
+              ),
+            ),
+            textDefault("Menu Form", Colors.white, 16, FontWeight.bold),
+            SizedBox(
+              width: 5,
+            ),
+          ]),
+        ),
+        body: Container(
+          padding: EdgeInsets.all(10),
+          child: isLoadingData
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: blueDefault,
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PenyakitTerdahulu1(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Riwayat Penyakit Terdahulu",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPenyakitTerdahulu == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPenyakitTerdahulu == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PenyakitKeluarga(idPasien: widget.idPasien);
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Riwayat Penyakit Keluarga",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPenyakitKeluarga == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPenyakitKeluarga == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return RiwwayatKebiasaan3(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Riwayat Kebiasaan", Colors.black, 14,
+                                  FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolRiwayatKebiasaan == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolRiwayatKebiasaan == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PemeriksaanUmum(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Pemeriksaan Umum", Colors.black, 14,
+                                  FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPemeriksaanUmum == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPemeriksaanUmum == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PemeriksaanMata(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Pemeriksaan Mata", Colors.black, 14,
+                                  FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPemeriksaanMata == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPemeriksaanMata == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PemeriksaanTHT(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Pemeriksaan THT", Colors.black, 14,
+                                  FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPemeriksaanTHT == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPemeriksaanTHT == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PemeriksaanRonggaDada(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Pemeriksaan Rongga Dada",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPemeriksaanRonggaDada == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPemeriksaanRonggaDada == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PemeriksaanRonggaPerut(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Pemeriksaan Rongga Perut",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPemeriksaanRonggaPerut == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPemeriksaanRonggaPerut == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PemeriksaanGentalia(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Pemeriksaan Gentalia", Colors.black,
+                                  14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPemeriksaanGentalia == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPemeriksaanGentalia == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PemeriksaanAnggotaGerak(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Pemeriksaan Anggota Gerak",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPemeriksaanAnggotaGerak == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPemeriksaanAnggotaGerak == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PemeriksaanRefleks(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Pemeriksaan Refleks", Colors.black,
+                                  14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPemeriksaanRefleks == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPemeriksaanRefleks == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PemeriksaanKelenjarGetah(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Pemeriksaan Kelenjar Getah",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPemeriksaanKelenjarGetah == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPemeriksaanKelenjarGetah == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return Fisik(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Riwayat Pajanan (Fisik)",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolFisik == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolFisik == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return Kimia(
+                              pasienId: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Riwayat Pajanan (Kimia)",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolKimia == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolKimia == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return Biologi(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Riwayat Pajanan (Biologi)",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolBiologi == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolBiologi == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return Psikologis(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Riwayat Pajanan (Psikologis)",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPsikologi == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPsikologi == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return Ergonomis(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Riwayat Pajanan (Ergonomis)",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolErgonomis == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolErgonomis == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return Pemeriksaan5(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Pemeriksaan", Colors.black, 14,
+                                  FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolPemeriksaan == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolPemeriksaan == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      _pemeriksaan == null
+                          ? Container()
+                          : _pemeriksaan!.pemeriksaanFisik == ""
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return HasilPemeriksaanFisik(
+                                            idPasien: widget.idPasien,
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  blurRadius: 2)
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Hasil Pemeriksaan Fisik",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  color: boolHasilFisik == false
+                                                      ? Colors.white
+                                                      : Colors.green,
+                                                  shape: BoxShape.circle),
+                                              child: boolHasilFisik == false
+                                                  ? Icon(
+                                                      Icons.warning,
+                                                      size: 30,
+                                                      color: Colors.amber,
+                                                    )
+                                                  : Icon(
+                                                      Icons.done,
+                                                      size: 20,
+                                                      color: Colors.white,
+                                                    ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                      _pemeriksaan == null
+                          ? Container()
+                          : _pemeriksaan!.pemeriksaanMata == ""
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return HasilPemeriksaanMata(
+                                            idPasien: widget.idPasien,
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  blurRadius: 2)
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Hasil Pemeriksaan Mata",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  color: boolHasilMata == false
+                                                      ? Colors.white
+                                                      : Colors.green,
+                                                  shape: BoxShape.circle),
+                                              child: boolHasilMata == false
+                                                  ? Icon(
+                                                      Icons.warning,
+                                                      size: 30,
+                                                      color: Colors.amber,
+                                                    )
+                                                  : Icon(
+                                                      Icons.done,
+                                                      size: 20,
+                                                      color: Colors.white,
+                                                    ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                      _pemeriksaan == null
+                          ? Container()
+                          : _pemeriksaan!.pemeriksaanGigiMulut == ""
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return HasilPemeriksaanGigiMulut(
+                                            idPasien: widget.idPasien,
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  blurRadius: 2)
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Hasil Pemeriksaan Gigi dan Mulut",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  color: boolHasilGigiMulut ==
+                                                          false
+                                                      ? Colors.white
+                                                      : Colors.green,
+                                                  shape: BoxShape.circle),
+                                              child: boolHasilGigiMulut == false
+                                                  ? Icon(
+                                                      Icons.warning,
+                                                      size: 30,
+                                                      color: Colors.amber,
+                                                    )
+                                                  : Icon(
+                                                      Icons.done,
+                                                      size: 20,
+                                                      color: Colors.white,
+                                                    ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                      _pemeriksaan == null
+                          ? Container()
+                          : _pemeriksaan!.pemeriksaanAudioMetri == ""
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return HasilPemeriksaanAudiometri(
+                                            idPasien: widget.idPasien,
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  blurRadius: 2)
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Hasil Pemeriksaan Audiometri",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  color: boolHasilAudiometri ==
+                                                          false
+                                                      ? Colors.white
+                                                      : Colors.green,
+                                                  shape: BoxShape.circle),
+                                              child:
+                                                  boolHasilAudiometri == false
+                                                      ? Icon(
+                                                          Icons.warning,
+                                                          size: 30,
+                                                          color: Colors.amber,
+                                                        )
+                                                      : Icon(
+                                                          Icons.done,
+                                                          size: 20,
+                                                          color: Colors.white,
+                                                        ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                      _pemeriksaan == null
+                          ? Container()
+                          : _pemeriksaan!.pemeriksaanSpirometri == ""
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return HasilPemeriksaanSpirometri(
+                                            idPasien: widget.idPasien,
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  blurRadius: 2)
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Hasil Pemeriksaan Spirometri",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  color: boolHasilSpirometri ==
+                                                          false
+                                                      ? Colors.white
+                                                      : Colors.green,
+                                                  shape: BoxShape.circle),
+                                              child:
+                                                  boolHasilSpirometri == false
+                                                      ? Icon(
+                                                          Icons.warning,
+                                                          size: 30,
+                                                          color: Colors.amber,
+                                                        )
+                                                      : Icon(
+                                                          Icons.done,
+                                                          size: 20,
+                                                          color: Colors.white,
+                                                        ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                      _pemeriksaan == null
+                          ? Container()
+                          : _pemeriksaan!.pemeriksaanTreadmill == ""
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return HasilPemeriksaanTreadmill(
+                                            idPasien: widget.idPasien,
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  blurRadius: 2)
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Hasil Pemeriksaan Treadmill",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  color: boolHasilTreadmill ==
+                                                          false
+                                                      ? Colors.white
+                                                      : Colors.green,
+                                                  shape: BoxShape.circle),
+                                              child: boolHasilTreadmill == false
+                                                  ? Icon(
+                                                      Icons.warning,
+                                                      size: 30,
+                                                      color: Colors.amber,
+                                                    )
+                                                  : Icon(
+                                                      Icons.done,
+                                                      size: 20,
+                                                      color: Colors.white,
+                                                    ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                      _pemeriksaan == null
+                          ? Container()
+                          : _pemeriksaan!.pemeriksaanLaboratorium == ""
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return HasilPemeriksaanLaboratorium(
+                                            idPasien: widget.idPasien,
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  blurRadius: 2)
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Hasil Pemeriksaan Laboratorium",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  color:
+                                                      boolHasilLaboratorium ==
+                                                              false
+                                                          ? Colors.white
+                                                          : Colors.green,
+                                                  shape: BoxShape.circle),
+                                              child:
+                                                  boolHasilLaboratorium == false
+                                                      ? Icon(
+                                                          Icons.warning,
+                                                          size: 30,
+                                                          color: Colors.amber,
+                                                        )
+                                                      : Icon(
+                                                          Icons.done,
+                                                          size: 20,
+                                                          color: Colors.white,
+                                                        ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                      _pemeriksaan == null
+                          ? Container()
+                          : _pemeriksaan!.pemeriksaanXrayJantung == ""
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return HasilPemeriksaanJantung(
+                                            idPasien: widget.idPasien,
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  blurRadius: 2)
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Hasil Pemeriksaan X-Ray Jantung",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  color:
+                                                      boolHasilJantung == false
+                                                          ? Colors.white
+                                                          : Colors.green,
+                                                  shape: BoxShape.circle),
+                                              child: boolHasilJantung == false
+                                                  ? Icon(
+                                                      Icons.warning,
+                                                      size: 30,
+                                                      color: Colors.amber,
+                                                    )
+                                                  : Icon(
+                                                      Icons.done,
+                                                      size: 20,
+                                                      color: Colors.white,
+                                                    ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                      _pemeriksaan == null
+                          ? Container()
+                          : _pemeriksaan!.paru == ""
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return HasilPemeriksaanParu(
+                                            idPasien: widget.idPasien,
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  blurRadius: 2)
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Hasil Pemeriksaan X-Ray Paru-Paru",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  color: boolHasilParu == false
+                                                      ? Colors.white
+                                                      : Colors.green,
+                                                  shape: BoxShape.circle),
+                                              child: boolHasilParu == false
+                                                  ? Icon(
+                                                      Icons.warning,
+                                                      size: 30,
+                                                      color: Colors.amber,
+                                                    )
+                                                  : Icon(
+                                                      Icons.done,
+                                                      size: 20,
+                                                      color: Colors.white,
+                                                    ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return Anjuran6(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Anjuran-anjuran", Colors.black, 14,
+                                  FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolAnjuran == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolAnjuran == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return KesimpulanKelayakan7(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Kesimpulan Kelayakan Kerja",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolKelayakanKerja == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolKelayakanKerja == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return KesimpulanDerajat8(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Kesimpulan Derajat Kesehatan",
+                                  Colors.black, 14, FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolKesimpulanDerajat == false
+                                        ? Colors.red
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolKesimpulanDerajat == false
+                                    ? Icon(
+                                        Icons.close,
+                                        size: 20,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return FotoLainLainView(
+                              idPasien: widget.idPasien,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 2)
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              textDefault("Foto Lain-Lain", Colors.black, 14,
+                                  FontWeight.normal),
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: boolFotoLainLain == false
+                                        ? Colors.white
+                                        : Colors.green,
+                                    shape: BoxShape.circle),
+                                child: boolFotoLainLain == false
+                                    ? Icon(
+                                        Icons.warning,
+                                        size: 30,
+                                        color: Colors.amber,
+                                      )
+                                    : Icon(
+                                        Icons.done,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Note : ",
+                            style: TextStyle(
+                                fontFamily: 'poppins',
+                                fontStyle: FontStyle.italic),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    shape: BoxShape.circle),
+                                child: Icon(
+                                  Icons.done,
+                                  size: 10,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                ": Form sudah terisi",
+                                style: TextStyle(
+                                    fontFamily: 'poppins',
+                                    fontSize: 12,
+                                    fontStyle: FontStyle.italic),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: Colors.red, shape: BoxShape.circle),
+                                child: Icon(
+                                  Icons.close,
+                                  size: 10,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                ": Form belum terisi (Harus Di isi)",
+                                style: TextStyle(
+                                    fontFamily: 'poppins',
+                                    fontSize: 12,
+                                    fontStyle: FontStyle.italic),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle),
+                                child: Icon(
+                                  Icons.warning,
+                                  size: 15,
+                                  color: Colors.amber,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                ": Form belum terisi (Boleh Di kosongkan)",
+                                style: TextStyle(
+                                    fontFamily: 'poppins',
+                                    fontSize: 12,
+                                    fontStyle: FontStyle.italic),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          if (btnSimpan == true) {
+                            Navigator.pushAndRemoveUntil(context,
+                                MaterialPageRoute(builder: (context) {
+                              return MenuUtama();
+                            }), (route) => false);
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: btnSimpan
+                                ? blueDefault
+                                : blueDefault.withOpacity(0.5),
+                          ),
+                          child: Center(
+                            child: textDefault(
+                                "Simpan", Colors.white, 14, FontWeight.normal),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              )
-            : SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return PenyakitTerdahulu1(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Riwayat Penyakit Terdahulu",
-                                Colors.black, 14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPenyakitTerdahulu == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPenyakitTerdahulu == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return PenyakitKeluarga(idPasien: widget.idPasien);
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Riwayat Penyakit Keluarga",
-                                Colors.black, 14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPenyakitKeluarga == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPenyakitKeluarga == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return RiwwayatKebiasaan3(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Riwayat Kebiasaan", Colors.black, 14,
-                                FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolRiwayatKebiasaan == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolRiwayatKebiasaan == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return PemeriksaanUmum(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Pemeriksaan Umum", Colors.black, 14,
-                                FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPemeriksaanUmum == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPemeriksaanUmum == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return PemeriksaanMata(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Pemeriksaan Mata", Colors.black, 14,
-                                FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPemeriksaanMata == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPemeriksaanMata == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return PemeriksaanTHT(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Pemeriksaan THT", Colors.black, 14,
-                                FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPemeriksaanTHT == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPemeriksaanTHT == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return PemeriksaanRonggaDada(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Pemeriksaan Rongga Dada", Colors.black,
-                                14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPemeriksaanRonggaDada == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPemeriksaanRonggaDada == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return PemeriksaanRonggaPerut(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Pemeriksaan Rongga Perut",
-                                Colors.black, 14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPemeriksaanRonggaPerut == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPemeriksaanRonggaPerut == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return PemeriksaanGentalia(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Pemeriksaan Gentalia", Colors.black,
-                                14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPemeriksaanGentalia == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPemeriksaanGentalia == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return PemeriksaanAnggotaGerak(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Pemeriksaan Anggota Gerak",
-                                Colors.black, 14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPemeriksaanAnggotaGerak == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPemeriksaanAnggotaGerak == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return PemeriksaanRefleks(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Pemeriksaan Refleks", Colors.black, 14,
-                                FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPemeriksaanRefleks == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPemeriksaanRefleks == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return PemeriksaanKelenjarGetah(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Pemeriksaan Kelenjar Getah",
-                                Colors.black, 14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPemeriksaanKelenjarGetah == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPemeriksaanKelenjarGetah == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return Fisik(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Riwayat Pajanan (Fisik)", Colors.black,
-                                14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolFisik == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolFisik == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return Kimia(
-                            pasienId: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Riwayat Pajanan (Kimia)", Colors.black,
-                                14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolKimia == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolKimia == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return Biologi(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Riwayat Pajanan (Biologi)",
-                                Colors.black, 14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolBiologi == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolBiologi == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return Psikologis(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Riwayat Pajanan (Psikologis)",
-                                Colors.black, 14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPsikologi == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPsikologi == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return Ergonomis(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Riwayat Pajanan (Ergonomis)",
-                                Colors.black, 14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolErgonomis == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolErgonomis == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return Pemeriksaan5(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Pemeriksaan", Colors.black, 14,
-                                FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolPemeriksaan == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolPemeriksaan == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    _pemeriksaan!.pemeriksaanFisik == ""
-                        ? Container()
-                        : Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return HasilPemeriksaanFisik(
-                                      idPasien: widget.idPasien,
-                                    );
-                                  }));
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey, blurRadius: 2)
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      textDefault("Hasil Pemeriksaan Fisik",
-                                          Colors.black, 14, FontWeight.normal),
-                                      Container(
-                                        padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                            color: boolHasilFisik == false
-                                                ? Colors.white
-                                                : Colors.green,
-                                            shape: BoxShape.circle),
-                                        child: boolHasilFisik == false
-                                            ? Icon(
-                                                Icons.warning,
-                                                size: 30,
-                                                color: Colors.amber,
-                                              )
-                                            : Icon(
-                                                Icons.done,
-                                                size: 20,
-                                                color: Colors.white,
-                                              ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                    _pemeriksaan!.pemeriksaanMata == ""
-                        ? Container()
-                        : Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return HasilPemeriksaanMata(
-                                      idPasien: widget.idPasien,
-                                    );
-                                  }));
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey, blurRadius: 2)
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      textDefault("Hasil Pemeriksaan Mata",
-                                          Colors.black, 14, FontWeight.normal),
-                                      Container(
-                                        padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                            color: boolHasilMata == false
-                                                ? Colors.white
-                                                : Colors.green,
-                                            shape: BoxShape.circle),
-                                        child: boolHasilMata == false
-                                            ? Icon(
-                                                Icons.warning,
-                                                size: 30,
-                                                color: Colors.amber,
-                                              )
-                                            : Icon(
-                                                Icons.done,
-                                                size: 20,
-                                                color: Colors.white,
-                                              ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                    _pemeriksaan!.pemeriksaanGigiMulut == ""
-                        ? Container()
-                        : Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return HasilPemeriksaanGigiMulut(
-                                      idPasien: widget.idPasien,
-                                    );
-                                  }));
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey, blurRadius: 2)
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      textDefault(
-                                          "Hasil Pemeriksaan Gigi dan Mulut",
-                                          Colors.black,
-                                          14,
-                                          FontWeight.normal),
-                                      Container(
-                                        padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                            color: boolHasilGigiMulut == false
-                                                ? Colors.white
-                                                : Colors.green,
-                                            shape: BoxShape.circle),
-                                        child: boolHasilGigiMulut == false
-                                            ? Icon(
-                                                Icons.warning,
-                                                size: 30,
-                                                color: Colors.amber,
-                                              )
-                                            : Icon(
-                                                Icons.done,
-                                                size: 20,
-                                                color: Colors.white,
-                                              ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                    _pemeriksaan!.pemeriksaanAudioMetri == ""
-                        ? Container()
-                        : Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return HasilPemeriksaanAudiometri(
-                                      idPasien: widget.idPasien,
-                                    );
-                                  }));
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey, blurRadius: 2)
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      textDefault(
-                                          "Hasil Pemeriksaan Audiometri",
-                                          Colors.black,
-                                          14,
-                                          FontWeight.normal),
-                                      Container(
-                                        padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                            color: boolHasilAudiometri == false
-                                                ? Colors.white
-                                                : Colors.green,
-                                            shape: BoxShape.circle),
-                                        child: boolHasilAudiometri == false
-                                            ? Icon(
-                                                Icons.warning,
-                                                size: 30,
-                                                color: Colors.amber,
-                                              )
-                                            : Icon(
-                                                Icons.done,
-                                                size: 20,
-                                                color: Colors.white,
-                                              ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                    _pemeriksaan!.pemeriksaanSpirometri == ""
-                        ? Container()
-                        : Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return HasilPemeriksaanSpirometri(
-                                      idPasien: widget.idPasien,
-                                    );
-                                  }));
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey, blurRadius: 2)
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      textDefault(
-                                          "Hasil Pemeriksaan Spirometri",
-                                          Colors.black,
-                                          14,
-                                          FontWeight.normal),
-                                      Container(
-                                        padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                            color: boolHasilSpirometri == false
-                                                ? Colors.white
-                                                : Colors.green,
-                                            shape: BoxShape.circle),
-                                        child: boolHasilSpirometri == false
-                                            ? Icon(
-                                                Icons.warning,
-                                                size: 30,
-                                                color: Colors.amber,
-                                              )
-                                            : Icon(
-                                                Icons.done,
-                                                size: 20,
-                                                color: Colors.white,
-                                              ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                    _pemeriksaan!.pemeriksaanTreadmill == ""
-                        ? Container()
-                        : Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return HasilPemeriksaanTreadmill(
-                                      idPasien: widget.idPasien,
-                                    );
-                                  }));
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey, blurRadius: 2)
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      textDefault("Hasil Pemeriksaan Treadmill",
-                                          Colors.black, 14, FontWeight.normal),
-                                      Container(
-                                        padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                            color: boolHasilTreadmill == false
-                                                ? Colors.white
-                                                : Colors.green,
-                                            shape: BoxShape.circle),
-                                        child: boolHasilTreadmill == false
-                                            ? Icon(
-                                                Icons.warning,
-                                                size: 30,
-                                                color: Colors.amber,
-                                              )
-                                            : Icon(
-                                                Icons.done,
-                                                size: 20,
-                                                color: Colors.white,
-                                              ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                    _pemeriksaan!.pemeriksaanLaboratorium == ""
-                        ? Container()
-                        : Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return HasilPemeriksaanLaboratorium(
-                                      idPasien: widget.idPasien,
-                                    );
-                                  }));
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey, blurRadius: 2)
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      textDefault(
-                                          "Hasil Pemeriksaan Laboratorium",
-                                          Colors.black,
-                                          14,
-                                          FontWeight.normal),
-                                      Container(
-                                        padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                            color:
-                                                boolHasilLaboratorium == false
-                                                    ? Colors.white
-                                                    : Colors.green,
-                                            shape: BoxShape.circle),
-                                        child: boolHasilLaboratorium == false
-                                            ? Icon(
-                                                Icons.warning,
-                                                size: 30,
-                                                color: Colors.amber,
-                                              )
-                                            : Icon(
-                                                Icons.done,
-                                                size: 20,
-                                                color: Colors.white,
-                                              ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                    _pemeriksaan!.pemeriksaanXrayJantung == ""
-                        ? Container()
-                        : Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return HasilPemeriksaanJantung(
-                                      idPasien: widget.idPasien,
-                                    );
-                                  }));
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey, blurRadius: 2)
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      textDefault(
-                                          "Hasil Pemeriksaan X-Ray Jantung",
-                                          Colors.black,
-                                          14,
-                                          FontWeight.normal),
-                                      Container(
-                                        padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                            color: boolHasilJantung == false
-                                                ? Colors.white
-                                                : Colors.green,
-                                            shape: BoxShape.circle),
-                                        child: boolHasilJantung == false
-                                            ? Icon(
-                                                Icons.warning,
-                                                size: 30,
-                                                color: Colors.amber,
-                                              )
-                                            : Icon(
-                                                Icons.done,
-                                                size: 20,
-                                                color: Colors.white,
-                                              ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                    _pemeriksaan!.paru == ""
-                        ? Container()
-                        : Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return HasilPemeriksaanParu(
-                                      idPasien: widget.idPasien,
-                                    );
-                                  }));
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey, blurRadius: 2)
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      textDefault(
-                                          "Hasil Pemeriksaan X-Ray Paru-Paru",
-                                          Colors.black,
-                                          14,
-                                          FontWeight.normal),
-                                      Container(
-                                        padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                            color: boolHasilParu == false
-                                                ? Colors.white
-                                                : Colors.green,
-                                            shape: BoxShape.circle),
-                                        child: boolHasilParu == false
-                                            ? Icon(
-                                                Icons.warning,
-                                                size: 30,
-                                                color: Colors.amber,
-                                              )
-                                            : Icon(
-                                                Icons.done,
-                                                size: 20,
-                                                color: Colors.white,
-                                              ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return Anjuran6(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Anjuran-anjuran", Colors.black, 14,
-                                FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolAnjuran == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolAnjuran == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return KesimpulanKelayakan7(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Kesimpulan Kelayakan Kerja",
-                                Colors.black, 14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolKelayakanKerja == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolKelayakanKerja == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return KesimpulanDerajat8(
-                            idPasien: widget.idPasien,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 2)
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            textDefault("Kesimpulan Derajat Kesehatan",
-                                Colors.black, 14, FontWeight.normal),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: boolKesimpulanDerajat == false
-                                      ? Colors.red
-                                      : Colors.green,
-                                  shape: BoxShape.circle),
-                              child: boolKesimpulanDerajat == false
-                                  ? Icon(
-                                      Icons.close,
-                                      size: 20,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.done,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Note : ",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              fontStyle: FontStyle.italic),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: Colors.green, shape: BoxShape.circle),
-                              child: Icon(
-                                Icons.done,
-                                size: 10,
-                                color: Colors.white,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              ": Form sudah terisi",
-                              style: TextStyle(
-                                  fontFamily: 'poppins',
-                                  fontSize: 12,
-                                  fontStyle: FontStyle.italic),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: Colors.red, shape: BoxShape.circle),
-                              child: Icon(
-                                Icons.close,
-                                size: 10,
-                                color: Colors.white,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              ": Form belum terisi (Harus Di isi)",
-                              style: TextStyle(
-                                  fontFamily: 'poppins',
-                                  fontSize: 12,
-                                  fontStyle: FontStyle.italic),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: Colors.white, shape: BoxShape.circle),
-                              child: Icon(
-                                Icons.warning,
-                                size: 15,
-                                color: Colors.amber,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              ": Form belum terisi (Boleh Di kosongkan)",
-                              style: TextStyle(
-                                  fontFamily: 'poppins',
-                                  fontSize: 12,
-                                  fontStyle: FontStyle.italic),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+        ),
+      ),
+    );
+  }
+
+  void dialogBack() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          actionsPadding: EdgeInsets.all(10),
+          title: Container(
+            width: 80,
+            child: Image.asset('assets/images/icon1.png'),
+          ),
+          content: Text(
+            "Apakah Anda yakin ingin\nKeluar dari Form?",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontFamily: 'poppins',
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
+          ),
+          actions: <Widget>[
+            Row(
+              children: [
+                Expanded(
+                    child: InkWell(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: btnSimpan
-                            ? blueDefault
-                            : blueDefault.withOpacity(0.5),
-                      ),
+                          border: Border.all(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: textDefault(
-                            "Simpaan", Colors.white, 14, FontWeight.normal),
-                      ),
-                    )
-                  ],
+                            "Tidak", Colors.black, 13, FontWeight.bold),
+                      )),
+                )),
+                SizedBox(
+                  width: 20,
                 ),
-              ),
-      ),
+                Expanded(
+                    child: InkWell(
+                  onTap: () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return MenuUtama();
+                    }),
+                  ),
+                  child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Center(
+                        child: textDefault(
+                            "Ya, Keluar", Colors.white, 14, FontWeight.bold),
+                      )),
+                )),
+              ],
+            )
+          ],
+        );
+      },
     );
   }
 }
