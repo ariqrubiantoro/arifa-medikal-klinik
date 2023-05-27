@@ -23,6 +23,7 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_k
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_terdahulu_1_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/riwayat_kebiasaan_3_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 import 'package:arifa_medikal_klink_3/screens/detail_pasien.dart';
 import 'package:arifa_medikal_klink_3/screens/formulir/form1.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -119,7 +120,10 @@ class _MenuUtamaState extends State<MenuUtama> {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('pasien').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('pasien')
+            .orderBy('waktu', descending: true)
+            .snapshots(),
         builder: (context, pasienSnapshot) {
           if (pasienSnapshot.hasError) {
             return Text('Something went wrong');
@@ -165,7 +169,9 @@ class _MenuUtamaState extends State<MenuUtama> {
                             textDefault(pasienSnapshots['namaPasien'],
                                 Colors.black, 14, FontWeight.normal),
                             textDefault(pasienSnapshots['NIK'], Colors.black,
-                                14, FontWeight.normal)
+                                14, FontWeight.normal),
+                            textDefault(pasienSnapshots['waktu'], Colors.grey,
+                                10, FontWeight.normal)
                           ]),
                     ],
                   ),
@@ -178,7 +184,9 @@ class _MenuUtamaState extends State<MenuUtama> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-            return AddPasienProfil();
+            return AddPasienProfil(
+              idPasien: "",
+            );
           }));
         },
         child: Icon(Icons.add),
@@ -431,7 +439,9 @@ class _MenuUtamaState extends State<MenuUtama> {
       }));
     } else {
       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return DetailPasien(pasienSnapshots: pasienSnapshots);
+        return PasienDetail(
+          idPasien: id,
+        );
       }));
     }
   }

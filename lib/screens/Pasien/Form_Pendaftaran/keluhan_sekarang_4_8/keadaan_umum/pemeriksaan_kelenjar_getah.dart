@@ -4,6 +4,8 @@ import 'package:arifa_medikal_klink_3/model/pemeriksaan_kelenjar_getah_model.dar
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/riwayat_pajanan/fisik.dart';
 import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
@@ -222,45 +224,56 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return MenuForm(idPasien: widget.idPasien!);
-        }));
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        if (prefs.getString("detail1") == null) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return MenuForm(idPasien: widget.idPasien!);
+          }));
+        } else {
+          prefs.remove("detail1");
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return PasienDetail(idPasien: widget.idPasien!);
+          }));
+        }
         return false;
       },
       child: Scaffold(
         appBar: AppBar(
-            backgroundColor: blueDefault,
-            title: 
-             Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          automaticallyImplyLeading: false,
+          backgroundColor: blueDefault,
+          title:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            InkWell(
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                if (prefs.getString("detail1") == null) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return MenuForm(idPasien: widget.idPasien!);
+                  }));
+                } else {
+                  prefs.remove("detail1");
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return PasienDetail(idPasien: widget.idPasien!);
+                  }));
+                }
+              },
+              child: Row(
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) {
-                        return MenuForm(idPasien: widget.idPasien!);
-                      }));
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.arrow_back),
-                      ],
-                    ),
-                  ),
-            textDefault(
-                "Keadaan Umum - Pemeriksaan Kelenjar Getah Bening",
-                Colors.white,
-                16,
-                FontWeight.bold),
-                
-                  SizedBox(
-                    width: 5,
-                  ),
-                ]),
-                
-                
-                ),
+                  Icon(Icons.arrow_back),
+                ],
+              ),
+            ),
+            textDefault("Keadaan Umum - Pemeriksaan Kelenjar Getah Bening",
+                Colors.white, 16, FontWeight.bold),
+            SizedBox(
+              width: 5,
+            ),
+          ]),
+        ),
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -938,8 +951,16 @@ class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
     firestore.setPemeriksaanKelenjarGetah(
         pemeriksaanKelenjarGetah: data, idPasien: widget.idPasien!);
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return MenuForm(idPasien: widget.idPasien!);
-    }));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("detail1") == null) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return MenuForm(idPasien: widget.idPasien!);
+      }));
+    } else {
+      prefs.remove("detail1");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return PasienDetail(idPasien: widget.idPasien!);
+      }));
+    }
   }
 }

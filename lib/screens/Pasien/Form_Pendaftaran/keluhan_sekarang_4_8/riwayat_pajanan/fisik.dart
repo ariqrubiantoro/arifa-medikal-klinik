@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 
 enum Question { ya, tidak, none }
 
@@ -190,40 +192,56 @@ class _FisikState extends State<Fisik> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return MenuForm(idPasien: widget.idPasien!);
-        }));
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        if (prefs.getString("detail1") == null) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return MenuForm(idPasien: widget.idPasien!);
+          }));
+        } else {
+          prefs.remove("detail1");
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return PasienDetail(idPasien: widget.idPasien!);
+          }));
+        }
         return false;
       },
       child: Scaffold(
         appBar: AppBar(
-            backgroundColor: blueDefault,
-            title: 
-             Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          automaticallyImplyLeading: false,
+          backgroundColor: blueDefault,
+          title:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            InkWell(
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                if (prefs.getString("detail1") == null) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return MenuForm(idPasien: widget.idPasien!);
+                  }));
+                } else {
+                  prefs.remove("detail1");
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return PasienDetail(idPasien: widget.idPasien!);
+                  }));
+                }
+              },
+              child: Row(
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) {
-                        return MenuForm(idPasien: widget.idPasien!);
-                      }));
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.arrow_back),
-                      ],
-                    ),
-                  ),
-                 
+                  Icon(Icons.arrow_back),
+                ],
+              ),
+            ),
             textDefault(
                 "Riwayat Pajanan - Fisik", Colors.white, 16, FontWeight.bold),
-                  SizedBox(
-                    width: 5,
-                  ),
-                ]),),
-            
+            SizedBox(
+              width: 5,
+            ),
+          ]),
+        ),
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -803,8 +821,16 @@ class _FisikState extends State<Fisik> {
 
     firestore.setFisik(fisik: data, idPasien: widget.idPasien!);
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return MenuForm(idPasien: widget.idPasien!);
-    }));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("detail1") == null) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return MenuForm(idPasien: widget.idPasien!);
+      }));
+    } else {
+      prefs.remove("detail1");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return PasienDetail(idPasien: widget.idPasien!);
+      }));
+    }
   }
 }

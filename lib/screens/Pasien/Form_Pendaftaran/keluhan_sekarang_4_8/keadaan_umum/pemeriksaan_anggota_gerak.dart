@@ -5,7 +5,8 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_se
 import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 import '../../../../../components/colors/color.dart';
 import '../../../../../components/widget/text.dart';
 
@@ -186,44 +187,57 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return MenuForm(idPasien: widget.idPasien!);
-        }));
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        if (prefs.getString("detail1") == null) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return MenuForm(idPasien: widget.idPasien!);
+          }));
+        } else {
+          prefs.remove("detail1");
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return PasienDetail(idPasien: widget.idPasien!);
+          }));
+        }
         return false;
       },
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-            backgroundColor: blueDefault,
-            title:
-            
-             Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          automaticallyImplyLeading: false,
+          backgroundColor: blueDefault,
+          title:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            InkWell(
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                if (prefs.getString("detail1") == null) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return MenuForm(idPasien: widget.idPasien!);
+                  }));
+                } else {
+                  prefs.remove("detail1");
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return PasienDetail(idPasien: widget.idPasien!);
+                  }));
+                }
+              },
+              child: Row(
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) {
-                        return MenuForm(idPasien: widget.idPasien!);
-                      }));
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.arrow_back),
-                      ],
-                    ),
-                  ),
-                  
-             textDefault("Keadaan Umum - Pemeriksaan Anggota Gerak",
+                  Icon(Icons.arrow_back),
+                ],
+              ),
+            ),
+            textDefault("Keadaan Umum - Pemeriksaan Anggota Gerak",
                 Colors.white, 16, FontWeight.bold),
-                  SizedBox(
-                    width: 5,
-                  ),
-                ]),
-            
-                
-                ),
+            SizedBox(
+              width: 5,
+            ),
+          ]),
+        ),
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -779,8 +793,16 @@ class _PemeriksaanAnggotaGerakState extends State<PemeriksaanAnggotaGerak> {
     firestore.setPemeriksaanAnggotaGerak(
         pemeriksaanAnggotaGerak: data, idPasien: widget.idPasien!);
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return MenuForm(idPasien: widget.idPasien!);
-    }));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("detail1") == null) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return MenuForm(idPasien: widget.idPasien!);
+      }));
+    } else {
+      prefs.remove("detail1");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return PasienDetail(idPasien: widget.idPasien!);
+      }));
+    }
   }
 }

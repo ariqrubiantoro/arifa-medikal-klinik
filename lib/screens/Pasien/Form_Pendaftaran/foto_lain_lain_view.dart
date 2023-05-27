@@ -5,12 +5,14 @@ import 'dart:io';
 
 import 'package:arifa_medikal_klink_3/model/foto_lain_lain_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_web/image_picker_web.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../components/colors/color.dart';
 import '../../../components/widget/text.dart';
@@ -132,25 +134,44 @@ class _FotoLainLainViewState extends State<FotoLainLainView> {
 
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return MenuForm(idPasien: widget.idPasien);
-        }));
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        if (prefs.getString("detail1") == null) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return MenuForm(idPasien: widget.idPasien);
+          }));
+        } else {
+          prefs.remove("detail1");
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return PasienDetail(idPasien: widget.idPasien);
+          }));
+        }
         return false;
       },
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: blueDefault,
           automaticallyImplyLeading: false,
+          backgroundColor: blueDefault,
           title:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             InkWell(
-              onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) {
-                  return MenuForm(idPasien: widget.idPasien);
-                }));
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                if (prefs.getString("detail1") == null) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return MenuForm(idPasien: widget.idPasien);
+                  }));
+                } else {
+                  prefs.remove("detail1");
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return PasienDetail(idPasien: widget.idPasien);
+                  }));
+                }
               },
               child: Row(
                 children: [
@@ -671,11 +692,16 @@ class _FotoLainLainViewState extends State<FotoLainLainView> {
     FirebaseFirestoreService firestore = FirebaseFirestoreService();
 
     firestore.setFotoLainLain(fotoLain: data, idPasien: widget.idPasien);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("detail1") == null) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return MenuForm(idPasien: widget.idPasien);
-      }),
-    );
+      }));
+    } else {
+      prefs.remove("detail1");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return PasienDetail(idPasien: widget.idPasien);
+      }));
+    }
   }
 }

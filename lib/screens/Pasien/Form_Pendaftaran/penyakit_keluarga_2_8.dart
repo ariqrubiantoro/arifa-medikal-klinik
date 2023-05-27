@@ -6,7 +6,8 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_t
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/riwayat_kebiasaan_3_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 import '../../../model/penyakit_keluarga_mode.dart';
 import '../../../service/firebase_firestore_service.dart';
 
@@ -232,24 +233,42 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
     // print("id pasien : ${widget.idPasien}");
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return MenuForm(idPasien: widget.idPasien!);
-        }));
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        if (prefs.getString("detail1") == null) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return MenuForm(idPasien: widget.idPasien!);
+          }));
+        } else {
+          prefs.remove("detail1");
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return PasienDetail(idPasien: widget.idPasien!);
+          }));
+        }
         return false;
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: blueDefault,
-          automaticallyImplyLeading: true,
           title:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             InkWell(
-              onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) {
-                  return MenuForm(idPasien: widget.idPasien!);
-                }));
+              onTap: () async{
+               SharedPreferences prefs = await SharedPreferences.getInstance();
+if(prefs.getString("detail1") == null){
+Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return MenuForm(idPasien: widget.idPasien!);
+        }));
+} else {
+prefs.remove("detail1");
+Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return PasienDetail(idPasien: widget.idPasien!);
+        }));
+}
               },
               child: Row(
                 children: [
@@ -802,8 +821,16 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
 
     firestore.setPenyakitKeluarga(data, widget.idPasien!);
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return MenuForm(idPasien: widget.idPasien!);
-    }));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("detail1") == null) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return MenuForm(idPasien: widget.idPasien!);
+      }));
+    } else {
+      prefs.remove("detail1");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return PasienDetail(idPasien: widget.idPasien!);
+      }));
+    }
   }
 }

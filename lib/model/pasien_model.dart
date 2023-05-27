@@ -29,19 +29,21 @@ class PasienModel {
     this.waktu,
   });
 
-  PasienModel.fromJson(Map<String, dynamic> json) {
-    nama = json['nama'];
-    jenisKelamin = json['jenis_kelamin'];
-    nik = json['nik'];
-    alamat = json['alamat'];
-    tanggalPemeriksaan = json['tanggal_pemeriksaan'];
-    tempatLahir = json['tempat_lahir'];
-    tanggalLahir = json['tanggal_lahir'];
-    umur = json['umur'];
-    perusahaan = json['perusahaan'];
-    bagian = json['bagian'];
-    noHp = json['no_hp'];
-    waktu = json['waktu'];
+  factory PasienModel.fromJson(String id, Map<String, dynamic> json) {
+    return PasienModel(
+      nama: json['namaPasien'],
+      jenisKelamin: json['jenis_kelamin'],
+      nik: json['NIK'],
+      alamat: json['alamat'],
+      tanggalPemeriksaan: json['tanggal_pemeriksaan'],
+      tempatLahir: json['tempat_lahir'],
+      tanggalLahir: json['tanggal_lahir'],
+      umur: json['umur'],
+      perusahaan: json['perusahaan'],
+      bagian: json['bagian'],
+      noHp: json['no_hp'],
+      waktu: json['waktu'],
+    );
   }
 
   Map<String, dynamic> toJson() {

@@ -6,6 +6,8 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_
 import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_audiometri.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_gigi_mulut.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_jantung.dart';
@@ -66,41 +68,55 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return MenuForm(idPasien: widget.idPasien!);
-        }));
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        if (prefs.getString("detail1") == null) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return MenuForm(idPasien: widget.idPasien!);
+          }));
+        } else {
+          prefs.remove("detail1");
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return PasienDetail(idPasien: widget.idPasien!);
+          }));
+        }
         return false;
       },
       child: Scaffold(
         appBar: AppBar(
-            backgroundColor: blueDefault,
-            title:
-
-             Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          automaticallyImplyLeading: false,
+          backgroundColor: blueDefault,
+          title:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            InkWell(
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                if (prefs.getString("detail1") == null) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return MenuForm(idPasien: widget.idPasien!);
+                  }));
+                } else {
+                  prefs.remove("detail1");
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return PasienDetail(idPasien: widget.idPasien!);
+                  }));
+                }
+              },
+              child: Row(
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) {
-                        return MenuForm(idPasien: widget.idPasien!);
-                      }));
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.arrow_back),
-                      ],
-                    ),
-                  ),
-                  
-                textDefault("Pemeriksaan", Colors.white, 16, FontWeight.bold),
-                  SizedBox(
-                    width: 5,
-                  ),
-                ]),
-                
-                ),
+                  Icon(Icons.arrow_back),
+                ],
+              ),
+            ),
+            textDefault("Pemeriksaan", Colors.white, 16, FontWeight.bold),
+            SizedBox(
+              width: 5,
+            ),
+          ]),
+        ),
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -357,8 +373,16 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
 
     firestore.setPemeriksaan(pemeriksaan: data, idPasien: widget.idPasien!);
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return MenuForm(idPasien: widget.idPasien!);
-    }));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("detail1") == null) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return MenuForm(idPasien: widget.idPasien!);
+      }));
+    } else {
+      prefs.remove("detail1");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return PasienDetail(idPasien: widget.idPasien!);
+      }));
+    }
   }
 }

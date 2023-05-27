@@ -38,6 +38,19 @@ class FirebaseFirestoreService {
     return pasien;
   }
 
+  Future<PasienModel?> getPasien(String idPasien) async {
+    DocumentReference doc = firestore.collection('pasien').doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      print(snapshot.data());
+      return PasienModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
   Future<PenyakitTerdahuluModel> setPenyakitTerdahulu(
       PenyakitTerdahuluModel penyakitTerdahulu, String idPasien) async {
     DocumentReference doc =
@@ -872,8 +885,7 @@ class FirebaseFirestoreService {
   }
 
   Future<FotoLainLain> setFotoLainLain(
-      {required FotoLainLain fotoLain,
-      required String idPasien}) async {
+      {required FotoLainLain fotoLain, required String idPasien}) async {
     DocumentReference doc = firestore.collection('fotoLainLain').doc(idPasien);
 
     await doc.set(fotoLain.toJson());
