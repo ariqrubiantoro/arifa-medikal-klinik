@@ -8,6 +8,7 @@ import 'package:arifa_medikal_klink_3/model/foto_lain_lain_model.dart';
 import 'package:arifa_medikal_klink_3/model/kelayakan_kerja_model.dart';
 import 'package:arifa_medikal_klink_3/model/kesimpulan_derajat_kesehatan.dart';
 import 'package:arifa_medikal_klink_3/model/kimia_model.dart';
+import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_anggota_gerak_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_gentalia_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_kelenjar_getah_model.dart';
@@ -52,7 +53,6 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaa
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_keluarga_2_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_terdahulu_1_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/riwayat_kebiasaan_3_8.dart';
-import 'package:arifa_medikal_klink_3/screens/detail_pasien.dart';
 import 'package:arifa_medikal_klink_3/screens/menu_utama.dart';
 import 'package:flutter/material.dart';
 
@@ -73,6 +73,8 @@ class MenuForm extends StatefulWidget {
 
 class _MenuFormState extends State<MenuForm> {
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
+  PasienModel? _pasien;
+
   PenyakitTerdahuluModel? _penyakitTerdahulu;
   PenyakitKeluargaModel? _penyakitKeluarga;
   PemeriksaanModel? _pemeriksaan;
@@ -149,6 +151,7 @@ class _MenuFormState extends State<MenuForm> {
   }
 
   cekData() async {
+    _pasien = await firestore.getPasien(widget.idPasien);
     _penyakitTerdahulu = await firestore.getPenyakitTerdahulu(widget.idPasien);
     _penyakitKeluarga = await firestore.getPenyakitKeluarga(widget.idPasien);
     _riwayatKebiasaan = await firestore.getRiwayatKebiasaan(widget.idPasien);
@@ -2192,14 +2195,7 @@ class _MenuFormState extends State<MenuForm> {
                         height: 20,
                       ),
                       InkWell(
-                        onTap: () {
-                          if (btnSimpan == true) {
-                            Navigator.pushAndRemoveUntil(context,
-                                MaterialPageRoute(builder: (context) {
-                              return MenuUtama();
-                            }), (route) => false);
-                          }
-                        },
+                        onTap: () {},
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
@@ -2284,5 +2280,29 @@ class _MenuFormState extends State<MenuForm> {
         );
       },
     );
+  }
+
+  saveButton() async {
+    PasienModel pasien = PasienModel(
+      nama: _pasien!.nama,
+      jenisKelamin: _pasien!.jenisKelamin,
+      nik: _pasien!.nik,
+      alamat: _pasien!.alamat,
+      tanggalPemeriksaan: _pasien!.tanggalPemeriksaan,
+      tempatLahir: _pasien!.tempatLahir,
+      tanggalLahir: _pasien!.tanggalLahir,
+      umur: _pasien!.umur,
+      perusahaan: _pasien!.perusahaan,
+      bagian: _pasien!.bagian,
+      noHp: _pasien!.noHp,
+      noMcu: _pasien!.noMcu,
+      waktu: DateTime.now().toString(),
+    );
+    if (btnSimpan == true) {
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+        return MenuUtama();
+      }), (route) => false);
+    }
   }
 }

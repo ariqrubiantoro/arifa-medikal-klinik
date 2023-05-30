@@ -63,6 +63,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
         perusahaanC.text = _pasien!.perusahaan!;
         bagianC.text = _pasien!.bagian!;
         nohpC.text = _pasien!.noHp!;
+        nomcuC.text = _pasien!.noMcu!;
       });
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -416,6 +417,24 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
                       SizedBox(
                         height: 10,
                       ),
+                      textDefault(
+                          "No. MCU", Colors.black, 14, FontWeight.normal),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: TextFormField(
+                            controller: nomcuC,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
                 ),
@@ -553,6 +572,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
       perusahaan: perusahaanC.text,
       bagian: bagianC.text,
       noHp: nohpC.text,
+      noMcu: nomcuC.text,
       waktu: DateTime.now().toString(),
     );
 

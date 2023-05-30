@@ -11,6 +11,7 @@ class PasienModel {
   String? perusahaan;
   String? bagian;
   String? noHp;
+  String? noMcu;
   String? waktu;
 
   PasienModel({
@@ -26,6 +27,7 @@ class PasienModel {
     this.perusahaan,
     this.bagian,
     this.noHp,
+    this.noMcu,
     this.waktu,
   });
 
@@ -42,6 +44,7 @@ class PasienModel {
       perusahaan: json['perusahaan'],
       bagian: json['bagian'],
       noHp: json['no_hp'],
+      noMcu: json['no_mcu'],
       waktu: json['waktu'],
     );
   }
@@ -59,6 +62,7 @@ class PasienModel {
       'perusahaan': perusahaan,
       'bagian': bagian,
       'no_hp': noHp,
+      'no_mcu': noMcu,
       'waktu': waktu,
     };
   }

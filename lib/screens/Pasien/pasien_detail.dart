@@ -65,8 +65,8 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaa
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_keluarga_2_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_terdahulu_1_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/riwayat_kebiasaan_3_8.dart';
-import 'package:arifa_medikal_klink_3/screens/detail_pasien.dart';
 import 'package:arifa_medikal_klink_3/screens/menu_utama.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:open_filex/open_filex.dart';
@@ -171,6 +171,7 @@ class _PasienDetailState extends State<PasienDetail> {
 
   bool isLoading = false;
   bool btnLoading = false;
+  String tanggal = "";
 
   @override
   void initState() {
@@ -180,6 +181,8 @@ class _PasienDetailState extends State<PasienDetail> {
 
   cekData() async {
     _pasien = await firestore.getPasien(widget.idPasien);
+    DateTime a = DateTime.parse(_pasien!.waktu!);
+    tanggal = DateFormat("dd MMM yyyy").format(a);
     _penyakitTerdahulu = await firestore.getPenyakitTerdahulu(widget.idPasien);
     _penyakitKeluarga = await firestore.getPenyakitKeluarga(widget.idPasien);
     _riwayatKebiasaan = await firestore.getRiwayatKebiasaan(widget.idPasien);
@@ -422,25 +425,28 @@ class _PasienDetailState extends State<PasienDetail> {
                           padding:
                               pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
                           width: 120,
-                          height: 20,
+                          height: 25,
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text("Nama",
                               style: pw.TextStyle(fontSize: 10))),
                       pw.Container(
-                          padding:
-                              pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
-                          width: 120,
-                          height: 20,
-                          decoration: pw.BoxDecoration(
-                              border: pw.Border.all(color: PdfColors.black)),
-                          child: pw.Text(_pasien!.nama!,
-                              style: pw.TextStyle(fontSize: 10))),
+                        padding: pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
+                        width: 120,
+                        height: 25,
+                        decoration: pw.BoxDecoration(
+                            border: pw.Border.all(color: PdfColors.black)),
+                        child: pw.Container(
+                            child: pw.Text(_pasien!.nama!,
+                                style: pw.TextStyle(
+                                    fontSize:
+                                        _pasien!.nama!.length < 15 ? 10 : 8))),
+                      ),
                       pw.Container(
                           padding:
                               pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
                           width: 100,
-                          height: 20,
+                          height: 25,
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text("Tgl. Pemeriksaan",
@@ -449,7 +455,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           padding:
                               pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
                           width: 240,
-                          height: 20,
+                          height: 25,
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text(_pasien!.tanggalPemeriksaan!,
@@ -620,7 +626,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                   decoration: pw.BoxDecoration(
                                       border: pw.Border.all(
                                           color: PdfColors.black)),
-                                  child: pw.Text("",
+                                  child: pw.Text("${_pasien!.noMcu!}",
                                       style: pw.TextStyle(fontSize: 10))),
                             ])
                           ])
@@ -5580,6 +5586,48 @@ class _PasienDetailState extends State<PasienDetail> {
                                     style: pw.TextStyle(
                                         fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
+                                _ajuran!.anjuran3 == ""
+                                    ? pw.Container()
+                                    : pw.Text("3. ${_ajuran!.anjuran3}",
+                                        style: pw.TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: pw.FontWeight.normal)),
+                                _ajuran!.anjuran4 == ""
+                                    ? pw.Container()
+                                    : pw.Text("4. ${_ajuran!.anjuran4}",
+                                        style: pw.TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: pw.FontWeight.normal)),
+                                _ajuran!.anjuran5 == ""
+                                    ? pw.Container()
+                                    : pw.Text("5. ${_ajuran!.anjuran5}",
+                                        style: pw.TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: pw.FontWeight.normal)),
+                                _ajuran!.anjuran6 == ""
+                                    ? pw.Container()
+                                    : pw.Text("6. ${_ajuran!.anjuran6}",
+                                        style: pw.TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: pw.FontWeight.normal)),
+                                _ajuran!.anjuran7 == ""
+                                    ? pw.Container()
+                                    : pw.Text("7. ${_ajuran!.anjuran7}",
+                                        style: pw.TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: pw.FontWeight.normal)),
+                                _ajuran!.anjuran8 == ""
+                                    ? pw.Container()
+                                    : pw.Text("8. ${_ajuran!.anjuran8}",
+                                        style: pw.TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: pw.FontWeight.normal)),
+                                _ajuran!.anjuran9 == ""
+                                    ? pw.Container()
+                                    : pw.Text("9. ${_ajuran!.anjuran9}",
+                                        style: pw.TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: pw.FontWeight.normal)),
                               ])
                         ]),
                     pw.SizedBox(height: 10),
@@ -5784,7 +5832,7 @@ class _PasienDetailState extends State<PasienDetail> {
                               mainAxisAlignment: pw.MainAxisAlignment.start,
                               crossAxisAlignment: pw.CrossAxisAlignment.start,
                               children: [
-                                pw.Text("Lhokseumawe,         2023",
+                                pw.Text("Lhokseumawe, $tanggal",
                                     style: pw.TextStyle(
                                         fontSize: 10,
                                         fontWeight: pw.FontWeight.normal)),
@@ -8180,7 +8228,8 @@ class _PasienDetailState extends State<PasienDetail> {
             ),
             Expanded(
               child: Container(
-                child: textDefault("", Colors.black, 12, FontWeight.normal),
+                child: textDefault(
+                    "${_pasien!.noMcu}", Colors.black, 12, FontWeight.normal),
               ),
             ),
           ],
@@ -13157,6 +13206,209 @@ class _PasienDetailState extends State<PasienDetail> {
         SizedBox(
           height: 5,
         ),
+        _ajuran!.anjuran3 == ""
+            ? Container()
+            : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: textDefault(
+                            "", Colors.black, 12, FontWeight.normal),
+                      ),
+                    ),
+                    Container(
+                      child: textDefault(
+                          ":  ", Colors.black, 12, FontWeight.normal),
+                    ),
+                    Expanded(
+                      child: Container(
+                        child: textDefault("${_ajuran!.anjuran3}", Colors.black,
+                            12, FontWeight.normal),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+              ]),
+        _ajuran!.anjuran4 == ""
+            ? Container()
+            : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: textDefault(
+                            "", Colors.black, 12, FontWeight.normal),
+                      ),
+                    ),
+                    Container(
+                      child: textDefault(
+                          ":  ", Colors.black, 12, FontWeight.normal),
+                    ),
+                    Expanded(
+                      child: Container(
+                        child: textDefault("${_ajuran!.anjuran4}", Colors.black,
+                            12, FontWeight.normal),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+              ]),
+        _ajuran!.anjuran5 == ""
+            ? Container()
+            : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: textDefault(
+                            "", Colors.black, 12, FontWeight.normal),
+                      ),
+                    ),
+                    Container(
+                      child: textDefault(
+                          ":  ", Colors.black, 12, FontWeight.normal),
+                    ),
+                    Expanded(
+                      child: Container(
+                        child: textDefault("${_ajuran!.anjuran5}", Colors.black,
+                            12, FontWeight.normal),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+              ]),
+        _ajuran!.anjuran6 == ""
+            ? Container()
+            : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: textDefault(
+                            "", Colors.black, 12, FontWeight.normal),
+                      ),
+                    ),
+                    Container(
+                      child: textDefault(
+                          ":  ", Colors.black, 12, FontWeight.normal),
+                    ),
+                    Expanded(
+                      child: Container(
+                        child: textDefault("${_ajuran!.anjuran6}", Colors.black,
+                            12, FontWeight.normal),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+              ]),
+        _ajuran!.anjuran7 == ""
+            ? Container()
+            : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: textDefault(
+                            "", Colors.black, 12, FontWeight.normal),
+                      ),
+                    ),
+                    Container(
+                      child: textDefault(
+                          ":  ", Colors.black, 12, FontWeight.normal),
+                    ),
+                    Expanded(
+                      child: Container(
+                        child: textDefault("${_ajuran!.anjuran7}", Colors.black,
+                            12, FontWeight.normal),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+              ]),
+        _ajuran!.anjuran8 == ""
+            ? Container()
+            : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: textDefault(
+                            "", Colors.black, 12, FontWeight.normal),
+                      ),
+                    ),
+                    Container(
+                      child: textDefault(
+                          ":  ", Colors.black, 12, FontWeight.normal),
+                    ),
+                    Expanded(
+                      child: Container(
+                        child: textDefault("${_ajuran!.anjuran8}", Colors.black,
+                            12, FontWeight.normal),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+              ]),
+        _ajuran!.anjuran9 == ""
+            ? Container()
+            : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: textDefault(
+                            "", Colors.black, 12, FontWeight.normal),
+                      ),
+                    ),
+                    Container(
+                      child: textDefault(
+                          ":  ", Colors.black, 12, FontWeight.normal),
+                    ),
+                    Expanded(
+                      child: Container(
+                        child: textDefault("${_ajuran!.anjuran9}", Colors.black,
+                            12, FontWeight.normal),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+              ]),
       ],
     );
   }

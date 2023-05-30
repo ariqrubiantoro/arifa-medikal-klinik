@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:arifa_medikal_klink_3/model/ajuran_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/kesimpulan_kelayakan_7_8.dart';
@@ -29,6 +29,13 @@ class _Anjuran6State extends State<Anjuran6> {
 
   TextEditingController konsumsiAirController = TextEditingController();
   TextEditingController olahragaTeraturController = TextEditingController();
+  final anjuran3 = TextEditingController();
+  final anjuran4 = TextEditingController();
+  final anjuran5 = TextEditingController();
+  final anjuran6 = TextEditingController();
+  final anjuran7 = TextEditingController();
+  final anjuran8 = TextEditingController();
+  final anjuran9 = TextEditingController();
 
   final FirebaseFirestoreService firestore = FirebaseFirestoreService();
   AjuranModel? data;
@@ -41,7 +48,17 @@ class _Anjuran6State extends State<Anjuran6> {
 
   getData() async {
     data = await firestore.getAjuran(widget.idPasien!);
+    print(widget.idPasien!);
     if (data != null) {
+      setState(() {
+        anjuran3.text = data!.anjuran3!;
+        anjuran4.text = data!.anjuran4!;
+        anjuran5.text = data!.anjuran5!;
+        anjuran6.text = data!.anjuran6!;
+        anjuran7.text = data!.anjuran7!;
+        anjuran8.text = data!.anjuran8!;
+        anjuran9.text = data!.anjuran9!;
+      });
       if (data!.konsumsiAir! == "Ya") {
         setState(() {
           konsumsiAir = data!.konsumsiAir!;
@@ -177,8 +194,11 @@ class _Anjuran6State extends State<Anjuran6> {
                     SizedBox(
                       height: 20,
                     ),
-                    textDefault("Konsumsi Air Mineral 2-3 Liter dalam Sehari",
-                        Colors.black, 14, FontWeight.bold),
+                    textDefault(
+                        "1. Konsumsi Air Mineral 2-3 Liter dalam Sehari",
+                        Colors.black,
+                        14,
+                        FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -235,7 +255,7 @@ class _Anjuran6State extends State<Anjuran6> {
                       height: 5,
                     ),
                     textDefault(
-                        "Olahraga Teratur Minimal 30 Menit Setiap Harinya 3-4X Seminggu",
+                        "2. Olahraga Teratur Minimal 30 Menit Setiap Harinya 3-4X Seminggu",
                         Colors.black,
                         14,
                         FontWeight.bold),
@@ -292,7 +312,182 @@ class _Anjuran6State extends State<Anjuran6> {
                       ],
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        textDefault("3. ", Colors.black, 14, FontWeight.bold),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {},
+                              controller: anjuran3,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        textDefault("4. ", Colors.black, 14, FontWeight.bold),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {},
+                              controller: anjuran4,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        textDefault("5. ", Colors.black, 14, FontWeight.bold),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {},
+                              controller: anjuran5,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        textDefault("6. ", Colors.black, 14, FontWeight.bold),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {},
+                              controller: anjuran6,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        textDefault("7. ", Colors.black, 14, FontWeight.bold),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {},
+                              controller: anjuran7,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        textDefault("8. ", Colors.black, 14, FontWeight.bold),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {},
+                              controller: anjuran8,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        textDefault("9. ", Colors.black, 14, FontWeight.bold),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextFormField(
+                              onTap: () {},
+                              controller: anjuran9,
+                              decoration:
+                                  InputDecoration(border: InputBorder.none),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                   ],
                 ),
@@ -334,6 +529,13 @@ class _Anjuran6State extends State<Anjuran6> {
       olahragaTeratur: olahragaTeraturController.text != ""
           ? olahragaTeraturController.text
           : olahragaTeratur,
+      anjuran3: anjuran3.text,
+      anjuran4: anjuran4.text,
+      anjuran5: anjuran5.text,
+      anjuran6: anjuran6.text,
+      anjuran7: anjuran7.text,
+      anjuran8: anjuran8.text,
+      anjuran9: anjuran9.text,
     );
 
     firestore.setAjuran(ajuran: data, idPasien: widget.idPasien!);

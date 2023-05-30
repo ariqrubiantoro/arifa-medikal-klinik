@@ -24,7 +24,6 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_t
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/riwayat_kebiasaan_3_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
-import 'package:arifa_medikal_klink_3/screens/detail_pasien.dart';
 import 'package:arifa_medikal_klink_3/screens/formulir/form1.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
