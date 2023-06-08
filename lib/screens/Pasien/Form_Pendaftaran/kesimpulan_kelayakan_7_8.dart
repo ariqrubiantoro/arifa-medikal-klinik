@@ -1,6 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:arifa_medikal_klink_3/model/kelayakan_kerja_model.dart';
+import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_model.dart';
+import 'package:arifa_medikal_klink_3/model/pemeriksaan_umum_model.dart';
+import 'package:arifa_medikal_klink_3/model/penyakit_terdahulu_model.dart';
+import 'package:arifa_medikal_klink_3/model/riwayat_kebiasaan_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/kesimpulan_derajat_8_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
@@ -42,6 +47,18 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
 
   final FirebaseFirestoreService firestore = FirebaseFirestoreService();
   KelayakanKerjaModel? data;
+  int? valueKelamin;
+  int valueUmur = 0;
+  int? valueTekananDarah;
+  int? valueIMT;
+  int? valueMerokok;
+  int? valueDiabetes;
+  int? valueFisik;
+  PasienModel? _pasien;
+  PemeriksaanUmumModel? _pemeriksaanUmum;
+  RiwayatKebiasaanModel? _riwayatKebiasan;
+  PenyakitTerdahuluModel? _penyakitTerdahulu;
+  PemeriksaanModel? _pemeriksaan;
 
   @override
   void initState() {
@@ -65,8 +82,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
           layakBekerjaTanpaCatatan = data!.layakBekerjaSesuaiPosisi!;
           _quest1 = Question.tidak;
         });
-      }
-      if (data!.layakBekerjaSesuaiPosisi! == "") {
+      } else if (data!.layakBekerjaSesuaiPosisi! == "") {
       } else {
         setState(() {
           layakBekerjaTanpaCatatanController.text =
@@ -84,8 +100,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
           layakBekerjaDenganCatatan = data!.layakBekerjaDenganCatatan!;
           _quest2 = Question.tidak;
         });
-      }
-      if (data!.layakBekerjaDenganCatatan! == "") {
+      } else if (data!.layakBekerjaDenganCatatan! == "") {
       } else {
         setState(() {
           layakBekerjaTanpaCatatanController.text =
@@ -103,8 +118,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
           layakBekerjaDenganPenyesuaian = data!.layakBekerjaDenganPenyesuaian!;
           _quest3 = Question.tidak;
         });
-      }
-      if (data!.layakBekerjaDenganPenyesuaian! == "") {
+      } else if (data!.layakBekerjaDenganPenyesuaian! == "") {
       } else {
         setState(() {
           layakBekerjaDenganPenyesuaianController.text =
@@ -122,12 +136,192 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
           layakUntukBekerja = data!.layakuntukBekerja!;
           _quest4 = Question.tidak;
         });
-      }
-      if (data!.layakuntukBekerja! == "") {
+      } else if (data!.layakuntukBekerja! == "") {
       } else {
         setState(() {
           layakUntukBekerjaController.text = data!.layakuntukBekerja!;
         });
+      }
+    }
+    _pasien = await firestore.getPasien(widget.idPasien!);
+    _pemeriksaanUmum = await firestore.getPemeriksaanUmum(widget.idPasien!);
+    _penyakitTerdahulu = await firestore.getPenyakitTerdahulu(widget.idPasien!);
+    _pemeriksaan = await firestore.getPemeriksaan(widget.idPasien!);
+    _riwayatKebiasan = await firestore.getRiwayatKebiasaan(widget.idPasien!);
+
+    if (_pasien != null &&
+        _pemeriksaanUmum != null &&
+        _penyakitTerdahulu != null &&
+        _pemeriksaan != null) {
+      if (_pasien!.jenisKelamin != "" &&
+          _pasien!.umurTahun != "" &&
+          _pemeriksaanUmum!.tekananDarah != "" &&
+          _pemeriksaanUmum!.imt != "" &&
+          _riwayatKebiasan!.strMerokok != "" &&
+          _penyakitTerdahulu!.diabetes != "" &&
+          _pemeriksaan!.aktivitasFisik != "") {
+        // UMUR
+        int umurKu = int.parse(_pasien!.umurTahun!);
+        if (umurKu <= 34) {
+          setState(() {
+            valueUmur = -4;
+          });
+        } else if (umurKu > 34 && umurKu <= 39) {
+          setState(() {
+            valueUmur = -3;
+          });
+        } else if (umurKu >= 40 && umurKu <= 44) {
+          setState(() {
+            valueUmur = -2;
+          });
+        } else if (umurKu >= 45 && umurKu <= 49) {
+          setState(() {
+            valueUmur = 0;
+          });
+        } else if (umurKu >= 50 && umurKu <= 54) {
+          setState(() {
+            valueUmur = 1;
+          });
+        } else if (umurKu >= 55 && umurKu <= 59) {
+          setState(() {
+            valueUmur = 2;
+          });
+        } else if (umurKu >= 60) {
+          setState(() {
+            valueUmur = 3;
+          });
+        }
+
+        // JENIS KELAMIN
+        if (_pasien!.jenisKelamin == "Pria") {
+          setState(() {
+            valueKelamin = 1;
+          });
+        } else {
+          setState(() {
+            valueKelamin = 0;
+          });
+        }
+
+        //TEKANAN DARAH
+        var tekananDarah = int.parse(_pemeriksaanUmum!.tekananDarah!);
+        if (tekananDarah < 130) {
+          setState(() {
+            valueTekananDarah = 0;
+          });
+        } else if (tekananDarah >= 130 && tekananDarah <= 139) {
+          setState(() {
+            valueTekananDarah = 1;
+          });
+        } else if (tekananDarah >= 140 && tekananDarah <= 159) {
+          setState(() {
+            valueTekananDarah = 2;
+          });
+        } else if (tekananDarah >= 160 && tekananDarah <= 179) {
+          setState(() {
+            valueTekananDarah = 3;
+          });
+        } else if (tekananDarah >= 180) {
+          setState(() {
+            valueTekananDarah = 4;
+          });
+        }
+
+        //IMT
+        var imt = double.parse(_pemeriksaanUmum!.imt!);
+
+        if (imt <= 25.99) {
+          setState(() {
+            valueIMT = 0;
+          });
+        } else if (imt >= 26.00 && imt <= 29.99) {
+          setState(() {
+            valueIMT = 1;
+          });
+        } else if (imt <= 30.00) {
+          setState(() {
+            valueIMT = 2;
+          });
+        }
+
+        //MEROKOK
+        if (_riwayatKebiasan!.strMerokok == "Tidak") {
+          setState(() {
+            valueMerokok = 0;
+          });
+        } else if (_riwayatKebiasan!.strMerokok == "Ya") {
+          setState(() {
+            valueMerokok = 4;
+          });
+        }
+
+        //DIABETES
+        if (_penyakitTerdahulu!.diabetes == "Ya") {
+          setState(() {
+            valueDiabetes = 2;
+          });
+        } else if (_penyakitTerdahulu!.diabetes == "Tidak") {
+          setState(() {
+            valueDiabetes = 0;
+          });
+        }
+
+        //AKTIVITAS FISIK
+        var fisik = _pemeriksaan!.aktivitasFisik;
+        if (fisik == "Tidak Ada") {
+          setState(() {
+            valueFisik = 2;
+          });
+        } else if (fisik == "Ringan") {
+          setState(() {
+            valueFisik = 1;
+          });
+        } else if (fisik == "Sedang") {
+          setState(() {
+            valueFisik = 0;
+          });
+        } else if (fisik == "Berat") {
+          setState(() {
+            valueFisik = -3;
+          });
+        }
+
+        var total = valueKelamin! +
+            valueUmur +
+            valueTekananDarah! +
+            valueIMT! +
+            valueMerokok! +
+            valueDiabetes! +
+            valueFisik!;
+        print("TOTAL $total");
+        if (total <= 1) {
+          setState(() {
+            cardiovaskuler.text = "Resiko Rendah (Skor $total)";
+          });
+        } else if (total >= 2 && total <= 4) {
+          setState(() {
+            cardiovaskuler.text = "Resiko Sedang (Skor $total)";
+          });
+        } else if (total >= 5) {
+          setState(() {
+            cardiovaskuler.text = "Resiko Tinggi (Skor $total)";
+          });
+        }
+        // print("awal UMUR ${valueUmur}");
+        // print("awal KELAMIN $valueKelamin");
+        // print("awal TEKANAN DARAH $valueTekananDarah");
+        // print("awal MEROKOK $valueMerokok");
+        // print("awal Diabetes $valueDiabetes");
+        // print("awal AK FISIK $valueFisik");
+        print("VALUE UMUR $valueUmur");
+        print("VALUE KELAMIN $valueKelamin");
+        print("VALUE TEKANAN DARAH $valueTekananDarah");
+        print("VALUE IMT $valueIMT");
+        print("VALUE MEROKOK $valueMerokok");
+        print("VALUE Diabetes $valueDiabetes");
+        print("VALUE AK FISIK $valueFisik");
+      } else {
+        print("gagal");
       }
     }
   }
@@ -231,7 +425,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                       height: 20,
                     ),
                     textDefault(
-                        "Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini",
+                        "Laik Bekerja Sesuai Posisi dan Lokasi Saat Ini",
                         Colors.black,
                         14,
                         FontWeight.bold),
@@ -291,7 +485,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                       height: 5,
                     ),
                     textDefault(
-                        "Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini, dengan Catatan",
+                        "Laik Bekerja Sesuai Posisi dan Lokasi Saat Ini, dengan Catatan",
                         Colors.black,
                         14,
                         FontWeight.bold),
@@ -351,7 +545,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                       height: 5,
                     ),
                     textDefault(
-                        "Layak Bekerja dengan Penyesuaian dan atau Pembatasan Kerja",
+                        "Laik Bekerja dengan Penyesuaian dan atau Pembatasan Kerja",
                         Colors.black,
                         14,
                         FontWeight.bold),
@@ -411,7 +605,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                     SizedBox(
                       height: 5,
                     ),
-                    textDefault("Layak untuk Bekerja", Colors.black, 14,
+                    textDefault("Tidak Laik untuk Bekerja", Colors.black, 14,
                         FontWeight.bold),
                     Row(
                       children: <Widget>[
@@ -479,6 +673,7 @@ class _KesimpulanKelayakan7State extends State<KesimpulanKelayakan7> {
                           border: Border.all(color: Colors.grey),
                           borderRadius: BorderRadius.circular(10)),
                       child: TextFormField(
+                        enabled: false,
                         controller: cardiovaskuler,
                         decoration: InputDecoration(border: InputBorder.none),
                       ),

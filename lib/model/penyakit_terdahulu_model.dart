@@ -10,6 +10,7 @@ class PenyakitTerdahuluModel {
   String? hepatitis;
   String? kencingManis;
   String? patahTulang;
+  String? diabetes;
 
   PenyakitTerdahuluModel({
     this.id,
@@ -23,6 +24,7 @@ class PenyakitTerdahuluModel {
     this.hepatitis,
     this.kencingManis,
     this.patahTulang,
+    this.diabetes,
   });
 
   factory PenyakitTerdahuluModel.fromJson(
@@ -39,6 +41,7 @@ class PenyakitTerdahuluModel {
       hepatitis: json['hepatitis'],
       kencingManis: json['kencingManis'],
       patahTulang: json['patahTulang'],
+      diabetes: json['diabetes'],
     );
   }
 
@@ -54,6 +57,7 @@ class PenyakitTerdahuluModel {
       'hepatitis': hepatitis,
       'kencingManis': kencingManis,
       'patahTulang': patahTulang,
+      'diabetes': diabetes,
     };
   }
 }

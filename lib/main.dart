@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, userSnapshot) {
             // return PasienDetail(
-            //   idPasien: "NOQxWsh28hHwsC2sr90K",
+            //   idPasien: "4YjDaN6cMrDqIcPukBkL",
             // );
             if (userSnapshot.hasData) {
               // return PasienDetail();

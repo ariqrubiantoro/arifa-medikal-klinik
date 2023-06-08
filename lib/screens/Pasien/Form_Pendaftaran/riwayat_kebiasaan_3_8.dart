@@ -702,6 +702,7 @@ class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
     firestore.setRiwayatKebiasaan(data, widget.idPasien!);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("merokok", merokok);
     if (prefs.getString("detail1") == null) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return MenuForm(idPasien: widget.idPasien!);

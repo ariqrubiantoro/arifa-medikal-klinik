@@ -32,6 +32,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
   int _quest8 = 0;
   int _quest9 = 0;
   int _quest10 = 0;
+  int _quest11 = 0;
 
   String darahTinggi = "Tidak Ada";
   String paru = "Tidak Ada";
@@ -43,6 +44,7 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
   String hepatitis = "Tidak Ada";
   String kencingManis = "Tidak Ada";
   String patahTulang = "Tidak Ada";
+  String diabetes = "Tidak";
 
   final darahTinggiF = TextEditingController();
   final paruF = TextEditingController();
@@ -953,6 +955,42 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
                           ))
                         ],
                       ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      textDefault(
+                          "Diabetes", Colors.black, 16, FontWeight.bold),
+                      Row(
+                        children: <Widget>[
+                          Radio(
+                            value: 1,
+                            groupValue: _quest11,
+                            onChanged: (value) {
+                              setState(() {
+                                _quest11 = value!;
+                                diabetes = "Ya";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Ya", Colors.black, 13, FontWeight.normal),
+                          Radio(
+                            value: 2,
+                            groupValue: _quest11,
+                            onChanged: (value) {
+                              setState(() {
+                                _quest11 = value!;
+                                diabetes = "Tidak";
+                              });
+                            },
+                          ),
+                          textDefault(
+                              "Tidak", Colors.black, 13, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      ),
                     ],
                   )),
                 ),
@@ -1014,14 +1052,21 @@ class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
       hepatitis: hepatitis,
       kencingManis: kencingManis,
       patahTulang: patahTulang,
+      diabetes: diabetes,
     );
 
     firestore.setPenyakitTerdahulu(data, widget.idPasien!);
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return MenuForm(
-        idPasien: widget.idPasien!,
-      );
-    }));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("detail1") == null) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return MenuForm(idPasien: widget.idPasien!);
+      }));
+    } else {
+      prefs.remove("detail1");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return PasienDetail(idPasien: widget.idPasien!);
+      }));
+    }
   }
 }

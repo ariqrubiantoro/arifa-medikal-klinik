@@ -8,6 +8,8 @@ import 'package:arifa_medikal_klink_3/components/widget/text.dart';
 import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_model.dart';
 import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_umum_model.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_napza.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_usg.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/add_pasien_profil.dart';
 import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -76,6 +78,8 @@ import 'package:pdf/widgets.dart' as pw;
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as htmm;
 
+import 'Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_napfa.dart';
+
 class PasienDetail extends StatefulWidget {
   PasienDetail({super.key, required this.idPasien});
   String idPasien;
@@ -117,6 +121,10 @@ class _PasienDetailState extends State<PasienDetail> {
   HasilPemeriksaanModel? _hasilLaboratorium;
   HasilPemeriksaanModel? _hasilJantung;
   HasilPemeriksaanModel? _hasilParu;
+  HasilPemeriksaanModel? _hasilUsg;
+  HasilPemeriksaanModel? _hasilNapfa;
+  HasilPemeriksaanModel? _hasilNapza;
+
   FotoLainLain? _fotoLainLain;
   bool boolProfilPasien = false;
   bool boolRiwayatPenTerdahulu = false;
@@ -160,6 +168,9 @@ class _PasienDetailState extends State<PasienDetail> {
   bool boolHasilLaboratorium = false;
   bool boolHasilJantung = false;
   bool boolHasilParu = false;
+  bool boolHasilUsg = false;
+  bool boolHasilNapfa = false;
+  bool boolHasilNapza = false;
 
   String merokokLama = "";
   String merokokBanyak = "";
@@ -225,6 +236,10 @@ class _PasienDetailState extends State<PasienDetail> {
         await firestore.getHasilPemeriksaanLaboratorium(widget.idPasien);
     _hasilJantung = await firestore.getHasilPemeriksaanJantung(widget.idPasien);
     _hasilParu = await firestore.getHasilPemeriksaanParu(widget.idPasien);
+    _hasilUsg = await firestore.getHasilPemeriksaanUsg(widget.idPasien);
+    _hasilParu = await firestore.getHasilPemeriksaanNapfa(widget.idPasien);
+    _hasilParu = await firestore.getHasilPemeriksaanNapza(widget.idPasien);
+
     _fotoLainLain = await firestore.getFotoLainLain(widget.idPasien);
     if (_riwayatKebiasaan!.strMerokok == "Tidak") {
       merokokLama = " -";
@@ -285,6 +300,10 @@ class _PasienDetailState extends State<PasienDetail> {
           await rootBundle.load('assets/images/icon_arifa.jpeg');
       final Uint8List faviconImage = faviconByte.buffer.asUint8List();
 
+      final ByteData skjByte =
+          await rootBundle.load('assets/images/standar_skj.jpg');
+      final Uint8List skjImage = skjByte.buffer.asUint8List();
+
       pdf.addPage(pw.MultiPage(
           pageFormat: PdfPageFormat.a4,
           maxPages: 20,
@@ -329,8 +348,8 @@ class _PasienDetailState extends State<PasienDetail> {
                       children: [
                     pw.SizedBox(height: 30),
                     pw.Container(
-                      width: 180,
-                      height: 120,
+                      width: 250,
+                      height: 130,
                       decoration: pw.BoxDecoration(),
                       child: pw.ClipRRect(
                         child: pw.Container(
@@ -429,7 +448,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text("Nama",
-                              style: pw.TextStyle(fontSize: 10))),
+                              style: pw.TextStyle(fontSize: 11))),
                       pw.Container(
                         padding: pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
                         width: 120,
@@ -450,7 +469,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text("Tgl. Pemeriksaan",
-                              style: pw.TextStyle(fontSize: 10))),
+                              style: pw.TextStyle(fontSize: 11))),
                       pw.Container(
                           padding:
                               pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
@@ -459,7 +478,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text(_pasien!.tanggalPemeriksaan!,
-                              style: pw.TextStyle(fontSize: 10))),
+                              style: pw.TextStyle(fontSize: 11))),
                     ]),
                     pw.Row(children: [
                       pw.Container(
@@ -470,7 +489,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text("Jenis Kelamin",
-                              style: pw.TextStyle(fontSize: 10))),
+                              style: pw.TextStyle(fontSize: 11))),
                       pw.Container(
                           padding:
                               pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
@@ -479,7 +498,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text(_pasien!.jenisKelamin!,
-                              style: pw.TextStyle(fontSize: 10))),
+                              style: pw.TextStyle(fontSize: 11))),
                       pw.Container(
                           padding:
                               pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
@@ -488,7 +507,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text("TTL/Umur",
-                              style: pw.TextStyle(fontSize: 10))),
+                              style: pw.TextStyle(fontSize: 11))),
                       pw.Container(
                           padding:
                               pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
@@ -498,7 +517,7 @@ class _PasienDetailState extends State<PasienDetail> {
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text(
                               _pasien!.tanggalLahir! + "/" + "${_pasien!.umur}",
-                              style: pw.TextStyle(fontSize: 10))),
+                              style: pw.TextStyle(fontSize: 11))),
                     ]),
                     pw.Row(children: [
                       pw.Container(
@@ -509,7 +528,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text("NIK",
-                              style: pw.TextStyle(fontSize: 10))),
+                              style: pw.TextStyle(fontSize: 11))),
                       pw.Container(
                           padding:
                               pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
@@ -518,7 +537,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text("${_pasien!.nik}",
-                              style: pw.TextStyle(fontSize: 10))),
+                              style: pw.TextStyle(fontSize: 11))),
                       pw.Container(
                           padding:
                               pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
@@ -527,7 +546,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text("Perusahaan",
-                              style: pw.TextStyle(fontSize: 10))),
+                              style: pw.TextStyle(fontSize: 11))),
                       pw.Container(
                           padding:
                               pw.EdgeInsets.only(left: 5, top: 2, bottom: 2),
@@ -536,7 +555,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(color: PdfColors.black)),
                           child: pw.Text(_pasien!.perusahaan!,
-                              style: pw.TextStyle(fontSize: 10))),
+                              style: pw.TextStyle(fontSize: 11))),
                     ]),
                     pw.Row(
                         mainAxisAlignment: pw.MainAxisAlignment.start,
@@ -551,7 +570,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                   border:
                                       pw.Border.all(color: PdfColors.black)),
                               child: pw.Text("Alamat",
-                                  style: pw.TextStyle(fontSize: 10))),
+                                  style: pw.TextStyle(fontSize: 11))),
                           pw.Container(
                               padding: pw.EdgeInsets.only(
                                   left: 5, top: 2, bottom: 2),
@@ -561,7 +580,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                   border:
                                       pw.Border.all(color: PdfColors.black)),
                               child: pw.Text(_pasien!.alamat!,
-                                  style: pw.TextStyle(fontSize: 10))),
+                                  style: pw.TextStyle(fontSize: 11))),
                           pw.Column(children: [
                             pw.Row(children: [
                               pw.Container(
@@ -573,7 +592,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                       border: pw.Border.all(
                                           color: PdfColors.black)),
                                   child: pw.Text("Bagian / Seksi",
-                                      style: pw.TextStyle(fontSize: 10))),
+                                      style: pw.TextStyle(fontSize: 11))),
                               pw.Container(
                                   padding: pw.EdgeInsets.only(
                                       left: 5, top: 2, bottom: 2),
@@ -583,7 +602,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                       border: pw.Border.all(
                                           color: PdfColors.black)),
                                   child: pw.Text(_pasien!.bagian!,
-                                      style: pw.TextStyle(fontSize: 10))),
+                                      style: pw.TextStyle(fontSize: 11))),
                             ]),
                             pw.Row(children: [
                               pw.Container(
@@ -595,7 +614,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                       border: pw.Border.all(
                                           color: PdfColors.black)),
                                   child: pw.Text("No HP",
-                                      style: pw.TextStyle(fontSize: 10))),
+                                      style: pw.TextStyle(fontSize: 11))),
                               pw.Container(
                                   padding: pw.EdgeInsets.only(
                                       left: 5, top: 2, bottom: 2),
@@ -605,7 +624,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                       border: pw.Border.all(
                                           color: PdfColors.black)),
                                   child: pw.Text(_pasien!.noHp!,
-                                      style: pw.TextStyle(fontSize: 10))),
+                                      style: pw.TextStyle(fontSize: 11))),
                             ]),
                             pw.Row(children: [
                               pw.Container(
@@ -617,7 +636,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                       border: pw.Border.all(
                                           color: PdfColors.black)),
                                   child: pw.Text("No MCU",
-                                      style: pw.TextStyle(fontSize: 10))),
+                                      style: pw.TextStyle(fontSize: 11))),
                               pw.Container(
                                   padding: pw.EdgeInsets.only(
                                       left: 5, top: 2, bottom: 2),
@@ -626,8 +645,11 @@ class _PasienDetailState extends State<PasienDetail> {
                                   decoration: pw.BoxDecoration(
                                       border: pw.Border.all(
                                           color: PdfColors.black)),
-                                  child: pw.Text("${_pasien!.noMcu!}",
-                                      style: pw.TextStyle(fontSize: 10))),
+                                  child: pw.Text(
+                                      _pasien!.noMcu == null
+                                          ? ""
+                                          : "${_pasien!.noMcu!}",
+                                      style: pw.TextStyle(fontSize: 11))),
                             ])
                           ])
                         ]),
@@ -639,7 +661,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 10),
                           pw.Text("I.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 20),
                           pw.Column(
@@ -647,20 +669,20 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Riwayat Penyakit Terdahulu",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(children: [
                                   pw.Container(
                                     width: 250,
                                     child: pw.Text("a. Darah tinggi",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(
                                       ": ${_penyakitTerdahulu!.darahTinggi ?? ""}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -669,12 +691,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     child: pw.Text(
                                         "b. Penyakit paru (Asma, TBC dll)",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(": ${_penyakitTerdahulu!.paru ?? ""}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -682,13 +704,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("c. Asam lambung",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(
                                       ": ${_penyakitTerdahulu!.asamLambung ?? ""}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -696,13 +718,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("d. Alergi",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(
                                       ": ${_penyakitTerdahulu!.alergi ?? ""}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -710,13 +732,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("e. Riwayat operasi",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(
                                       ": ${_penyakitTerdahulu!.riwayatOperasi ?? ""}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -724,13 +746,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("f. Riwayat kecelakaan",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(
                                       ": ${_penyakitTerdahulu!.riwayatKecelakaan ?? ""}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -738,13 +760,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("g. Riwayat rawat RS",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(
                                       ": ${_penyakitTerdahulu!.riwayatRawatRs ?? ""}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -752,13 +774,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("h. Hepatitis",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(
                                       ": ${_penyakitTerdahulu!.hepatitis ?? ""}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -766,13 +788,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("i. Kencing manis",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(
                                       ": ${_penyakitTerdahulu!.kencingManis ?? ""}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -781,13 +803,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                     child: pw.Text(
                                         "j. Patah tulang (terpasang PEN)",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(
                                       ": ${_penyakitTerdahulu!.patahTulang ?? ""}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                               ])
@@ -800,7 +822,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 5),
                           pw.Text("II.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 20),
                           pw.Column(
@@ -808,20 +830,20 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Riwayat Penyakit Keluarga (Orang Tua)",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(children: [
                                   pw.Container(
                                     width: 250,
                                     child: pw.Text("a. Kencing manis",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(
                                       ": ${_penyakitKeluarga!.kencingManis}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -829,12 +851,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("b. Darah tinggi",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(": ${_penyakitKeluarga!.darahTinggi}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -842,12 +864,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("c. Asam lambung",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(": ${_penyakitKeluarga!.asamLambung}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -855,12 +877,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("d. Alergi",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(": ${_penyakitKeluarga!.alergi}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -869,12 +891,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     child: pw.Text(
                                         "e. Penyakit paru (Asma, TBC, dll)",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(": ${_penyakitKeluarga!.paru}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -882,12 +904,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("f. Stroke",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(": ${_penyakitKeluarga!.stroke}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -895,12 +917,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("g. Ginjal",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(": ${_penyakitKeluarga!.ginjal}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -908,12 +930,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("h. Hemorrhoid",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(": ${_penyakitKeluarga!.hemorhoid}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -921,12 +943,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("i. Kanker",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(": ${_penyakitKeluarga!.kanker}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -934,12 +956,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("j. Jantung",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(": ${_penyakitKeluarga!.jantung}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                               ])
@@ -952,7 +974,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 5),
                           pw.Text("III.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 15),
                           pw.Column(
@@ -960,19 +982,19 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Riwayat Kebiasaan",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(children: [
                                   pw.Container(
                                     width: 250,
                                     child: pw.Text("a. Merokok",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(": ${_riwayatKebiasaan!.strMerokok}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -980,12 +1002,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("   a). Lama",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(merokokLama,
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -993,12 +1015,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("   b). Banyak",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(merokokBanyak,
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -1006,12 +1028,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(merokokBungkus,
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -1019,12 +1041,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("b. Minum Miras",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(": ${_riwayatKebiasaan!.strMiras}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -1032,12 +1054,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("   a). Lama",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(mirasLama,
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -1045,12 +1067,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("   b). Banyak",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(mirasBanyak,
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -1058,12 +1080,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(mirasBotol,
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                                 pw.Row(children: [
@@ -1071,13 +1093,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 250,
                                     child: pw.Text("c. Olahraga",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ),
                                   pw.Text(
                                       ": ${_riwayatKebiasaan!.olahraga != null ? 'Ya' : 'Tidak'}",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.normal)),
                                 ]),
                               ])
@@ -1086,11 +1108,11 @@ class _PasienDetailState extends State<PasienDetail> {
                     //   pw.SizedBox(width: 5),
                     //   pw.Text("IV.",
                     //       style: pw.TextStyle(
-                    //           fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                    //           fontSize: 11, fontWeight: pw.FontWeight.bold)),
                     //   pw.SizedBox(width: 15),
                     //   pw.Text("Keluhan Sekarang",
                     //       style: pw.TextStyle(
-                    //           fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                    //           fontSize: 11, fontWeight: pw.FontWeight.bold)),
                     // ]),
                   ]),
                 ),
@@ -1143,11 +1165,11 @@ class _PasienDetailState extends State<PasienDetail> {
                       pw.SizedBox(width: 5),
                       pw.Text("IV.",
                           style: pw.TextStyle(
-                              fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                              fontSize: 11, fontWeight: pw.FontWeight.bold)),
                       pw.SizedBox(width: 15),
                       pw.Text("Keluhan Sekarang",
                           style: pw.TextStyle(
-                              fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                              fontSize: 11, fontWeight: pw.FontWeight.bold)),
                     ]),
                     pw.SizedBox(height: 10),
                     pw.Row(
@@ -1157,7 +1179,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 5),
                           pw.Text("A.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 15),
                           pw.Column(
@@ -1166,7 +1188,7 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("KEADAAN UMUM",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -1176,7 +1198,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                     children: [
                                       pw.Text("1.",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight: pw.FontWeight.bold)),
                                       pw.SizedBox(width: 10),
                                       pw.Column(
@@ -1187,7 +1209,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                           children: [
                                             pw.Text("Pemeriksaan Umum",
                                                 style: pw.TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 11,
                                                     fontWeight:
                                                         pw.FontWeight.bold)),
                                             pw.Row(
@@ -1199,7 +1221,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "a. Tinggi Badan",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1209,7 +1231,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanUmum!.tinggiBadan}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1218,7 +1240,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     width: 100,
                                                     child: pw.Text("cm",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1233,7 +1255,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "b. Berat Badan",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1243,7 +1265,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanUmum!.beratBadan}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1252,7 +1274,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     width: 100,
                                                     child: pw.Text("kg",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1267,7 +1289,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "c. Berat Badan Ideal",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1277,7 +1299,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanUmum!.beratBadanIdeal}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1286,7 +1308,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     width: 100,
                                                     child: pw.Text("kg",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1300,7 +1322,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     width: 200,
                                                     child: pw.Text("d. IMT",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1310,7 +1332,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanUmum!.imt}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1325,7 +1347,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "e. Lingkaran Perut",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1335,7 +1357,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanUmum!.lingkarPerut}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1344,7 +1366,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     width: 100,
                                                     child: pw.Text("cm",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1359,7 +1381,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "f. Tekanan Darah",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1367,9 +1389,9 @@ class _PasienDetailState extends State<PasienDetail> {
                                                   pw.Container(
                                                     width: 100,
                                                     child: pw.Text(
-                                                        ": ${_pemeriksaanUmum!.tekananDarah}",
+                                                        ": ${_pemeriksaanUmum!.tekananDarah}/${_pemeriksaanUmum!.tekananDarahDistole == null ? "" : _pemeriksaanUmum!.tekananDarahDistole}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1378,7 +1400,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     width: 100,
                                                     child: pw.Text("mmHg",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1393,7 +1415,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "g. Denyut Nadi",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1403,7 +1425,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanUmum!.denyutNadi}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1412,7 +1434,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     width: 100,
                                                     child: pw.Text("x/menit",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1427,7 +1449,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "h. Frek. Pernafasan",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1437,7 +1459,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanUmum!.pernapasan}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1446,7 +1468,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     width: 100,
                                                     child: pw.Text("x/menit",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1460,7 +1482,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     width: 200,
                                                     child: pw.Text("i. Suhu",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1470,7 +1492,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanUmum!.suhu}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1479,7 +1501,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     width: 100,
                                                     child: pw.Text("°C",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1498,7 +1520,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                     children: [
                                       pw.Text("2.",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight: pw.FontWeight.bold)),
                                       pw.SizedBox(width: 10),
                                       pw.Column(
@@ -1509,7 +1531,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                           children: [
                                             pw.Text("Pemeriksaan Mata",
                                                 style: pw.TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 11,
                                                     fontWeight:
                                                         pw.FontWeight.bold)),
                                             pw.Row(
@@ -1521,7 +1543,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "a. Berkaca mata",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1531,7 +1553,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanMata!.kacaMata}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1540,7 +1562,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "(${_pemeriksaanMata!.kondisi})",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1555,7 +1577,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "b. Visus      Os(kiri)",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1565,7 +1587,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanMata!.visusKiri}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1574,7 +1596,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "(Tanpa lensa koreksi)",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1589,7 +1611,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "                   Os(kanan)",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1599,7 +1621,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanMata!.visusKanan}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1608,7 +1630,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "(Tanpa lensa koreksi)",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1623,7 +1645,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "c. Buta Warna",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1633,7 +1655,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanMata!.butaWarna}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1648,7 +1670,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "d. Penyakit Mata",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1658,7 +1680,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanMata!.penyakitMata}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1673,7 +1695,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "e. Konjungtiva",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1683,7 +1705,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanMata!.konjungtiva}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1697,7 +1719,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     width: 200,
                                                     child: pw.Text("f. Sklera",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1707,7 +1729,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanMata!.sklera}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1727,7 +1749,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 35),
                           pw.Text("3.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 10),
                           pw.Column(
@@ -1737,7 +1759,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                 pw.Text(
                                     "Pemeriksaan Telinga, Hidung dan Tenggorokan",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -1747,7 +1769,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                     children: [
                                       pw.Text("a.",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight: pw.FontWeight.bold)),
                                       pw.SizedBox(width: 10),
                                       pw.Column(
@@ -1758,7 +1780,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                           children: [
                                             pw.Text("Telinga",
                                                 style: pw.TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 11,
                                                     fontWeight:
                                                         pw.FontWeight.bold)),
                                             pw.Row(
@@ -1770,7 +1792,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "(a) Membran tymp kiri",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1780,7 +1802,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanTHT!.telinga!.membranTympKiri}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1795,7 +1817,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "(b) Membran tymp kanan",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1805,7 +1827,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanTHT!.telinga!.membranTympKanan}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1820,7 +1842,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "(c) Penyakit telinga kiri",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1830,7 +1852,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanTHT!.telinga!.penyakitTelingaKiri}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1838,7 +1860,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                   pw.Text(
                                                       "Serumen : ${_pemeriksaanTHT!.telinga!.serumenKiri}",
                                                       style: pw.TextStyle(
-                                                          fontSize: 10,
+                                                          fontSize: 11,
                                                           fontWeight: pw
                                                               .FontWeight
                                                               .normal)),
@@ -1852,7 +1874,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "(d) Penyakit telinga kanan",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1862,7 +1884,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanTHT!.telinga!.penyakitTelingaKanan}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -1870,7 +1892,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                   pw.Text(
                                                       "Serumen : ${_pemeriksaanTHT!.telinga!.serumenKanan}",
                                                       style: pw.TextStyle(
-                                                          fontSize: 10,
+                                                          fontSize: 11,
                                                           fontWeight: pw
                                                               .FontWeight
                                                               .normal)),
@@ -1886,7 +1908,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 60),
                           pw.Text("b.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 10),
                           pw.Column(
@@ -1895,7 +1917,7 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Hidung",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -1905,7 +1927,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 200,
                                         child: pw.Text("(a) Pilek / tersumbat",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -1914,7 +1936,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanTHT!.hidung!.pilekTersumbat}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -1927,7 +1949,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 200,
                                         child: pw.Text("(b) Lidah",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -1936,7 +1958,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanTHT!.hidung!.lidah}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -1949,7 +1971,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 200,
                                         child: pw.Text("(c) Lain-lain",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -1958,7 +1980,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanTHT!.hidung!.lainLain}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -1973,7 +1995,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 60),
                           pw.Text("c.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 10),
                           pw.Column(
@@ -1982,7 +2004,7 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Kerongkongan",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -1992,7 +2014,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 200,
                                         child: pw.Text("(a) Tonsil kanan",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2001,7 +2023,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanTHT!.kerongkongan!.tonsilKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2014,7 +2036,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 200,
                                         child: pw.Text("(b) Tonsil kiri",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2023,7 +2045,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanTHT!.kerongkongan!.tonsilKiri}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2036,7 +2058,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 200,
                                         child: pw.Text("(c) Pharing",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2045,7 +2067,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanTHT!.kerongkongan!.pharing}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2058,7 +2080,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 200,
                                         child: pw.Text("(d) Tiroid  ",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2067,7 +2089,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanTHT!.kerongkongan!.tiroid}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2080,7 +2102,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 200,
                                         child: pw.Text("(e) Lain-lain",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2089,7 +2111,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanTHT!.kerongkongan!.lainLain}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2104,7 +2126,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 35),
                           pw.Text("4.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 10),
                           pw.Column(
@@ -2113,7 +2135,7 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Pemeriksaan Rongga Dada",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -2123,7 +2145,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                     children: [
                                       pw.Text("a.",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight: pw.FontWeight.bold)),
                                       pw.SizedBox(width: 10),
                                       pw.Column(
@@ -2134,7 +2156,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                           children: [
                                             pw.Text("Jantung",
                                                 style: pw.TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 11,
                                                     fontWeight:
                                                         pw.FontWeight.bold)),
                                             pw.Row(
@@ -2146,7 +2168,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         "(a) Batas-batas Jantung",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -2156,7 +2178,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                     child: pw.Text(
                                                         ": ${_pemeriksaanRonggaDada!.jantung!.batasBatasJantung}",
                                                         style: pw.TextStyle(
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                             fontWeight: pw
                                                                 .FontWeight
                                                                 .normal)),
@@ -2164,7 +2186,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                   pw.Text(
                                                       "Iktus Kordis :${_pemeriksaanRonggaDada!.jantung!.iktusKordis}",
                                                       style: pw.TextStyle(
-                                                          fontSize: 10,
+                                                          fontSize: 11,
                                                           fontWeight: pw
                                                               .FontWeight
                                                               .normal)),
@@ -2224,7 +2246,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 59),
                           pw.Text("b.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 10),
                           pw.Column(
@@ -2233,7 +2255,7 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Paru",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -2243,7 +2265,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 100,
                                         child: pw.Text("(a) Inspeksi",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2252,14 +2274,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanRonggaDada!.paru!.inspeksiKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanRonggaDada!.paru!.inspeksiKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -2271,7 +2293,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 100,
                                         child: pw.Text("(b) Palpasi",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2280,14 +2302,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanRonggaDada!.paru!.palpasiKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanRonggaDada!.paru!.palpasiKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -2299,7 +2321,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 100,
                                         child: pw.Text("(c) Perkusi",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2308,14 +2330,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanRonggaDada!.paru!.perkusiKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanRonggaDada!.paru!.perkusiKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -2327,7 +2349,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 100,
                                         child: pw.Text("(d) Auskultasi",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2336,14 +2358,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanRonggaDada!.paru!.auskultasiKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanRonggaDada!.paru!.auskultasiKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -2357,7 +2379,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 35),
                           pw.Text("5.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 10),
                           pw.Column(
@@ -2366,7 +2388,7 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Pemeriksaan Rongga Perut",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -2376,7 +2398,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("a. Inspeksi",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2385,7 +2407,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRonggaPerut!.inspeksi}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2398,7 +2420,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("b. Perkusi",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2407,7 +2429,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRonggaPerut!.perkusi}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2420,7 +2442,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("c. Auskultasi",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2429,7 +2451,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRonggaPerut!.auskultasi}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2442,7 +2464,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("d. Hati",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2451,7 +2473,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRonggaPerut!.hati}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2464,7 +2486,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("e. Limpa",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2473,7 +2495,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRonggaPerut!.limpa}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2486,7 +2508,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("f. Ginjal Kiri",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2495,7 +2517,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRonggaPerut!.ginjalKiri}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2504,7 +2526,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Ballotement : ${_pemeriksaanRonggaPerut!.ballotementKiri}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       )
@@ -2517,7 +2539,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("g. Ginjal Kanan",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2526,7 +2548,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRonggaPerut!.ginjalKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2535,7 +2557,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Ballotement : ${_pemeriksaanRonggaPerut!.ballotementKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       )
@@ -2548,7 +2570,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("h. Hernia",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2557,7 +2579,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRonggaPerut!.hernia}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2570,7 +2592,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("i. Tumor",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2579,7 +2601,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRonggaPerut!.tumor}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2592,7 +2614,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("j. Lain - lain",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2601,7 +2623,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRonggaPerut!.lainLain}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2616,7 +2638,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 35),
                           pw.Text("6.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 10),
                           pw.Column(
@@ -2625,7 +2647,7 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Pemeriksaan Gentalia dan Anorektal",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -2635,7 +2657,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("a. Hernia",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2644,7 +2666,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanGentalia!.hernia}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2657,7 +2679,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("b. Haemorhoid",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2666,7 +2688,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanGentalia!.hemorhoid}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2679,7 +2701,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("c. Sikatriks",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2688,7 +2710,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanGentalia!.sikatriks}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2701,7 +2723,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("d. Spincter",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2710,7 +2732,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanGentalia!.spincter}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2723,7 +2745,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("e. Untuk laki-laki",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2731,7 +2753,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 200,
                                         child: pw.Text("",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2745,7 +2767,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "   - Efidymis/testis/prostat",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2754,7 +2776,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanGentalia!.efidymisTestisProstat}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2767,7 +2789,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("   - Ekskresi",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2776,7 +2798,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanGentalia!.ekskresi}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2791,7 +2813,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 35),
                           pw.Text("7.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 10),
                           pw.Column(
@@ -2800,7 +2822,7 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Pemeriksaan Anggota Gerak",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -2810,7 +2832,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("a. Atas kiri / kanan",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2819,14 +2841,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanAnggotaGerak!.atasKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanAnggotaGerak!.atasKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -2838,7 +2860,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("b. Bawah kiri / kanan",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2847,14 +2869,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanAnggotaGerak!.bawahKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanAnggotaGerak!.bawahKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -2866,7 +2888,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("c. Sembab/Oedem",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2875,14 +2897,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanAnggotaGerak!.sembabOedemKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanAnggotaGerak!.sembabOedemKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -2894,7 +2916,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("d. Cacat",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2903,14 +2925,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanAnggotaGerak!.cacatKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanAnggotaGerak!.cacatKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -2924,7 +2946,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 35),
                           pw.Text("8.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 10),
                           pw.Column(
@@ -2933,17 +2955,17 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Pemeriksaan Refleks",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(
                                     mainAxisAlignment: pw.MainAxisAlignment.end,
                                     children: [
-                                      pw.SizedBox(width: 340),
+                                      pw.SizedBox(width: 440),
                                       pw.Container(
                                         width: 65,
                                         child: pw.Text("Kanan",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2951,7 +2973,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 50,
                                         child: pw.Text("Kiri",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2964,7 +2986,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 70,
                                         child: pw.Text("a. Pupil",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2973,7 +2995,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRefleks!.pupil!.pupil}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2981,7 +3003,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 80,
                                         child: pw.Text("Biceps",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2989,7 +3011,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 50,
                                         child: pw.Text(":",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -2998,7 +3020,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "${_pemeriksaanRefleks!.pupil!.bicepsKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.bold)),
                                       ),
@@ -3007,7 +3029,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "${_pemeriksaanRefleks!.pupil!.bicepsKiri}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.bold)),
                                       ),
@@ -3020,7 +3042,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 70,
                                         child: pw.Text("b. Patella",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3029,7 +3051,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRefleks!.patella!.patella}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3037,7 +3059,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 80,
                                         child: pw.Text("Triceps",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3045,7 +3067,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 50,
                                         child: pw.Text(":",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3054,7 +3076,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "${_pemeriksaanRefleks!.patella!.tricepsKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.bold)),
                                       ),
@@ -3063,7 +3085,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "${_pemeriksaanRefleks!.patella!.tricepsKiri}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.bold)),
                                       ),
@@ -3076,7 +3098,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 70,
                                         child: pw.Text("c. Achiles",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3085,7 +3107,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             ": ${_pemeriksaanRefleks!.achilles!.acciles}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3093,7 +3115,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 80,
                                         child: pw.Text("Babinsky",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3101,7 +3123,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 50,
                                         child: pw.Text(":",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3110,7 +3132,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "${_pemeriksaanRefleks!.achilles!.babinskiKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.bold)),
                                       ),
@@ -3119,7 +3141,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "${_pemeriksaanRefleks!.achilles!.babinskiKiri}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.bold)),
                                       ),
@@ -3134,7 +3156,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 35),
                           pw.Text("9.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 10),
                           pw.Column(
@@ -3143,7 +3165,7 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Pemeriksaan Kelenjar Getah Bening",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -3153,7 +3175,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("a. Cervical",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3162,14 +3184,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanKelenjarGetah!.cervicalKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanKelenjarGetah!.cervicalKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -3181,7 +3203,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("b. Axila",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3190,14 +3212,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanKelenjarGetah!.axilaKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanKelenjarGetah!.axilaKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -3209,7 +3231,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("c. Supra Clavicula",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3218,14 +3240,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanKelenjarGetah!.supraclaviculaKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanKelenjarGetah!.supraclaviculaKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -3237,7 +3259,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("d. Infra Clavicula",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3246,14 +3268,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanKelenjarGetah!.infraclaviculaKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanKelenjarGetah!.infraclaviculaKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -3265,7 +3287,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         width: 150,
                                         child: pw.Text("e. Inguinal",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
@@ -3274,14 +3296,14 @@ class _PasienDetailState extends State<PasienDetail> {
                                         child: pw.Text(
                                             "Kanan : ${_pemeriksaanKelenjarGetah!.inguinalKanan}",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.normal)),
                                       ),
                                       pw.Text(
                                           "Kiri : ${_pemeriksaanKelenjarGetah!.inguinalKiri}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ]),
@@ -3339,7 +3361,7 @@ class _PasienDetailState extends State<PasienDetail> {
                           pw.SizedBox(width: 5),
                           pw.Text("A.",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold)),
                           pw.SizedBox(width: 15),
                           pw.Column(
@@ -3348,7 +3370,7 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Riwayat Pajanan Pada Pekerjaan",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -3358,7 +3380,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                     children: [
                                       pw.Text("1.",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight: pw.FontWeight.bold)),
                                       pw.SizedBox(width: 15),
                                       pw.Column(
@@ -3369,68 +3391,68 @@ class _PasienDetailState extends State<PasienDetail> {
                                           children: [
                                             pw.Text("Fisik",
                                                 style: pw.TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 11,
                                                     fontWeight:
                                                         pw.FontWeight.bold)),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text("a. Kebisingan",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
                                               ),
                                               pw.Text(": ${_fisik!.kebisingan}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text("b. Suhu Panas",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
                                               ),
                                               pw.Text(": ${_fisik!.suhuPanas}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text("c. Suhu Dingin",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
                                               ),
                                               pw.Text(": ${_fisik!.suhuDingin}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text(
                                                     "d. Radiasi bukan pengion (gel mikro, infrared, medan listrik, dll)",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3438,18 +3460,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_fisik!.radiasiBukanPengion}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text(
                                                     "e. Radiasi pengion (sinar X, Gamma, dll)",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3457,18 +3479,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_fisik!.radiasiPengion}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text(
                                                     "f. Getaran lokal",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3476,18 +3498,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_fisik!.getaranLokal}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text(
                                                     "g. Getaran seluruh tubuh",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3495,41 +3517,41 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_fisik!.getaranSeluruhTubuh}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text("h. Ketinggian ",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
                                               ),
                                               pw.Text(": ${_fisik!.ketinggian}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text("i. Lain-lain",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
                                               ),
                                               pw.Text(": ${_fisik!.lainLain}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
@@ -3546,7 +3568,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                     children: [
                                       pw.Text("2.",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight: pw.FontWeight.bold)),
                                       pw.SizedBox(width: 15),
                                       pw.Column(
@@ -3557,17 +3579,17 @@ class _PasienDetailState extends State<PasienDetail> {
                                           children: [
                                             pw.Text("Kimia",
                                                 style: pw.TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 11,
                                                     fontWeight:
                                                         pw.FontWeight.bold)),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text(
                                                     "a. Debu anorganik (silika, semen, dll)",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3575,18 +3597,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_kimia!.debuAnorganik ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text(
                                                     "b. Debu organik (kapas,tekstil,gandum)",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3594,35 +3616,35 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_kimia!.debuOrganik ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text("c. Asap",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
                                               ),
                                               pw.Text(": ${_kimia!.asap ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text(
                                                     "d. Bahan Kimia berbahaya",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3630,18 +3652,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_kimia!.logamBerat != null ? "Ya" : "Tidak"}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 20),
                                               pw.Container(
-                                                width: 340,
+                                                width: 440,
                                                 child: pw.Text(
                                                     "- Logam berat (Timah Hitam, Air Raksa, dll)",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3649,18 +3671,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_kimia!.logamBerat ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 20),
                                               pw.Container(
-                                                width: 340,
+                                                width: 440,
                                                 child: pw.Text(
                                                     "- Pelarut organik (Benzene, Alkil, Toluen, dll)",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3668,18 +3690,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_kimia!.pelarutOrganik ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 20),
                                               pw.Container(
-                                                width: 340,
+                                                width: 440,
                                                 child: pw.Text(
                                                     "- Iritan asam (Air keras, Asam Sulfat) ",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3687,18 +3709,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_kimia!.iritanAsam ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 20),
                                               pw.Container(
-                                                width: 340,
+                                                width: 440,
                                                 child: pw.Text(
                                                     "- Iritan basa (Amoniak, Soda api) ",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3706,18 +3728,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_kimia!.iritanBasa ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 20),
                                               pw.Container(
-                                                width: 340,
+                                                width: 440,
                                                 child: pw.Text(
                                                     "- Cairan pembersih (Amonia, Klor, Kaporit)",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3725,17 +3747,17 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_kimia!.cairanPembersih ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 20),
                                               pw.Container(
-                                                width: 340,
+                                                width: 440,
                                                 child: pw.Text("- Pestisida",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3743,18 +3765,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_kimia!.pestisida ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 20),
                                               pw.Container(
-                                                width: 340,
+                                                width: 440,
                                                 child: pw.Text(
                                                     "- Uap Logam (Mangan, Seng)",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3762,17 +3784,17 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_kimia!.uapLogam ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 20),
                                               pw.Container(
-                                                width: 340,
+                                                width: 440,
                                                 child: pw.Text("- Lain-lain",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3780,7 +3802,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_kimia!.lainLain ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
@@ -3795,7 +3817,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                     children: [
                                       pw.Text("3.",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight: pw.FontWeight.bold)),
                                       pw.SizedBox(width: 15),
                                       pw.Column(
@@ -3806,17 +3828,17 @@ class _PasienDetailState extends State<PasienDetail> {
                                           children: [
                                             pw.Text("Biologi",
                                                 style: pw.TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 11,
                                                     fontWeight:
                                                         pw.FontWeight.bold)),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text(
                                                     "a. Bakteri / Virus / Jamur / Parasit",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3824,18 +3846,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_biologi!.bakteri ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text(
                                                     "b. Darah / cairan tubuh lain",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3843,18 +3865,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_biologi!.darah ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text(
                                                     "c. Nyamuk / serangga / lain-lain",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3862,18 +3884,18 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_biologi!.nyamuk ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text(
                                                     "d. Limbah (kotoran manusia / hewan)",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3881,17 +3903,17 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_biologi!.limbah ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
                                             pw.Row(children: [
                                               pw.SizedBox(width: 10),
                                               pw.Container(
-                                                width: 350,
+                                                width: 450,
                                                 child: pw.Text("e. . Lain-lain",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3899,7 +3921,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Text(
                                                   ": ${_biologi!.lainLain ?? ""}",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight: pw
                                                           .FontWeight.normal)),
                                             ]),
@@ -3915,7 +3937,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                       children: [
                                         pw.Text("4.",
                                             style: pw.TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 fontWeight:
                                                     pw.FontWeight.bold)),
                                         pw.SizedBox(width: 15),
@@ -3927,17 +3949,17 @@ class _PasienDetailState extends State<PasienDetail> {
                                             children: [
                                               pw.Text("Psikologis",
                                                   style: pw.TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontWeight:
                                                           pw.FontWeight.bold)),
                                               pw.Row(children: [
                                                 pw.SizedBox(width: 10),
                                                 pw.Container(
-                                                  width: 350,
+                                                  width: 450,
                                                   child: pw.Text(
                                                       "a. Beban Kerja tidak sesuai dengan waktu & jumlah pekerjaan",
                                                       style: pw.TextStyle(
-                                                          fontSize: 10,
+                                                          fontSize: 11,
                                                           fontWeight: pw
                                                               .FontWeight
                                                               .normal)),
@@ -3945,7 +3967,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                 pw.Text(
                                                     ": ${_psikologi!.bebanKerja ?? ""}",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3953,11 +3975,11 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Row(children: [
                                                 pw.SizedBox(width: 10),
                                                 pw.Container(
-                                                  width: 350,
+                                                  width: 450,
                                                   child: pw.Text(
                                                       "b. Pekerjaan tidak sesuai dengan pengetahuan dan keterampilan",
                                                       style: pw.TextStyle(
-                                                          fontSize: 10,
+                                                          fontSize: 11,
                                                           fontWeight: pw
                                                               .FontWeight
                                                               .normal)),
@@ -3965,7 +3987,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                 pw.Text(
                                                     ": ${_psikologi!.pekerjaanTidakSesuai ?? ""}",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3973,11 +3995,11 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Row(children: [
                                                 pw.SizedBox(width: 10),
                                                 pw.Container(
-                                                  width: 350,
+                                                  width: 450,
                                                   child: pw.Text(
                                                       "c. Ketidakjelasan tugas",
                                                       style: pw.TextStyle(
-                                                          fontSize: 10,
+                                                          fontSize: 11,
                                                           fontWeight: pw
                                                               .FontWeight
                                                               .normal)),
@@ -3985,7 +4007,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                 pw.Text(
                                                     ": ${_psikologi!.ketidakjelasanTugas ?? ""}",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -3993,11 +4015,11 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Row(children: [
                                                 pw.SizedBox(width: 10),
                                                 pw.Container(
-                                                  width: 350,
+                                                  width: 450,
                                                   child: pw.Text(
                                                       "d. Hambatan jenjang karir ",
                                                       style: pw.TextStyle(
-                                                          fontSize: 10,
+                                                          fontSize: 11,
                                                           fontWeight: pw
                                                               .FontWeight
                                                               .normal)),
@@ -4005,7 +4027,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                 pw.Text(
                                                     ": ${_psikologi!.hamabatanJenjangKarir ?? ""}",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -4013,11 +4035,11 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Row(children: [
                                                 pw.SizedBox(width: 10),
                                                 pw.Container(
-                                                  width: 350,
+                                                  width: 450,
                                                   child: pw.Text(
                                                       "e. Bekerja giliran (shift) ",
                                                       style: pw.TextStyle(
-                                                          fontSize: 10,
+                                                          fontSize: 11,
                                                           fontWeight: pw
                                                               .FontWeight
                                                               .normal)),
@@ -4025,7 +4047,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                 pw.Text(
                                                     ": ${_psikologi!.shift ?? ""}",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -4033,11 +4055,11 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Row(children: [
                                                 pw.SizedBox(width: 10),
                                                 pw.Container(
-                                                  width: 350,
+                                                  width: 450,
                                                   child: pw.Text(
                                                       "f. Konflik dengan teman sekerja",
                                                       style: pw.TextStyle(
-                                                          fontSize: 10,
+                                                          fontSize: 11,
                                                           fontWeight: pw
                                                               .FontWeight
                                                               .normal)),
@@ -4045,7 +4067,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                 pw.Text(
                                                     ": ${_psikologi!.konflikRekanKerja ?? ""}",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -4053,11 +4075,11 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Row(children: [
                                                 pw.SizedBox(width: 10),
                                                 pw.Container(
-                                                  width: 350,
+                                                  width: 450,
                                                   child: pw.Text(
                                                       "g. Konflik dalam keluarga",
                                                       style: pw.TextStyle(
-                                                          fontSize: 10,
+                                                          fontSize: 11,
                                                           fontWeight: pw
                                                               .FontWeight
                                                               .normal)),
@@ -4065,7 +4087,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                 pw.Text(
                                                     ": ${_psikologi!.konflikKeluarga ?? ""}",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -4073,11 +4095,11 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.Row(children: [
                                                 pw.SizedBox(width: 10),
                                                 pw.Container(
-                                                  width: 350,
+                                                  width: 450,
                                                   child: pw.Text(
                                                       "h. Lain-lain ",
                                                       style: pw.TextStyle(
-                                                          fontSize: 10,
+                                                          fontSize: 11,
                                                           fontWeight: pw
                                                               .FontWeight
                                                               .normal)),
@@ -4085,7 +4107,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                 pw.Text(
                                                     ": ${_psikologi!.lainLain ?? ""}",
                                                     style: pw.TextStyle(
-                                                        fontSize: 10,
+                                                        fontSize: 11,
                                                         fontWeight: pw
                                                             .FontWeight
                                                             .normal)),
@@ -4104,7 +4126,7 @@ class _PasienDetailState extends State<PasienDetail> {
                             pw.SizedBox(width: 35),
                             pw.Text("5.",
                                 style: pw.TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     fontWeight: pw.FontWeight.bold)),
                             pw.SizedBox(width: 15),
                             pw.Column(
@@ -4113,139 +4135,139 @@ class _PasienDetailState extends State<PasienDetail> {
                                 children: [
                                   pw.Text("Ergonomis",
                                       style: pw.TextStyle(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: pw.FontWeight.bold)),
                                   pw.Row(children: [
                                     pw.SizedBox(width: 10),
                                     pw.Container(
-                                      width: 350,
+                                      width: 450,
                                       child: pw.Text(
                                           "a. Gerakan berulang dengan tangan",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
                                     pw.Text(
                                         ": ${_ergonomis!.gerakanBerulang ?? ""}",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ]),
                                   pw.Row(children: [
                                     pw.SizedBox(width: 10),
                                     pw.Container(
-                                      width: 350,
+                                      width: 450,
                                       child: pw.Text(
                                           "b. Angkat / angkut berat ",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
                                     pw.Text(
                                         ": ${_ergonomis!.angkatBerat ?? ""}",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ]),
                                   pw.Row(children: [
                                     pw.SizedBox(width: 10),
                                     pw.Container(
-                                      width: 350,
+                                      width: 450,
                                       child: pw.Text(
                                           "c. Duduk lama > 4 jam terus menerus",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
                                     pw.Text(": ${_ergonomis!.dudukLama ?? ""}",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ]),
                                   pw.Row(children: [
                                     pw.SizedBox(width: 10),
                                     pw.Container(
-                                      width: 350,
+                                      width: 450,
                                       child: pw.Text(
                                           "d. Berdiri lama > 4 jam terus menerus",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
                                     pw.Text(
                                         ": ${_ergonomis!.berdiriLama ?? ""}",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ]),
                                   pw.Row(children: [
                                     pw.SizedBox(width: 10),
                                     pw.Container(
-                                      width: 350,
+                                      width: 450,
                                       child: pw.Text(
                                           "e. Posisi tubuh tidak ergonomis",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
                                     pw.Text(
                                         ": ${_ergonomis!.posisiTubuh ?? ""}",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ]),
                                   pw.Row(children: [
                                     pw.SizedBox(width: 10),
                                     pw.Container(
-                                      width: 350,
+                                      width: 450,
                                       child: pw.Text(
                                           "f. Pencahayaan tidak sesuai",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
                                     pw.Text(
                                         ": ${_ergonomis!.pencahayaanTidakSesuai ?? ""}",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ]),
                                   pw.Row(children: [
                                     pw.SizedBox(width: 10),
                                     pw.Container(
-                                      width: 350,
+                                      width: 450,
                                       child: pw.Text(
                                           "g. Bekerja dengan layar / monitor 4 jam / lebih dalam sehari",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
                                     pw.Text(
                                         ": ${_ergonomis!.bekerjaDenganLayar ?? ""}",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ]),
                                   pw.Row(children: [
                                     pw.SizedBox(width: 10),
                                     pw.Container(
-                                      width: 350,
+                                      width: 450,
                                       child: pw.Text("h. Lain-lain ",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                     ),
                                     pw.Text(": ${_ergonomis!.lainLain ?? ""}",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.normal)),
                                   ]),
                                 ])
@@ -4359,14 +4381,11 @@ class _PasienDetailState extends State<PasienDetail> {
                             ? pw.Container()
                             : pw.Container(
                                 width: 700,
-                                height: 350,
-                                decoration: pw.BoxDecoration(
-                                    border:
-                                        pw.Border.all(color: PdfColors.black)),
+                                height: 450,
                                 child: pw.Image(
                                   pw.MemoryImage(
                                       base64Decode(_hasilFisik!.image!)),
-                                  fit: pw.BoxFit.fill,
+                                  fit: pw.BoxFit.contain,
                                 ),
                               ),
                         pw.SizedBox(height: 10),
@@ -4482,14 +4501,11 @@ class _PasienDetailState extends State<PasienDetail> {
                             ? pw.Container()
                             : pw.Container(
                                 width: 700,
-                                height: 350,
-                                decoration: pw.BoxDecoration(
-                                    border:
-                                        pw.Border.all(color: PdfColors.black)),
+                                height: 450,
                                 child: pw.Image(
                                   pw.MemoryImage(
                                       base64Decode(_hasilMata!.image!)),
-                                  fit: pw.BoxFit.fill,
+                                  fit: pw.BoxFit.contain,
                                 ),
                               ),
                         pw.SizedBox(height: 10),
@@ -4606,14 +4622,11 @@ class _PasienDetailState extends State<PasienDetail> {
                             ? pw.Container()
                             : pw.Container(
                                 width: 700,
-                                height: 350,
-                                decoration: pw.BoxDecoration(
-                                    border:
-                                        pw.Border.all(color: PdfColors.black)),
+                                height: 450,
                                 child: pw.Image(
                                   pw.MemoryImage(
                                       base64Decode(_hasilGigiMulut!.image!)),
-                                  fit: pw.BoxFit.fill,
+                                  fit: pw.BoxFit.contain,
                                 ),
                               ),
                         pw.SizedBox(height: 10),
@@ -4730,14 +4743,11 @@ class _PasienDetailState extends State<PasienDetail> {
                             ? pw.Container()
                             : pw.Container(
                                 width: 700,
-                                height: 350,
-                                decoration: pw.BoxDecoration(
-                                    border:
-                                        pw.Border.all(color: PdfColors.black)),
+                                height: 450,
                                 child: pw.Image(
                                   pw.MemoryImage(
                                       base64Decode(_hasilAudiometri!.image!)),
-                                  fit: pw.BoxFit.fill,
+                                  fit: pw.BoxFit.contain,
                                 ),
                               ),
                         pw.SizedBox(height: 10),
@@ -4854,14 +4864,11 @@ class _PasienDetailState extends State<PasienDetail> {
                             ? pw.Container()
                             : pw.Container(
                                 width: 700,
-                                height: 350,
-                                decoration: pw.BoxDecoration(
-                                    border:
-                                        pw.Border.all(color: PdfColors.black)),
+                                height: 450,
                                 child: pw.Image(
                                   pw.MemoryImage(
                                       base64Decode(_hasilSpirometri!.image!)),
-                                  fit: pw.BoxFit.fill,
+                                  fit: pw.BoxFit.contain,
                                 ),
                               ),
                         pw.SizedBox(height: 10),
@@ -4978,14 +4985,11 @@ class _PasienDetailState extends State<PasienDetail> {
                             ? pw.Container()
                             : pw.Container(
                                 width: 700,
-                                height: 350,
-                                decoration: pw.BoxDecoration(
-                                    border:
-                                        pw.Border.all(color: PdfColors.black)),
+                                height: 450,
                                 child: pw.Image(
                                   pw.MemoryImage(
                                       base64Decode(_hasilTreadmill!.image!)),
-                                  fit: pw.BoxFit.fill,
+                                  fit: pw.BoxFit.contain,
                                 ),
                               ),
                         pw.SizedBox(height: 10),
@@ -5102,14 +5106,11 @@ class _PasienDetailState extends State<PasienDetail> {
                             ? pw.Container()
                             : pw.Container(
                                 width: 700,
-                                height: 350,
-                                decoration: pw.BoxDecoration(
-                                    border:
-                                        pw.Border.all(color: PdfColors.black)),
+                                height: 450,
                                 child: pw.Image(
                                   pw.MemoryImage(
                                       base64Decode(_hasilLaboratorium!.image!)),
-                                  fit: pw.BoxFit.fill,
+                                  fit: pw.BoxFit.contain,
                                 ),
                               ),
                         pw.SizedBox(height: 10),
@@ -5225,14 +5226,11 @@ class _PasienDetailState extends State<PasienDetail> {
                             ? pw.Container()
                             : pw.Container(
                                 width: 700,
-                                height: 350,
-                                decoration: pw.BoxDecoration(
-                                    border:
-                                        pw.Border.all(color: PdfColors.black)),
+                                height: 450,
                                 child: pw.Image(
                                   pw.MemoryImage(
                                       base64Decode(_hasilJantung!.image!)),
-                                  fit: pw.BoxFit.fill,
+                                  fit: pw.BoxFit.contain,
                                 ),
                               ),
                         pw.SizedBox(height: 10),
@@ -5348,19 +5346,376 @@ class _PasienDetailState extends State<PasienDetail> {
                             ? pw.Container()
                             : pw.Container(
                                 width: 700,
-                                height: 350,
-                                decoration: pw.BoxDecoration(
-                                    border:
-                                        pw.Border.all(color: PdfColors.black)),
+                                height: 450,
                                 child: pw.Image(
                                   pw.MemoryImage(
                                       base64Decode(_hasilParu!.image!)),
-                                  fit: pw.BoxFit.fill,
+                                  fit: pw.BoxFit.contain,
                                 ),
                               ),
                         pw.SizedBox(height: 10),
                         pw.Row(children: [
                           pw.Text(_hasilParu!.keterangan!,
+                              style: pw.TextStyle(fontSize: 12)),
+                        ])
+                      ]))
+                ];
+              }));
+
+      _hasilUsg == null
+          ? null
+          : pdf.addPage(pw.MultiPage(
+              pageFormat: PdfPageFormat.a4,
+              margin: pw.EdgeInsets.all(0),
+              maxPages: 20,
+              header: (context) {
+                return pw.Container(
+                  width: 1000,
+                  height: 80,
+                  margin: pw.EdgeInsets.only(bottom: 10),
+                  decoration: pw.BoxDecoration(),
+                  child: pw.ClipRRect(
+                    child: pw.Container(
+                      child: pw.Image(
+                        pw.MemoryImage(headerImage),
+                        fit: pw.BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                );
+              },
+              footer: (context) {
+                return pw.Container(
+                  width: 1000,
+                  height: 80,
+                  decoration: pw.BoxDecoration(),
+                  child: pw.ClipRRect(
+                    child: pw.Container(
+                      child: pw.Image(
+                        pw.MemoryImage(footerImage),
+                        fit: pw.BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                );
+              },
+              build: (pw.Context context) {
+                return [
+                  pw.Container(
+                      padding: pw.EdgeInsets.all(20),
+                      child: pw.Column(children: [
+                        pw.Text(_hasilParu!.judul!,
+                            style: pw.TextStyle(
+                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                        pw.SizedBox(height: 20),
+                        pw.Row(
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                            mainAxisAlignment:
+                                pw.MainAxisAlignment.spaceBetween,
+                            children: [
+                              pw.Row(children: [
+                                pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text("Nama Pasien",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text("Umur",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text("J.Kelamin",
+                                          style: pw.TextStyle(fontSize: 12))
+                                    ]),
+                                pw.SizedBox(width: 20),
+                                pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text(": ${_pasien!.nama}",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text(": ${_pasien!.umur}",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text(": ${_pasien!.jenisKelamin}",
+                                          style: pw.TextStyle(fontSize: 12))
+                                    ])
+                              ]),
+                              pw.Row(children: [
+                                pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text(_hasilUsg!.dokterApa!,
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text("Tanggal Pemeriksaan",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                    ]),
+                                pw.SizedBox(width: 20),
+                                pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text(": ${_hasilUsg!.namaDokter!}",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text(
+                                          ": ${_pasien!.tanggalPemeriksaan}",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                    ])
+                              ])
+                            ]),
+                        pw.SizedBox(height: 10),
+                        _hasilUsg!.image! == ""
+                            ? pw.Container()
+                            : pw.Container(
+                                width: 700,
+                                height: 450,
+                                child: pw.Image(
+                                  pw.MemoryImage(
+                                      base64Decode(_hasilUsg!.image!)),
+                                  fit: pw.BoxFit.contain,
+                                ),
+                              ),
+                        pw.SizedBox(height: 10),
+                        pw.Row(children: [
+                          pw.Text(_hasilUsg!.keterangan!,
+                              style: pw.TextStyle(fontSize: 12)),
+                        ])
+                      ]))
+                ];
+              }));
+
+      _hasilNapfa == null
+          ? null
+          : pdf.addPage(pw.MultiPage(
+              pageFormat: PdfPageFormat.a4,
+              margin: pw.EdgeInsets.all(0),
+              maxPages: 20,
+              header: (context) {
+                return pw.Container(
+                  width: 1000,
+                  height: 80,
+                  margin: pw.EdgeInsets.only(bottom: 10),
+                  decoration: pw.BoxDecoration(),
+                  child: pw.ClipRRect(
+                    child: pw.Container(
+                      child: pw.Image(
+                        pw.MemoryImage(headerImage),
+                        fit: pw.BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                );
+              },
+              footer: (context) {
+                return pw.Container(
+                  width: 1000,
+                  height: 80,
+                  decoration: pw.BoxDecoration(),
+                  child: pw.ClipRRect(
+                    child: pw.Container(
+                      child: pw.Image(
+                        pw.MemoryImage(footerImage),
+                        fit: pw.BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                );
+              },
+              build: (pw.Context context) {
+                return [
+                  pw.Container(
+                      padding: pw.EdgeInsets.all(20),
+                      child: pw.Column(children: [
+                        pw.Text(_hasilParu!.judul!,
+                            style: pw.TextStyle(
+                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                        pw.SizedBox(height: 20),
+                        pw.Row(
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                            mainAxisAlignment:
+                                pw.MainAxisAlignment.spaceBetween,
+                            children: [
+                              pw.Row(children: [
+                                pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text("Nama Pasien",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text("Umur",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text("J.Kelamin",
+                                          style: pw.TextStyle(fontSize: 12))
+                                    ]),
+                                pw.SizedBox(width: 20),
+                                pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text(": ${_pasien!.nama}",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text(": ${_pasien!.umur}",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text(": ${_pasien!.jenisKelamin}",
+                                          style: pw.TextStyle(fontSize: 12))
+                                    ])
+                              ]),
+                              pw.Row(children: [
+                                pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text(_hasilNapfa!.dokterApa!,
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text("Tanggal Pemeriksaan",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                    ]),
+                                pw.SizedBox(width: 20),
+                                pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text(": ${_hasilNapfa!.namaDokter!}",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text(
+                                          ": ${_pasien!.tanggalPemeriksaan}",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                    ])
+                              ])
+                            ]),
+                        pw.SizedBox(height: 10),
+                        _hasilNapfa!.image! == ""
+                            ? pw.Container()
+                            : pw.Container(
+                                width: 700,
+                                height: 450,
+                                child: pw.Image(
+                                  pw.MemoryImage(
+                                      base64Decode(_hasilNapfa!.image!)),
+                                  fit: pw.BoxFit.contain,
+                                ),
+                              ),
+                        pw.SizedBox(height: 10),
+                        pw.Row(children: [
+                          pw.Text(_hasilNapfa!.keterangan!,
+                              style: pw.TextStyle(fontSize: 12)),
+                        ])
+                      ]))
+                ];
+              }));
+
+      _hasilNapza == null
+          ? null
+          : pdf.addPage(pw.MultiPage(
+              pageFormat: PdfPageFormat.a4,
+              margin: pw.EdgeInsets.all(0),
+              maxPages: 20,
+              header: (context) {
+                return pw.Container(
+                  width: 1000,
+                  height: 80,
+                  margin: pw.EdgeInsets.only(bottom: 10),
+                  decoration: pw.BoxDecoration(),
+                  child: pw.ClipRRect(
+                    child: pw.Container(
+                      child: pw.Image(
+                        pw.MemoryImage(headerImage),
+                        fit: pw.BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                );
+              },
+              footer: (context) {
+                return pw.Container(
+                  width: 1000,
+                  height: 80,
+                  decoration: pw.BoxDecoration(),
+                  child: pw.ClipRRect(
+                    child: pw.Container(
+                      child: pw.Image(
+                        pw.MemoryImage(footerImage),
+                        fit: pw.BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                );
+              },
+              build: (pw.Context context) {
+                return [
+                  pw.Container(
+                      padding: pw.EdgeInsets.all(20),
+                      child: pw.Column(children: [
+                        pw.Text(_hasilParu!.judul!,
+                            style: pw.TextStyle(
+                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                        pw.SizedBox(height: 20),
+                        pw.Row(
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                            mainAxisAlignment:
+                                pw.MainAxisAlignment.spaceBetween,
+                            children: [
+                              pw.Row(children: [
+                                pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text("Nama Pasien",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text("Umur",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text("J.Kelamin",
+                                          style: pw.TextStyle(fontSize: 12))
+                                    ]),
+                                pw.SizedBox(width: 20),
+                                pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text(": ${_pasien!.nama}",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text(": ${_pasien!.umur}",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text(": ${_pasien!.jenisKelamin}",
+                                          style: pw.TextStyle(fontSize: 12))
+                                    ])
+                              ]),
+                              pw.Row(children: [
+                                pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text(_hasilNapza!.dokterApa!,
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text("Tanggal Pemeriksaan",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                    ]),
+                                pw.SizedBox(width: 20),
+                                pw.Column(
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Text(": ${_hasilNapza!.namaDokter!}",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                      pw.Text(
+                                          ": ${_pasien!.tanggalPemeriksaan}",
+                                          style: pw.TextStyle(fontSize: 12)),
+                                    ])
+                              ])
+                            ]),
+                        pw.SizedBox(height: 10),
+                        _hasilNapza!.image! == ""
+                            ? pw.Container()
+                            : pw.Container(
+                                width: 700,
+                                height: 450,
+                                child: pw.Image(
+                                  pw.MemoryImage(
+                                      base64Decode(_hasilNapza!.image!)),
+                                  fit: pw.BoxFit.contain,
+                                ),
+                              ),
+                        pw.SizedBox(height: 10),
+                        pw.Row(children: [
+                          pw.Text(_hasilNapza!.keterangan!,
                               style: pw.TextStyle(fontSize: 12)),
                         ])
                       ]))
@@ -5414,11 +5769,11 @@ class _PasienDetailState extends State<PasienDetail> {
                           width: 240,
                           child: pw.Text("PEMERIKSAAN FISIK",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold))),
                       pw.Text(": ${_pemeriksaan!.pemeriksaanFisik}",
                           style: pw.TextStyle(
-                              fontSize: 10, fontWeight: pw.FontWeight.normal))
+                              fontSize: 11, fontWeight: pw.FontWeight.normal))
                     ]),
                     pw.Row(children: [
                       pw.SizedBox(width: 10),
@@ -5426,11 +5781,11 @@ class _PasienDetailState extends State<PasienDetail> {
                           width: 240,
                           child: pw.Text("PEMERIKSAAN MATA",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold))),
                       pw.Text(": ${_pemeriksaan!.pemeriksaanMata}",
                           style: pw.TextStyle(
-                              fontSize: 10, fontWeight: pw.FontWeight.normal))
+                              fontSize: 11, fontWeight: pw.FontWeight.normal))
                     ]),
                     pw.Row(children: [
                       pw.SizedBox(width: 10),
@@ -5438,11 +5793,11 @@ class _PasienDetailState extends State<PasienDetail> {
                           width: 240,
                           child: pw.Text("PEMERIKSAAN GIGI & MULUT",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold))),
                       pw.Text(": ${_pemeriksaan!.pemeriksaanGigiMulut}",
                           style: pw.TextStyle(
-                              fontSize: 10, fontWeight: pw.FontWeight.normal))
+                              fontSize: 11, fontWeight: pw.FontWeight.normal))
                     ]),
                     pw.Row(children: [
                       pw.SizedBox(width: 10),
@@ -5450,11 +5805,11 @@ class _PasienDetailState extends State<PasienDetail> {
                           width: 240,
                           child: pw.Text("PEMERIKSAAN AUDIOMETRI",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold))),
                       pw.Text(": ${_pemeriksaan!.pemeriksaanAudioMetri}",
                           style: pw.TextStyle(
-                              fontSize: 10, fontWeight: pw.FontWeight.normal))
+                              fontSize: 11, fontWeight: pw.FontWeight.normal))
                     ]),
                     pw.Row(children: [
                       pw.SizedBox(width: 10),
@@ -5462,11 +5817,11 @@ class _PasienDetailState extends State<PasienDetail> {
                           width: 240,
                           child: pw.Text("PEMERIKSAAN SPIROMETRI",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold))),
                       pw.Text(": ${_pemeriksaan!.pemeriksaanSpirometri}",
                           style: pw.TextStyle(
-                              fontSize: 10, fontWeight: pw.FontWeight.normal))
+                              fontSize: 11, fontWeight: pw.FontWeight.normal))
                     ]),
                     pw.Row(children: [
                       pw.SizedBox(width: 10),
@@ -5474,11 +5829,11 @@ class _PasienDetailState extends State<PasienDetail> {
                           width: 240,
                           child: pw.Text("PEMERIKSAAN TREADMILL/EKG",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold))),
                       pw.Text(": ${_pemeriksaan!.pemeriksaanTreadmill}",
                           style: pw.TextStyle(
-                              fontSize: 10, fontWeight: pw.FontWeight.normal))
+                              fontSize: 11, fontWeight: pw.FontWeight.normal))
                     ]),
                     pw.Row(children: [
                       pw.SizedBox(width: 10),
@@ -5486,11 +5841,11 @@ class _PasienDetailState extends State<PasienDetail> {
                           width: 240,
                           child: pw.Text("PEMERIKSAAN LABORATORIUM",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.bold))),
                       pw.Text(": ${_pemeriksaan!.pemeriksaanLaboratorium}",
                           style: pw.TextStyle(
-                              fontSize: 10, fontWeight: pw.FontWeight.normal))
+                              fontSize: 11, fontWeight: pw.FontWeight.normal))
                     ]),
                     pw.Row(
                         mainAxisAlignment: pw.MainAxisAlignment.start,
@@ -5505,7 +5860,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                     width: 240,
                                     child: pw.Text("PEMERIKSAAN X RAY",
                                         style: pw.TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             fontWeight: pw.FontWeight.bold))),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -5518,13 +5873,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                           width: 230,
                                           child: pw.Text("1. JANTUNG",
                                               style: pw.TextStyle(
-                                                  fontSize: 10,
+                                                  fontSize: 11,
                                                   fontWeight:
                                                       pw.FontWeight.bold))),
                                       pw.Text(
                                           ": ${_pemeriksaan!.pemeriksaanXrayJantung}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight: pw.FontWeight.normal))
                                     ]),
                                 pw.Row(
@@ -5538,12 +5893,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                           width: 230,
                                           child: pw.Text("2. PARU",
                                               style: pw.TextStyle(
-                                                  fontSize: 10,
+                                                  fontSize: 11,
                                                   fontWeight:
                                                       pw.FontWeight.bold))),
                                       pw.Text(": ${_pemeriksaan!.paru}",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight: pw.FontWeight.normal))
                                     ]),
                               ])
@@ -5557,11 +5912,11 @@ class _PasienDetailState extends State<PasienDetail> {
                               width: 240,
                               child: pw.Text("ANJURAN-ANJURAN",
                                   style: pw.TextStyle(
-                                      fontSize: 10,
+                                      fontSize: 11,
                                       fontWeight: pw.FontWeight.bold))),
                           pw.Text(":",
                               style: pw.TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: pw.FontWeight.normal)),
                           pw.SizedBox(width: 5),
                           pw.Column(
@@ -5642,45 +5997,45 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("KESIMPULAN KELAYAKAN KERJA",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Text(
                                     _kelayakanKerja!.layakBekerjaSesuaiPosisi ==
                                             "Ya"
-                                        ? "(v) : Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini"
-                                        : "(x) : Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini",
+                                        ? "(v) : Laik Bekerja Sesuai Posisi dan Lokasi Saat Ini"
+                                        : "(  ) : Laik Bekerja Sesuai Posisi dan Lokasi Saat Ini",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
                                     _kelayakanKerja!
                                                 .layakBekerjaDenganCatatan ==
                                             "Ya"
-                                        ? "(v) : Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini, Dengan Catatan"
-                                        : "(x) : Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini, Dengan Catatan",
+                                        ? "(v) : Laik Bekerja Sesuai Posisi dan Lokasi Saat Ini, Dengan Catatan"
+                                        : "(  ) : Laik Bekerja Sesuai Posisi dan Lokasi Saat Ini, Dengan Catatan",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
                                     _kelayakanKerja!
                                                 .layakBekerjaDenganPenyesuaian ==
                                             "Ya"
-                                        ? "(v) : Layak Bekerja Dengan Penyesuaian dan atau Pembatasan Pekerjaan"
-                                        : "(x) : Layak Bekerja Dengan Penyesuaian dan atau Pembatasan Pekerjaan",
+                                        ? "(v) : Laik Bekerja Dengan Penyesuaian dan atau Pembatasan Pekerjaan"
+                                        : "(  ) : Laik Bekerja Dengan Penyesuaian dan atau Pembatasan Pekerjaan",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
                                     _kelayakanKerja!.layakuntukBekerja == "Ya"
-                                        ? "(v) : Layak Untuk Bekerja"
-                                        : "(x) : Layak Untuk Bekerja",
+                                        ? "(v) : Tidak Laik Untuk Bekerja"
+                                        : "(  ) : Tidak Laik Untuk Bekerja",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
                                     "Resiko Cardiovaskuler : ${_kelayakanKerja!.resikoCardioVascular}",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                               ])
                         ]),
@@ -5696,57 +6051,57 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("KESIMPULAN DERAJAT KESEHATAN :",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 // pw.Text(
                                 //     "Lingkar Perut : ${_kesimpulanDerajatKesehatan!.lingkarPerut}",
                                 //     style: pw.TextStyle(
-                                //         fontSize: 10,
+                                //         fontSize: 11,
                                 //         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
                                     _kesimpulanDerajatKesehatan!
                                                 .ditemukanKelainanMedis ==
                                             "Ya"
-                                        ? "(x) : P1. Tidak ditemukan kelainan medis"
+                                        ? "(  ) : P1. Tidak ditemukan kelainan medis"
                                         : "(v) : P1. Tidak ditemukan kelainan medis",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
                                     _kesimpulanDerajatKesehatan!
                                                 .ditemukanKelainanYangTidakSerius ==
                                             "Ya"
                                         ? "(v) : P2. Ditemukan kelainan medis yang tidak serius"
-                                        : "(x) : P2. Ditemukan kelainan medis yang tidak serius",
+                                        : "(  ) : P2. Ditemukan kelainan medis yang tidak serius",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
                                     _kesimpulanDerajatKesehatan!
                                                 .ditemukanKelainanResikoKesehatanRendah ==
                                             "Ya"
                                         ? "(v) : P3. Ditemukan kelainan medis, resiko kesehatan rendah"
-                                        : "(x) : P3. Ditemukan kelainan medis, resiko kesehatan rendah",
+                                        : "(  ) : P3. Ditemukan kelainan medis, resiko kesehatan rendah",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
                                     _kesimpulanDerajatKesehatan!
                                                 .ditemukanKelainanResikoKesehatanSedang ==
                                             "Ya"
                                         ? "(v) : P4. Ditemukan kelainan medis bermakna yang dapat menjadi serius, resiko kesehatan sedang"
-                                        : "(x) : P4. Ditemukan kelainan medis bermakna yang dapat menjadi serius, resiko kesehatan sedang",
+                                        : "(  ) : P4. Ditemukan kelainan medis bermakna yang dapat menjadi serius, resiko kesehatan sedang",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
                                     _kesimpulanDerajatKesehatan!
                                                 .ditemukanKelainanResikoKesehatanTinggi ==
                                             "Ya"
                                         ? "(v) : P5. Ditemukan kelainan medis yang serius, resiko kesehatan tinggi"
-                                        : "(x) : P5. Ditemukan kelainan medis yang serius, resiko kesehatan tinggi",
+                                        : "(  ) : P5. Ditemukan kelainan medis yang serius, resiko kesehatan tinggi",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Row(
                                     mainAxisAlignment:
@@ -5759,9 +6114,9 @@ class _PasienDetailState extends State<PasienDetail> {
                                                       .ditemukanKelainanMenyebabkanKeterbatasan ==
                                                   "Ya"
                                               ? "(v) : "
-                                              : "(x) : ",
+                                              : "(  ) : ",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                       pw.Column(
@@ -5773,13 +6128,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                             pw.Text(
                                                 "P6. Ditemukan kelainan medis yang menyebabkan keterbatasan fisik maupun psikis untuk",
                                                 style: pw.TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 11,
                                                     fontWeight:
                                                         pw.FontWeight.normal)),
                                             pw.Text(
                                                 "melakukan sesuai jabatan/posisinya",
                                                 style: pw.TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 11,
                                                     fontWeight:
                                                         pw.FontWeight.normal)),
                                           ])
@@ -5795,9 +6150,9 @@ class _PasienDetailState extends State<PasienDetail> {
                                                       .tidakDapatBekerja ==
                                                   "Ya"
                                               ? "(v) : "
-                                              : "(x) : ",
+                                              : "(  ) : ",
                                           style: pw.TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight:
                                                   pw.FontWeight.normal)),
                                       pw.Column(
@@ -5809,13 +6164,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                             pw.Text(
                                                 " P7. Tidak dapat bekerja untuk melakukan pekerjaan sesuai jabatan/posisinya dan/atau posisi apapun, ",
                                                 style: pw.TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 11,
                                                     fontWeight:
                                                         pw.FontWeight.normal)),
                                             pw.Text(
                                                 "Dalam perawatan rumah sakit, atau dalam status ijin sakit",
                                                 style: pw.TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 11,
                                                     fontWeight:
                                                         pw.FontWeight.normal)),
                                           ])
@@ -5834,11 +6189,11 @@ class _PasienDetailState extends State<PasienDetail> {
                               children: [
                                 pw.Text("Lhokseumawe, $tanggal",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text("Dokter Penanggung Jawab MCU",
                                     style: pw.TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                               ])
                         ])
@@ -5860,7 +6215,7 @@ class _PasienDetailState extends State<PasienDetail> {
                     pw.SizedBox(width: 50),
                     pw.Text("dr. Rajab Saputra",
                         style: pw.TextStyle(
-                            fontSize: 10,
+                            fontSize: 11,
                             fontWeight: pw.FontWeight.bold,
                             decoration: pw.TextDecoration.underline)),
                   ]),
@@ -5871,7 +6226,7 @@ class _PasienDetailState extends State<PasienDetail> {
                     pw.SizedBox(width: 45),
                     pw.Text("NO.SIP.503/055/2021",
                         style: pw.TextStyle(
-                          fontSize: 10,
+                          fontSize: 11,
                           fontWeight: pw.FontWeight.bold,
                         )),
                   ])
@@ -6355,6 +6710,55 @@ class _PasienDetailState extends State<PasienDetail> {
                     ];
                   }));
 
+      pdf.addPage(pw.MultiPage(
+          pageFormat: PdfPageFormat.a4,
+          margin: pw.EdgeInsets.all(0),
+          maxPages: 20,
+          header: (context) {
+            return pw.Container(
+              width: 1000,
+              height: 80,
+              margin: pw.EdgeInsets.only(bottom: 10),
+              decoration: pw.BoxDecoration(),
+              child: pw.ClipRRect(
+                child: pw.Container(
+                  child: pw.Image(
+                    pw.MemoryImage(headerImage),
+                    fit: pw.BoxFit.fill,
+                  ),
+                ),
+              ),
+            );
+          },
+          footer: (context) {
+            return pw.Container(
+              width: 1000,
+              height: 80,
+              decoration: pw.BoxDecoration(),
+              child: pw.ClipRRect(
+                child: pw.Container(
+                  child: pw.Image(
+                    pw.MemoryImage(footerImage),
+                    fit: pw.BoxFit.fill,
+                  ),
+                ),
+              ),
+            );
+          },
+          build: (pw.Context context) {
+            return [
+              pw.Container(
+                  margin: pw.EdgeInsets.all(10),
+                  width: 600,
+                  height: 620,
+                  child: pw.Center(
+                    child: pw.Image(
+                      pw.MemoryImage(skjImage),
+                    ),
+                  )),
+            ];
+          }));
+
       if (kIsWeb) {
         final bytes = await pdf.save();
         final blob = htmm.Blob([bytes], 'application/pdf');
@@ -6377,1617 +6781,1618 @@ class _PasienDetailState extends State<PasienDetail> {
       });
     }
 
-    return Scaffold(
-      appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: blueDefault,
-          title: Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return MenuUtama();
+        }));
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: blueDefault,
+            title: Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return MenuUtama();
+                    }));
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              textDefault("Hasil MCU", Colors.white, 20, FontWeight.bold),
-            ],
-          )),
-      body: isLoading == false
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Container(
-              padding: EdgeInsets.all(20),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        textDefault("Anamnesa dan Pemeriksaan Fisik",
-                            blueDefault, 18, FontWeight.bold)
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
+                SizedBox(
+                  width: 10,
+                ),
+                textDefault("Hasil MCU", Colors.white, 20, FontWeight.bold),
+              ],
+            )),
+        body: isLoading == false
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                padding: EdgeInsets.all(20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                boolProfilPasien = !boolProfilPasien;
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                textDefault("Profil Pasien", Colors.black, 14,
-                                    FontWeight.normal),
-                                boolProfilPasien
-                                    ? InkWell(
-                                        onTap: () async {
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          prefs.setString('detail1', "value");
-                                          Navigator.pushReplacement(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return AddPasienProfil(
-                                                idPasien: widget.idPasien);
-                                          }));
-                                        },
-                                        child: Icon(Icons.edit))
-                                    : Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                          ),
-                          boolProfilPasien ? listProfilePasien() : Container()
+                          textDefault("Anamnesa dan Pemeriksaan Fisik",
+                              blueDefault, 18, FontWeight.bold)
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                boolRiwayatPenTerdahulu =
-                                    !boolRiwayatPenTerdahulu;
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                textDefault("Riwayat Penyakit Terdahulu",
-                                    Colors.black, 14, FontWeight.normal),
-                                boolRiwayatPenTerdahulu
-                                    ? InkWell(
-                                        onTap: () async {
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          prefs.setString('detail1', "value");
-                                          Navigator.pushReplacement(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return PenyakitTerdahulu1(
-                                                idPasien: widget.idPasien);
-                                          }));
-                                        },
-                                        child: Icon(Icons.edit))
-                                    : Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                          ),
-                          boolRiwayatPenTerdahulu
-                              ? listPenyakitTerdahulu()
-                              : Container()
-                        ],
+                      SizedBox(
+                        height: 10,
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                boolRiyatPenKeluarga = !boolRiyatPenKeluarga;
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                textDefault("Riwayat Penyakit Keluarga",
-                                    Colors.black, 14, FontWeight.normal),
-                                boolRiyatPenKeluarga
-                                    ? InkWell(
-                                        onTap: () async {
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          prefs.setString('detail1', "value");
-                                          Navigator.pushReplacement(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return PenyakitKeluarga(
-                                                idPasien: widget.idPasien);
-                                          }));
-                                        },
-                                        child: Icon(Icons.edit))
-                                    : Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                          ),
-                          boolRiyatPenKeluarga
-                              ? listPenyakitKeluarga()
-                              : Container()
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                boolRiwayatKebiasaan = !boolRiwayatKebiasaan;
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                textDefault("Riwayat Kebiasaan", Colors.black,
-                                    14, FontWeight.normal),
-                                boolRiwayatKebiasaan
-                                    ? InkWell(
-                                        onTap: () async {
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          prefs.setString('detail1', "value");
-                                          Navigator.pushReplacement(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return RiwwayatKebiasaan3(
-                                                idPasien: widget.idPasien);
-                                          }));
-                                        },
-                                        child: Icon(Icons.edit))
-                                    : Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                          ),
-                          boolRiwayatKebiasaan
-                              ? listRiwayatKebiasaan()
-                              : Container()
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                boolKeluhanSekarang = !boolKeluhanSekarang;
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                textDefault("Keluhan Sekarang", Colors.black,
-                                    14, FontWeight.normal),
-                                Icon(boolKeluhanSekarang
-                                    ? Icons.arrow_drop_up
-                                    : Icons.arrow_drop_down)
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    boolKeluhanSekarang == false
-                        ? Container()
-                        : Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 10),
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Column(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          boolKeadaanUmum = !boolKeadaanUmum;
-                                        });
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          textDefault(
-                                              "Keadaan Umum",
-                                              Colors.black,
-                                              14,
-                                              FontWeight.normal),
-                                          Icon(boolKeadaanUmum
-                                              ? Icons.arrow_drop_up
-                                              : Icons.arrow_drop_down)
-                                        ],
-                                      ),
-                                    ),
-                                    boolKeadaanUmum == false
-                                        ? Container()
-                                        : Column(
-                                            children: [
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolPemeriksaanUmum =
-                                                              !boolPemeriksaanUmum;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Pemeriksaan Umum",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolPemeriksaanUmum
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return PemeriksaanUmum(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolPemeriksaanUmum
-                                                        ? listPemeriksaanUmum()
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolPemeriksaanMata =
-                                                              !boolPemeriksaanMata;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Pemeriksaan Mata",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolPemeriksaanMata
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return PemeriksaanMata(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolPemeriksaanMata
-                                                        ? listPemeriksaanMata()
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolPemeriksaanTHT =
-                                                              !boolPemeriksaanTHT;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Pemeriksaan THT",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolPemeriksaanTHT
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return PemeriksaanTHT(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolPemeriksaanTHT == false
-                                                        ? Container()
-                                                        : Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        10),
-                                                            child: Column(
-                                                              children: [
-                                                                Divider(
-                                                                  thickness: 1,
-                                                                ),
-                                                                Container(
-                                                                  child: Column(
-                                                                    children: [
-                                                                      InkWell(
-                                                                        onTap:
-                                                                            () {
-                                                                          setState(
-                                                                              () {
-                                                                            boolTelinga =
-                                                                                !boolTelinga;
-                                                                          });
-                                                                        },
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            textDefault(
-                                                                                "Pemeriksaan Telinga",
-                                                                                Colors.black,
-                                                                                14,
-                                                                                FontWeight.normal),
-                                                                            boolTelinga
-                                                                                ? InkWell(
-                                                                                    onTap: () async {
-                                                                                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                                                                                      prefs.setString('detail1', "value");
-                                                                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                                                                                        return PemeriksaanTHT(idPasien: widget.idPasien);
-                                                                                      }));
-                                                                                    },
-                                                                                    child: Icon(Icons.edit))
-                                                                                : Icon(Icons.arrow_drop_down)
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                      boolTelinga ==
-                                                                              false
-                                                                          ? Container()
-                                                                          : listTelinga()
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Divider(
-                                                                  thickness: 1,
-                                                                ),
-                                                                Container(
-                                                                  child: Column(
-                                                                    children: [
-                                                                      InkWell(
-                                                                        onTap:
-                                                                            () {
-                                                                          setState(
-                                                                              () {
-                                                                            boolHidung =
-                                                                                !boolHidung;
-                                                                          });
-                                                                        },
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            textDefault(
-                                                                                "Pemeriksaan Hidung",
-                                                                                Colors.black,
-                                                                                14,
-                                                                                FontWeight.normal),
-                                                                            boolHidung
-                                                                                ? InkWell(
-                                                                                    onTap: () async {
-                                                                                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                                                                                      prefs.setString('detail1', "value");
-                                                                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                                                                                        return PemeriksaanTHT(idPasien: widget.idPasien);
-                                                                                      }));
-                                                                                    },
-                                                                                    child: Icon(Icons.edit))
-                                                                                : Icon(Icons.arrow_drop_down)
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                      boolHidung
-                                                                          ? listHidung()
-                                                                          : Container()
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Divider(
-                                                                  thickness: 1,
-                                                                ),
-                                                                Container(
-                                                                  child: Column(
-                                                                    children: [
-                                                                      InkWell(
-                                                                        onTap:
-                                                                            () {
-                                                                          setState(
-                                                                              () {
-                                                                            boolKerongkongan =
-                                                                                !boolKerongkongan;
-                                                                          });
-                                                                        },
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            textDefault(
-                                                                                "Pemeriksaan Kerongkongan",
-                                                                                Colors.black,
-                                                                                14,
-                                                                                FontWeight.normal),
-                                                                            boolKerongkongan
-                                                                                ? InkWell(
-                                                                                    onTap: () async {
-                                                                                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                                                                                      prefs.setString('detail1', "value");
-                                                                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                                                                                        return PemeriksaanTHT(idPasien: widget.idPasien);
-                                                                                      }));
-                                                                                    },
-                                                                                    child: Icon(Icons.edit))
-                                                                                : Icon(Icons.arrow_drop_down)
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                      boolKerongkongan
-                                                                          ? listKerongkongan()
-                                                                          : Container()
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          )
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolPemeriksaanRonggaDada =
-                                                              !boolPemeriksaanRonggaDada;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Pemeriksaan Rongga Dada",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolPemeriksaanRonggaDada
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return PemeriksaanRonggaDada(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolPemeriksaanRonggaDada ==
-                                                            false
-                                                        ? Container()
-                                                        : Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        10),
-                                                            child: Column(
-                                                              children: [
-                                                                Divider(
-                                                                  thickness: 1,
-                                                                ),
-                                                                Container(
-                                                                  child: Column(
-                                                                    children: [
-                                                                      InkWell(
-                                                                        onTap:
-                                                                            () {
-                                                                          setState(
-                                                                              () {
-                                                                            boolJantung =
-                                                                                !boolJantung;
-                                                                          });
-                                                                        },
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            textDefault(
-                                                                                "Jantung",
-                                                                                Colors.black,
-                                                                                14,
-                                                                                FontWeight.normal),
-                                                                            boolJantung
-                                                                                ? InkWell(
-                                                                                    onTap: () async {
-                                                                                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                                                                                      prefs.setString('detail1', "value");
-                                                                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                                                                                        return PemeriksaanRonggaDada(idPasien: widget.idPasien);
-                                                                                      }));
-                                                                                    },
-                                                                                    child: Icon(Icons.edit))
-                                                                                : Icon(Icons.arrow_drop_down)
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                      boolJantung
-                                                                          ? listJantung()
-                                                                          : Container()
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Divider(
-                                                                  thickness: 1,
-                                                                ),
-                                                                Container(
-                                                                  child: Column(
-                                                                    children: [
-                                                                      InkWell(
-                                                                        onTap:
-                                                                            () {
-                                                                          setState(
-                                                                              () {
-                                                                            boolParu =
-                                                                                !boolParu;
-                                                                          });
-                                                                        },
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            textDefault(
-                                                                                "Paru",
-                                                                                Colors.black,
-                                                                                14,
-                                                                                FontWeight.normal),
-                                                                            boolParu
-                                                                                ? InkWell(
-                                                                                    onTap: () async {
-                                                                                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                                                                                      prefs.setString('detail1', "value");
-                                                                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                                                                                        return PemeriksaanRonggaDada(idPasien: widget.idPasien);
-                                                                                      }));
-                                                                                    },
-                                                                                    child: Icon(Icons.edit))
-                                                                                : Icon(Icons.arrow_drop_down)
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                      boolParu
-                                                                          ? listParu()
-                                                                          : Container()
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          )
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolPemeriksaanRonggaPerut =
-                                                              !boolPemeriksaanRonggaPerut;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Pemeriksaan Rongga Perut",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolPemeriksaanRonggaPerut
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return PemeriksaanRonggaPerut(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolPemeriksaanRonggaPerut
-                                                        ? listRonggaPerut()
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolPemeriksaanGentalia =
-                                                              !boolPemeriksaanGentalia;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Pemeriksaan Gentalia dan Anokretal",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolPemeriksaanGentalia
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return PemeriksaanGentalia(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolPemeriksaanGentalia
-                                                        ? listGentalia()
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolPemeriksaanAnggotaGerak =
-                                                              !boolPemeriksaanAnggotaGerak;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Pemeriksaan Anggota Gerak",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolPemeriksaanAnggotaGerak
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return PemeriksaanAnggotaGerak(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolPemeriksaanAnggotaGerak
-                                                        ? listAnggotaGerak()
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolPemeriksaanRefleks =
-                                                              !boolPemeriksaanRefleks;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Pemeriksaan Refleks",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolPemeriksaanRefleks
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return PemeriksaanRefleks(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolPemeriksaanRefleks
-                                                        ? listRefleks()
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolPemeriksaanKelenjarGetah =
-                                                              !boolPemeriksaanKelenjarGetah;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Pemeriksaan Kelenjar Getah Bening",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolPemeriksaanKelenjarGetah
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return PemeriksaanKelenjarGetah(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolPemeriksaanKelenjarGetah
-                                                        ? listKelenjarGetah()
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 10),
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Column(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          boolRiwayatPajanan =
-                                              !boolRiwayatPajanan;
-                                        });
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          textDefault(
-                                              "Riwayat Pajanan Pada Pekerjaan",
-                                              Colors.black,
-                                              14,
-                                              FontWeight.normal),
-                                          Icon(boolRiwayatPajanan
-                                              ? Icons.arrow_drop_up
-                                              : Icons.arrow_drop_down)
-                                        ],
-                                      ),
-                                    ),
-                                    boolRiwayatPajanan == false
-                                        ? Container()
-                                        : Column(
-                                            children: [
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolFisik =
-                                                              !boolFisik;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Fisik",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolFisik
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return Fisik(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolFisik
-                                                        ? listFisik()
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolKimia =
-                                                              !boolKimia;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Kimia",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolKimia
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return Kimia(
-                                                                          pasienId:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolKimia
-                                                        ? listKimia()
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolBiologi =
-                                                              !boolBiologi;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Biologi",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolBiologi
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return Biologi(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolBiologi
-                                                        ? listBiologi()
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolPsikologis =
-                                                              !boolPsikologis;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Psikologis",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolPsikologis
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return Psikologis(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolPsikologis
-                                                        ? listPsikologis()
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 1,
-                                              ),
-                                              Container(
-                                                child: Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          boolErgonomis =
-                                                              !boolErgonomis;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          textDefault(
-                                                              "Ergonomis",
-                                                              Colors.black,
-                                                              14,
-                                                              FontWeight
-                                                                  .normal),
-                                                          boolErgonomis
-                                                              ? InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    SharedPreferences
-                                                                        prefs =
-                                                                        await SharedPreferences
-                                                                            .getInstance();
-                                                                    prefs.setString(
-                                                                        'detail1',
-                                                                        "value");
-                                                                    Navigator.pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(builder:
-                                                                            (context) {
-                                                                      return Ergonomis(
-                                                                          idPasien:
-                                                                              widget.idPasien);
-                                                                    }));
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit))
-                                                              : Icon(Icons
-                                                                  .arrow_drop_down)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    boolErgonomis
-                                                        ? listErgonomis()
-                                                        : Container()
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                            ],
-                          ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                boolPemeriksaan = !boolPemeriksaan;
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                textDefault("Pemeriksaan", Colors.black, 14,
-                                    FontWeight.normal),
-                                boolPemeriksaan
-                                    ? InkWell(
-                                        onTap: () async {
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          prefs.setString('detail1', "value");
-                                          Navigator.pushReplacement(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return Pemeriksaan5(
-                                                idPasien: widget.idPasien);
-                                          }));
-                                        },
-                                        child: Icon(Icons.edit))
-                                    : Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                          ),
-                          boolPemeriksaan ? listPemeriksaan() : Container()
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                boolAnjuran = !boolAnjuran;
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                textDefault("Anjuran-Anjuran", Colors.black, 14,
-                                    FontWeight.normal),
-                                boolAnjuran
-                                    ? InkWell(
-                                        onTap: () async {
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          prefs.setString('detail1', "value");
-                                          Navigator.pushReplacement(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return Anjuran6(
-                                                idPasien: widget.idPasien);
-                                          }));
-                                        },
-                                        child: Icon(Icons.edit))
-                                    : Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                          ),
-                          boolAnjuran ? listAnjuran() : Container()
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                boolKesimpulanKelayakan =
-                                    !boolKesimpulanKelayakan;
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                textDefault("Kesimpulan Kelayakan Kerja",
-                                    Colors.black, 14, FontWeight.normal),
-                                boolKesimpulanKelayakan
-                                    ? InkWell(
-                                        onTap: () async {
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          prefs.setString('detail1', "value");
-                                          Navigator.pushReplacement(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return KesimpulanKelayakan7(
-                                                idPasien: widget.idPasien);
-                                          }));
-                                        },
-                                        child: Icon(Icons.edit))
-                                    : Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                          ),
-                          boolKesimpulanKelayakan
-                              ? listKesimpulanKelayakan()
-                              : Container()
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                boolKesimpulanDerajat = !boolKesimpulanDerajat;
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                textDefault("Kesimpulan Derajat Kesehatan",
-                                    Colors.black, 14, FontWeight.normal),
-                                boolKesimpulanDerajat
-                                    ? InkWell(
-                                        onTap: () async {
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          prefs.setString('detail1', "value");
-                                          Navigator.pushReplacement(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return KesimpulanDerajat8(
-                                                idPasien: widget.idPasien);
-                                          }));
-                                        },
-                                        child: Icon(Icons.edit))
-                                    : Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                          ),
-                          boolKesimpulanDerajat
-                              ? listKesimpulanDerajat()
-                              : Container()
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          btnLoading = true;
-                        });
-                        getHasilPDFMCU();
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                      Container(
+                        padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            color: blueDefault,
-                            borderRadius: BorderRadius.circular(100)),
-                        child: Center(
-                          child: btnLoading
-                              ? Container(
-                                  width: 25,
-                                  height: 25,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ))
-                              : textDefault("Download Hasil MCU", Colors.white,
-                                  14, FontWeight.normal),
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  boolProfilPasien = !boolProfilPasien;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  textDefault("Profil Pasien", Colors.black, 14,
+                                      FontWeight.normal),
+                                  boolProfilPasien
+                                      ? InkWell(
+                                          onTap: () async {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.setString('detail1', "value");
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return AddPasienProfil(
+                                                  idPasien: widget.idPasien);
+                                            }));
+                                          },
+                                          child: Icon(Icons.edit))
+                                      : Icon(Icons.arrow_drop_down)
+                                ],
+                              ),
+                            ),
+                            boolProfilPasien ? listProfilePasien() : Container()
+                          ],
                         ),
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  boolRiwayatPenTerdahulu =
+                                      !boolRiwayatPenTerdahulu;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  textDefault("Riwayat Penyakit Terdahulu",
+                                      Colors.black, 14, FontWeight.normal),
+                                  boolRiwayatPenTerdahulu
+                                      ? InkWell(
+                                          onTap: () async {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.setString('detail1', "value");
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return PenyakitTerdahulu1(
+                                                  idPasien: widget.idPasien);
+                                            }));
+                                          },
+                                          child: Icon(Icons.edit))
+                                      : Icon(Icons.arrow_drop_down)
+                                ],
+                              ),
+                            ),
+                            boolRiwayatPenTerdahulu
+                                ? listPenyakitTerdahulu()
+                                : Container()
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  boolRiyatPenKeluarga = !boolRiyatPenKeluarga;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  textDefault("Riwayat Penyakit Keluarga",
+                                      Colors.black, 14, FontWeight.normal),
+                                  boolRiyatPenKeluarga
+                                      ? InkWell(
+                                          onTap: () async {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.setString('detail1', "value");
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return PenyakitKeluarga(
+                                                  idPasien: widget.idPasien);
+                                            }));
+                                          },
+                                          child: Icon(Icons.edit))
+                                      : Icon(Icons.arrow_drop_down)
+                                ],
+                              ),
+                            ),
+                            boolRiyatPenKeluarga
+                                ? listPenyakitKeluarga()
+                                : Container()
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  boolRiwayatKebiasaan = !boolRiwayatKebiasaan;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  textDefault("Riwayat Kebiasaan", Colors.black,
+                                      14, FontWeight.normal),
+                                  boolRiwayatKebiasaan
+                                      ? InkWell(
+                                          onTap: () async {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.setString('detail1', "value");
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return RiwwayatKebiasaan3(
+                                                  idPasien: widget.idPasien);
+                                            }));
+                                          },
+                                          child: Icon(Icons.edit))
+                                      : Icon(Icons.arrow_drop_down)
+                                ],
+                              ),
+                            ),
+                            boolRiwayatKebiasaan
+                                ? listRiwayatKebiasaan()
+                                : Container()
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  boolKeluhanSekarang = !boolKeluhanSekarang;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  textDefault("Keluhan Sekarang", Colors.black,
+                                      14, FontWeight.normal),
+                                  Icon(boolKeluhanSekarang
+                                      ? Icons.arrow_drop_up
+                                      : Icons.arrow_drop_down)
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      boolKeluhanSekarang == false
+                          ? Container()
+                          : Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 10),
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Column(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            boolKeadaanUmum = !boolKeadaanUmum;
+                                          });
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Keadaan Umum",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Icon(boolKeadaanUmum
+                                                ? Icons.arrow_drop_up
+                                                : Icons.arrow_drop_down)
+                                          ],
+                                        ),
+                                      ),
+                                      boolKeadaanUmum == false
+                                          ? Container()
+                                          : Column(
+                                              children: [
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolPemeriksaanUmum =
+                                                                !boolPemeriksaanUmum;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Pemeriksaan Umum",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolPemeriksaanUmum
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return PemeriksaanUmum(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolPemeriksaanUmum
+                                                          ? listPemeriksaanUmum()
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolPemeriksaanMata =
+                                                                !boolPemeriksaanMata;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Pemeriksaan Mata",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolPemeriksaanMata
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return PemeriksaanMata(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolPemeriksaanMata
+                                                          ? listPemeriksaanMata()
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolPemeriksaanTHT =
+                                                                !boolPemeriksaanTHT;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Pemeriksaan THT",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolPemeriksaanTHT
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return PemeriksaanTHT(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolPemeriksaanTHT ==
+                                                              false
+                                                          ? Container()
+                                                          : Padding(
+                                                              padding: const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      10),
+                                                              child: Column(
+                                                                children: [
+                                                                  Divider(
+                                                                    thickness:
+                                                                        1,
+                                                                  ),
+                                                                  Container(
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        InkWell(
+                                                                          onTap:
+                                                                              () {
+                                                                            setState(() {
+                                                                              boolTelinga = !boolTelinga;
+                                                                            });
+                                                                          },
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              textDefault("Pemeriksaan Telinga", Colors.black, 14, FontWeight.normal),
+                                                                              boolTelinga
+                                                                                  ? InkWell(
+                                                                                      onTap: () async {
+                                                                                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                                                                                        prefs.setString('detail1', "value");
+                                                                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                                                                                          return PemeriksaanTHT(idPasien: widget.idPasien);
+                                                                                        }));
+                                                                                      },
+                                                                                      child: Icon(Icons.edit))
+                                                                                  : Icon(Icons.arrow_drop_down)
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        boolTelinga ==
+                                                                                false
+                                                                            ? Container()
+                                                                            : listTelinga()
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  Divider(
+                                                                    thickness:
+                                                                        1,
+                                                                  ),
+                                                                  Container(
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        InkWell(
+                                                                          onTap:
+                                                                              () {
+                                                                            setState(() {
+                                                                              boolHidung = !boolHidung;
+                                                                            });
+                                                                          },
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              textDefault("Pemeriksaan Hidung", Colors.black, 14, FontWeight.normal),
+                                                                              boolHidung
+                                                                                  ? InkWell(
+                                                                                      onTap: () async {
+                                                                                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                                                                                        prefs.setString('detail1', "value");
+                                                                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                                                                                          return PemeriksaanTHT(idPasien: widget.idPasien);
+                                                                                        }));
+                                                                                      },
+                                                                                      child: Icon(Icons.edit))
+                                                                                  : Icon(Icons.arrow_drop_down)
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        boolHidung
+                                                                            ? listHidung()
+                                                                            : Container()
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  Divider(
+                                                                    thickness:
+                                                                        1,
+                                                                  ),
+                                                                  Container(
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        InkWell(
+                                                                          onTap:
+                                                                              () {
+                                                                            setState(() {
+                                                                              boolKerongkongan = !boolKerongkongan;
+                                                                            });
+                                                                          },
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              textDefault("Pemeriksaan Kerongkongan", Colors.black, 14, FontWeight.normal),
+                                                                              boolKerongkongan
+                                                                                  ? InkWell(
+                                                                                      onTap: () async {
+                                                                                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                                                                                        prefs.setString('detail1', "value");
+                                                                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                                                                                          return PemeriksaanTHT(idPasien: widget.idPasien);
+                                                                                        }));
+                                                                                      },
+                                                                                      child: Icon(Icons.edit))
+                                                                                  : Icon(Icons.arrow_drop_down)
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        boolKerongkongan
+                                                                            ? listKerongkongan()
+                                                                            : Container()
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            )
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolPemeriksaanRonggaDada =
+                                                                !boolPemeriksaanRonggaDada;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Pemeriksaan Rongga Dada",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolPemeriksaanRonggaDada
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return PemeriksaanRonggaDada(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolPemeriksaanRonggaDada ==
+                                                              false
+                                                          ? Container()
+                                                          : Padding(
+                                                              padding: const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      10),
+                                                              child: Column(
+                                                                children: [
+                                                                  Divider(
+                                                                    thickness:
+                                                                        1,
+                                                                  ),
+                                                                  Container(
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        InkWell(
+                                                                          onTap:
+                                                                              () {
+                                                                            setState(() {
+                                                                              boolJantung = !boolJantung;
+                                                                            });
+                                                                          },
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              textDefault("Jantung", Colors.black, 14, FontWeight.normal),
+                                                                              boolJantung
+                                                                                  ? InkWell(
+                                                                                      onTap: () async {
+                                                                                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                                                                                        prefs.setString('detail1', "value");
+                                                                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                                                                                          return PemeriksaanRonggaDada(idPasien: widget.idPasien);
+                                                                                        }));
+                                                                                      },
+                                                                                      child: Icon(Icons.edit))
+                                                                                  : Icon(Icons.arrow_drop_down)
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        boolJantung
+                                                                            ? listJantung()
+                                                                            : Container()
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  Divider(
+                                                                    thickness:
+                                                                        1,
+                                                                  ),
+                                                                  Container(
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        InkWell(
+                                                                          onTap:
+                                                                              () {
+                                                                            setState(() {
+                                                                              boolParu = !boolParu;
+                                                                            });
+                                                                          },
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              textDefault("Paru", Colors.black, 14, FontWeight.normal),
+                                                                              boolParu
+                                                                                  ? InkWell(
+                                                                                      onTap: () async {
+                                                                                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                                                                                        prefs.setString('detail1', "value");
+                                                                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                                                                                          return PemeriksaanRonggaDada(idPasien: widget.idPasien);
+                                                                                        }));
+                                                                                      },
+                                                                                      child: Icon(Icons.edit))
+                                                                                  : Icon(Icons.arrow_drop_down)
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        boolParu
+                                                                            ? listParu()
+                                                                            : Container()
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            )
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolPemeriksaanRonggaPerut =
+                                                                !boolPemeriksaanRonggaPerut;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Pemeriksaan Rongga Perut",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolPemeriksaanRonggaPerut
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return PemeriksaanRonggaPerut(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolPemeriksaanRonggaPerut
+                                                          ? listRonggaPerut()
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolPemeriksaanGentalia =
+                                                                !boolPemeriksaanGentalia;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Pemeriksaan Gentalia dan Anokretal",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolPemeriksaanGentalia
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return PemeriksaanGentalia(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolPemeriksaanGentalia
+                                                          ? listGentalia()
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolPemeriksaanAnggotaGerak =
+                                                                !boolPemeriksaanAnggotaGerak;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Pemeriksaan Anggota Gerak",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolPemeriksaanAnggotaGerak
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return PemeriksaanAnggotaGerak(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolPemeriksaanAnggotaGerak
+                                                          ? listAnggotaGerak()
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolPemeriksaanRefleks =
+                                                                !boolPemeriksaanRefleks;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Pemeriksaan Refleks",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolPemeriksaanRefleks
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return PemeriksaanRefleks(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolPemeriksaanRefleks
+                                                          ? listRefleks()
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolPemeriksaanKelenjarGetah =
+                                                                !boolPemeriksaanKelenjarGetah;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Pemeriksaan Kelenjar Getah Bening",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolPemeriksaanKelenjarGetah
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return PemeriksaanKelenjarGetah(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolPemeriksaanKelenjarGetah
+                                                          ? listKelenjarGetah()
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 10),
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Column(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            boolRiwayatPajanan =
+                                                !boolRiwayatPajanan;
+                                          });
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Riwayat Pajanan Pada Pekerjaan",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Icon(boolRiwayatPajanan
+                                                ? Icons.arrow_drop_up
+                                                : Icons.arrow_drop_down)
+                                          ],
+                                        ),
+                                      ),
+                                      boolRiwayatPajanan == false
+                                          ? Container()
+                                          : Column(
+                                              children: [
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolFisik =
+                                                                !boolFisik;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Fisik",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolFisik
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return Fisik(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolFisik
+                                                          ? listFisik()
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolKimia =
+                                                                !boolKimia;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Kimia",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolKimia
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return Kimia(
+                                                                            pasienId:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolKimia
+                                                          ? listKimia()
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolBiologi =
+                                                                !boolBiologi;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Biologi",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolBiologi
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return Biologi(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolBiologi
+                                                          ? listBiologi()
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolPsikologis =
+                                                                !boolPsikologis;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Psikologis",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolPsikologis
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return Psikologis(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolPsikologis
+                                                          ? listPsikologis()
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1,
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            boolErgonomis =
+                                                                !boolErgonomis;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            textDefault(
+                                                                "Ergonomis",
+                                                                Colors.black,
+                                                                14,
+                                                                FontWeight
+                                                                    .normal),
+                                                            boolErgonomis
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      SharedPreferences
+                                                                          prefs =
+                                                                          await SharedPreferences
+                                                                              .getInstance();
+                                                                      prefs.setString(
+                                                                          'detail1',
+                                                                          "value");
+                                                                      Navigator.pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return Ergonomis(
+                                                                            idPasien:
+                                                                                widget.idPasien);
+                                                                      }));
+                                                                    },
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit))
+                                                                : Icon(Icons
+                                                                    .arrow_drop_down)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      boolErgonomis
+                                                          ? listErgonomis()
+                                                          : Container()
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                              ],
+                            ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  boolPemeriksaan = !boolPemeriksaan;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  textDefault("Pemeriksaan", Colors.black, 14,
+                                      FontWeight.normal),
+                                  boolPemeriksaan
+                                      ? InkWell(
+                                          onTap: () async {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.setString('detail1', "value");
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return Pemeriksaan5(
+                                                  idPasien: widget.idPasien);
+                                            }));
+                                          },
+                                          child: Icon(Icons.edit))
+                                      : Icon(Icons.arrow_drop_down)
+                                ],
+                              ),
+                            ),
+                            boolPemeriksaan ? listPemeriksaan() : Container()
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  boolAnjuran = !boolAnjuran;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  textDefault("Anjuran-Anjuran", Colors.black,
+                                      14, FontWeight.normal),
+                                  boolAnjuran
+                                      ? InkWell(
+                                          onTap: () async {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.setString('detail1', "value");
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return Anjuran6(
+                                                  idPasien: widget.idPasien);
+                                            }));
+                                          },
+                                          child: Icon(Icons.edit))
+                                      : Icon(Icons.arrow_drop_down)
+                                ],
+                              ),
+                            ),
+                            boolAnjuran ? listAnjuran() : Container()
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  boolKesimpulanKelayakan =
+                                      !boolKesimpulanKelayakan;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  textDefault("Kesimpulan Kelayakan Kerja",
+                                      Colors.black, 14, FontWeight.normal),
+                                  boolKesimpulanKelayakan
+                                      ? InkWell(
+                                          onTap: () async {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.setString('detail1', "value");
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return KesimpulanKelayakan7(
+                                                  idPasien: widget.idPasien);
+                                            }));
+                                          },
+                                          child: Icon(Icons.edit))
+                                      : Icon(Icons.arrow_drop_down)
+                                ],
+                              ),
+                            ),
+                            boolKesimpulanKelayakan
+                                ? listKesimpulanKelayakan()
+                                : Container()
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  boolKesimpulanDerajat =
+                                      !boolKesimpulanDerajat;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  textDefault("Kesimpulan Derajat Kesehatan",
+                                      Colors.black, 14, FontWeight.normal),
+                                  boolKesimpulanDerajat
+                                      ? InkWell(
+                                          onTap: () async {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.setString('detail1', "value");
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return KesimpulanDerajat8(
+                                                  idPasien: widget.idPasien);
+                                            }));
+                                          },
+                                          child: Icon(Icons.edit))
+                                      : Icon(Icons.arrow_drop_down)
+                                ],
+                              ),
+                            ),
+                            boolKesimpulanDerajat
+                                ? listKesimpulanDerajat()
+                                : Container()
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            btnLoading = true;
+                          });
+                          getHasilPDFMCU();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          decoration: BoxDecoration(
+                              color: blueDefault,
+                              borderRadius: BorderRadius.circular(100)),
+                          child: Center(
+                            child: btnLoading
+                                ? Container(
+                                    width: 25,
+                                    height: 25,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ))
+                                : textDefault("Download Hasil MCU",
+                                    Colors.white, 14, FontWeight.normal),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
+      ),
     );
   }
 
@@ -8481,6 +8886,35 @@ class _PasienDetailState extends State<PasienDetail> {
               child: Container(
                 child: textDefault("${_penyakitTerdahulu!.patahTulang}",
                     Colors.black, 12, FontWeight.normal),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                child: textDefault(
+                    "Diabetes", Colors.black, 12, FontWeight.normal),
+              ),
+            ),
+            Container(
+              child: textDefault(":  ", Colors.black, 12, FontWeight.normal),
+            ),
+            Expanded(
+              child: Container(
+                child: textDefault(
+                    _penyakitTerdahulu!.diabetes == null
+                        ? ""
+                        : "${_penyakitTerdahulu!.diabetes}",
+                    Colors.black,
+                    12,
+                    FontWeight.normal),
               ),
             ),
           ],
@@ -9075,8 +9509,11 @@ class _PasienDetailState extends State<PasienDetail> {
             ),
             Expanded(
               child: Container(
-                child: textDefault("${_pemeriksaanUmum!.tekananDarah}",
-                    Colors.black, 12, FontWeight.normal),
+                child: textDefault(
+                    "${_pemeriksaanUmum!.tekananDarah}/${_pemeriksaanUmum!.tekananDarahDistole == null ? "" : _pemeriksaanUmum!.tekananDarahDistole}",
+                    Colors.black,
+                    12,
+                    FontWeight.normal),
               ),
             ),
           ],
@@ -12386,6 +12823,35 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
+                    "Aktivitas Fisik", Colors.black, 12, FontWeight.normal),
+              ),
+            ),
+            Container(
+              child: textDefault(":  ", Colors.black, 12, FontWeight.normal),
+            ),
+            Expanded(
+              child: Container(
+                child: textDefault(
+                    _pemeriksaan!.aktivitasFisik == null
+                        ? ""
+                        : "${_pemeriksaan!.aktivitasFisik}",
+                    Colors.black,
+                    12,
+                    FontWeight.normal),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                child: textDefault(
                     "Pemeriksaan Fisik", Colors.black, 12, FontWeight.normal),
               ),
             ),
@@ -12395,6 +12861,30 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault("${_pemeriksaan!.pemeriksaanFisik}",
+                    Colors.black, 12, FontWeight.normal),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                child: textDefault(
+                    "Pemeriksaan Mata", Colors.black, 12, FontWeight.normal),
+              ),
+            ),
+            Container(
+              child: textDefault(":  ", Colors.black, 12, FontWeight.normal),
+            ),
+            Expanded(
+              child: Container(
+                child: textDefault("${_pemeriksaan!.pemeriksaanMata}",
                     Colors.black, 12, FontWeight.normal),
               ),
             ),
@@ -12570,12 +13060,99 @@ class _PasienDetailState extends State<PasienDetail> {
         SizedBox(
           height: 5,
         ),
-        _hasilFisik == null
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                child: textDefault(
+                    "Pemeriksaan USG", Colors.black, 12, FontWeight.normal),
+              ),
+            ),
+            Container(
+              child: textDefault(":  ", Colors.black, 12, FontWeight.normal),
+            ),
+            Expanded(
+              child: Container(
+                child: textDefault(
+                    _pemeriksaan!.pemeriksaanUsg == null
+                        ? ""
+                        : "${_pemeriksaan!.pemeriksaanUsg}",
+                    Colors.black,
+                    12,
+                    FontWeight.normal),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                child: textDefault(
+                    "Pemeriksaan NAPFA", Colors.black, 12, FontWeight.normal),
+              ),
+            ),
+            Container(
+              child: textDefault(":  ", Colors.black, 12, FontWeight.normal),
+            ),
+            Expanded(
+              child: Container(
+                child: textDefault(
+                    _pemeriksaan!.pemeriksaanNapfa == null
+                        ? ""
+                        : "${_pemeriksaan!.pemeriksaanNapfa}",
+                    Colors.black,
+                    12,
+                    FontWeight.normal),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                child: textDefault(
+                    "Pemeriksaan NAPZA", Colors.black, 12, FontWeight.normal),
+              ),
+            ),
+            Container(
+              child: textDefault(":  ", Colors.black, 12, FontWeight.normal),
+            ),
+            Expanded(
+              child: Container(
+                child: textDefault(
+                    _pemeriksaan!.pemeriksaanNapza == null
+                        ? ""
+                        : "${_pemeriksaan!.pemeriksaanNapza}",
+                    Colors.black,
+                    12,
+                    FontWeight.normal),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        _pemeriksaan!.pemeriksaanFisik == ""
             ? Container()
             : Divider(
                 thickness: 1,
               ),
-        _hasilFisik == null
+        _pemeriksaan!.pemeriksaanFisik == ""
             ? Container()
             : Container(
                 child: Column(
@@ -12616,16 +13193,25 @@ class _PasienDetailState extends State<PasienDetail> {
                         ],
                       ),
                     ),
-                    boolHasilFisik ? listHasilPemeriksaan() : Container()
+                    boolHasilFisik
+                        ? _hasilFisik == null
+                            ? listHasilPemeriksaan("", "", "", "", "")
+                            : listHasilPemeriksaan(
+                                "${_hasilFisik!.judul!}",
+                                "${_hasilFisik!.dokterApa!}",
+                                "${_hasilFisik!.namaDokter!}",
+                                _hasilFisik!.image! == "" ? "" : "[FOTO]",
+                                "${_hasilFisik!.keterangan!}")
+                        : Container()
                   ],
                 ),
               ),
-        _hasilMata == null
+        _pemeriksaan!.pemeriksaanMata == ""
             ? Container()
             : Divider(
                 thickness: 1,
               ),
-        _hasilMata == null
+        _pemeriksaan!.pemeriksaanMata == ""
             ? Container()
             : Container(
                 child: Column(
@@ -12666,16 +13252,25 @@ class _PasienDetailState extends State<PasienDetail> {
                         ],
                       ),
                     ),
-                    boolHasilMata ? listHasilPemeriksaan() : Container()
+                    boolHasilMata
+                        ? _hasilMata == null
+                            ? listHasilPemeriksaan("", "", "", "", "")
+                            : listHasilPemeriksaan(
+                                _hasilMata!.judul!,
+                                _hasilMata!.dokterApa!,
+                                _hasilMata!.namaDokter!,
+                                _hasilMata!.image! == "" ? "" : "[FOTO]",
+                                _hasilMata!.keterangan!)
+                        : Container()
                   ],
                 ),
               ),
-        _hasilGigiMulut == null
+        _pemeriksaan!.pemeriksaanGigiMulut == ""
             ? Container()
             : Divider(
                 thickness: 1,
               ),
-        _hasilGigiMulut == null
+        _pemeriksaan!.pemeriksaanGigiMulut == ""
             ? Container()
             : Container(
                 child: Column(
@@ -12716,16 +13311,25 @@ class _PasienDetailState extends State<PasienDetail> {
                         ],
                       ),
                     ),
-                    boolHasilGigiMulut ? listHasilPemeriksaan() : Container()
+                    boolHasilGigiMulut
+                        ? _hasilGigiMulut == null
+                            ? listHasilPemeriksaan("", "", "", "", "")
+                            : listHasilPemeriksaan(
+                                _hasilGigiMulut!.judul!,
+                                _hasilGigiMulut!.dokterApa!,
+                                _hasilGigiMulut!.namaDokter!,
+                                _hasilGigiMulut!.image! == "" ? "" : "[FOTO]",
+                                _hasilGigiMulut!.keterangan!)
+                        : Container()
                   ],
                 ),
               ),
-        _hasilAudiometri == null
+        _pemeriksaan!.pemeriksaanAudioMetri == ""
             ? Container()
             : Divider(
                 thickness: 1,
               ),
-        _hasilAudiometri == null
+        _pemeriksaan!.pemeriksaanAudioMetri == ""
             ? Container()
             : Container(
                 child: Column(
@@ -12766,16 +13370,25 @@ class _PasienDetailState extends State<PasienDetail> {
                         ],
                       ),
                     ),
-                    boolHasilAudiometri ? listHasilPemeriksaan() : Container()
+                    boolHasilAudiometri
+                        ? _hasilAudiometri == null
+                            ? listHasilPemeriksaan("", "", "", "", "")
+                            : listHasilPemeriksaan(
+                                _hasilAudiometri!.judul!,
+                                _hasilAudiometri!.dokterApa!,
+                                _hasilAudiometri!.namaDokter!,
+                                _hasilAudiometri!.image! == "" ? "" : "[FOTO]",
+                                _hasilAudiometri!.keterangan!)
+                        : Container()
                   ],
                 ),
               ),
-        _hasilSpirometri == null
+        _pemeriksaan!.pemeriksaanSpirometri == ""
             ? Container()
             : Divider(
                 thickness: 1,
               ),
-        _hasilSpirometri == null
+        _pemeriksaan!.pemeriksaanSpirometri == ""
             ? Container()
             : Container(
                 child: Column(
@@ -12816,16 +13429,25 @@ class _PasienDetailState extends State<PasienDetail> {
                         ],
                       ),
                     ),
-                    boolHasilSpirometri ? listHasilPemeriksaan() : Container()
+                    boolHasilSpirometri
+                        ? _hasilSpirometri == null
+                            ? listHasilPemeriksaan("", "", "", "", "")
+                            : listHasilPemeriksaan(
+                                _hasilSpirometri!.judul!,
+                                _hasilSpirometri!.dokterApa!,
+                                _hasilSpirometri!.namaDokter!,
+                                _hasilSpirometri!.image! == "" ? "" : "[FOTO]",
+                                _hasilSpirometri!.keterangan!)
+                        : Container()
                   ],
                 ),
               ),
-        _hasilTreadmill == null
+        _pemeriksaan!.pemeriksaanTreadmill == ""
             ? Container()
             : Divider(
                 thickness: 1,
               ),
-        _hasilTreadmill == null
+        _pemeriksaan!.pemeriksaanTreadmill == ""
             ? Container()
             : Container(
                 child: Column(
@@ -12866,16 +13488,25 @@ class _PasienDetailState extends State<PasienDetail> {
                         ],
                       ),
                     ),
-                    boolHasilTreadmill ? listHasilPemeriksaan() : Container()
+                    boolHasilTreadmill
+                        ? _hasilTreadmill == null
+                            ? listHasilPemeriksaan("", "", "", "", "")
+                            : listHasilPemeriksaan(
+                                _hasilTreadmill!.judul!,
+                                _hasilTreadmill!.dokterApa!,
+                                _hasilTreadmill!.namaDokter!,
+                                _hasilTreadmill!.image! == "" ? "" : "[FOTO]",
+                                _hasilTreadmill!.keterangan!)
+                        : Container()
                   ],
                 ),
               ),
-        _hasilLaboratorium == null
+        _pemeriksaan!.pemeriksaanLaboratorium == ""
             ? Container()
             : Divider(
                 thickness: 1,
               ),
-        _hasilLaboratorium == null
+        _pemeriksaan!.pemeriksaanLaboratorium == ""
             ? Container()
             : Container(
                 child: Column(
@@ -12916,16 +13547,27 @@ class _PasienDetailState extends State<PasienDetail> {
                         ],
                       ),
                     ),
-                    boolHasilLaboratorium ? listHasilPemeriksaan() : Container()
+                    boolHasilLaboratorium
+                        ? _hasilLaboratorium == null
+                            ? listHasilPemeriksaan("", "", "", "", "")
+                            : listHasilPemeriksaan(
+                                _hasilLaboratorium!.judul!,
+                                _hasilLaboratorium!.dokterApa!,
+                                _hasilLaboratorium!.namaDokter!,
+                                _hasilLaboratorium!.image! == ""
+                                    ? ""
+                                    : "[FOTO]",
+                                _hasilLaboratorium!.keterangan!)
+                        : Container()
                   ],
                 ),
               ),
-        _hasilJantung == null
+        _pemeriksaan!.pemeriksaanXrayJantung == ""
             ? Container()
             : Divider(
                 thickness: 1,
               ),
-        _hasilJantung == null
+        _pemeriksaan!.pemeriksaanXrayJantung == ""
             ? Container()
             : Container(
                 child: Column(
@@ -12966,16 +13608,25 @@ class _PasienDetailState extends State<PasienDetail> {
                         ],
                       ),
                     ),
-                    boolHasilJantung ? listHasilPemeriksaan() : Container()
+                    boolHasilJantung
+                        ? _hasilJantung == null
+                            ? listHasilPemeriksaan("", "", "", "", "")
+                            : listHasilPemeriksaan(
+                                _hasilJantung!.judul!,
+                                _hasilJantung!.dokterApa!,
+                                _hasilJantung!.namaDokter!,
+                                _hasilJantung!.image! == "" ? "" : "[FOTO]",
+                                _hasilJantung!.keterangan!)
+                        : Container()
                   ],
                 ),
               ),
-        _hasilParu == null
+        _pemeriksaan!.paru == ""
             ? Container()
             : Divider(
                 thickness: 1,
               ),
-        _hasilParu == null
+        _pemeriksaan!.paru == ""
             ? Container()
             : Container(
                 child: Column(
@@ -12999,7 +13650,7 @@ class _PasienDetailState extends State<PasienDetail> {
                         children: [
                           textDefault("Hasil Pemeriksaan Paru", Colors.black,
                               14, FontWeight.normal),
-                          boolParu
+                          boolHasilParu
                               ? InkWell(
                                   onTap: () async {
                                     SharedPreferences prefs =
@@ -13016,7 +13667,199 @@ class _PasienDetailState extends State<PasienDetail> {
                         ],
                       ),
                     ),
-                    boolHasilParu ? listHasilPemeriksaan() : Container()
+                    boolHasilParu
+                        ? _hasilParu == null
+                            ? listHasilPemeriksaan("", "", "", "", "")
+                            : listHasilPemeriksaan(
+                                _hasilParu!.judul!,
+                                _hasilParu!.dokterApa!,
+                                _hasilParu!.namaDokter!,
+                                _hasilParu!.image! == "" ? "" : "[FOTO]",
+                                _hasilParu!.keterangan!)
+                        : Container()
+                  ],
+                ),
+              ),
+        _pemeriksaan!.pemeriksaanUsg == ""
+            ? Container()
+            : Divider(
+                thickness: 1,
+              ),
+        _pemeriksaan!.pemeriksaanUsg == ""
+            ? Container()
+            : Container(
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          boolHasilUsg = !boolHasilUsg;
+                          boolHasilNapfa = false;
+                          boolHasilNapza = false;
+                          boolHasilFisik = false;
+                          boolHasilGigiMulut = false;
+                          boolHasilAudiometri = false;
+                          boolHasilSpirometri = false;
+                          boolHasilTreadmill = false;
+                          boolHasilLaboratorium = false;
+                          boolHasilJantung = false;
+                          boolHasilMata = false;
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          textDefault("Hasil Pemeriksaan Usg", Colors.black, 14,
+                              FontWeight.normal),
+                          boolHasilUsg
+                              ? InkWell(
+                                  onTap: () async {
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    prefs.setString('detail1', "value");
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return HasilPemeriksaanUsg(
+                                          idPasien: widget.idPasien);
+                                    }));
+                                  },
+                                  child: Icon(Icons.edit))
+                              : Icon(Icons.arrow_drop_down)
+                        ],
+                      ),
+                    ),
+                    boolHasilUsg
+                        ? _hasilUsg == null
+                            ? listHasilPemeriksaan("", "", "", "", "")
+                            : listHasilPemeriksaan(
+                                _hasilUsg!.judul!,
+                                _hasilUsg!.dokterApa!,
+                                _hasilUsg!.namaDokter!,
+                                _hasilUsg!.image! == "" ? "" : "[FOTO]",
+                                _hasilUsg!.keterangan!)
+                        : Container()
+                  ],
+                ),
+              ),
+        _pemeriksaan!.pemeriksaanNapfa == ""
+            ? Container()
+            : Divider(
+                thickness: 1,
+              ),
+        _pemeriksaan!.pemeriksaanNapfa == ""
+            ? Container()
+            : Container(
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          boolHasilNapfa = !boolHasilNapfa;
+                          boolHasilUsg = false;
+                          boolHasilNapza = false;
+                          boolHasilFisik = false;
+                          boolHasilGigiMulut = false;
+                          boolHasilAudiometri = false;
+                          boolHasilSpirometri = false;
+                          boolHasilTreadmill = false;
+                          boolHasilLaboratorium = false;
+                          boolHasilJantung = false;
+                          boolHasilMata = false;
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          textDefault("Hasil Pemeriksaan Napfa", Colors.black,
+                              14, FontWeight.normal),
+                          boolHasilNapfa
+                              ? InkWell(
+                                  onTap: () async {
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    prefs.setString('detail1', "value");
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return HasilPemeriksaanNapfa(
+                                          idPasien: widget.idPasien);
+                                    }));
+                                  },
+                                  child: Icon(Icons.edit))
+                              : Icon(Icons.arrow_drop_down)
+                        ],
+                      ),
+                    ),
+                    boolHasilNapfa
+                        ? _hasilNapfa == null
+                            ? listHasilPemeriksaan("", "", "", "", "")
+                            : listHasilPemeriksaan(
+                                _hasilNapfa!.judul!,
+                                _hasilNapfa!.dokterApa!,
+                                _hasilNapfa!.namaDokter!,
+                                _hasilNapfa!.image! == "" ? "" : "[FOTO]",
+                                _hasilNapfa!.keterangan!)
+                        : Container()
+                  ],
+                ),
+              ),
+        _pemeriksaan!.pemeriksaanNapza == ""
+            ? Container()
+            : Divider(
+                thickness: 1,
+              ),
+        _pemeriksaan!.pemeriksaanNapza == ""
+            ? Container()
+            : Container(
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          boolHasilNapza = !boolHasilNapza;
+                          boolHasilNapfa = false;
+                          boolHasilNapza = false;
+                          boolHasilFisik = false;
+                          boolHasilGigiMulut = false;
+                          boolHasilAudiometri = false;
+                          boolHasilSpirometri = false;
+                          boolHasilTreadmill = false;
+                          boolHasilLaboratorium = false;
+                          boolHasilJantung = false;
+                          boolHasilMata = false;
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          textDefault("Hasil Pemeriksaan Napza", Colors.black,
+                              14, FontWeight.normal),
+                          boolHasilNapza
+                              ? InkWell(
+                                  onTap: () async {
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    prefs.setString('detail1', "value");
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return HasilPemeriksaanNapza(
+                                          idPasien: widget.idPasien);
+                                    }));
+                                  },
+                                  child: Icon(Icons.edit))
+                              : Icon(Icons.arrow_drop_down)
+                        ],
+                      ),
+                    ),
+                    boolHasilNapza
+                        ? _hasilNapza == null
+                            ? listHasilPemeriksaan("", "", "", "", "")
+                            : listHasilPemeriksaan(
+                                _hasilNapza!.judul!,
+                                _hasilNapza!.dokterApa!,
+                                _hasilNapza!.namaDokter!,
+                                _hasilNapza!.image! == "" ? "" : "[FOTO]",
+                                _hasilNapza!.keterangan!)
+                        : Container()
                   ],
                 ),
               ),
@@ -13024,7 +13867,8 @@ class _PasienDetailState extends State<PasienDetail> {
     );
   }
 
-  Widget listHasilPemeriksaan() {
+  Widget listHasilPemeriksaan(String judul, String dokterApa, String namaDokter,
+      String foto, String keterangan) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -13047,7 +13891,44 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    "${boolHasilFisik ? _hasilFisik!.judul : boolHasilMata ? _hasilMata!.judul : boolHasilGigiMulut ? _hasilGigiMulut!.judul : boolHasilAudiometri ? _hasilAudiometri!.judul : boolHasilSpirometri ? _hasilSpirometri!.judul : boolHasilTreadmill ? _hasilTreadmill!.judul : boolHasilLaboratorium ? _hasilLaboratorium!.judul : boolHasilJantung ? _hasilJantung!.judul : boolHasilParu ? _hasilParu!.judul : boolHasilFisik ? _hasilFisik!.judul : _hasilFisik!.judul}",
+                    // _hasilFisik != null
+                    //     ? boolHasilFisik
+                    //         ? "${_hasilFisik!.judul}"
+                    //         : ""
+                    //     : _hasilMata != null
+                    //         ? boolHasilMata
+                    //             ? "${_hasilMata!.judul}"
+                    //             : ""
+                    //         : _hasilGigiMulut != null
+                    //             ? boolHasilGigiMulut
+                    //                 ? "${_hasilGigiMulut!.judul}"
+                    //                 : ""
+                    //             : _hasilAudiometri != null
+                    //                 ? boolHasilAudiometri
+                    //                     ? "${_hasilAudiometri!.judul}"
+                    //                     : ""
+                    //                 : _hasilSpirometri != null
+                    //                     ? boolHasilSpirometri
+                    //                         ? "${_hasilSpirometri!.judul}"
+                    //                         : ""
+                    //                     : _hasilTreadmill != null
+                    //                         ? boolHasilTreadmill
+                    //                             ? "${_hasilTreadmill!.judul}"
+                    //                             : ""
+                    //                         : _hasilLaboratorium != null
+                    //                             ? boolHasilLaboratorium
+                    //                                 ? "${_hasilLaboratorium!.judul}"
+                    //                                 : ""
+                    //                             : _hasilJantung != null
+                    //                                 ? boolHasilJantung
+                    //                                     ? "${_hasilJantung!.judul}"
+                    //                                     : ""
+                    //                                 : _hasilParu != null
+                    //                                     ? boolHasilParu
+                    //                                         ? "${_hasilParu!.judul}"
+                    //                                         : ""
+                    //                                     : "",
+                    "$judul",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13065,7 +13946,47 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    "${boolHasilFisik ? _hasilFisik!.dokterApa : boolHasilMata ? _hasilMata!.dokterApa : boolHasilGigiMulut ? _hasilGigiMulut!.dokterApa : boolHasilAudiometri ? _hasilAudiometri!.dokterApa : boolHasilSpirometri ? _hasilSpirometri!.dokterApa : boolHasilTreadmill ? _hasilTreadmill!.dokterApa : boolHasilLaboratorium ? _hasilLaboratorium!.dokterApa : boolHasilJantung ? _hasilJantung!.dokterApa : boolHasilParu ? _hasilParu!.dokterApa : boolHasilFisik ? _hasilFisik!.dokterApa : _hasilFisik!.dokterApa}",
+                    // _hasilFisik == null
+                    //     ? ""
+                    //     : boolHasilFisik
+                    //         ? "${_hasilFisik!.dokterApa}"
+                    //         : _hasilMata == null
+                    //             ? ""
+                    //             : boolHasilMata
+                    //                 ? "${_hasilMata!.dokterApa}"
+                    //                 : _hasilGigiMulut == null
+                    //                     ? ""
+                    //                     : boolHasilGigiMulut
+                    //                         ? "${_hasilGigiMulut!.dokterApa}"
+                    //                         : _hasilAudiometri == null
+                    //                             ? ""
+                    //                             : boolHasilAudiometri
+                    //                                 ? "${_hasilAudiometri!.dokterApa}"
+                    //                                 : _hasilSpirometri == null
+                    //                                     ? ""
+                    //                                     : boolHasilSpirometri
+                    //                                         ? "${_hasilSpirometri!.dokterApa}"
+                    //                                         : _hasilTreadmill ==
+                    //                                                 null
+                    //                                             ? ""
+                    //                                             : _hasilLaboratorium ==
+                    //                                                     null
+                    //                                                 ? ""
+                    //                                                 : boolHasilLaboratorium
+                    //                                                     ? "${_hasilLaboratorium!.dokterApa}"
+                    //                                                     : _hasilJantung ==
+                    //                                                             null
+                    //                                                         ? ""
+                    //                                                         : _hasilJantung == null
+                    //                                                             ? ""
+                    //                                                             : boolHasilJantung
+                    //                                                                 ? "${_hasilJantung!.dokterApa}"
+                    //                                                                 : _hasilParu == null
+                    //                                                                     ? ""
+                    //                                                                     : boolHasilParu
+                    //                                                                         ? "${_hasilParu!.dokterApa}"
+                    //                                                                         : "",
+                    "$dokterApa",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13077,7 +13998,47 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    "${boolHasilFisik ? _hasilFisik!.namaDokter : boolHasilMata ? _hasilMata!.namaDokter : boolHasilGigiMulut ? _hasilGigiMulut!.namaDokter : boolHasilAudiometri ? _hasilAudiometri!.namaDokter : boolHasilSpirometri ? _hasilSpirometri!.namaDokter : boolHasilTreadmill ? _hasilTreadmill!.namaDokter : boolHasilLaboratorium ? _hasilLaboratorium!.namaDokter : boolHasilJantung ? _hasilJantung!.namaDokter : boolHasilParu ? _hasilParu!.namaDokter : boolHasilFisik ? _hasilFisik!.namaDokter : _hasilFisik!.namaDokter}",
+                    // _hasilFisik == null
+                    //     ? ""
+                    //     : boolHasilFisik
+                    //         ? "${_hasilFisik!.namaDokter}"
+                    //         : _hasilMata == null
+                    //             ? ""
+                    //             : boolHasilMata
+                    //                 ? "${_hasilMata!.namaDokter}"
+                    //                 : _hasilGigiMulut == null
+                    //                     ? ""
+                    //                     : boolHasilGigiMulut
+                    //                         ? "${_hasilGigiMulut!.namaDokter}"
+                    //                         : _hasilAudiometri == null
+                    //                             ? ""
+                    //                             : boolHasilAudiometri
+                    //                                 ? "${_hasilAudiometri!.namaDokter}"
+                    //                                 : _hasilSpirometri == null
+                    //                                     ? ""
+                    //                                     : boolHasilSpirometri
+                    //                                         ? "${_hasilSpirometri!.namaDokter}"
+                    //                                         : _hasilTreadmill ==
+                    //                                                 null
+                    //                                             ? ""
+                    //                                             : _hasilLaboratorium ==
+                    //                                                     null
+                    //                                                 ? ""
+                    //                                                 : boolHasilLaboratorium
+                    //                                                     ? "${_hasilLaboratorium!.namaDokter}"
+                    //                                                     : _hasilJantung ==
+                    //                                                             null
+                    //                                                         ? ""
+                    //                                                         : _hasilJantung == null
+                    //                                                             ? ""
+                    //                                                             : boolHasilJantung
+                    //                                                                 ? "${_hasilJantung!.namaDokter}"
+                    //                                                                 : _hasilParu == null
+                    //                                                                     ? ""
+                    //                                                                     : boolHasilParu
+                    //                                                                         ? "${_hasilParu!.namaDokter}"
+                    //                                                                         : "",
+                    "$namaDokter",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13103,7 +14064,47 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    "${boolHasilFisik ? _hasilFisik!.image != "" ? "[foto]" : '' : boolHasilMata ? _hasilMata!.image != "" ? "[foto]" : '' : boolHasilGigiMulut ? _hasilGigiMulut!.image != "" ? "[foto]" : '' : boolHasilAudiometri ? _hasilAudiometri!.image != "" ? "[foto]" : '' : boolHasilSpirometri ? _hasilSpirometri!.image != "" ? "[foto]" : '' : boolHasilTreadmill ? _hasilTreadmill!.image != "" ? "[foto]" : '' : boolHasilLaboratorium ? _hasilLaboratorium!.image != "" ? "[foto]" : '' : boolHasilJantung ? _hasilJantung!.image != "" ? "[foto]" : '' : boolHasilParu ? _hasilParu!.image != "" ? "[foto]" : '' : boolHasilFisik ? _hasilFisik!.image != "" ? "[foto]" : '' : _hasilFisik!.image != "" ? "[foto]" : ''}",
+                    // _hasilFisik == null
+                    //     ? ""
+                    //     : boolHasilFisik
+                    //         ? "[FOTO]"
+                    //         : _hasilMata == null
+                    //             ? ""
+                    //             : boolHasilMata
+                    //                 ? "[FOTO]"
+                    //                 : _hasilGigiMulut == null
+                    //                     ? ""
+                    //                     : boolHasilGigiMulut
+                    //                         ? "[FOTO]"
+                    //                         : _hasilAudiometri == null
+                    //                             ? ""
+                    //                             : boolHasilAudiometri
+                    //                                 ? "[FOTO]"
+                    //                                 : _hasilSpirometri == null
+                    //                                     ? ""
+                    //                                     : boolHasilSpirometri
+                    //                                         ? "[FOTO]"
+                    //                                         : _hasilTreadmill ==
+                    //                                                 null
+                    //                                             ? ""
+                    //                                             : _hasilLaboratorium ==
+                    //                                                     null
+                    //                                                 ? ""
+                    //                                                 : boolHasilLaboratorium
+                    //                                                     ? "[FOTO]"
+                    //                                                     : _hasilJantung ==
+                    //                                                             null
+                    //                                                         ? ""
+                    //                                                         : _hasilJantung == null
+                    //                                                             ? ""
+                    //                                                             : boolHasilJantung
+                    //                                                                 ? "[FOTO]"
+                    //                                                                 : _hasilParu == null
+                    //                                                                     ? ""
+                    //                                                                     : boolHasilParu
+                    //                                                                         ? "[FOTO]"
+                    //                                                                         : "",
+                    "$foto",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13130,7 +14131,47 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    "${boolHasilFisik ? _hasilFisik!.keterangan : boolHasilMata ? _hasilMata!.keterangan : boolHasilGigiMulut ? _hasilGigiMulut!.keterangan : boolHasilAudiometri ? _hasilAudiometri!.keterangan : boolHasilSpirometri ? _hasilSpirometri!.keterangan : boolHasilTreadmill ? _hasilTreadmill!.keterangan : boolHasilLaboratorium ? _hasilLaboratorium!.keterangan : boolHasilJantung ? _hasilJantung!.keterangan : boolHasilParu ? _hasilParu!.keterangan : boolHasilFisik ? _hasilFisik!.keterangan : _hasilFisik!.keterangan}",
+                    // _hasilFisik == null
+                    //     ? ""
+                    //     : boolHasilFisik
+                    //         ? "${_hasilFisik!.keterangan}"
+                    //         : _hasilMata == null
+                    //             ? ""
+                    //             : boolHasilMata
+                    //                 ? "${_hasilMata!.keterangan}"
+                    //                 : _hasilGigiMulut == null
+                    //                     ? ""
+                    //                     : boolHasilGigiMulut
+                    //                         ? "${_hasilGigiMulut!.keterangan}"
+                    //                         : _hasilAudiometri == null
+                    //                             ? ""
+                    //                             : boolHasilAudiometri
+                    //                                 ? "${_hasilAudiometri!.keterangan}"
+                    //                                 : _hasilSpirometri == null
+                    //                                     ? ""
+                    //                                     : boolHasilSpirometri
+                    //                                         ? "${_hasilSpirometri!.keterangan}"
+                    //                                         : _hasilTreadmill ==
+                    //                                                 null
+                    //                                             ? ""
+                    //                                             : _hasilLaboratorium ==
+                    //                                                     null
+                    //                                                 ? ""
+                    //                                                 : boolHasilLaboratorium
+                    //                                                     ? "${_hasilLaboratorium!.keterangan}"
+                    //                                                     : _hasilJantung ==
+                    //                                                             null
+                    //                                                         ? ""
+                    //                                                         : _hasilJantung == null
+                    //                                                             ? ""
+                    //                                                             : boolHasilJantung
+                    //                                                                 ? "${_hasilJantung!.keterangan}"
+                    //                                                                 : _hasilParu == null
+                    //                                                                     ? ""
+                    //                                                                     : boolHasilParu
+                    //                                                                         ? "${_hasilParu!.keterangan}"
+                    //                                                                         : "",
+                    "$keterangan",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13427,7 +14468,7 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    "Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini ",
+                    "Laik Bekerja Sesuai Posisi dan Lokasi Saat Ini ",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13457,7 +14498,7 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    "Layak Bekerja Sesuai Posisi dan Lokasi Saat Ini , dengan Catatan",
+                    "Laik Bekerja Sesuai Posisi dan Lokasi Saat Ini , dengan Catatan",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13487,7 +14528,7 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    "Layak Bekerja dengan Penyesuaian dan atau Pembatasan Pekerjaan",
+                    "Laik Bekerja dengan Penyesuaian dan atau Pembatasan Pekerjaan",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13516,8 +14557,8 @@ class _PasienDetailState extends State<PasienDetail> {
           children: [
             Expanded(
               child: Container(
-                child: textDefault(
-                    "Layak untuk Bekerja", Colors.black, 12, FontWeight.normal),
+                child: textDefault("Tidak Laik untuk Bekerja", Colors.black, 12,
+                    FontWeight.normal),
               ),
             ),
             Container(
@@ -13540,7 +14581,7 @@ class _PasienDetailState extends State<PasienDetail> {
           children: [
             Expanded(
               child: Container(
-                child: textDefault("Risiko Cardiovaskuler", Colors.black, 12,
+                child: textDefault("Resiko Cardiovaskuler", Colors.black, 12,
                     FontWeight.normal),
               ),
             ),

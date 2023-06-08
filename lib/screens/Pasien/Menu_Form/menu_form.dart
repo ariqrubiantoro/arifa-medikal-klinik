@@ -28,9 +28,12 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Peme
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_jantung.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_laboratorium.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_mata.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_napfa.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_napza.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_paru.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_spirometri.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_treadmill.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_usg.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/foto_lain_lain_view.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_THT.dart';
@@ -105,6 +108,10 @@ class _MenuFormState extends State<MenuForm> {
   HasilPemeriksaanModel? _hasilLaboratorium;
   HasilPemeriksaanModel? _hasilJantung;
   HasilPemeriksaanModel? _hasilParu;
+  HasilPemeriksaanModel? _hasilUsg;
+  HasilPemeriksaanModel? _hasilNapfa;
+  HasilPemeriksaanModel? _hasilNapza;
+
   FotoLainLain? _fotoLainLain;
 
   bool boolPenyakitTerdahulu = false;
@@ -139,6 +146,9 @@ class _MenuFormState extends State<MenuForm> {
   bool boolHasilLaboratorium = false;
   bool boolHasilJantung = false;
   bool boolHasilParu = false;
+  bool boolHasilUsg = false;
+  bool boolHasilNapfa = false;
+  bool boolHasilNapza = false;
   bool boolFotoLainLain = false;
 
   bool btnSimpan = false;
@@ -194,6 +204,10 @@ class _MenuFormState extends State<MenuForm> {
         await firestore.getHasilPemeriksaanLaboratorium(widget.idPasien);
     _hasilJantung = await firestore.getHasilPemeriksaanJantung(widget.idPasien);
     _hasilParu = await firestore.getHasilPemeriksaanParu(widget.idPasien);
+    _hasilUsg = await firestore.getHasilPemeriksaanUsg(widget.idPasien);
+    _hasilNapfa = await firestore.getHasilPemeriksaanNapfa(widget.idPasien);
+    _hasilNapza = await firestore.getHasilPemeriksaanNapza(widget.idPasien);
+
     _fotoLainLain = await firestore.getFotoLainLain(widget.idPasien);
 
     if (_hasilFisik != null) {
@@ -239,6 +253,21 @@ class _MenuFormState extends State<MenuForm> {
     if (_hasilParu != null) {
       setState(() {
         boolHasilParu = true;
+      });
+    }
+    if (_hasilUsg != null) {
+      setState(() {
+        boolHasilUsg = true;
+      });
+    }
+    if (_hasilNapfa != null) {
+      setState(() {
+        boolHasilNapfa = true;
+      });
+    }
+    if (_hasilNapza != null) {
+      setState(() {
+        boolHasilNapza = true;
       });
     }
 
@@ -1907,6 +1936,204 @@ class _MenuFormState extends State<MenuForm> {
                                     ),
                                   ],
                                 ),
+                      _pemeriksaan == null
+                          ? Container()
+                          : _pemeriksaan!.pemeriksaanUsg == ""
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return HasilPemeriksaanUsg(
+                                            idPasien: widget.idPasien,
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  blurRadius: 2)
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Hasil Pemeriksaan USG",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  color: boolHasilUsg == false
+                                                      ? Colors.white
+                                                      : Colors.green,
+                                                  shape: BoxShape.circle),
+                                              child: boolHasilUsg == false
+                                                  ? Icon(
+                                                      Icons.warning,
+                                                      size: 30,
+                                                      color: Colors.amber,
+                                                    )
+                                                  : Icon(
+                                                      Icons.done,
+                                                      size: 20,
+                                                      color: Colors.white,
+                                                    ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                      _pemeriksaan == null
+                          ? Container()
+                          : _pemeriksaan!.pemeriksaanNapfa == ""
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return HasilPemeriksaanNapfa(
+                                            idPasien: widget.idPasien,
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  blurRadius: 2)
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Hasil Pemeriksaan NAPFA",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  color: boolHasilNapfa == false
+                                                      ? Colors.white
+                                                      : Colors.green,
+                                                  shape: BoxShape.circle),
+                                              child: boolHasilNapfa == false
+                                                  ? Icon(
+                                                      Icons.warning,
+                                                      size: 30,
+                                                      color: Colors.amber,
+                                                    )
+                                                  : Icon(
+                                                      Icons.done,
+                                                      size: 20,
+                                                      color: Colors.white,
+                                                    ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                      _pemeriksaan == null
+                          ? Container()
+                          : _pemeriksaan!.pemeriksaanNapza == ""
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return HasilPemeriksaanNapza(
+                                            idPasien: widget.idPasien,
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  blurRadius: 2)
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textDefault(
+                                                "Hasil Pemeriksaan NAPZA",
+                                                Colors.black,
+                                                14,
+                                                FontWeight.normal),
+                                            Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  color: boolHasilNapza == false
+                                                      ? Colors.white
+                                                      : Colors.green,
+                                                  shape: BoxShape.circle),
+                                              child: boolHasilNapza == false
+                                                  ? Icon(
+                                                      Icons.warning,
+                                                      size: 30,
+                                                      color: Colors.amber,
+                                                    )
+                                                  : Icon(
+                                                      Icons.done,
+                                                      size: 20,
+                                                      color: Colors.white,
+                                                    ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
                       InkWell(
                         onTap: () {
                           Navigator.pushReplacement(context,
@@ -2195,7 +2422,7 @@ class _MenuFormState extends State<MenuForm> {
                         height: 20,
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: saveButton,
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(

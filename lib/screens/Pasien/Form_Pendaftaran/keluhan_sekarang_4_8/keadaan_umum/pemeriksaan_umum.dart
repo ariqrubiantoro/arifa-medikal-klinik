@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'dart:math';
 
@@ -29,6 +29,8 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
   final imt = TextEditingController();
   final lingkaranPerut = TextEditingController();
   final tekananDarah = TextEditingController();
+  final tekananDarahDistole = TextEditingController();
+
   final denyutNadi = TextEditingController();
   final pernapasan = TextEditingController();
   final suhu = TextEditingController();
@@ -57,6 +59,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
         pernapasan.text = data!.pernapasan!;
         suhu.text = data!.suhu!;
         jenisKelamin = prefs.getString('jenisKelamin')!;
+        tekananDarahDistole.text = data!.tekananDarahDistole!;
       });
     }
   }
@@ -401,8 +404,8 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                         children: [
                           Container(
                             width: 150,
-                            child: textDefault("Tekanan Darah", Colors.black,
-                                14, FontWeight.normal),
+                            child: textDefault("Tekanan Darah (Sistole)",
+                                Colors.black, 14, FontWeight.normal),
                           ),
                           textDefault(
                               ":  ", Colors.black, 14, FontWeight.normal),
@@ -415,6 +418,21 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                             ),
                             child: TextFormField(
                                 controller: tekananDarah,
+                                keyboardType: TextInputType.number,
+                                decoration:
+                                    InputDecoration(border: InputBorder.none)),
+                          ),
+                          textDefault(
+                              " / ", Colors.black, 18, FontWeight.normal),
+                          Container(
+                            width: 80,
+                            padding: EdgeInsets.only(left: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: TextFormField(
+                                controller: tekananDarahDistole,
                                 keyboardType: TextInputType.number,
                                 decoration:
                                     InputDecoration(border: InputBorder.none)),
@@ -555,6 +573,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
       imt: imt.text,
       lingkarPerut: lingkaranPerut.text,
       tekananDarah: tekananDarah.text,
+      tekananDarahDistole: tekananDarahDistole.text,
       denyutNadi: denyutNadi.text,
       pernapasan: pernapasan.text,
       suhu: suhu.text,
@@ -564,6 +583,9 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
         pemeriksaanUmum: data, idPasien: widget.idPasien!);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('tekananDarah', tekananDarah.text);
+    prefs.setString('imt', imt.text);
+
     if (prefs.getString("detail1") == null) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return MenuForm(idPasien: widget.idPasien!);

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:arifa_medikal_klink_3/model/foto_lain_lain_model.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaan_5_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -160,16 +161,24 @@ class _FotoLainLainViewState extends State<FotoLainLainView> {
             InkWell(
               onTap: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
-                if (prefs.getString("detail1") == null) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
-                    return MenuForm(idPasien: widget.idPasien);
-                  }));
+                if (prefs.getString('iconHasil') == null) {
+                  if (prefs.getString("detail1") == null) {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return MenuForm(idPasien: widget.idPasien);
+                    }));
+                  } else {
+                    prefs.remove("detail1");
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return PasienDetail(idPasien: widget.idPasien);
+                    }));
+                  }
                 } else {
-                  prefs.remove("detail1");
+                  prefs.remove("iconHasil");
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return PasienDetail(idPasien: widget.idPasien);
+                    return Pemeriksaan5(idPasien: widget.idPasien);
                   }));
                 }
               },
@@ -693,14 +702,23 @@ class _FotoLainLainViewState extends State<FotoLainLainView> {
 
     firestore.setFotoLainLain(fotoLain: data, idPasien: widget.idPasien);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString("detail1") == null) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return MenuForm(idPasien: widget.idPasien);
-      }));
+    if (prefs.getString('iconHasil') == null) {
+      if (prefs.getString("detail1") == null) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return MenuForm(idPasien: widget.idPasien);
+        }));
+      } else {
+        prefs.remove("detail1");
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return PasienDetail(idPasien: widget.idPasien);
+        }));
+      }
     } else {
-      prefs.remove("detail1");
+      prefs.remove("iconHasil");
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return PasienDetail(idPasien: widget.idPasien);
+        return Pemeriksaan5(idPasien: widget.idPasien);
       }));
     }
   }

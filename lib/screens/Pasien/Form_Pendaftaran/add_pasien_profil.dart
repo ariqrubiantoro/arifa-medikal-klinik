@@ -40,6 +40,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
   PasienModel? _pasien;
   int idJk = 0;
   bool cek = false;
+  String umurr = "";
 
   var jkStr = "";
 
@@ -64,6 +65,14 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
         bagianC.text = _pasien!.bagian!;
         nohpC.text = _pasien!.noHp!;
         nomcuC.text = _pasien!.noMcu!;
+        umurr = _pasien!.umurTahun!;
+        if (_pasien!.jenisKelamin == "Pria") {
+          jkStr = "Pria";
+          idJk = 1;
+        } else if (_pasien!.jenisKelamin == "Wanita") {
+          jkStr = "Wanita";
+          idJk = 2;
+        }
       });
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -118,6 +127,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
     duration = AgeCalculator.age(birthday);
     umurC.text =
         "${duration.years} Tahun ${duration.months} Bulan ${duration.days} Hari";
+    umurr = "${duration.years}";
     return duration;
   }
 
@@ -569,6 +579,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
       tempatLahir: tempatLahirC.text,
       tanggalLahir: tglLahirC.text,
       umur: umurC.text,
+      umurTahun: umurr,
       perusahaan: perusahaanC.text,
       bagian: bagianC.text,
       noHp: nohpC.text,
@@ -576,17 +587,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
       waktu: DateTime.now().toString(),
     );
 
-    firestore.setPasien(pasien);
-    prefs.setString('jenisKelamin', jkStr);
-
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) {
-    //     return AddPasienProfilSucces(
-    //       idPasien: pasien.id,
-    //     );
-    //   }),
-    // );
+    firestore.setPasien(pasien, widget.idPasien);
 
     if (prefs.getString("detail1") == null) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {

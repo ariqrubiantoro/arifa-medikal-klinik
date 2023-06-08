@@ -255,20 +255,20 @@ class _PenyakitKeluargaState extends State<PenyakitKeluarga> {
           title:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             InkWell(
-              onTap: () async{
-               SharedPreferences prefs = await SharedPreferences.getInstance();
-if(prefs.getString("detail1") == null){
-Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return MenuForm(idPasien: widget.idPasien!);
-        }));
-} else {
-prefs.remove("detail1");
-Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return PasienDetail(idPasien: widget.idPasien!);
-        }));
-}
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                if (prefs.getString("detail1") == null) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return MenuForm(idPasien: widget.idPasien!);
+                  }));
+                } else {
+                  prefs.remove("detail1");
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return PasienDetail(idPasien: widget.idPasien!);
+                  }));
+                }
               },
               child: Row(
                 children: [

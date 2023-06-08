@@ -6,29 +6,32 @@ import 'dart:html' as html;
 
 import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_model.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_jantung.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_paru.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaan_5_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 
 import '../../../../components/colors/color.dart';
 import '../../../../components/widget/text.dart';
 import '../../../../service/firebase_firestore_service.dart';
+import 'hasil_pemeriksaan_laboratorium.dart';
 
-class HasilPemeriksaanParu extends StatefulWidget {
-  HasilPemeriksaanParu({super.key, required this.idPasien});
+class HasilPemeriksaanNapza extends StatefulWidget {
+  HasilPemeriksaanNapza({super.key, required this.idPasien});
   String idPasien;
   @override
-  State<HasilPemeriksaanParu> createState() => _HasilPemeriksaanParuState();
+  State<HasilPemeriksaanNapza> createState() => _HasilPemeriksaanNapzaState();
 }
 
-class _HasilPemeriksaanParuState extends State<HasilPemeriksaanParu> {
+class _HasilPemeriksaanNapzaState extends State<HasilPemeriksaanNapza> {
   HasilPemeriksaanModel? _hasilPemeriksaan;
   bool isLoading = false;
   final judulConn = TextEditingController();
@@ -43,7 +46,7 @@ class _HasilPemeriksaanParuState extends State<HasilPemeriksaanParu> {
 
   @override
   void initState() {
-    judulConn.text = "Hasil Pemeriksaan Paru-Paru";
+    judulConn.text = "Hasil Pemeriksaan NAPZA";
     dokterApa.text = "Dokter ";
     getData();
     super.initState();
@@ -51,7 +54,7 @@ class _HasilPemeriksaanParuState extends State<HasilPemeriksaanParu> {
 
   getData() async {
     _hasilPemeriksaan =
-        await firestore.getHasilPemeriksaanParu(widget.idPasien);
+        await firestore.getHasilPemeriksaanNapza(widget.idPasien);
     setState(() {
       judulConn.text = _hasilPemeriksaan!.judul!;
       keteranganConn.text = _hasilPemeriksaan!.keterangan!;
@@ -94,24 +97,16 @@ class _HasilPemeriksaanParuState extends State<HasilPemeriksaanParu> {
       onWillPop: () async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
 
-        if (prefs.getString('iconHasil') == null) {
-          if (prefs.getString("detail1") == null) {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) {
-              return MenuForm(idPasien: widget.idPasien);
-            }));
-          } else {
-            prefs.remove("detail1");
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) {
-              return PasienDetail(idPasien: widget.idPasien);
-            }));
-          }
-        } else {
-          prefs.remove("iconHasil");
+        if (prefs.getString("detail1") == null) {
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
-            return Pemeriksaan5(idPasien: widget.idPasien);
+            return MenuForm(idPasien: widget.idPasien);
+          }));
+        } else {
+          prefs.remove("detail1");
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return PasienDetail(idPasien: widget.idPasien);
           }));
         }
         return false;
@@ -377,7 +372,7 @@ class _HasilPemeriksaanParuState extends State<HasilPemeriksaanParu> {
         image: fotoHasilBase64,
         dokterApa: dokterApa.text,
         namaDokter: namaDokter.text);
-    firestore.setHasilPemeriksaanParu(
+    firestore.setHasilPemeriksaanNapza(
         pemeriksaan: data, idPasien: widget.idPasien);
     _pemeriksaan = await firestore.getPemeriksaan(widget.idPasien);
 

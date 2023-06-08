@@ -8,6 +8,7 @@ class PasienModel {
   String? tempatLahir;
   String? tanggalLahir;
   String? umur;
+  String? umurTahun;
   String? perusahaan;
   String? bagian;
   String? noHp;
@@ -24,6 +25,7 @@ class PasienModel {
     this.tempatLahir,
     this.tanggalLahir,
     this.umur,
+    this.umurTahun,
     this.perusahaan,
     this.bagian,
     this.noHp,
@@ -41,6 +43,7 @@ class PasienModel {
       tempatLahir: json['tempat_lahir'],
       tanggalLahir: json['tanggal_lahir'],
       umur: json['umur'],
+      umurTahun: json['umurTahun'],
       perusahaan: json['perusahaan'],
       bagian: json['bagian'],
       noHp: json['no_hp'],
@@ -59,6 +62,7 @@ class PasienModel {
       'tempat_lahir': tempatLahir,
       'tanggal_lahir': tanggalLahir,
       'umur': umur,
+      'umurTahun': umurTahun,
       'perusahaan': perusahaan,
       'bagian': bagian,
       'no_hp': noHp,

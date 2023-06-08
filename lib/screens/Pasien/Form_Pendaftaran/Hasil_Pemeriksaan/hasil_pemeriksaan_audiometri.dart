@@ -6,6 +6,7 @@ import 'dart:html' as html;
 
 import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_model.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaan_5_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,8 @@ class _HasilPemeriksaanAudiometriState
       judulConn.text = _hasilPemeriksaan!.judul!;
       keteranganConn.text = _hasilPemeriksaan!.keterangan!;
       fotoHasilBase64 = _hasilPemeriksaan!.image!;
+      namaDokter.text = _hasilPemeriksaan!.namaDokter!;
+      dokterApa.text = _hasilPemeriksaan!.dokterApa!;
     });
   }
 
@@ -100,16 +103,24 @@ class _HasilPemeriksaanAudiometriState
       onWillPop: () async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
 
-        if (prefs.getString("detail1") == null) {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return MenuForm(idPasien: widget.idPasien);
-          }));
+        if (prefs.getString('iconHasil') == null) {
+          if (prefs.getString("detail1") == null) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return MenuForm(idPasien: widget.idPasien);
+            }));
+          } else {
+            prefs.remove("detail1");
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return PasienDetail(idPasien: widget.idPasien);
+            }));
+          }
         } else {
-          prefs.remove("detail1");
+          prefs.remove("iconHasil");
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
-            return PasienDetail(idPasien: widget.idPasien);
+            return Pemeriksaan5(idPasien: widget.idPasien);
           }));
         }
         return false;
@@ -123,16 +134,24 @@ class _HasilPemeriksaanAudiometriState
             InkWell(
               onTap: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
-                if (prefs.getString("detail1") == null) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
-                    return MenuForm(idPasien: widget.idPasien);
-                  }));
+                if (prefs.getString('iconHasil') == null) {
+                  if (prefs.getString("detail1") == null) {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return MenuForm(idPasien: widget.idPasien);
+                    }));
+                  } else {
+                    prefs.remove("detail1");
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return PasienDetail(idPasien: widget.idPasien);
+                    }));
+                  }
                 } else {
-                  prefs.remove("detail1");
+                  prefs.remove("iconHasil");
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return PasienDetail(idPasien: widget.idPasien);
+                    return Pemeriksaan5(idPasien: widget.idPasien);
                   }));
                 }
               },
@@ -229,6 +248,37 @@ class _HasilPemeriksaanAudiometriState
                           ),
                         ),
                       ),
+                      fotoHasilBase64 == ""
+                          ? Container()
+                          : Column(
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                InkWell(
+                                  onTap: () async {
+                                    setState(() {
+                                      fotoHasilBase64 = "";
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 150,
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(10),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.grey, blurRadius: 2)
+                                        ]),
+                                    child: Center(
+                                      child: textDefault("Hapus Foto",
+                                          Colors.white, 14, FontWeight.normal),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                       SizedBox(
                         height: 50,
                       ),
@@ -341,14 +391,23 @@ class _HasilPemeriksaanAudiometriState
     _pemeriksaan = await firestore.getPemeriksaan(widget.idPasien);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString("detail1") == null) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return MenuForm(idPasien: widget.idPasien);
-      }));
+    if (prefs.getString('iconHasil') == null) {
+      if (prefs.getString("detail1") == null) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return MenuForm(idPasien: widget.idPasien);
+        }));
+      } else {
+        prefs.remove("detail1");
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return PasienDetail(idPasien: widget.idPasien);
+        }));
+      }
     } else {
-      prefs.remove("detail1");
+      prefs.remove("iconHasil");
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return PasienDetail(idPasien: widget.idPasien);
+        return Pemeriksaan5(idPasien: widget.idPasien);
       }));
     }
   }

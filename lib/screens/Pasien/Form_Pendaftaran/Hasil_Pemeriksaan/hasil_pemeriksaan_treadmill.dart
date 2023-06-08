@@ -9,6 +9,7 @@ import 'package:arifa_medikal_klink_3/model/pemeriksaan_model.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_jantung.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_paru.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaan_5_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _HasilPemeriksaanTreadmillState extends State<HasilPemeriksaanTreadmill> {
 
   @override
   void initState() {
-    judulConn.text = "Hasil Pemeriksaan Treadmill";
+    judulConn.text = "Hasil Pemeriksaan Treadmill / EKG";
     dokterApa.text = "Dokter ";
     getData();
     super.initState();
@@ -59,6 +60,8 @@ class _HasilPemeriksaanTreadmillState extends State<HasilPemeriksaanTreadmill> {
       judulConn.text = _hasilPemeriksaan!.judul!;
       keteranganConn.text = _hasilPemeriksaan!.keterangan!;
       fotoHasilBase64 = _hasilPemeriksaan!.image!;
+      namaDokter.text = _hasilPemeriksaan!.namaDokter!;
+      dokterApa.text = _hasilPemeriksaan!.dokterApa!;
     });
   }
 
@@ -118,16 +121,24 @@ class _HasilPemeriksaanTreadmillState extends State<HasilPemeriksaanTreadmill> {
             InkWell(
               onTap: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
-                if (prefs.getString("detail1") == null) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
-                    return MenuForm(idPasien: widget.idPasien);
-                  }));
+                if (prefs.getString('iconHasil') == null) {
+                  if (prefs.getString("detail1") == null) {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return MenuForm(idPasien: widget.idPasien);
+                    }));
+                  } else {
+                    prefs.remove("detail1");
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return PasienDetail(idPasien: widget.idPasien);
+                    }));
+                  }
                 } else {
-                  prefs.remove("detail1");
+                  prefs.remove("iconHasil");
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return PasienDetail(idPasien: widget.idPasien);
+                    return Pemeriksaan5(idPasien: widget.idPasien);
                   }));
                 }
               },
@@ -224,6 +235,37 @@ class _HasilPemeriksaanTreadmillState extends State<HasilPemeriksaanTreadmill> {
                           ),
                         ),
                       ),
+                      fotoHasilBase64 == ""
+                          ? Container()
+                          : Column(
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                InkWell(
+                                  onTap: () async {
+                                    setState(() {
+                                      fotoHasilBase64 = "";
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 150,
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(10),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.grey, blurRadius: 2)
+                                        ]),
+                                    child: Center(
+                                      child: textDefault("Hapus Foto",
+                                          Colors.white, 14, FontWeight.normal),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                       SizedBox(
                         height: 50,
                       ),
@@ -336,14 +378,23 @@ class _HasilPemeriksaanTreadmillState extends State<HasilPemeriksaanTreadmill> {
     _pemeriksaan = await firestore.getPemeriksaan(widget.idPasien);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString("detail1") == null) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return MenuForm(idPasien: widget.idPasien);
-      }));
+    if (prefs.getString('iconHasil') == null) {
+      if (prefs.getString("detail1") == null) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return MenuForm(idPasien: widget.idPasien);
+        }));
+      } else {
+        prefs.remove("detail1");
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return PasienDetail(idPasien: widget.idPasien);
+        }));
+      }
     } else {
-      prefs.remove("detail1");
+      prefs.remove("iconHasil");
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return PasienDetail(idPasien: widget.idPasien);
+        return Pemeriksaan5(idPasien: widget.idPasien);
       }));
     }
   }

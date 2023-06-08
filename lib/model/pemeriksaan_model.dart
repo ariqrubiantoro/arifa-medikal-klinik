@@ -1,4 +1,5 @@
 class PemeriksaanModel {
+  String? aktivitasFisik;
   String? pemeriksaanFisik;
   String? pemeriksaanMata;
   String? pemeriksaanGigiMulut;
@@ -8,8 +9,12 @@ class PemeriksaanModel {
   String? pemeriksaanLaboratorium;
   String? pemeriksaanXrayJantung;
   String? paru;
+  String? pemeriksaanUsg;
+  String? pemeriksaanNapfa;
+  String? pemeriksaanNapza;
 
   PemeriksaanModel({
+    this.aktivitasFisik,
     this.pemeriksaanFisik,
     this.pemeriksaanMata,
     this.pemeriksaanGigiMulut,
@@ -19,10 +24,14 @@ class PemeriksaanModel {
     this.pemeriksaanLaboratorium,
     this.pemeriksaanXrayJantung,
     this.paru,
+    this.pemeriksaanUsg,
+    this.pemeriksaanNapfa,
+    this.pemeriksaanNapza,
   });
 
   factory PemeriksaanModel.fromJson(String? id, Map<String, dynamic> json) {
     return PemeriksaanModel(
+      aktivitasFisik: json['aktivitas_fisik'],
       pemeriksaanFisik: json['pemeriksaan_fisik'],
       pemeriksaanMata: json['pemeriksaan_mata'],
       pemeriksaanGigiMulut: json['pemeriksaan_gigi_mulut'],
@@ -32,10 +41,14 @@ class PemeriksaanModel {
       pemeriksaanLaboratorium: json['peemriksaan_laboratorium'],
       pemeriksaanXrayJantung: json['pemeriksaan_xray_jantung'],
       paru: json['paru'],
+      pemeriksaanUsg: json['pemeriksaan_usg'],
+      pemeriksaanNapfa: json['pemeriksaan_napfa'],
+      pemeriksaanNapza: json['pemeriksaan_napza'],
     );
   }
   Map<String, dynamic> toJson() {
     return {
+      'aktivitas_fisik': aktivitasFisik,
       'pemeriksaan_fisik': pemeriksaanFisik,
       'pemeriksaan_mata': pemeriksaanMata,
       'pemeriksaan_gigi_mulut': pemeriksaanGigiMulut,
@@ -45,6 +58,9 @@ class PemeriksaanModel {
       'peemriksaan_laboratorium': pemeriksaanLaboratorium,
       'pemeriksaan_xray_jantung': pemeriksaanXrayJantung,
       'paru': paru,
+      'pemeriksaan_usg': paru,
+      'pemeriksaan_napfa': paru,
+      'pemeriksaan_napza': paru,
     };
   }
 }

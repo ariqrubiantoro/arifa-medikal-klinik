@@ -5,6 +5,7 @@ class PemeriksaanUmumModel {
   String? imt;
   String? lingkarPerut;
   String? tekananDarah;
+  String? tekananDarahDistole;
   String? denyutNadi;
   String? pernapasan;
   String? suhu;
@@ -16,6 +17,7 @@ class PemeriksaanUmumModel {
     this.imt,
     this.lingkarPerut,
     this.tekananDarah,
+    this.tekananDarahDistole,
     this.denyutNadi,
     this.pernapasan,
     this.suhu,
@@ -29,6 +31,7 @@ class PemeriksaanUmumModel {
       imt: json['imt'],
       lingkarPerut: json['lingkar_perut'],
       tekananDarah: json['tekanan_darah'],
+      tekananDarahDistole: json['tekanan_darah_distole'],
       denyutNadi: json['denyut_nadi'],
       pernapasan: json['pernapasan'],
       suhu: json['suhu'],
@@ -43,6 +46,7 @@ class PemeriksaanUmumModel {
       'imt': imt,
       'lingkar_perut': lingkarPerut,
       'tekanan_darah': tekananDarah,
+      'tekanan_darah_distole': tekananDarahDistole,
       'denyut_nadi': denyutNadi,
       'pernapasan': pernapasan,
       'suhu': suhu,
