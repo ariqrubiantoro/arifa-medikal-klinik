@@ -378,7 +378,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                     child: InkWell(
                   onTap: () {
                     setState(() {
-                      firestore.deletePasien(id);
+                      deletePasien(id, setState);
                       Navigator.of(context).pop();
                       // .then((value) => Navigator.pushAndRemoveUntil(
                       //     context,
@@ -582,5 +582,175 @@ class _MenuUtamaState extends State<MenuUtama> {
         );
       }));
     }
+  }
+
+  Future<dynamic> deletePasien(String idPasien, Function setState) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    await firestore.collection('pasien').doc(idPasien).delete();
+    await firestore.collection('penyakitTerdahulu').doc(idPasien).delete();
+    await firestore.collection('riwayatKebiasaan').doc(idPasien).delete();
+    await firestore.collection('penyakitKeluarga').doc(idPasien).delete();
+    await firestore.collection('pemeriksaan').doc(idPasien).delete();
+    await firestore
+        .collection('kesimpulanDerajatKesehatan')
+        .doc(idPasien)
+        .delete();
+    await firestore.collection('kelayakanKerja').doc(idPasien).delete();
+    await firestore.collection('ajuran').doc(idPasien).delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanUmum')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanTHT')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanRonggaPerut')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanRonggaDada')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanRefleks')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanMata')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanKelenjarGetah')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanGentalia')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('keadaanUmum')
+        .collection('pemeriksaanAnggotaGerak')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('biologi')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('ergonomis')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('fisik')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('kimia')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('keluhan')
+        .doc('riwayatPajananPadaPekerjaan')
+        .collection('psikologi')
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Audiometri")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Fisik")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Gigi")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Jantung")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Mata")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Paru")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Spirometri")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Laboratorium1")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Usg")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Napfa")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Napza")
+        .doc(idPasien)
+        .delete();
+    await firestore.collection('fotoLainLain').doc(idPasien).delete();
+    setState(() {
+      getClientStream();
+    });
   }
 }
