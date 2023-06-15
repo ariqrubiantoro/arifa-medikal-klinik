@@ -21,6 +21,7 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Peme
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_treadmill.dart';
 import '../../../components/colors/color.dart';
 import '../../../components/widget/text.dart';
+import 'Hasil_Pemeriksaan/hasil_pemeriksaan_laboratorium1.dart';
 
 enum Question { tidakada, ringan, sedang, berat, none }
 
@@ -72,6 +73,9 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
         laboratorium.text = data!.pemeriksaanLaboratorium!;
         jantung.text = data!.pemeriksaanXrayJantung!;
         paru.text = data!.paru!;
+        usg.text = data!.pemeriksaanUsg!;
+        napfa.text = data!.pemeriksaanNapfa!;
+        napza.text = data!.pemeriksaanNapza!;
       });
       if (aktivfisik.text == "Tidak Ada") {
         setState(() {
@@ -191,26 +195,39 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
                       height: 20,
                     ),
                     Row(
+                      children: [
+                        textDefault("*", Colors.red, 14, FontWeight.bold),
+                        textDefault(
+                            "Isi kesimpulan dari hasil pemeriksaan tersebut",
+                            Colors.black,
+                            14,
+                            FontWeight.bold),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         textDefault("Aktivitas Fisik", Colors.black, 14,
                             FontWeight.bold),
                       ],
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: TextFormField(
-                        enabled: false,
-                        controller: aktivfisik,
-                        decoration: InputDecoration(border: InputBorder.none),
-                      ),
-                    ),
+                    // SizedBox(
+                    //   height: 5,
+                    // ),
+                    // Container(
+                    //   padding: EdgeInsets.symmetric(horizontal: 10),
+                    //   decoration: BoxDecoration(
+                    //       border: Border.all(color: Colors.grey),
+                    //       borderRadius: BorderRadius.circular(10)),
+                    //   child: TextFormField(
+                    //     enabled: false,
+                    //     controller: aktivfisik,
+                    //     decoration: InputDecoration(border: InputBorder.none),
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 10,
                     ),
@@ -501,6 +518,13 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
                       children: [
                         textDefault("Pemeriksaan Laboratorium", Colors.black,
                             14, FontWeight.bold),
+                        Text(
+                          "(note: lengkapi detail Hasil Pemeriksaan Laboratorium di halaman berikutnya)",
+                          style: TextStyle(
+                              fontFamily: 'poppins',
+                              fontSize: 12,
+                              fontStyle: FontStyle.italic),
+                        ),
                         InkWell(
                             onTap: () async {
                               SharedPreferences prefs =
@@ -508,7 +532,7 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
                               prefs.setString('iconHasil', 'iconHasil');
                               Navigator.pushReplacement(context,
                                   MaterialPageRoute(builder: (context) {
-                                return HasilPemeriksaanLaboratorium(
+                                return HasilPemeriksaanLaboratorium1(
                                     idPasien: widget.idPasien!);
                               }));
                             },

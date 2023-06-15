@@ -45,8 +45,28 @@ class _HasilPemeriksaanJantungState extends State<HasilPemeriksaanJantung> {
 
   @override
   void initState() {
-    judulConn.text = "Hasil Pemeriksaan Jantung";
+    judulConn.text = "Hasil Pemeriksaan Radiologi (Toraks PA)";
     dokterApa.text = "Dokter ";
+    keteranganConn.text = '''
+
+KLINIS                : MEDIKAL CHECK UP
+
+
+COR                   : Besar, bentuk dan letak jantung dalam batasan normal
+PULMO              : Corakan vascular tampak normal
+                            Tak tampak bercak pada kedua lapangan paru
+
+
+
+Hemidiafragma kanan setinggi costa 10 posterior
+Sinus costofrenikus kanan kiri lancip
+
+
+
+KESAN :
+- Cor tak membesar
+- Pulmo tak tampak infiltrat
+    ''';
     getData();
     super.initState();
   }
@@ -60,6 +80,28 @@ class _HasilPemeriksaanJantungState extends State<HasilPemeriksaanJantung> {
       fotoHasilBase64 = _hasilPemeriksaan!.image!;
       namaDokter.text = _hasilPemeriksaan!.namaDokter!;
       dokterApa.text = _hasilPemeriksaan!.dokterApa!;
+      if (keteranganConn.text == "") {
+        keteranganConn.text = '''
+
+KLINIS                : MEDIKAL CHECK UP
+
+
+COR                   : Besar, bentuk dan letak jantung dalam batasan normal
+PULMO              : Corakan vascular tampak normal
+                            Tak tampak bercak pada kedua lapangan paru
+
+
+
+Hemidiafragma kanan setinggi costa 10 posterior
+Sinus costofrenikus kanan kiri lancip
+
+
+
+KESAN :
+- Cor tak membesar
+- Pulmo tak tampak infiltrat
+    ''';
+      }
     });
   }
 
@@ -69,7 +111,7 @@ class _HasilPemeriksaanJantungState extends State<HasilPemeriksaanJantung> {
   Future getfoto(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
     final XFile? imagePicked =
-        await picker.pickImage(source: source, imageQuality: 50);
+        await picker.pickImage(source: source, imageQuality: 40);
     _image = File(imagePicked!.path);
     print(imagePicked.path);
     // bytes = File(imagePicked.path).readAsBytesSync();

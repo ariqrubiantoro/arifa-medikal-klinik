@@ -83,6 +83,71 @@ class _MenuUtamaState extends State<MenuUtama> {
   BiologiModel? _biologi;
   PsikologiModel? _psikologi;
   ErgonomisModel? _ergonomis;
+  final searchConn = TextEditingController();
+  List dataPasien2 = [];
+
+  List _allResults = [];
+  List _resultsList = [];
+
+  @override
+  void initState() {
+    searchConn.addListener(onSearchChanged);
+    super.initState();
+  }
+
+  onSearchChanged() {
+    print(searchConn.text);
+    searchResultList();
+  }
+
+  searchResultList() {
+    var showResult = [];
+    if (searchConn.text != "") {
+      for (var i in _allResults) {
+        var name = i['namaPasien'].toString().toLowerCase();
+        if (name.contains(searchConn.text.toLowerCase())) {
+          setState(() {
+            showResult.add(i);
+          });
+        }
+      }
+      setState(() {
+        _resultsList = showResult;
+      });
+    } else {
+      setState(() {
+        _resultsList = _allResults;
+        print(_resultsList);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    searchConn.removeListener(onSearchChanged);
+    searchConn.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    getClientStream();
+    super.didChangeDependencies();
+  }
+
+  getClientStream() async {
+    FirebaseFirestore.instance
+        .collection('pasien')
+        .orderBy('waktu', descending: true)
+        .get()
+        .then((value) {
+      setState(() {
+        _allResults = value.docs;
+        _resultsList = _allResults;
+      });
+    });
+    searchResultList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,68 +183,142 @@ class _MenuUtamaState extends State<MenuUtama> {
           )
         ],
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('pasien')
-            .orderBy('waktu', descending: true)
-            .snapshots(),
-        builder: (context, pasienSnapshot) {
-          if (pasienSnapshot.hasError) {
-            return Text('Something went wrong');
-          }
-          if (pasienSnapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          final listPasien = pasienSnapshot.data!.docs;
-          return ListView.builder(
-            itemCount: listPasien.length,
-            itemBuilder: (context, index) {
-              final DocumentSnapshot pasienSnapshots =
-                  pasienSnapshot.data!.docs[index];
-              return InkWell(
-                onTap: () {
-                  cekData(pasienSnapshots.id, "${pasienSnapshots['NIK']}",
-                      pasienSnapshots);
-                },
-                onLongPress: () => showDialogDelete(pasienSnapshots.id),
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 30),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
-                        BoxShadow(color: Colors.grey, blurRadius: 1)
-                      ]),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.person_outline_rounded,
-                        size: 40,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            textDefault(pasienSnapshots['namaPasien'],
-                                Colors.black, 14, FontWeight.normal),
-                            textDefault(pasienSnapshots['NIK'], Colors.black,
-                                14, FontWeight.normal),
-                            textDefault(pasienSnapshots['waktu'], Colors.grey,
-                                10, FontWeight.normal)
-                          ]),
-                    ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10)),
+              child: Row(
+                children: [
+                  Icon(Icons.search),
+                  SizedBox(
+                    width: 10,
                   ),
-                ),
-              );
-            },
-          );
-        },
+                  Expanded(
+                    child: TextField(
+                      controller: searchConn,
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(fontFamily: 'poppins'),
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Cari pasien disini..."),
+                      onChanged: (value) {},
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Column(
+              children: List.generate(_resultsList.length, (index) {
+                var data = _resultsList[index];
+                print(data);
+                return InkWell(
+                  onTap: () {
+                    cekData(data.id, "${data['NIK']}", data);
+                  },
+                  onLongPress: () => showDialogDelete(data.id),
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(color: Colors.grey, blurRadius: 1)
+                        ]),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.person_outline_rounded,
+                          size: 40,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              textDefault(data['namaPasien'], Colors.black, 14,
+                                  FontWeight.normal),
+                              textDefault(data['NIK'], Colors.black, 14,
+                                  FontWeight.normal),
+                              textDefault(data['waktu'], Colors.grey, 10,
+                                  FontWeight.normal)
+                            ]),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+            )
+          ],
+        ),
       ),
+      // body: StreamBuilder<QuerySnapshot>(
+      //   stream: FirebaseFirestore.instance
+      //       .collection('pasien')
+      //       .orderBy('waktu', descending: true)
+      //       .snapshots(),
+      //   builder: (context, pasienSnapshot) {
+      //     if (pasienSnapshot.hasError) {
+      //       return Text('Something went wrong');
+      //     }
+      //     if (pasienSnapshot.connectionState == ConnectionState.waiting) {
+      //       return Center(
+      //         child: Container(),
+      //       );
+      //     }
+      //     var listPasien = pasienSnapshot.data!.docs;
+      //     return SingleChildScrollView(
+      //       child: Column(
+      //         children: [
+      //           Container(
+      //             margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+      //             padding: EdgeInsets.symmetric(horizontal: 10),
+      //             decoration: BoxDecoration(
+      //                 color: Colors.white,
+      //                 border: Border.all(color: Colors.grey),
+      //                 borderRadius: BorderRadius.circular(10)),
+      //             child: Row(
+      //               children: [
+      //                 Icon(Icons.search),
+      //                 SizedBox(
+      //                   width: 10,
+      //                 ),
+      //                 Expanded(
+      //                     child: TextFormField(
+      //                   controller: searchConn,
+      //                   style: TextStyle(fontFamily: 'poppins'),
+      //                   decoration: InputDecoration(
+      //                       border: InputBorder.none,
+      //                       hintText: "Cari pasien disini..."),
+      //                   onChanged: (value) {
+      //                     setState(() {
+      //                       searchConn.text = value;
+      //                     });
+      //                   },
+      //                 ))
+      //               ],
+      //             ),
+      //           ),
+      //           SizedBox(
+      //             height: 10,
+      //           ),
+      //           Column(
+      //             children: List.generate(listPasien.length, (index) {
+
+      //             }),
+      //           )
+      //         ],
+      //       ),
+      //     );
+      //   },
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (_) {

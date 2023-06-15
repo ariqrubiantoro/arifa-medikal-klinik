@@ -22,9 +22,9 @@ class RiwwayatKebiasaan3 extends StatefulWidget {
 
 class _RiwwayatKebiasaan3State extends State<RiwwayatKebiasaan3> {
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
-  int _quest = 0;
-  int _quest2 = 0;
-  int _quest3 = 0;
+  int _quest = 2;
+  int _quest2 = 2;
+  int _quest3 = 2;
 
   String merokok = "Tidak";
   String miras = "Tidak";

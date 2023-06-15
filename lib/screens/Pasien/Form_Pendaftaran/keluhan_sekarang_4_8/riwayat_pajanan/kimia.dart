@@ -22,27 +22,27 @@ class Kimia extends StatefulWidget {
 }
 
 class _KimiaState extends State<Kimia> {
-  Question _quest1 = Question.none;
-  Question _quest2 = Question.none;
-  Question _quest3 = Question.none;
-  Question _quest4 = Question.none;
-  Question _quest5 = Question.none;
-  Question _quest6 = Question.none;
-  Question _quest7 = Question.none;
-  Question _quest8 = Question.none;
-  Question _quest9 = Question.none;
-  Question _quest10 = Question.none;
+  Question _quest1 = Question.tidak;
+  Question _quest2 = Question.tidak;
+  Question _quest3 = Question.tidak;
+  Question _quest4 = Question.tidak;
+  Question _quest5 = Question.tidak;
+  Question _quest6 = Question.tidak;
+  Question _quest7 = Question.tidak;
+  Question _quest8 = Question.tidak;
+  Question _quest9 = Question.tidak;
+  Question _quest10 = Question.tidak;
 
-  String debuAnorganik = "";
-  String debuOrganik = "";
-  String asap = "";
-  String logamBerat = "";
-  String pelarutOrganik = "";
-  String iritanAsam = "";
-  String iritanBasa = "";
-  String cairanPembersih = "";
-  String pestisida = "";
-  String uapLogam = "";
+  String debuAnorganik = "Tidak";
+  String debuOrganik = "Tidak";
+  String asap = "Tidak";
+  String logamBerat = "Tidak";
+  String pelarutOrganik = "Tidak";
+  String iritanAsam = "Tidak";
+  String iritanBasa = "Tidak";
+  String cairanPembersih = "Tidak";
+  String pestisida = "Tidak";
+  String uapLogam = "Tidak";
 
   TextEditingController debuAnorganikController = TextEditingController();
   TextEditingController debuOrganikController = TextEditingController();

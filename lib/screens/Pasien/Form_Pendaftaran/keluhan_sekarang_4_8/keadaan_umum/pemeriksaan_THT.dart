@@ -22,22 +22,22 @@ class PemeriksaanTHT extends StatefulWidget {
 }
 
 class _PemeriksaanTHTState extends State<PemeriksaanTHT> {
-  int _questTelinga1 = 0;
-  int _questTelinga2 = 0;
-  int _questTelinga3 = 0;
-  int _questTelinga4 = 0;
-  int _questTelinga5 = 0;
-  int _questTelinga6 = 0;
+  int _questTelinga1 = 1;
+  int _questTelinga2 = 1;
+  int _questTelinga3 = 1;
+  int _questTelinga4 = 2;
+  int _questTelinga5 = 1;
+  int _questTelinga6 = 2;
 
-  int _questHidung1 = 0;
-  int _questHidung2 = 0;
-  int _questHidung3 = 0;
+  int _questHidung1 = 2;
+  int _questHidung2 = 1;
+  int _questHidung3 = 1;
 
-  int _questKerongkongan1 = 0;
-  int _questKerongkongan2 = 0;
-  int _questKerongkongan3 = 0;
-  int _questKerongkongan4 = 0;
-  int _questKerongkongan5 = 0;
+  int _questKerongkongan1 = 1;
+  int _questKerongkongan2 = 1;
+  int _questKerongkongan3 = 1;
+  int _questKerongkongan4 = 1;
+  int _questKerongkongan5 = 2;
 
   bool tapTelinga = false;
   bool tapHidung = false;

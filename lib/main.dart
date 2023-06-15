@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_fisik.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_jantung.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_laboratorium1.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_usg.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/foto_lain_lain_view.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaan_5_8.dart';
@@ -55,13 +58,7 @@ class MyApp extends StatelessWidget {
             //   idPasien: "4YjDaN6cMrDqIcPukBkL",
             // );
             if (userSnapshot.hasData) {
-              // return PasienDetail();
               return MenuUtama();
-              // return Pemeriksaan5(
-              //   idPasien: 'weOGL76aYRmBaoAItKpP',
-              // );
-              // return MenuForm(idPasien: "O4cVtyFtQ04GK2Lu6tiZ");
-              // return FotoLainLainView(idPasien: "O4cVtyFtQ04GK2Lu6tiZ");
             } else {
               return AuthScreen();
             }

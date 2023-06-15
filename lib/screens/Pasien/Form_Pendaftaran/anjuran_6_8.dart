@@ -21,11 +21,11 @@ class Anjuran6 extends StatefulWidget {
 }
 
 class _Anjuran6State extends State<Anjuran6> {
-  Question _quest1 = Question.none;
-  Question _quest2 = Question.none;
+  Question _quest1 = Question.ya;
+  Question _quest2 = Question.ya;
 
-  String konsumsiAir = "";
-  String olahragaTeratur = "";
+  String konsumsiAir = "Ya";
+  String olahragaTeratur = "Ya";
 
   TextEditingController konsumsiAirController = TextEditingController();
   TextEditingController olahragaTeraturController = TextEditingController();

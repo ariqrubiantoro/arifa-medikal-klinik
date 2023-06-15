@@ -22,17 +22,17 @@ class PenyakitTerdahulu1 extends StatefulWidget {
 
 class _PenyakitTerdahulu1State extends State<PenyakitTerdahulu1> {
   FirebaseFirestoreService firestore = FirebaseFirestoreService();
-  int _quest = 0;
-  int _quest2 = 0;
-  int _quest3 = 0;
-  int _quest4 = 0;
-  int _quest5 = 0;
-  int _quest6 = 0;
-  int _quest7 = 0;
-  int _quest8 = 0;
-  int _quest9 = 0;
-  int _quest10 = 0;
-  int _quest11 = 0;
+  int _quest = 2;
+  int _quest2 = 2;
+  int _quest3 = 2;
+  int _quest4 = 2;
+  int _quest5 = 2;
+  int _quest6 = 2;
+  int _quest7 = 2;
+  int _quest8 = 2;
+  int _quest9 = 2;
+  int _quest10 = 2;
+  int _quest11 = 2;
 
   String darahTinggi = "Tidak Ada";
   String paru = "Tidak Ada";

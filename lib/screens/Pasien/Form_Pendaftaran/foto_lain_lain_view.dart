@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'dart:convert';
 import 'dart:io';
@@ -68,7 +68,7 @@ class _FotoLainLainViewState extends State<FotoLainLainView> {
   Future getfoto(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
     final XFile? imagePicked =
-        await picker.pickImage(source: source, imageQuality: 50);
+        await picker.pickImage(source: source, imageQuality: 40);
     _image = File(imagePicked!.path);
     // print(imagePicked.path);
     // bytes = File(imagePicked.path).readAsBytesSync();
@@ -714,7 +714,7 @@ class _FotoLainLainViewState extends State<FotoLainLainView> {
             MaterialPageRoute(builder: (context) {
           return PasienDetail(idPasien: widget.idPasien);
         }));
-      }
+      } 
     } else {
       prefs.remove("iconHasil");
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {

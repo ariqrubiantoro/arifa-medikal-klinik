@@ -21,21 +21,21 @@ class PemeriksaanRonggaDada extends StatefulWidget {
 }
 
 class _PemeriksaanRonggaDadaState extends State<PemeriksaanRonggaDada> {
-  int _questJantung1 = 0;
-  int _questJantung2 = 0;
-  int _questJantung3 = 0;
-  int _questJantung4 = 0;
-  int _questJantung5 = 0;
-  int _questJantung6 = 0;
+  int _questJantung1 = 1;
+  int _questJantung2 = 1;
+  int _questJantung3 = 1;
+  int _questJantung4 = 1;
+  int _questJantung5 = 1;
+  int _questJantung6 = 1;
 
-  int _questParu1 = 0;
-  int _questParu2 = 0;
-  int _questParu3 = 0;
-  int _questParu4 = 0;
-  int _questParu5 = 0;
-  int _questParu6 = 0;
-  int _questParu7 = 0;
-  int _questParu8 = 0;
+  int _questParu1 = 1;
+  int _questParu2 = 1;
+  int _questParu3 = 1;
+  int _questParu4 = 1;
+  int _questParu5 = 1;
+  int _questParu6 = 1;
+  int _questParu7 = 1;
+  int _questParu8 = 1;
 
   String batasJantung = "Normal";
   String auskultasi = "Normal";

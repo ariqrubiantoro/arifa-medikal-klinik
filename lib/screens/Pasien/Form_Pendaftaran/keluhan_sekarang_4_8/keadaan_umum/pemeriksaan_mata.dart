@@ -26,13 +26,13 @@ class PemeriksaanMata extends StatefulWidget {
 
 class _PemeriksaanMataState extends State<PemeriksaanMata> {
   FirebaseFirestoreService firstore = FirebaseFirestoreService();
-  int _questKacamata = 0;
+  int _questKacamata = 2;
   QuestRabun _questKondisi = QuestRabun.jauh;
-  int _questOlahraga = 0;
-  int _questButa = 0;
-  int _questPenMata = 0;
-  int _questKonjungtiva = 0;
-  int _questSklera = 0;
+  int _questOlahraga = 2;
+  int _questButa = 2;
+  int _questPenMata = 2;
+  int _questKonjungtiva = 2;
+  int _questSklera = 2;
 
   final osKiri = TextEditingController();
   final osKanan = TextEditingController();

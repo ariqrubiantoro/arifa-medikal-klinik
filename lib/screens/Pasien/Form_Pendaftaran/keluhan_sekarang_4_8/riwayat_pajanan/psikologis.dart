@@ -21,21 +21,21 @@ class Psikologis extends StatefulWidget {
 }
 
 class _PsikologisState extends State<Psikologis> {
-  Question _quest1 = Question.none;
-  Question _quest2 = Question.none;
-  Question _quest3 = Question.none;
-  Question _quest4 = Question.none;
-  Question _quest5 = Question.none;
-  Question _quest6 = Question.none;
-  Question _quest7 = Question.none;
+  Question _quest1 = Question.tidak;
+  Question _quest2 = Question.tidak;
+  Question _quest3 = Question.tidak;
+  Question _quest4 = Question.tidak;
+  Question _quest5 = Question.tidak;
+  Question _quest6 = Question.tidak;
+  Question _quest7 = Question.tidak;
 
-  String bebanKerja = "";
-  String pekerjaanTidakSesuai = "";
-  String ketidakjelasanTugas = "";
-  String hambatanJenjang = "";
-  String bekerjaGiliran = "";
-  String konflikDenganTeman = "";
-  String konflikDalamKeluarga = "";
+  String bebanKerja = "Tidak";
+  String pekerjaanTidakSesuai = "Tidak";
+  String ketidakjelasanTugas = "Tidak";
+  String hambatanJenjang = "Tidak";
+  String bekerjaGiliran = "Tidak";
+  String konflikDenganTeman = "Tidak";
+  String konflikDalamKeluarga = "Tidak";
 
   final lainlain = TextEditingController();
 

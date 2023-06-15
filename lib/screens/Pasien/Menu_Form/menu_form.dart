@@ -27,6 +27,7 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Peme
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_gigi_mulut.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_jantung.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_laboratorium.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_laboratorium1.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_mata.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_napfa.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_napza.dart';
@@ -62,6 +63,7 @@ import 'package:flutter/material.dart';
 import '../../../components/colors/color.dart';
 import '../../../components/widget/text.dart';
 import '../../../model/hasil_pemeriksaan/hasil_pemeriksaan_model.dart';
+import '../../../model/hasil_pemeriksaan/hasil_pemeriksaan_usg_model.dart';
 import '../../../model/pemeriksaan_umum_model.dart';
 import '../../../service/firebase_firestore_service.dart';
 
@@ -108,7 +110,7 @@ class _MenuFormState extends State<MenuForm> {
   HasilPemeriksaanModel? _hasilLaboratorium;
   HasilPemeriksaanModel? _hasilJantung;
   HasilPemeriksaanModel? _hasilParu;
-  HasilPemeriksaanModel? _hasilUsg;
+  HasilPemeriksaanUSGModel? _hasilUsg;
   HasilPemeriksaanModel? _hasilNapfa;
   HasilPemeriksaanModel? _hasilNapza;
 
@@ -1745,7 +1747,7 @@ class _MenuFormState extends State<MenuForm> {
                                         Navigator.pushReplacement(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return HasilPemeriksaanLaboratorium(
+                                          return HasilPemeriksaanLaboratorium1(
                                             idPasien: widget.idPasien,
                                           );
                                         }));

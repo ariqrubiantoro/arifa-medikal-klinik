@@ -22,23 +22,23 @@ class Fisik extends StatefulWidget {
 }
 
 class _FisikState extends State<Fisik> {
-  Question _quest1 = Question.none;
-  Question _quest2 = Question.none;
-  Question _quest3 = Question.none;
-  Question _quest4 = Question.none;
-  Question _quest5 = Question.none;
-  Question _quest6 = Question.none;
-  Question _quest7 = Question.none;
-  Question _quest8 = Question.none;
+  Question _quest1 = Question.tidak;
+  Question _quest2 = Question.tidak;
+  Question _quest3 = Question.tidak;
+  Question _quest4 = Question.tidak;
+  Question _quest5 = Question.tidak;
+  Question _quest6 = Question.tidak;
+  Question _quest7 = Question.tidak;
+  Question _quest8 = Question.tidak;
 
-  String kebisingan = "";
-  String suhuPanas = "";
-  String suhuDingin = "";
-  String radiasiBukanPengion = "";
-  String radiasiPengion = "";
-  String getaranLokal = "";
-  String getaranTubuh = "";
-  String ketinggian = "";
+  String kebisingan = "Tidak";
+  String suhuPanas = "Tidak";
+  String suhuDingin = "Tidak";
+  String radiasiBukanPengion = "Tidak";
+  String radiasiPengion = "Tidak";
+  String getaranLokal = "Tidak";
+  String getaranTubuh = "Tidak";
+  String ketinggian = "Tidak";
 
   TextEditingController kebisinganController = TextEditingController();
   TextEditingController suhuPanasController = TextEditingController();

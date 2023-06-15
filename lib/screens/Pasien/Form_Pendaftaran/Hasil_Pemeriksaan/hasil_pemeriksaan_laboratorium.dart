@@ -71,7 +71,7 @@ class _HasilPemeriksaanLaboratoriumState
   Future getfoto(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
     final XFile? imagePicked =
-        await picker.pickImage(source: source, imageQuality: 50);
+        await picker.pickImage(source: source, imageQuality: 40);
     _image = File(imagePicked!.path);
     print(imagePicked.path);
     // bytes = File(imagePicked.path).readAsBytesSync();

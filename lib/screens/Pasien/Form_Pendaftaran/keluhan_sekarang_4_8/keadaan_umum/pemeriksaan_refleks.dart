@@ -21,9 +21,9 @@ class PemeriksaanRefleks extends StatefulWidget {
 }
 
 class _PemeriksaanRefleksState extends State<PemeriksaanRefleks> {
-  int _quest1 = 0;
-  int _quest2 = 0;
-  int _quest3 = 0;
+  int _quest1 = 1;
+  int _quest2 = 1;
+  int _quest3 = 1;
 
   String strPupil = "Normal";
   String strPatella = "Normal";

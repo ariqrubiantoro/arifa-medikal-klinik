@@ -23,16 +23,16 @@ class PemeriksaanKelenjarGetah extends StatefulWidget {
 }
 
 class _PemeriksaanKelenjarGetahState extends State<PemeriksaanKelenjarGetah> {
-  int _quest1 = 0;
-  int _quest2 = 0;
-  int _quest3 = 0;
-  int _quest4 = 0;
-  int _quest5 = 0;
-  int _quest6 = 0;
-  int _quest7 = 0;
-  int _quest8 = 0;
-  int _quest9 = 0;
-  int _quest10 = 0;
+  int _quest1 = 1;
+  int _quest2 = 1;
+  int _quest3 = 1;
+  int _quest4 = 1;
+  int _quest5 = 1;
+  int _quest6 = 1;
+  int _quest7 = 1;
+  int _quest8 = 1;
+  int _quest9 = 1;
+  int _quest10 = 1;
 
   String cervicalKiri = "Normal";
   String cervicalKanan = "Normal";

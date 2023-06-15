@@ -21,21 +21,21 @@ class KesimpulanDerajat8 extends StatefulWidget {
 }
 
 class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
-  Question _quest1 = Question.none;
-  Question _quest2 = Question.none;
-  Question _quest3 = Question.none;
-  Question _quest4 = Question.none;
-  Question _quest5 = Question.none;
-  Question _quest6 = Question.none;
-  Question _quest7 = Question.none;
+  Question _quest1 = Question.tidak;
+  Question _quest2 = Question.tidak;
+  Question _quest3 = Question.tidak;
+  Question _quest4 = Question.tidak;
+  Question _quest5 = Question.tidak;
+  Question _quest6 = Question.tidak;
+  Question _quest7 = Question.tidak;
 
-  String str1 = "";
-  String str2 = "";
-  String str3 = "";
-  String str4 = "";
-  String str5 = "";
-  String str6 = "";
-  String str7 = "";
+  String str1 = "Tidak";
+  String str2 = "Tidak";
+  String str3 = "Tidak";
+  String str4 = "Tidak";
+  String str5 = "Tidak";
+  String str6 = "Tidak";
+  String str7 = "Tidak";
 
   TextEditingController str1Controller = TextEditingController();
   TextEditingController str2Controller = TextEditingController();
@@ -67,8 +67,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
           str1 = data!.ditemukanKelainanMedis!;
           _quest1 = Question.tidak;
         });
-      }
-      if (data!.ditemukanKelainanMedis! == "") {
+      } else if (data!.ditemukanKelainanMedis! == "") {
       } else {
         setState(() {
           str1Controller.text = data!.ditemukanKelainanMedis!;
@@ -85,8 +84,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
           str2 = data!.ditemukanKelainanYangTidakSerius!;
           _quest2 = Question.tidak;
         });
-      }
-      if (data!.ditemukanKelainanYangTidakSerius! == "") {
+      } else if (data!.ditemukanKelainanYangTidakSerius! == "") {
       } else {
         setState(() {
           str2Controller.text = data!.ditemukanKelainanYangTidakSerius!;
@@ -103,8 +101,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
           str3 = data!.ditemukanKelainanResikoKesehatanRendah!;
           _quest3 = Question.tidak;
         });
-      }
-      if (data!.ditemukanKelainanResikoKesehatanRendah! == "") {
+      } else if (data!.ditemukanKelainanResikoKesehatanRendah! == "") {
       } else {
         setState(() {
           str3Controller.text = data!.ditemukanKelainanResikoKesehatanRendah!;
@@ -121,8 +118,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
           str4 = data!.ditemukanKelainanResikoKesehatanSedang!;
           _quest4 = Question.tidak;
         });
-      }
-      if (data!.ditemukanKelainanResikoKesehatanSedang! == "") {
+      } else if (data!.ditemukanKelainanResikoKesehatanSedang! == "") {
       } else {
         setState(() {
           str4Controller.text = data!.ditemukanKelainanResikoKesehatanSedang!;
@@ -139,8 +135,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
           str5 = data!.ditemukanKelainanResikoKesehatanTinggi!;
           _quest5 = Question.tidak;
         });
-      }
-      if (data!.ditemukanKelainanResikoKesehatanTinggi! == "") {
+      } else if (data!.ditemukanKelainanResikoKesehatanTinggi! == "") {
       } else {
         setState(() {
           str5Controller.text = data!.ditemukanKelainanResikoKesehatanTinggi!;
@@ -157,8 +152,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
           str6 = data!.ditemukanKelainanMenyebabkanKeterbatasan!;
           _quest6 = Question.tidak;
         });
-      }
-      if (data!.ditemukanKelainanMenyebabkanKeterbatasan! == "") {
+      } else if (data!.ditemukanKelainanMenyebabkanKeterbatasan! == "") {
       } else {
         setState(() {
           str6Controller.text = data!.ditemukanKelainanMenyebabkanKeterbatasan!;
@@ -175,8 +169,7 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
           str7 = data!.tidakDapatBekerja!;
           _quest7 = Question.tidak;
         });
-      }
-      if (data!.tidakDapatBekerja! == "") {
+      } else if (data!.tidakDapatBekerja! == "") {
       } else {
         setState(() {
           str7Controller.text = data!.tidakDapatBekerja!;
@@ -304,26 +297,6 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         SizedBox(
                           width: 10,
                         ),
-                        Expanded(
-                          child: Container(
-                            height: 45,
-                            padding: EdgeInsets.only(left: 5),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(5)),
-                            child: TextFormField(
-                              onTap: () {
-                                setState(() {
-                                  _quest1 = Question.none;
-                                });
-                              },
-                              controller: str1Controller,
-                              maxLength: 12,
-                              decoration:
-                                  InputDecoration(border: InputBorder.none),
-                            ),
-                          ),
-                        )
                       ],
                     ),
                     SizedBox(
@@ -361,26 +334,6 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         SizedBox(
                           width: 10,
                         ),
-                        Expanded(
-                          child: Container(
-                            height: 45,
-                            padding: EdgeInsets.only(left: 5),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(5)),
-                            child: TextFormField(
-                              onTap: () {
-                                setState(() {
-                                  _quest2 = Question.none;
-                                });
-                              },
-                              controller: str2Controller,
-                              maxLength: 12,
-                              decoration:
-                                  InputDecoration(border: InputBorder.none),
-                            ),
-                          ),
-                        )
                       ],
                     ),
                     SizedBox(
@@ -421,26 +374,6 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         SizedBox(
                           width: 10,
                         ),
-                        Expanded(
-                          child: Container(
-                            height: 45,
-                            padding: EdgeInsets.only(left: 5),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(5)),
-                            child: TextFormField(
-                              onTap: () {
-                                setState(() {
-                                  _quest3 = Question.none;
-                                });
-                              },
-                              controller: str3Controller,
-                              maxLength: 12,
-                              decoration:
-                                  InputDecoration(border: InputBorder.none),
-                            ),
-                          ),
-                        )
                       ],
                     ),
                     SizedBox(
@@ -481,26 +414,6 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         SizedBox(
                           width: 10,
                         ),
-                        Expanded(
-                          child: Container(
-                            height: 45,
-                            padding: EdgeInsets.only(left: 5),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(5)),
-                            child: TextFormField(
-                              onTap: () {
-                                setState(() {
-                                  _quest4 = Question.none;
-                                });
-                              },
-                              controller: str4Controller,
-                              maxLength: 12,
-                              decoration:
-                                  InputDecoration(border: InputBorder.none),
-                            ),
-                          ),
-                        )
                       ],
                     ),
                     SizedBox(
@@ -541,26 +454,6 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         SizedBox(
                           width: 10,
                         ),
-                        Expanded(
-                          child: Container(
-                            height: 45,
-                            padding: EdgeInsets.only(left: 5),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(5)),
-                            child: TextFormField(
-                              onTap: () {
-                                setState(() {
-                                  _quest5 = Question.none;
-                                });
-                              },
-                              controller: str5Controller,
-                              maxLength: 12,
-                              decoration:
-                                  InputDecoration(border: InputBorder.none),
-                            ),
-                          ),
-                        )
                       ],
                     ),
                     SizedBox(
@@ -601,26 +494,6 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         SizedBox(
                           width: 10,
                         ),
-                        Expanded(
-                          child: Container(
-                            height: 45,
-                            padding: EdgeInsets.only(left: 5),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(5)),
-                            child: TextFormField(
-                              onTap: () {
-                                setState(() {
-                                  _quest6 = Question.none;
-                                });
-                              },
-                              controller: str6Controller,
-                              maxLength: 12,
-                              decoration:
-                                  InputDecoration(border: InputBorder.none),
-                            ),
-                          ),
-                        )
                       ],
                     ),
                     SizedBox(
@@ -661,26 +534,6 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         SizedBox(
                           width: 10,
                         ),
-                        Expanded(
-                          child: Container(
-                            height: 45,
-                            padding: EdgeInsets.only(left: 5),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(5)),
-                            child: TextFormField(
-                              onTap: () {
-                                setState(() {
-                                  _quest7 = Question.none;
-                                });
-                              },
-                              controller: str7Controller,
-                              maxLength: 12,
-                              decoration:
-                                  InputDecoration(border: InputBorder.none),
-                            ),
-                          ),
-                        )
                       ],
                     ),
                     SizedBox(

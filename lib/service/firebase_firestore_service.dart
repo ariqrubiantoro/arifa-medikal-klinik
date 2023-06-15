@@ -1,5 +1,7 @@
 import 'package:arifa_medikal_klink_3/model/foto_lain_lain_model.dart';
+import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_laboratorium_model.dart';
 import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_model.dart';
+import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_usg_model.dart';
 import 'package:arifa_medikal_klink_3/model/pasien_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_anggota_gerak_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_gentalia_model.dart';
@@ -770,6 +772,36 @@ class FirebaseFirestoreService {
     }
   }
 
+  Future<HasilPemeriksaanLaboratoriumModel> setHasilPemeriksaanLaboratorium1(
+      {required HasilPemeriksaanLaboratoriumModel pemeriksaan,
+      required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Laboratorium1")
+        .doc(idPasien);
+
+    await doc.set(pemeriksaan.toJson());
+
+    return pemeriksaan;
+  }
+
+  Future<HasilPemeriksaanLaboratoriumModel?> getHasilPemeriksaanLaboratorium1(
+      String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Laboratorium1")
+        .doc(idPasien);
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return HasilPemeriksaanLaboratoriumModel.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
   Future<HasilPemeriksaanModel> setHasilPemeriksaanJantung(
       {required HasilPemeriksaanModel pemeriksaan,
       required String idPasien}) async {
@@ -830,8 +862,8 @@ class FirebaseFirestoreService {
     }
   }
 
-  Future<HasilPemeriksaanModel> setHasilPemeriksaanUsg(
-      {required HasilPemeriksaanModel pemeriksaan,
+  Future<HasilPemeriksaanUSGModel> setHasilPemeriksaanUsg(
+      {required HasilPemeriksaanUSGModel pemeriksaan,
       required String idPasien}) async {
     DocumentReference doc = firestore
         .collection('pemeriksaan')
@@ -844,17 +876,18 @@ class FirebaseFirestoreService {
     return pemeriksaan;
   }
 
-  Future<HasilPemeriksaanModel?> getHasilPemeriksaanUsg(String idPasien) async {
+  Future<HasilPemeriksaanUSGModel?> getHasilPemeriksaanUsg(
+      String idPasien) async {
     DocumentReference doc = firestore
         .collection('pemeriksaan')
         .doc('Hasil_Pemeriksaan')
-        .collection("Paru")
+        .collection("Usg")
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
     if (snapshot.data() == null) {
       return null;
     } else {
-      return HasilPemeriksaanModel.fromJson(
+      return HasilPemeriksaanUSGModel.fromJson(
           snapshot.id, snapshot.data() as Map<String, dynamic>);
     }
   }
@@ -878,7 +911,7 @@ class FirebaseFirestoreService {
     DocumentReference doc = firestore
         .collection('pemeriksaan')
         .doc('Hasil_Pemeriksaan')
-        .collection("Paru")
+        .collection("Napfa")
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
     if (snapshot.data() == null) {
@@ -908,7 +941,7 @@ class FirebaseFirestoreService {
     DocumentReference doc = firestore
         .collection('pemeriksaan')
         .doc('Hasil_Pemeriksaan')
-        .collection("Paru")
+        .collection("Napza")
         .doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
     if (snapshot.data() == null) {
@@ -1142,6 +1175,24 @@ class FirebaseFirestoreService {
         .collection('pemeriksaan')
         .doc('Hasil_Pemeriksaan')
         .collection("Spirometri")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Usg")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Napfa")
+        .doc(idPasien)
+        .delete();
+    await firestore
+        .collection('pemeriksaan')
+        .doc('Hasil_Pemeriksaan')
+        .collection("Napza")
         .doc(idPasien)
         .delete();
     await firestore.collection('fotoLainLain').doc(idPasien).delete();
