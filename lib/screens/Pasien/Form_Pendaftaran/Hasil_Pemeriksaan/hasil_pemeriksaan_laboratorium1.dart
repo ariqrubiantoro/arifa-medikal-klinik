@@ -36,12 +36,14 @@ class _HasilPemeriksaanLaboratorium1State
   final mch = TextEditingController();
   final mchc = TextEditingController();
   final rdw = TextEditingController();
+  final led = TextEditingController();
   final limfosit = TextEditingController();
   final granulosit = TextEditingController();
   final mid = TextEditingController();
 
   final bilirubinTotal = TextEditingController();
   final bilirubinDirect = TextEditingController();
+  final bilirubinIndirect = TextEditingController();
   final sgot = TextEditingController();
   final sgpt = TextEditingController();
   final alkalinePhosphatase = TextEditingController();
@@ -66,6 +68,7 @@ class _HasilPemeriksaanLaboratorium1State
   final keton = TextEditingController();
   final bilirubi = TextEditingController();
   final glukosa = TextEditingController();
+  final golonganDarah = TextEditingController();
 
   final konsitensi = TextEditingController();
   final warna = TextEditingController();
@@ -92,63 +95,74 @@ class _HasilPemeriksaanLaboratorium1State
         await firestore.getHasilPemeriksaanLaboratorium1(widget.idPasien);
     if (_hasilPemeriksaanLaboratorium != null) {
       setState(() {
-        hemoglobin.text = _hasilPemeriksaanLaboratorium!.hemoglobin!;
-        hematokrit.text = _hasilPemeriksaanLaboratorium!.hematokrit!;
-        eritrosit.text = _hasilPemeriksaanLaboratorium!.eritrosit!;
-        trombosit.text = _hasilPemeriksaanLaboratorium!.trombosit!;
-        leukosit.text = _hasilPemeriksaanLaboratorium!.leukosit!;
-        mcv.text = _hasilPemeriksaanLaboratorium!.mcv!;
-        mch.text = _hasilPemeriksaanLaboratorium!.mch!;
-        mchc.text = _hasilPemeriksaanLaboratorium!.mchc!;
-        rdw.text = _hasilPemeriksaanLaboratorium!.rdw!;
-        limfosit.text = _hasilPemeriksaanLaboratorium!.limfosit!;
-        granulosit.text = _hasilPemeriksaanLaboratorium!.granulosit!;
-        mid.text = _hasilPemeriksaanLaboratorium!.mid!;
+        hemoglobin.text = _hasilPemeriksaanLaboratorium!.hemoglobin ?? "";
+        hematokrit.text = _hasilPemeriksaanLaboratorium!.hematokrit ?? "";
+        eritrosit.text = _hasilPemeriksaanLaboratorium!.eritrosit ?? "";
+        trombosit.text = _hasilPemeriksaanLaboratorium!.trombosit ?? "";
+        leukosit.text = _hasilPemeriksaanLaboratorium!.leukosit ?? "";
+        mcv.text = _hasilPemeriksaanLaboratorium!.mcv ?? "";
+        mch.text = _hasilPemeriksaanLaboratorium!.mch ?? "";
+        mchc.text = _hasilPemeriksaanLaboratorium!.mchc ?? "";
+        rdw.text = _hasilPemeriksaanLaboratorium!.rdw ?? "";
+        limfosit.text = _hasilPemeriksaanLaboratorium!.limfosit ?? "";
+        granulosit.text = _hasilPemeriksaanLaboratorium!.granulosit ?? "";
+        mid.text = _hasilPemeriksaanLaboratorium!.mid ?? "";
 
-        bilirubinTotal.text = _hasilPemeriksaanLaboratorium!.bilirubinTotal!;
-        bilirubinDirect.text = _hasilPemeriksaanLaboratorium!.bilirubinDirect!;
-        sgot.text = _hasilPemeriksaanLaboratorium!.sgot!;
-        sgpt.text = _hasilPemeriksaanLaboratorium!.sgpt!;
+        bilirubinTotal.text =
+            _hasilPemeriksaanLaboratorium!.bilirubinTotal ?? "";
+        bilirubinDirect.text =
+            _hasilPemeriksaanLaboratorium!.bilirubinDirect ?? "";
+
+        sgot.text = _hasilPemeriksaanLaboratorium!.sgot ?? "";
+        sgpt.text = _hasilPemeriksaanLaboratorium!.sgpt ?? "";
         alkalinePhosphatase.text =
-            _hasilPemeriksaanLaboratorium!.alkalinePhosphatase!;
-        cholinesterase.text = _hasilPemeriksaanLaboratorium!.cholinesterase!;
-        ureum.text = _hasilPemeriksaanLaboratorium!.ureum!;
-        creatinine.text = _hasilPemeriksaanLaboratorium!.creatinine!;
-        uricAcid.text = _hasilPemeriksaanLaboratorium!.uricAcid!;
-        glukosaPuasa.text = _hasilPemeriksaanLaboratorium!.glukosaPuasa!;
-        kgd2JamPP.text = _hasilPemeriksaanLaboratorium!.kgd2JamPP!;
+            _hasilPemeriksaanLaboratorium!.alkalinePhosphatase ?? "";
+        cholinesterase.text =
+            _hasilPemeriksaanLaboratorium!.cholinesterase ?? "";
+        ureum.text = _hasilPemeriksaanLaboratorium!.ureum ?? "";
+        creatinine.text = _hasilPemeriksaanLaboratorium!.creatinine ?? "";
+        uricAcid.text = _hasilPemeriksaanLaboratorium!.uricAcid ?? "";
+        glukosaPuasa.text = _hasilPemeriksaanLaboratorium!.glukosaPuasa ?? "";
+        kgd2JamPP.text = _hasilPemeriksaanLaboratorium!.kgd2JamPP ?? "";
         cholesterolTotal.text =
-            _hasilPemeriksaanLaboratorium!.cholesterolTotal!;
-        hdlCholesterol.text = _hasilPemeriksaanLaboratorium!.hdlCholesterol!;
-        ldlCholesterol.text = _hasilPemeriksaanLaboratorium!.ldlCholesterol!;
-        triglyserida.text = _hasilPemeriksaanLaboratorium!.triglyserida!;
+            _hasilPemeriksaanLaboratorium!.cholesterolTotal ?? "";
+        hdlCholesterol.text =
+            _hasilPemeriksaanLaboratorium!.hdlCholesterol ?? "";
+        ldlCholesterol.text =
+            _hasilPemeriksaanLaboratorium!.ldlCholesterol ?? "";
+        triglyserida.text = _hasilPemeriksaanLaboratorium!.triglyserida ?? "";
 
         leukositUrinalisa.text =
-            _hasilPemeriksaanLaboratorium!.leukositUrinalisa!;
-        nitrit.text = _hasilPemeriksaanLaboratorium!.nitrit!;
-        urobilin.text = _hasilPemeriksaanLaboratorium!.urobilin!;
-        protein.text = _hasilPemeriksaanLaboratorium!.protein!;
-        ph.text = _hasilPemeriksaanLaboratorium!.ph!;
-        darah.text = _hasilPemeriksaanLaboratorium!.darah!;
-        beratJenis.text = _hasilPemeriksaanLaboratorium!.beratJenis!;
-        keton.text = _hasilPemeriksaanLaboratorium!.keton!;
-        bilirubi.text = _hasilPemeriksaanLaboratorium!.bilirubi!;
-        glukosa.text = _hasilPemeriksaanLaboratorium!.glukosa!;
+            _hasilPemeriksaanLaboratorium!.leukositUrinalisa ?? "";
+        nitrit.text = _hasilPemeriksaanLaboratorium!.nitrit ?? "";
+        urobilin.text = _hasilPemeriksaanLaboratorium!.urobilin ?? "";
+        protein.text = _hasilPemeriksaanLaboratorium!.protein ?? "";
+        ph.text = _hasilPemeriksaanLaboratorium!.ph ?? "";
+        darah.text = _hasilPemeriksaanLaboratorium!.darah ?? "";
+        beratJenis.text = _hasilPemeriksaanLaboratorium!.beratJenis ?? "";
+        keton.text = _hasilPemeriksaanLaboratorium!.keton ?? "";
+        bilirubi.text = _hasilPemeriksaanLaboratorium!.bilirubi ?? "";
+        glukosa.text = _hasilPemeriksaanLaboratorium!.glukosa ?? "";
 
-        konsitensi.text = _hasilPemeriksaanLaboratorium!.konsitensi!;
-        warna.text = _hasilPemeriksaanLaboratorium!.warna!;
-        lendir.text = _hasilPemeriksaanLaboratorium!.lendir!;
-        darahFeses.text = _hasilPemeriksaanLaboratorium!.darahFeses!;
-        telurCacing.text = _hasilPemeriksaanLaboratorium!.telurCacing!;
-        parasit.text = _hasilPemeriksaanLaboratorium!.parasit!;
-        cyste.text = _hasilPemeriksaanLaboratorium!.cyste!;
-        leucocyte.text = _hasilPemeriksaanLaboratorium!.leucocyte!;
-        erythrocyte.text = _hasilPemeriksaanLaboratorium!.erythrocyte!;
-        lemak.text = _hasilPemeriksaanLaboratorium!.lemak!;
-        amylum.text = _hasilPemeriksaanLaboratorium!.amylum!;
-        serabut.text = _hasilPemeriksaanLaboratorium!.serabut!;
-        dokter.text = _hasilPemeriksaanLaboratorium!.dokter!;
-        analisa.text = _hasilPemeriksaanLaboratorium!.analisa!;
+        konsitensi.text = _hasilPemeriksaanLaboratorium!.konsitensi ?? "";
+        warna.text = _hasilPemeriksaanLaboratorium!.warna ?? "";
+        lendir.text = _hasilPemeriksaanLaboratorium!.lendir ?? "";
+        darahFeses.text = _hasilPemeriksaanLaboratorium!.darahFeses ?? "";
+        telurCacing.text = _hasilPemeriksaanLaboratorium!.telurCacing ?? "";
+        parasit.text = _hasilPemeriksaanLaboratorium!.parasit ?? "";
+        cyste.text = _hasilPemeriksaanLaboratorium!.cyste ?? "";
+        leucocyte.text = _hasilPemeriksaanLaboratorium!.leucocyte ?? "";
+        erythrocyte.text = _hasilPemeriksaanLaboratorium!.erythrocyte ?? "";
+        lemak.text = _hasilPemeriksaanLaboratorium!.lemak ?? "";
+        amylum.text = _hasilPemeriksaanLaboratorium!.amylum ?? "";
+        serabut.text = _hasilPemeriksaanLaboratorium!.serabut ?? "";
+        dokter.text = _hasilPemeriksaanLaboratorium!.dokter ?? "";
+        analisa.text = _hasilPemeriksaanLaboratorium!.analisa ?? "";
+
+        led.text = _hasilPemeriksaanLaboratorium!.led ?? "";
+        bilirubinIndirect.text =
+            _hasilPemeriksaanLaboratorium!.bilirubinIndirect ?? "";
+        golonganDarah.text = _hasilPemeriksaanLaboratorium!.golonganDarah ?? "";
       });
     }
   }
@@ -376,6 +390,20 @@ class _HasilPemeriksaanLaboratorium1State
                     SizedBox(
                       height: 10,
                     ),
+                    textDefault("LED", Colors.black, 14, FontWeight.normal),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextFormField(
+                        controller: led,
+                        decoration: InputDecoration(border: InputBorder.none),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     textDefault(
                         "Limfosit", Colors.black, 14, FontWeight.normal),
                     Container(
@@ -452,6 +480,21 @@ class _HasilPemeriksaanLaboratorium1State
                           borderRadius: BorderRadius.circular(10)),
                       child: TextFormField(
                         controller: bilirubinDirect,
+                        decoration: InputDecoration(border: InputBorder.none),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    textDefault("Bilirubin Indirect", Colors.black, 14,
+                        FontWeight.normal),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextFormField(
+                        controller: bilirubinIndirect,
                         decoration: InputDecoration(border: InputBorder.none),
                       ),
                     ),
@@ -802,6 +845,21 @@ class _HasilPemeriksaanLaboratorium1State
                       ),
                     ),
                     SizedBox(
+                      height: 10,
+                    ),
+                    textDefault(
+                        "Golongan Darah", Colors.black, 14, FontWeight.normal),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextFormField(
+                        controller: golonganDarah,
+                        decoration: InputDecoration(border: InputBorder.none),
+                      ),
+                    ),
+                    SizedBox(
                       height: 20,
                     ),
                     textDefault("FESES", Colors.black, 20, FontWeight.bold),
@@ -1128,6 +1186,9 @@ class _HasilPemeriksaanLaboratorium1State
       lemak: lemak.text,
       amylum: amylum.text,
       serabut: serabut.text,
+      led: led.text,
+      bilirubinIndirect: bilirubinIndirect.text,
+      golonganDarah: golonganDarah.text,
     );
 
     firestore.setHasilPemeriksaanLaboratorium1(

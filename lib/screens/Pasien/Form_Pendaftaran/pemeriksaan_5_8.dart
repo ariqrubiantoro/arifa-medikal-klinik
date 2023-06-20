@@ -518,13 +518,6 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
                       children: [
                         textDefault("Pemeriksaan Laboratorium", Colors.black,
                             14, FontWeight.bold),
-                        Text(
-                          "(note: lengkapi detail Hasil Pemeriksaan Laboratorium di halaman berikutnya)",
-                          style: TextStyle(
-                              fontFamily: 'poppins',
-                              fontSize: 12,
-                              fontStyle: FontStyle.italic),
-                        ),
                         InkWell(
                             onTap: () async {
                               SharedPreferences prefs =
@@ -538,6 +531,13 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
                             },
                             child: Icon(Icons.upload_file))
                       ],
+                    ),
+                    Text(
+                      "(note: lengkapi detail Hasil Pemeriksaan Laboratorium di halaman berikutnya)",
+                      style: TextStyle(
+                          fontFamily: 'poppins',
+                          fontSize: 12,
+                          fontStyle: FontStyle.italic),
                     ),
                     SizedBox(
                       height: 5,
@@ -778,10 +778,10 @@ class _Pemeriksaan5State extends State<Pemeriksaan5> {
       pemeriksaanTreadmill: treadmill.text,
       pemeriksaanLaboratorium: laboratorium.text,
       pemeriksaanXrayJantung: jantung.text,
-      paru: paru.text,
       pemeriksaanUsg: usg.text,
       pemeriksaanNapfa: napfa.text,
       pemeriksaanNapza: napza.text,
+      paru: paru.text,
     );
 
     firestore.setPemeriksaan(pemeriksaan: data, idPasien: widget.idPasien!);

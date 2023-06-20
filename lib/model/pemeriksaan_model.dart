@@ -58,9 +58,9 @@ class PemeriksaanModel {
       'peemriksaan_laboratorium': pemeriksaanLaboratorium,
       'pemeriksaan_xray_jantung': pemeriksaanXrayJantung,
       'paru': paru,
-      'pemeriksaan_usg': paru,
-      'pemeriksaan_napfa': paru,
-      'pemeriksaan_napza': paru,
+      'pemeriksaan_usg': pemeriksaanUsg,
+      'pemeriksaan_napfa': pemeriksaanNapfa,
+      'pemeriksaan_napza': pemeriksaanNapza,
     };
   }
 }

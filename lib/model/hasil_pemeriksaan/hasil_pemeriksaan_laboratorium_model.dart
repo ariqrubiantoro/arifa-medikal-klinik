@@ -10,12 +10,14 @@ class HasilPemeriksaanLaboratoriumModel {
   String? mch;
   String? mchc;
   String? rdw;
+  String? led;
   String? limfosit;
   String? granulosit;
   String? mid;
 
   String? bilirubinTotal;
   String? bilirubinDirect;
+  String? bilirubinIndirect;
   String? sgot;
   String? sgpt;
   String? alkalinePhosphatase;
@@ -40,6 +42,7 @@ class HasilPemeriksaanLaboratoriumModel {
   String? keton;
   String? bilirubi;
   String? glukosa;
+  String? golonganDarah;
 
   String? konsitensi;
   String? warna;
@@ -66,6 +69,9 @@ class HasilPemeriksaanLaboratoriumModel {
     this.mch,
     this.mchc,
     this.rdw,
+    this.led,
+    this.bilirubinIndirect,
+    this.golonganDarah,
     this.limfosit,
     this.granulosit,
     this.mid,
@@ -128,6 +134,9 @@ class HasilPemeriksaanLaboratoriumModel {
       bilirubinTotal: json['bilirubinTotal'],
       bilirubinDirect: json['bilirubinDirect'],
       sgot: json['sgot'],
+      led: json['led'],
+      bilirubinIndirect: json['bilirubinIndirect'],
+      golonganDarah: json['golonganDarah'],
       sgpt: json['sgpt'],
       alkalinePhosphatase: json['alkalinePhosphatase'],
       cholinesterase: json['cholinesterase'],
@@ -178,6 +187,9 @@ class HasilPemeriksaanLaboratoriumModel {
       "mch": mch,
       "mchc": mchc,
       "rdw": rdw,
+      "led": led,
+      "bilirubinIndirect": bilirubinIndirect,
+      "golonganDarah": golonganDarah,
       "limfosit": limfosit,
       "granulosit": granulosit,
       "mid": mid,
