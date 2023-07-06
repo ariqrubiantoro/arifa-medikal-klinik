@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'dart:html' as html;
 
 import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_model.dart';
 import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_usg_model.dart';
@@ -18,7 +17,6 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 
 import '../../../../components/colors/color.dart';
 import '../../../../components/widget/text.dart';
@@ -132,64 +130,70 @@ Tak tampak kelainan pada organ-organ intraabdomen di atas
     });
   }
 
-  Future<void> _pickImage() async {
-    fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
-      setState(() {
-        fotoHasilBase64 = base64Encode(fromPicker!);
-        print(fotoHasilBase64);
-      });
-    }
+  Future getFotoWeb() async {
+    final ImagePicker picker = ImagePicker();
+
+    var image = await picker.pickImage(
+        source: ImageSource.gallery, maxWidth: 800, maxHeight: 800);
+    var imageForWeb = await image!.readAsBytes();
+    setState(() {
+      fotoHasilBase64 = base64Encode(imageForWeb);
+    });
   }
 
-  Future<void> _pickImage2() async {
-    fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
-      setState(() {
-        fotoHasilBase642 = base64Encode(fromPicker!);
-        print(fotoHasilBase64);
-      });
-    }
+  Future getFotoWeb2() async {
+    final ImagePicker picker = ImagePicker();
+
+    var image = await picker.pickImage(
+        source: ImageSource.gallery, maxWidth: 800, maxHeight: 800);
+    var imageForWeb = await image!.readAsBytes();
+    setState(() {
+      fotoHasilBase642 = base64Encode(imageForWeb);
+    });
   }
 
-  Future<void> _pickImage3() async {
-    fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
-      setState(() {
-        fotoHasilBase643 = base64Encode(fromPicker!);
-        print(fotoHasilBase64);
-      });
-    }
+  Future getFotoWeb3() async {
+    final ImagePicker picker = ImagePicker();
+
+    var image = await picker.pickImage(
+        source: ImageSource.gallery, maxWidth: 800, maxHeight: 800);
+    var imageForWeb = await image!.readAsBytes();
+    setState(() {
+      fotoHasilBase643 = base64Encode(imageForWeb);
+    });
   }
 
-  Future<void> _pickImage4() async {
-    fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
-      setState(() {
-        fotoHasilBase644 = base64Encode(fromPicker!);
-        print(fotoHasilBase644);
-      });
-    }
+  Future getFotoWeb4() async {
+    final ImagePicker picker = ImagePicker();
+
+    var image = await picker.pickImage(
+        source: ImageSource.gallery, maxWidth: 800, maxHeight: 800);
+    var imageForWeb = await image!.readAsBytes();
+    setState(() {
+      fotoHasilBase644 = base64Encode(imageForWeb);
+    });
   }
 
-  Future<void> _pickImage5() async {
-    fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
-      setState(() {
-        fotoHasilBase645 = base64Encode(fromPicker!);
-        print(fotoHasilBase64);
-      });
-    }
+  Future getFotoWeb5() async {
+    final ImagePicker picker = ImagePicker();
+
+    var image = await picker.pickImage(
+        source: ImageSource.gallery, maxWidth: 800, maxHeight: 800);
+    var imageForWeb = await image!.readAsBytes();
+    setState(() {
+      fotoHasilBase645 = base64Encode(imageForWeb);
+    });
   }
 
-  Future<void> _pickImage6() async {
-    fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
-      setState(() {
-        fotoHasilBase646 = base64Encode(fromPicker!);
-        print(fotoHasilBase64);
-      });
-    }
+  Future getFotoWeb6() async {
+    final ImagePicker picker = ImagePicker();
+
+    var image = await picker.pickImage(
+        source: ImageSource.gallery, maxWidth: 800, maxHeight: 800);
+    var imageForWeb = await image!.readAsBytes();
+    setState(() {
+      fotoHasilBase646 = base64Encode(imageForWeb);
+    });
   }
 
   @override
@@ -314,7 +318,7 @@ Tak tampak kelainan pada organ-organ intraabdomen di atas
                         onTap: () {
                           if (kIsWeb) {
                             setState(() {
-                              _pickImage();
+                              getFotoWeb();
                             });
                           } else {
                             setState(() {
@@ -400,7 +404,7 @@ Tak tampak kelainan pada organ-organ intraabdomen di atas
                             onTap: () {
                               if (kIsWeb) {
                                 setState(() {
-                                  _pickImage2();
+                                  getFotoWeb2();
                                 });
                               } else {
                                 setState(() {
@@ -494,7 +498,7 @@ Tak tampak kelainan pada organ-organ intraabdomen di atas
                             onTap: () {
                               if (kIsWeb) {
                                 setState(() {
-                                  _pickImage3();
+                                  getFotoWeb3();
                                 });
                               } else {
                                 setState(() {
@@ -588,7 +592,7 @@ Tak tampak kelainan pada organ-organ intraabdomen di atas
                             onTap: () {
                               if (kIsWeb) {
                                 setState(() {
-                                  _pickImage4();
+                                  getFotoWeb4();
                                 });
                               } else {
                                 setState(() {
@@ -682,7 +686,7 @@ Tak tampak kelainan pada organ-organ intraabdomen di atas
                             onTap: () {
                               if (kIsWeb) {
                                 setState(() {
-                                  _pickImage5();
+                                  getFotoWeb5();
                                 });
                               } else {
                                 setState(() {
@@ -776,7 +780,7 @@ Tak tampak kelainan pada organ-organ intraabdomen di atas
                             onTap: () {
                               if (kIsWeb) {
                                 setState(() {
-                                  _pickImage6();
+                                  getFotoWeb6();
                                 });
                               } else {
                                 setState(() {

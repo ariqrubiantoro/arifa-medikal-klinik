@@ -1,11 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
+import 'package:arifa_medikal_klink_3/firebase_options.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_audiometri.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_fisik.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_jantung.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_laboratorium1.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_usg.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/foto_lain_lain_view.dart';
+import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_mata.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaan_5_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
@@ -27,16 +32,40 @@ Future<void> main() async {
       projectId: 'arifa-medikal-klinik-c8675',
       storageBucket: 'arifa-medika dl-klinik-c8675.appspot.com',
     ));
-  } else {
-    await Firebase.initializeApp(
-        options: FirebaseOptions(
-      apiKey: 'AIzaSyDGkCmmjYa6MQpnrxwrn7IshpdzOLR2UWs',
-      appId: '1:603088810081:android:249b74d705f17a52f3fa20',
-      messagingSenderId: '603088810081',
-      projectId: 'arifa-medikal-klinik-c8675',
-      storageBucket: 'arifa-medikal-klinik-c8675.appspot.com',
-    ));
   }
+
+  await Firebase.initializeApp();
+  // if (kIsWeb) {
+  //   await Firebase.initializeApp(
+  //       options: FirebaseOptions(
+  //     apiKey: 'AIzaSyDGkCmmjYa6MQpnrxwrn7IshpdzOLR2UWs',
+  //     appId: '1:603088810081:android:249b74d705f17a52f3fa20',
+  //     messagingSenderId: '603088810081',
+  //     projectId: 'arifa-medikal-klinik-c8675',
+  //     storageBucket: 'arifa-medika dl-klinik-c8675.appspot.com',
+  //   ));
+  // } else if (Platform.isIOS) {
+  //   await Firebase.initializeApp(
+  //       options: FirebaseOptions(
+  //     apiKey: 'AIzaSyDGkCmmjYa6MQpnrxwrn7IshpdzOLR2UWs',
+  //     appId: '1:635068110518:ios:07d1f1a5d80d2741db3817',
+  //     messagingSenderId: '603088810081',
+  //     projectId: 'arifa-medikal-klinik-c8675',
+  //     storageBucket: 'arifa-medika dl-klinik-c8675.appspot.com',
+  //     iosClientId:
+  //         '635068110518-unv2h39mb96ok9dusr5areoro56g0icl.apps.googleusercontent.com',
+  //     iosBundleId: 'com.example.arifaMedikalKlink3',
+  //   ));
+  // } else {
+  //   await Firebase.initializeApp(
+  //       options: FirebaseOptions(
+  //     apiKey: 'AIzaSyDGkCmmjYa6MQpnrxwrn7IshpdzOLR2UWs',
+  //     appId: '1:603088810081:android:249b74d705f17a52f3fa20',
+  //     messagingSenderId: '603088810081',
+  //     projectId: 'arifa-medikal-klinik-c8675',
+  //     storageBucket: 'arifa-medikal-klinik-c8675.appspot.com',
+  //   ));
+  // }
   runApp(const MyApp());
 }
 
@@ -54,7 +83,7 @@ class MyApp extends StatelessWidget {
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, userSnapshot) {
-            // return PasienDetail(
+            // return HasilPemeriksaanAudiometri(
             //   idPasien: "4YjDaN6cMrDqIcPukBkL",
             // );
             if (userSnapshot.hasData) {

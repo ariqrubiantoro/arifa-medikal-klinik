@@ -1,4 +1,5 @@
 import 'package:arifa_medikal_klink_3/model/foto_lain_lain_model.dart';
+import 'package:arifa_medikal_klink_3/model/fotolainlain_new_model.dart';
 import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_laboratorium_model.dart';
 import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_model.dart';
 import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_usg_model.dart';
@@ -1028,6 +1029,146 @@ class FirebaseFirestoreService {
     return fotoLain;
   }
 
+  Future<FotoLainLainNew> setFotoLainLain12(
+      {required FotoLainLainNew fotoLain, required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('fotoLainLain')
+        .doc(idPasien)
+        .collection('foto')
+        .doc('foto1-2');
+
+    await doc.set(fotoLain.toJson());
+
+    return fotoLain;
+  }
+
+  Future<FotoLainLainNew?> getFotoLainLain12(String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('fotoLainLain')
+        .doc(idPasien)
+        .collection('foto')
+        .doc('foto1-2');
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return FotoLainLainNew.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<FotoLainLainNew> setFotoLainLain34(
+      {required FotoLainLainNew fotoLain, required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('fotoLainLain')
+        .doc(idPasien)
+        .collection('foto')
+        .doc('foto3-4');
+
+    await doc.set(fotoLain.toJson());
+
+    return fotoLain;
+  }
+
+  Future<FotoLainLainNew?> getFotoLainLain34(String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('fotoLainLain')
+        .doc(idPasien)
+        .collection('foto')
+        .doc('foto3-4');
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return FotoLainLainNew.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<FotoLainLainNew> setFotoLainLain56(
+      {required FotoLainLainNew fotoLain, required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('fotoLainLain')
+        .doc(idPasien)
+        .collection('foto')
+        .doc('foto5-6');
+
+    await doc.set(fotoLain.toJson());
+
+    return fotoLain;
+  }
+
+  Future<FotoLainLainNew?> getFotoLainLain56(String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('fotoLainLain')
+        .doc(idPasien)
+        .collection('foto')
+        .doc('foto5-6');
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return FotoLainLainNew.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<FotoLainLainNew> setFotoLainLain78(
+      {required FotoLainLainNew fotoLain, required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('fotoLainLain')
+        .doc(idPasien)
+        .collection('foto')
+        .doc('foto7-8');
+
+    await doc.set(fotoLain.toJson());
+
+    return fotoLain;
+  }
+
+  Future<FotoLainLainNew?> getFotoLainLain78(String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('fotoLainLain')
+        .doc(idPasien)
+        .collection('foto')
+        .doc('foto7-8');
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return FotoLainLainNew.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<FotoLainLainNew> setFotoLainLain9(
+      {required FotoLainLainNew fotoLain, required String idPasien}) async {
+    DocumentReference doc = firestore
+        .collection('fotoLainLain')
+        .doc(idPasien)
+        .collection('foto')
+        .doc('foto9');
+
+    await doc.set(fotoLain.toJson());
+
+    return fotoLain;
+  }
+
+  Future<FotoLainLainNew?> getFotoLainLain9(String idPasien) async {
+    DocumentReference doc = firestore
+        .collection('fotoLainLain')
+        .doc(idPasien)
+        .collection('foto')
+        .doc('foto9');
+    DocumentSnapshot snapshot = await doc.get();
+    if (snapshot.data() == null) {
+      return null;
+    } else {
+      return FotoLainLainNew.fromJson(
+          snapshot.id, snapshot.data() as Map<String, dynamic>);
+    }
+  }
+
   Future<FotoLainLain?> getFotoLainLain(String idPasien) async {
     DocumentReference doc = firestore.collection('fotoLainLain').doc(idPasien);
     DocumentSnapshot snapshot = await doc.get();
@@ -1038,6 +1179,4 @@ class FirebaseFirestoreService {
           snapshot.id, snapshot.data() as Map<String, dynamic>);
     }
   }
-
-  
 }

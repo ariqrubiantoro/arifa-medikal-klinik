@@ -36,8 +36,12 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
 
   final osKiri = TextEditingController();
   final osKanan = TextEditingController();
+  final koreksiKiri = TextEditingController();
+  final koreksiKanan = TextEditingController();
 
   bool boolKondisi = false;
+
+  final kondisiMata = TextEditingController();
 
   String kacamata = "Tidak";
   String kondisi = "Rabun Jauh";
@@ -85,14 +89,12 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
         });
       }
 
-      if (data!.kondisi! == "Rabun Dekat") {
-        setState(() {
-          kondisi = "Rabun Dekat";
-        });
-      }
       setState(() {
+        kondisiMata.text = data!.kondisi!;
         osKiri.text = data!.visusKiri!;
         osKanan.text = data!.visusKanan!;
+        koreksiKiri.text = data!.koreksiKiri!;
+        koreksiKanan.text = data!.koreksiKanan!;
       });
       if (data!.olahraga! == "Ya") {
         setState(() {
@@ -356,34 +358,22 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               children: [
                                 textDefault("Kondisi", Colors.black, 14,
                                     FontWeight.bold),
-                                Row(
-                                  children: <Widget>[
-                                    Radio(
-                                      value: QuestRabun.dekat,
-                                      groupValue: _questKondisi,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _questKondisi = value!;
-                                          kondisi = "Rabun Dekat";
-                                        });
-                                      },
-                                    ),
-                                    textDefault("Rabun Dekat", Colors.black, 14,
-                                        FontWeight.normal),
-                                    Radio(
-                                      value: QuestRabun.jauh,
-                                      groupValue: _questKondisi,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _questKondisi = value!;
-                                          kondisi = "Rabun Jauh";
-                                        });
-                                      },
-                                    ),
-                                    textDefault("Rabun Jauh", Colors.black, 14,
-                                        FontWeight.normal),
-                                  ],
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(color: Colors.grey)),
+                                  child: TextFormField(
+                                      controller: kondisiMata,
+                                      decoration: InputDecoration(
+                                          hintText:
+                                              "Rabun Jauh/Dekat/Katarak/Lainnya",
+                                          border: InputBorder.none)),
                                 ),
+                                SizedBox(
+                                  height: 10,
+                                )
                               ],
                             )
                           : Container(),
@@ -399,6 +389,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           Container(
                             width: 80,
                             // height: 35,
+                            padding: EdgeInsets.symmetric(horizontal: 5),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(5),
@@ -409,8 +400,24 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                                 decoration:
                                     InputDecoration(border: InputBorder.none)),
                           ),
-                          textDefault(" (Tanpa lensa koreksi)", Colors.black,
-                              12, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Colors.grey)),
+                              child: TextFormField(
+                                  controller: koreksiKiri,
+                                  decoration: InputDecoration(
+                                      hintText:
+                                          "Tanpa Lensa Koreksi/Dengan Lensa Koreksi",
+                                      border: InputBorder.none)),
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -426,6 +433,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                           textDefault(
                               ":  ", Colors.black, 13, FontWeight.normal),
                           Container(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
                             width: 80,
                             // height: 35,
                             decoration: BoxDecoration(
@@ -438,8 +446,24 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                                 decoration:
                                     InputDecoration(border: InputBorder.none)),
                           ),
-                          textDefault(" (Tanpa lensa koreksi)", Colors.black,
-                              12, FontWeight.normal),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Colors.grey)),
+                              child: TextFormField(
+                                  controller: koreksiKanan,
+                                  decoration: InputDecoration(
+                                      hintText:
+                                          "Tanpa Lensa Koreksi/Dengan Lensa Koreksi",
+                                      border: InputBorder.none)),
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -627,7 +651,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               setState(() {
                                 konjungtivaF.text = "";
                                 _questKonjungtiva = value!;
-                                penMata = "Normal";
+                                konjungtiva = "Normal";
                               });
                             },
                           ),
@@ -640,7 +664,7 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
                               setState(() {
                                 konjungtivaF.text = "";
                                 _questKonjungtiva = value!;
-                                penMata = "Tidak Normal";
+                                konjungtiva = "Tidak Normal";
                               });
                             },
                           ),
@@ -774,9 +798,11 @@ class _PemeriksaanMataState extends State<PemeriksaanMata> {
     kondisi = boolKondisi ? kondisi : "";
     PemeriksaanMataModel data = PemeriksaanMataModel(
       kacaMata: kacamata,
-      kondisi: kondisi,
+      kondisi: kondisiMata.text,
       visusKiri: osKiri.text,
       visusKanan: osKanan.text,
+      koreksiKiri: koreksiKiri.text,
+      koreksiKanan: koreksiKanan.text,
       olahraga: olahraga,
       butaWarna: buta,
       penyakitMata: penMata,

@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, avoid_web_libraries_in_flutter, duplicate_ignore
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:arifa_medikal_klink_3/components/colors/color.dart';
 import 'package:arifa_medikal_klink_3/components/widget/text.dart';
@@ -31,6 +30,7 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Review/components/list_riwa
 import 'package:arifa_medikal_klink_3/screens/Pasien/Review/components/list_rongga_perut.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Review/components/list_telinga.dart';
 import 'package:arifa_medikal_klink_3/service/firebase_firestore_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +87,7 @@ import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_k
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/penyakit_terdahulu_1_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/riwayat_kebiasaan_3_8.dart';
 import 'package:arifa_medikal_klink_3/screens/menu_utama.dart';
-import 'package:intl/intl.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:open_filex/open_filex.dart';
@@ -95,14 +95,18 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as htmm;
+// import 'dart:html' as htmm;
 
+import '../../model/fotolainlain_new_model.dart';
 import '../../model/hasil_pemeriksaan/hasil_pemeriksaan_laboratorium_model.dart';
 import 'Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_laboratorium1.dart';
 import 'Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_napfa.dart';
 import 'Review/components/list_anjuran.dart';
 import 'Review/components/list_kelenjar_getah.dart';
 import 'Review/components/list_profile_pasien.dart';
+import 'package:universal_html_cpy/html.dart' as html;
+import 'dart:io';
+// import 'package:intl/intl.dart' if (dart.library.html) 'dart:html' as html if(dart.library.io) 'package:intl/intl.dart';
 
 class PasienDetail extends StatefulWidget {
   PasienDetail({super.key, required this.idPasien});
@@ -148,6 +152,11 @@ class _PasienDetailState extends State<PasienDetail> {
   HasilPemeriksaanUSGModel? _hasilUsg;
   HasilPemeriksaanModel? _hasilNapfa;
   HasilPemeriksaanModel? _hasilNapza;
+  FotoLainLainNew? _fotoLain12;
+  FotoLainLainNew? _fotoLain34;
+  FotoLainLainNew? _fotoLain56;
+  FotoLainLainNew? _fotoLain78;
+  FotoLainLainNew? _fotoLain9;
 
   FotoLainLain? _fotoLainLain;
   bool boolProfilPasien = false;
@@ -264,6 +273,12 @@ class _PasienDetailState extends State<PasienDetail> {
     _hasilUsg = await firestore.getHasilPemeriksaanUsg(widget.idPasien);
     _hasilNapfa = await firestore.getHasilPemeriksaanNapfa(widget.idPasien);
     _hasilNapza = await firestore.getHasilPemeriksaanNapza(widget.idPasien);
+
+    _fotoLain12 = await firestore.getFotoLainLain12(widget.idPasien);
+    _fotoLain34 = await firestore.getFotoLainLain34(widget.idPasien);
+    _fotoLain56 = await firestore.getFotoLainLain56(widget.idPasien);
+    _fotoLain78 = await firestore.getFotoLainLain78(widget.idPasien);
+    _fotoLain9 = await firestore.getFotoLainLain9(widget.idPasien);
 
     _fotoLainLain = await firestore.getFotoLainLain(widget.idPasien);
     if (_riwayatKebiasaan!.strMerokok == "Tidak") {
@@ -1619,7 +1634,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                   ),
                                                   pw.Container(
                                                     child: pw.Text(
-                                                        "(Tanpa lensa koreksi)",
+                                                        "(${_pemeriksaanMata!.koreksiKiri})",
                                                         style: pw.TextStyle(
                                                             fontSize: 11,
                                                             fontWeight: pw
@@ -1653,7 +1668,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                   ),
                                                   pw.Container(
                                                     child: pw.Text(
-                                                        "(Tanpa lensa koreksi)",
+                                                        "(${_pemeriksaanMata!.koreksiKanan})",
                                                         style: pw.TextStyle(
                                                             fontSize: 11,
                                                             fontWeight: pw
@@ -4343,126 +4358,157 @@ class _PasienDetailState extends State<PasienDetail> {
                   padding: pw.EdgeInsets.symmetric(horizontal: 10),
                   child: pw.Column(children: [
                     pw.SizedBox(height: 10),
-                    pw.Row(children: [
-                      pw.SizedBox(width: 10),
-                      pw.Container(
-                          width: 240,
-                          child: pw.Text("PEMERIKSAAN FISIK",
-                              style: pw.TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: pw.FontWeight.bold))),
-                      pw.Text(": ${_pemeriksaan!.pemeriksaanFisik}",
-                          style: pw.TextStyle(
-                              fontSize: 11, fontWeight: pw.FontWeight.normal))
-                    ]),
-                    pw.Row(children: [
-                      pw.SizedBox(width: 10),
-                      pw.Container(
-                          width: 240,
-                          child: pw.Text("PEMERIKSAAN MATA",
-                              style: pw.TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: pw.FontWeight.bold))),
-                      pw.Text(": ${_pemeriksaan!.pemeriksaanMata}",
-                          style: pw.TextStyle(
-                              fontSize: 11, fontWeight: pw.FontWeight.normal))
-                    ]),
-                    pw.Row(children: [
-                      pw.SizedBox(width: 10),
-                      pw.Container(
-                          width: 240,
-                          child: pw.Text("PEMERIKSAAN GIGI & MULUT",
-                              style: pw.TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: pw.FontWeight.bold))),
-                      pw.Text(": ${_pemeriksaan!.pemeriksaanGigiMulut}",
-                          style: pw.TextStyle(
-                              fontSize: 11, fontWeight: pw.FontWeight.normal))
-                    ]),
-                    pw.Row(children: [
-                      pw.SizedBox(width: 10),
-                      pw.Container(
-                          width: 240,
-                          child: pw.Text("PEMERIKSAAN AUDIOMETRI",
-                              style: pw.TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: pw.FontWeight.bold))),
-                      pw.Text(": ${_pemeriksaan!.pemeriksaanAudioMetri}",
-                          style: pw.TextStyle(
-                              fontSize: 11, fontWeight: pw.FontWeight.normal))
-                    ]),
-                    pw.Row(children: [
-                      pw.SizedBox(width: 10),
-                      pw.Container(
-                          width: 240,
-                          child: pw.Text("PEMERIKSAAN SPIROMETRI",
-                              style: pw.TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: pw.FontWeight.bold))),
-                      pw.Text(": ${_pemeriksaan!.pemeriksaanSpirometri}",
-                          style: pw.TextStyle(
-                              fontSize: 11, fontWeight: pw.FontWeight.normal))
-                    ]),
-                    pw.Row(children: [
-                      pw.SizedBox(width: 10),
-                      pw.Container(
-                          width: 240,
-                          child: pw.Text("PEMERIKSAAN TREADMILL/EKG",
-                              style: pw.TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: pw.FontWeight.bold))),
-                      pw.Text(": ${_pemeriksaan!.pemeriksaanTreadmill}",
-                          style: pw.TextStyle(
-                              fontSize: 11, fontWeight: pw.FontWeight.normal))
-                    ]),
-                    pw.Row(children: [
-                      pw.SizedBox(width: 10),
-                      pw.Container(
-                          width: 240,
-                          child: pw.Text("PEMERIKSAAN LABORATORIUM",
-                              style: pw.TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: pw.FontWeight.bold))),
-                      pw.Text(": ${_pemeriksaan!.pemeriksaanLaboratorium}",
-                          style: pw.TextStyle(
-                              fontSize: 11, fontWeight: pw.FontWeight.normal))
-                    ]),
-                    pw.Row(children: [
-                      pw.SizedBox(width: 10),
-                      pw.Container(
-                          width: 240,
-                          child: pw.Text("PEMERIKSAAN USG",
-                              style: pw.TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: pw.FontWeight.bold))),
-                      pw.Text(": ${_pemeriksaan!.pemeriksaanUsg}",
-                          style: pw.TextStyle(
-                              fontSize: 11, fontWeight: pw.FontWeight.normal))
-                    ]),
-                    pw.Row(children: [
-                      pw.SizedBox(width: 10),
-                      pw.Container(
-                          width: 240,
-                          child: pw.Text("PEMERIKSAAN NAPFA",
-                              style: pw.TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: pw.FontWeight.bold))),
-                      pw.Text(": ${_pemeriksaan!.pemeriksaanNapfa}",
-                          style: pw.TextStyle(
-                              fontSize: 11, fontWeight: pw.FontWeight.normal))
-                    ]),
-                    pw.Row(children: [
-                      pw.SizedBox(width: 10),
-                      pw.Container(
-                          width: 240,
-                          child: pw.Text("PEMERIKSAAN NAPZA",
-                              style: pw.TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: pw.FontWeight.bold))),
-                      pw.Text(": ${_pemeriksaan!.pemeriksaanNapza}",
-                          style: pw.TextStyle(
-                              fontSize: 11, fontWeight: pw.FontWeight.normal))
-                    ]),
+                    _pemeriksaan!.pemeriksaanFisik == ""
+                        ? pw.Container()
+                        : pw.Row(children: [
+                            pw.SizedBox(width: 10),
+                            pw.Container(
+                                width: 240,
+                                child: pw.Text("PEMERIKSAAN FISIK",
+                                    style: pw.TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: pw.FontWeight.bold))),
+                            pw.Text(": ${_pemeriksaan!.pemeriksaanFisik}",
+                                style: pw.TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: pw.FontWeight.normal))
+                          ]),
+                    _pemeriksaan!.pemeriksaanMata == ""
+                        ? pw.Container()
+                        : pw.Row(children: [
+                            pw.SizedBox(width: 10),
+                            pw.Container(
+                                width: 240,
+                                child: pw.Text("PEMERIKSAAN MATA",
+                                    style: pw.TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: pw.FontWeight.bold))),
+                            pw.Text(": ${_pemeriksaan!.pemeriksaanMata}",
+                                style: pw.TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: pw.FontWeight.normal))
+                          ]),
+                    _pemeriksaan!.pemeriksaanGigiMulut == ""
+                        ? pw.Container()
+                        : pw.Row(children: [
+                            pw.SizedBox(width: 10),
+                            pw.Container(
+                                width: 240,
+                                child: pw.Text("PEMERIKSAAN GIGI & MULUT",
+                                    style: pw.TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: pw.FontWeight.bold))),
+                            pw.Text(": ${_pemeriksaan!.pemeriksaanGigiMulut}",
+                                style: pw.TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: pw.FontWeight.normal))
+                          ]),
+                    _pemeriksaan!.pemeriksaanAudioMetri == ""
+                        ? pw.Container()
+                        : pw.Row(children: [
+                            pw.SizedBox(width: 10),
+                            pw.Container(
+                                width: 240,
+                                child: pw.Text("PEMERIKSAAN AUDIOMETRI",
+                                    style: pw.TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: pw.FontWeight.bold))),
+                            pw.Text(": ${_pemeriksaan!.pemeriksaanAudioMetri}",
+                                style: pw.TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: pw.FontWeight.normal))
+                          ]),
+                    _pemeriksaan!.pemeriksaanSpirometri == ""
+                        ? pw.Container()
+                        : pw.Row(children: [
+                            pw.SizedBox(width: 10),
+                            pw.Container(
+                                width: 240,
+                                child: pw.Text("PEMERIKSAAN SPIROMETRI",
+                                    style: pw.TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: pw.FontWeight.bold))),
+                            pw.Text(": ${_pemeriksaan!.pemeriksaanSpirometri}",
+                                style: pw.TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: pw.FontWeight.normal))
+                          ]),
+                    _pemeriksaan!.pemeriksaanTreadmill == ""
+                        ? pw.Container()
+                        : pw.Row(children: [
+                            pw.SizedBox(width: 10),
+                            pw.Container(
+                                width: 240,
+                                child: pw.Text("PEMERIKSAAN TREADMILL/EKG",
+                                    style: pw.TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: pw.FontWeight.bold))),
+                            pw.Text(": ${_pemeriksaan!.pemeriksaanTreadmill}",
+                                style: pw.TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: pw.FontWeight.normal))
+                          ]),
+                    _pemeriksaan!.pemeriksaanLaboratorium == ""
+                        ? pw.Container()
+                        : pw.Row(children: [
+                            pw.SizedBox(width: 10),
+                            pw.Container(
+                                width: 240,
+                                child: pw.Text("PEMERIKSAAN LABORATORIUM",
+                                    style: pw.TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: pw.FontWeight.bold))),
+                            pw.Text(
+                                ": ${_pemeriksaan!.pemeriksaanLaboratorium}",
+                                style: pw.TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: pw.FontWeight.normal))
+                          ]),
+                    _pemeriksaan!.pemeriksaanUsg == ""
+                        ? pw.Container()
+                        : pw.Row(children: [
+                            pw.SizedBox(width: 10),
+                            pw.Container(
+                                width: 240,
+                                child: pw.Text("PEMERIKSAAN USG",
+                                    style: pw.TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: pw.FontWeight.bold))),
+                            pw.Text(": ${_pemeriksaan!.pemeriksaanUsg}",
+                                style: pw.TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: pw.FontWeight.normal))
+                          ]),
+                    _pemeriksaan!.pemeriksaanNapfa == ""
+                        ? pw.Container()
+                        : pw.Row(children: [
+                            pw.SizedBox(width: 10),
+                            pw.Container(
+                                width: 240,
+                                child: pw.Text("PEMERIKSAAN NAPFA",
+                                    style: pw.TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: pw.FontWeight.bold))),
+                            pw.Text(": ${_pemeriksaan!.pemeriksaanNapfa}",
+                                style: pw.TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: pw.FontWeight.normal))
+                          ]),
+                    _pemeriksaan!.pemeriksaanNapza == ""
+                        ? pw.Container()
+                        : pw.Row(children: [
+                            pw.SizedBox(width: 10),
+                            pw.Container(
+                                width: 240,
+                                child: pw.Text("PEMERIKSAAN NAPZA",
+                                    style: pw.TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: pw.FontWeight.bold))),
+                            pw.Text(": ${_pemeriksaan!.pemeriksaanNapza}",
+                                style: pw.TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: pw.FontWeight.normal))
+                          ]),
                     pw.Row(
                         mainAxisAlignment: pw.MainAxisAlignment.start,
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -4472,51 +4518,61 @@ class _PasienDetailState extends State<PasienDetail> {
                               mainAxisAlignment: pw.MainAxisAlignment.start,
                               crossAxisAlignment: pw.CrossAxisAlignment.start,
                               children: [
-                                pw.Container(
-                                    width: 240,
-                                    child: pw.Text("PEMERIKSAAN X RAY",
-                                        style: pw.TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: pw.FontWeight.bold))),
-                                pw.Row(
-                                    mainAxisAlignment:
-                                        pw.MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.SizedBox(width: 10),
-                                      pw.Container(
-                                          width: 230,
-                                          child: pw.Text("1. JANTUNG",
-                                              style: pw.TextStyle(
-                                                  fontSize: 11,
-                                                  fontWeight:
-                                                      pw.FontWeight.bold))),
-                                      pw.Text(
-                                          ": ${_pemeriksaan!.pemeriksaanXrayJantung}",
-                                          style: pw.TextStyle(
-                                              fontSize: 11,
-                                              fontWeight: pw.FontWeight.normal))
-                                    ]),
-                                pw.Row(
-                                    mainAxisAlignment:
-                                        pw.MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.SizedBox(width: 10),
-                                      pw.Container(
-                                          width: 230,
-                                          child: pw.Text("2. PARU",
-                                              style: pw.TextStyle(
-                                                  fontSize: 11,
-                                                  fontWeight:
-                                                      pw.FontWeight.bold))),
-                                      pw.Text(": ${_pemeriksaan!.paru}",
-                                          style: pw.TextStyle(
-                                              fontSize: 11,
-                                              fontWeight: pw.FontWeight.normal))
-                                    ]),
+                                _pemeriksaan!.pemeriksaanXrayJantung == "" &&
+                                        _pemeriksaan!.paru == ""
+                                    ? pw.Container()
+                                    : pw.Container(
+                                        width: 240,
+                                        child: pw.Text("PEMERIKSAAN X RAY",
+                                            style: pw.TextStyle(
+                                                fontSize: 11,
+                                                fontWeight:
+                                                    pw.FontWeight.bold))),
+                                _pemeriksaan!.pemeriksaanXrayJantung == ""
+                                    ? pw.Container()
+                                    : pw.Row(
+                                        mainAxisAlignment:
+                                            pw.MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                            pw.SizedBox(width: 10),
+                                            pw.Container(
+                                                width: 230,
+                                                child: pw.Text("1. JANTUNG",
+                                                    style: pw.TextStyle(
+                                                        fontSize: 11,
+                                                        fontWeight: pw
+                                                            .FontWeight.bold))),
+                                            pw.Text(
+                                                ": ${_pemeriksaan!.pemeriksaanXrayJantung}",
+                                                style: pw.TextStyle(
+                                                    fontSize: 11,
+                                                    fontWeight:
+                                                        pw.FontWeight.normal))
+                                          ]),
+                                _pemeriksaan!.paru == ""
+                                    ? pw.Container()
+                                    : pw.Row(
+                                        mainAxisAlignment:
+                                            pw.MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                            pw.SizedBox(width: 10),
+                                            pw.Container(
+                                                width: 230,
+                                                child: pw.Text("2. PARU",
+                                                    style: pw.TextStyle(
+                                                        fontSize: 11,
+                                                        fontWeight: pw
+                                                            .FontWeight.bold))),
+                                            pw.Text(": ${_pemeriksaan!.paru}",
+                                                style: pw.TextStyle(
+                                                    fontSize: 11,
+                                                    fontWeight:
+                                                        pw.FontWeight.normal))
+                                          ]),
                               ])
                         ]),
                     pw.Row(
@@ -4863,2208 +4919,2490 @@ class _PasienDetailState extends State<PasienDetail> {
 
       _hasilFisik == null
           ? null
-          : pdf.addPage(pw.MultiPage(
-              pageFormat: PdfPageFormat.a4,
-              margin: pw.EdgeInsets.all(0),
-              maxPages: 20,
-              header: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  margin: pw.EdgeInsets.only(bottom: 10),
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(headerImage),
-                        fit: pw.BoxFit.fill,
+          : _hasilFisik!.image! == "" && _hasilFisik!.keterangan! == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              footer: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(footerImage),
-                        fit: pw.BoxFit.fill,
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              build: (pw.Context context) {
-                return [
-                  pw.Container(
-                      padding: pw.EdgeInsets.all(20),
-                      child: pw.Column(children: [
-                        pw.Text(_hasilFisik!.judul!,
-                            style: pw.TextStyle(
-                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 20),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Nama Pasien",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Umur",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("J.Kelamin",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_pasien!.nama}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.umur}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.jenisKelamin}",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ])
-                              ]),
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(_hasilFisik!.dokterApa!,
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Tanggal Pemeriksaan",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_hasilFisik!.namaDokter!}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(
-                                          ": ${_pasien!.tanggalPemeriksaan}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ])
-                              ])
-                            ]),
-                        pw.SizedBox(height: 10),
-                        _hasilFisik!.image! == ""
-                            ? pw.Container()
-                            : pw.Container(
-                                width: 700,
-                                height: 450,
-                                child: pw.Image(
-                                  pw.MemoryImage(
-                                      base64Decode(_hasilFisik!.image!)),
-                                  fit: pw.BoxFit.contain,
-                                ),
-                              ),
-                        pw.SizedBox(height: 10),
-                        pw.Row(children: [
-                          pw.Text(_hasilFisik!.keterangan!,
-                              style: pw.TextStyle(fontSize: 12)),
-                        ])
-                      ]))
-                ];
-              }));
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                          padding: pw.EdgeInsets.all(20),
+                          child: pw.Column(children: [
+                            pw.Text(_hasilFisik!.judul!,
+                                style: pw.TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 20),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    pw.MainAxisAlignment.spaceBetween,
+                                children: [
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Nama Pasien",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Umur",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("J.Kelamin",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_pasien!.nama}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.umur}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.jenisKelamin}",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ])
+                                  ]),
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(_hasilFisik!.dokterApa!,
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Tanggal Pemeriksaan",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(
+                                              ": ${_hasilFisik!.namaDokter!}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(
+                                              ": ${_pasien!.tanggalPemeriksaan}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ])
+                                  ])
+                                ]),
+                            pw.SizedBox(height: 10),
+                            _hasilFisik!.image! == ""
+                                ? pw.Container()
+                                : pw.Container(
+                                    width: 700,
+                                    height: 450,
+                                    child: pw.Image(
+                                      pw.MemoryImage(
+                                          base64Decode(_hasilFisik!.image!)),
+                                      fit: pw.BoxFit.contain,
+                                    ),
+                                  ),
+                            pw.SizedBox(height: 10),
+                            pw.Row(children: [
+                              pw.Text(_hasilFisik!.keterangan!,
+                                  style: pw.TextStyle(fontSize: 12)),
+                            ])
+                          ]))
+                    ];
+                  }));
 
       _hasilMata == null
           ? null
-          : pdf.addPage(pw.MultiPage(
-              pageFormat: PdfPageFormat.a4,
-              margin: pw.EdgeInsets.all(0),
-              maxPages: 20,
-              header: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  margin: pw.EdgeInsets.only(bottom: 10),
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(headerImage),
-                        fit: pw.BoxFit.fill,
+          : _hasilMata!.image! == "" && _hasilMata!.keterangan! == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              footer: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(footerImage),
-                        fit: pw.BoxFit.fill,
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              build: (pw.Context context) {
-                return [
-                  pw.Container(
-                      padding: pw.EdgeInsets.all(20),
-                      child: pw.Column(children: [
-                        pw.Text(_hasilMata!.judul!,
-                            style: pw.TextStyle(
-                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 20),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Nama Pasien",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Umur",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("J.Kelamin",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_pasien!.nama}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.umur}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.jenisKelamin}",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ])
-                              ]),
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(_hasilMata!.dokterApa!,
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Tanggal Pemeriksaan",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_hasilMata!.namaDokter!}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(
-                                          ": ${_pasien!.tanggalPemeriksaan}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ])
-                              ])
-                            ]),
-                        pw.SizedBox(height: 10),
-                        _hasilMata!.image! == ""
-                            ? pw.Container()
-                            : pw.Container(
-                                width: 700,
-                                height: 450,
-                                child: pw.Image(
-                                  pw.MemoryImage(
-                                      base64Decode(_hasilMata!.image!)),
-                                  fit: pw.BoxFit.contain,
-                                ),
-                              ),
-                        pw.SizedBox(height: 10),
-                        pw.Row(children: [
-                          pw.Text(_hasilMata!.keterangan!,
-                              style: pw.TextStyle(fontSize: 12)),
-                        ])
-                      ]))
-                ];
-              }));
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                          padding: pw.EdgeInsets.all(20),
+                          child: pw.Column(children: [
+                            pw.Text(_hasilMata!.judul!,
+                                style: pw.TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 20),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    pw.MainAxisAlignment.spaceBetween,
+                                children: [
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Nama Pasien",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Umur",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("J.Kelamin",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_pasien!.nama}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.umur}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.jenisKelamin}",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ])
+                                  ]),
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(_hasilMata!.dokterApa!,
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Tanggal Pemeriksaan",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(
+                                              ": ${_hasilMata!.namaDokter!}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(
+                                              ": ${_pasien!.tanggalPemeriksaan}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ])
+                                  ])
+                                ]),
+                            pw.SizedBox(height: 10),
+                            _hasilMata!.image! == ""
+                                ? pw.Container()
+                                : pw.Container(
+                                    width: 700,
+                                    height: 450,
+                                    child: pw.Image(
+                                      pw.MemoryImage(
+                                          base64Decode(_hasilMata!.image!)),
+                                      fit: pw.BoxFit.contain,
+                                    ),
+                                  ),
+                            pw.SizedBox(height: 10),
+                            pw.Row(children: [
+                              pw.Text(_hasilMata!.keterangan!,
+                                  style: pw.TextStyle(fontSize: 12)),
+                            ])
+                          ]))
+                    ];
+                  }));
 
       _hasilGigiMulut == null
           ? null
-          : pdf.addPage(pw.MultiPage(
-              pageFormat: PdfPageFormat.a4,
-              margin: pw.EdgeInsets.all(0),
-              maxPages: 20,
-              header: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  margin: pw.EdgeInsets.only(bottom: 10),
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(headerImage),
-                        fit: pw.BoxFit.fill,
+          : _hasilGigiMulut!.image! == "" && _hasilGigiMulut!.keterangan! == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              footer: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(footerImage),
-                        fit: pw.BoxFit.fill,
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              build: (pw.Context context) {
-                return [
-                  pw.Container(
-                      padding: pw.EdgeInsets.all(20),
-                      child: pw.Column(children: [
-                        pw.Text(_hasilGigiMulut!.judul!,
-                            style: pw.TextStyle(
-                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 20),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Nama Pasien",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Umur",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("J.Kelamin",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_pasien!.nama}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.umur}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.jenisKelamin}",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ])
-                              ]),
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(_hasilGigiMulut!.dokterApa!,
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Tanggal Pemeriksaan",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(
-                                          ": ${_hasilGigiMulut!.namaDokter!}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(
-                                          ": ${_pasien!.tanggalPemeriksaan}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ])
-                              ])
-                            ]),
-                        pw.SizedBox(height: 10),
-                        _hasilGigiMulut!.image! == ""
-                            ? pw.Container()
-                            : pw.Container(
-                                width: 700,
-                                height: 450,
-                                child: pw.Image(
-                                  pw.MemoryImage(
-                                      base64Decode(_hasilGigiMulut!.image!)),
-                                  fit: pw.BoxFit.contain,
-                                ),
-                              ),
-                        pw.SizedBox(height: 10),
-                        pw.Row(children: [
-                          pw.Text(_hasilGigiMulut!.keterangan!,
-                              style: pw.TextStyle(fontSize: 12)),
-                        ])
-                      ]))
-                ];
-              }));
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                          padding: pw.EdgeInsets.all(20),
+                          child: pw.Column(children: [
+                            pw.Text(_hasilGigiMulut!.judul!,
+                                style: pw.TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 20),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    pw.MainAxisAlignment.spaceBetween,
+                                children: [
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Nama Pasien",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Umur",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("J.Kelamin",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_pasien!.nama}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.umur}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.jenisKelamin}",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ])
+                                  ]),
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(_hasilGigiMulut!.dokterApa!,
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Tanggal Pemeriksaan",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(
+                                              ": ${_hasilGigiMulut!.namaDokter!}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(
+                                              ": ${_pasien!.tanggalPemeriksaan}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ])
+                                  ])
+                                ]),
+                            pw.SizedBox(height: 10),
+                            _hasilGigiMulut!.image! == ""
+                                ? pw.Container()
+                                : pw.Container(
+                                    width: 700,
+                                    height: 450,
+                                    child: pw.Image(
+                                      pw.MemoryImage(base64Decode(
+                                          _hasilGigiMulut!.image!)),
+                                      fit: pw.BoxFit.contain,
+                                    ),
+                                  ),
+                            pw.SizedBox(height: 10),
+                            pw.Row(children: [
+                              pw.Text(_hasilGigiMulut!.keterangan!,
+                                  style: pw.TextStyle(fontSize: 12)),
+                            ])
+                          ]))
+                    ];
+                  }));
 
       _hasilAudiometri == null
           ? null
-          : pdf.addPage(pw.MultiPage(
-              pageFormat: PdfPageFormat.a4,
-              margin: pw.EdgeInsets.all(0),
-              maxPages: 20,
-              header: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  margin: pw.EdgeInsets.only(bottom: 10),
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(headerImage),
-                        fit: pw.BoxFit.fill,
+          : _hasilAudiometri!.image! == "" &&
+                  _hasilAudiometri!.keterangan! == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              footer: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(footerImage),
-                        fit: pw.BoxFit.fill,
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              build: (pw.Context context) {
-                return [
-                  pw.Container(
-                      padding: pw.EdgeInsets.all(20),
-                      child: pw.Column(children: [
-                        pw.Text(_hasilAudiometri!.judul!,
-                            style: pw.TextStyle(
-                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 20),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Nama Pasien",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Umur",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("J.Kelamin",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_pasien!.nama}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.umur}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.jenisKelamin}",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ])
-                              ]),
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(_hasilAudiometri!.dokterApa!,
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Tanggal Pemeriksaan",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(
-                                          ": ${_hasilAudiometri!.namaDokter!}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(
-                                          ": ${_pasien!.tanggalPemeriksaan}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ])
-                              ])
-                            ]),
-                        pw.SizedBox(height: 10),
-                        _hasilAudiometri!.image! == ""
-                            ? pw.Container()
-                            : pw.Container(
-                                width: 700,
-                                height: 450,
-                                child: pw.Image(
-                                  pw.MemoryImage(
-                                      base64Decode(_hasilAudiometri!.image!)),
-                                  fit: pw.BoxFit.contain,
-                                ),
-                              ),
-                        pw.SizedBox(height: 10),
-                        pw.Row(children: [
-                          pw.Text(_hasilAudiometri!.keterangan!,
-                              style: pw.TextStyle(fontSize: 12)),
-                        ])
-                      ]))
-                ];
-              }));
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                          padding: pw.EdgeInsets.all(20),
+                          child: pw.Column(children: [
+                            pw.Text(_hasilAudiometri!.judul!,
+                                style: pw.TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 20),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    pw.MainAxisAlignment.spaceBetween,
+                                children: [
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Nama Pasien",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Umur",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("J.Kelamin",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_pasien!.nama}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.umur}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.jenisKelamin}",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ])
+                                  ]),
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(_hasilAudiometri!.dokterApa!,
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Tanggal Pemeriksaan",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(
+                                              ": ${_hasilAudiometri!.namaDokter!}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(
+                                              ": ${_pasien!.tanggalPemeriksaan}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ])
+                                  ])
+                                ]),
+                            pw.SizedBox(height: 10),
+                            _hasilAudiometri!.image! == ""
+                                ? pw.Container()
+                                : pw.Container(
+                                    width: 700,
+                                    height: 450,
+                                    child: pw.Image(
+                                      pw.MemoryImage(base64Decode(
+                                          _hasilAudiometri!.image!)),
+                                      fit: pw.BoxFit.contain,
+                                    ),
+                                  ),
+                            pw.SizedBox(height: 10),
+                            pw.Row(children: [
+                              pw.Text(_hasilAudiometri!.keterangan!,
+                                  style: pw.TextStyle(fontSize: 12)),
+                            ])
+                          ]))
+                    ];
+                  }));
 
       _hasilSpirometri == null
           ? null
-          : pdf.addPage(pw.MultiPage(
-              pageFormat: PdfPageFormat.a4,
-              margin: pw.EdgeInsets.all(0),
-              maxPages: 20,
-              header: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  margin: pw.EdgeInsets.only(bottom: 10),
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(headerImage),
-                        fit: pw.BoxFit.fill,
+          : _hasilSpirometri!.image! == "" &&
+                  _hasilSpirometri!.keterangan! == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              footer: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(footerImage),
-                        fit: pw.BoxFit.fill,
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              build: (pw.Context context) {
-                return [
-                  pw.Container(
-                      padding: pw.EdgeInsets.all(20),
-                      child: pw.Column(children: [
-                        pw.Text(_hasilSpirometri!.judul!,
-                            style: pw.TextStyle(
-                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 20),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Nama Pasien",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Umur",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("J.Kelamin",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_pasien!.nama}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.umur}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.jenisKelamin}",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ])
-                              ]),
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(_hasilSpirometri!.dokterApa!,
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Tanggal Pemeriksaan",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(
-                                          ": ${_hasilSpirometri!.namaDokter!}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(
-                                          ": ${_pasien!.tanggalPemeriksaan}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ])
-                              ])
-                            ]),
-                        pw.SizedBox(height: 10),
-                        _hasilSpirometri!.image! == ""
-                            ? pw.Container()
-                            : pw.Container(
-                                width: 700,
-                                height: 450,
-                                child: pw.Image(
-                                  pw.MemoryImage(
-                                      base64Decode(_hasilSpirometri!.image!)),
-                                  fit: pw.BoxFit.contain,
-                                ),
-                              ),
-                        pw.SizedBox(height: 10),
-                        pw.Row(children: [
-                          pw.Text(_hasilSpirometri!.keterangan!,
-                              style: pw.TextStyle(fontSize: 12)),
-                        ])
-                      ]))
-                ];
-              }));
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                          padding: pw.EdgeInsets.all(20),
+                          child: pw.Column(children: [
+                            pw.Text(_hasilSpirometri!.judul!,
+                                style: pw.TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 20),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    pw.MainAxisAlignment.spaceBetween,
+                                children: [
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Nama Pasien",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Umur",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("J.Kelamin",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_pasien!.nama}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.umur}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.jenisKelamin}",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ])
+                                  ]),
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(_hasilSpirometri!.dokterApa!,
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Tanggal Pemeriksaan",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(
+                                              ": ${_hasilSpirometri!.namaDokter!}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(
+                                              ": ${_pasien!.tanggalPemeriksaan}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ])
+                                  ])
+                                ]),
+                            pw.SizedBox(height: 10),
+                            _hasilSpirometri!.image! == ""
+                                ? pw.Container()
+                                : pw.Container(
+                                    width: 700,
+                                    height: 450,
+                                    child: pw.Image(
+                                      pw.MemoryImage(base64Decode(
+                                          _hasilSpirometri!.image!)),
+                                      fit: pw.BoxFit.contain,
+                                    ),
+                                  ),
+                            pw.SizedBox(height: 10),
+                            pw.Row(children: [
+                              pw.Text(_hasilSpirometri!.keterangan!,
+                                  style: pw.TextStyle(fontSize: 12)),
+                            ])
+                          ]))
+                    ];
+                  }));
 
       _hasilLaboratorium == null
           ? null
-          : pdf.addPage(pw.MultiPage(
-              pageFormat: PdfPageFormat.a4,
-              margin: pw.EdgeInsets.all(0),
-              maxPages: 20,
-              header: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  margin: pw.EdgeInsets.only(bottom: 10),
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(headerImage),
-                        fit: pw.BoxFit.fill,
+          : _hasilLaboratorium!.dokter == "" ||
+                  _hasilLaboratorium!.analisa == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              footer: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(footerImage),
-                        fit: pw.BoxFit.fill,
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              build: (pw.Context context) {
-                return [
-                  pw.Container(
-                      padding: pw.EdgeInsets.all(20),
-                      child: pw.Column(children: [
-                        pw.Text("Hasil Pemeriksaan Laboratorium",
-                            style: pw.TextStyle(
-                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 10),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Nama Pasien",
-                                          style: pw.TextStyle(fontSize: 8)),
-                                      pw.Text("Umur",
-                                          style: pw.TextStyle(fontSize: 8)),
-                                      pw.Text("J.Kelamin",
-                                          style: pw.TextStyle(fontSize: 8))
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_pasien!.nama}",
-                                          style: pw.TextStyle(fontSize: 8)),
-                                      pw.Text(": ${_pasien!.umur}",
-                                          style: pw.TextStyle(fontSize: 8)),
-                                      pw.Text(": ${_pasien!.jenisKelamin}",
-                                          style: pw.TextStyle(fontSize: 8))
-                                    ])
-                              ]),
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Dokter Penanggung Jawab",
-                                          style: pw.TextStyle(fontSize: 8)),
-                                      pw.Text("Analisa",
-                                          style: pw.TextStyle(fontSize: 8)),
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_hasilLaboratorium!.dokter}",
-                                          style: pw.TextStyle(fontSize: 8)),
-                                      pw.Text(
-                                          ": ${_hasilLaboratorium!.analisa}",
-                                          style: pw.TextStyle(fontSize: 8)),
-                                    ])
-                              ])
-                            ]),
-                        pw.Divider(thickness: 1),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Center(
-                                  child: pw.Text('Analisis',
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                          padding: pw.EdgeInsets.all(20),
+                          child: pw.Column(children: [
+                            pw.Text("Hasil Pemeriksaan Laboratorium",
+                                style: pw.TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 10),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    pw.MainAxisAlignment.spaceBetween,
+                                children: [
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Nama Pasien",
+                                              style: pw.TextStyle(fontSize: 8)),
+                                          pw.Text("Umur",
+                                              style: pw.TextStyle(fontSize: 8)),
+                                          pw.Text("J.Kelamin",
+                                              style: pw.TextStyle(fontSize: 8))
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_pasien!.nama}",
+                                              style: pw.TextStyle(fontSize: 8)),
+                                          pw.Text(": ${_pasien!.umur}",
+                                              style: pw.TextStyle(fontSize: 8)),
+                                          pw.Text(": ${_pasien!.jenisKelamin}",
+                                              style: pw.TextStyle(fontSize: 8))
+                                        ])
+                                  ]),
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Dokter Penanggung Jawab",
+                                              style: pw.TextStyle(fontSize: 8)),
+                                          pw.Text("Analis",
+                                              style: pw.TextStyle(fontSize: 8)),
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(
+                                              ": ${_hasilLaboratorium!.dokter}",
+                                              style: pw.TextStyle(fontSize: 8)),
+                                          pw.Text(
+                                              ": ${_hasilLaboratorium!.analisa}",
+                                              style: pw.TextStyle(fontSize: 8)),
+                                        ])
+                                  ])
+                                ]),
+                            pw.Divider(thickness: 1),
+                            pw.Row(children: [
+                              pw.Container(
+                                  width: 200,
+                                  child: pw.Center(
+                                      child: pw.Text('Analisis',
+                                          style: pw.TextStyle(
+                                              fontSize: 8,
+                                              fontWeight:
+                                                  pw.FontWeight.bold)))),
+                              pw.Container(
+                                  width: 150,
+                                  child: pw.Text('Hasil',
                                       style: pw.TextStyle(
                                           fontSize: 8,
-                                          fontWeight: pw.FontWeight.bold)))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('Hasil',
-                                  style: pw.TextStyle(
-                                      fontSize: 8,
-                                      fontWeight: pw.FontWeight.bold))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('Angka Normal',
-                                  style: pw.TextStyle(
-                                      fontSize: 8,
-                                      fontWeight: pw.FontWeight.bold))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('Satuan',
-                                  style: pw.TextStyle(
-                                      fontSize: 8,
-                                      fontWeight: pw.FontWeight.bold))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 550,
-                              padding: pw.EdgeInsets.all(2),
-                              decoration: pw.BoxDecoration(
-                                  color: PdfColors.grey200,
-                                  border: pw.Border(
-                                      top:
-                                          pw.BorderSide(color: PdfColors.black),
-                                      bottom: pw.BorderSide(
-                                          color: PdfColors.black))),
-                              child: pw.Text("HEMATOLOGI",
-                                  style: pw.TextStyle(
-                                      fontSize: 8,
-                                      fontWeight: pw.FontWeight.bold)))
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Hemoglobin',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child:
-                                  pw.Text('${_hasilLaboratorium!.hemoglobin}',
+                                          fontWeight: pw.FontWeight.bold))),
+                              pw.Container(
+                                  width: 150,
+                                  child: pw.Text('Angka Normal',
                                       style: pw.TextStyle(
-                                        fontSize: 7,
-                                      ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('13.0 - 18.0',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('g/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Hematokrit',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child:
-                                  pw.Text('${_hasilLaboratorium!.hematokrit}',
+                                          fontSize: 8,
+                                          fontWeight: pw.FontWeight.bold))),
+                              pw.Container(
+                                  width: 100,
+                                  child: pw.Text('Satuan',
                                       style: pw.TextStyle(
-                                        fontSize: 7,
-                                      ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('37.0 - 47.0',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('%',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Eritrosit',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.eritrosit}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('4.5 - 6.5',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('10^6/mm^3',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Trombosit',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.trombosit}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('150 - 450',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('10^3/mm^3',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Leukosit',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.leukosit}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('4.0 - 11.0',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('10^3/mm^3',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('MCV',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.mcv}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('79 - 99',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('fL',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('MCH',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.mch}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('27.0 - 31.0',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('pg',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('MCHC',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.mchc}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('33 - 37',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('%',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('RDW',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.rdw}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('11.5 - 14.5',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('%',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('LED',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.led ?? ""}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('0 - 20',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mm/jam',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Text("Hitung Jenis",
-                              style: pw.TextStyle(
-                                  fontSize: 7, fontWeight: pw.FontWeight.bold)),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Limfosit',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.limfosit}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('19 - 48',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('%',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Granulosit',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child:
-                                  pw.Text('${_hasilLaboratorium!.granulosit}',
-                                      style: pw.TextStyle(
-                                        fontSize: 7,
-                                      ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('2.0 - 8.0',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('10^3/mm^3',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('MID',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.mid}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('2.0 - 15.0',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('%',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 550,
-                              padding: pw.EdgeInsets.all(2),
-                              decoration: pw.BoxDecoration(
-                                  color: PdfColors.grey200,
-                                  border: pw.Border(
-                                      top:
-                                          pw.BorderSide(color: PdfColors.black),
-                                      bottom: pw.BorderSide(
-                                          color: PdfColors.black))),
-                              child: pw.Text("KIMIA DARAH",
-                                  style: pw.TextStyle(
-                                      fontSize: 8,
-                                      fontWeight: pw.FontWeight.bold)))
-                        ]),
-                        pw.Row(children: [
-                          pw.Text("Fungsi Hati",
-                              style: pw.TextStyle(
-                                  fontSize: 7, fontWeight: pw.FontWeight.bold)),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Bilirubin Total',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text(
-                                  '${_hasilLaboratorium!.bilirubinTotal}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('< 1.00',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mg/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Bilirubin Direct',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text(
-                                  '${_hasilLaboratorium!.bilirubinDirect}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('< 0.5',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mg/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Bilirubin Indirect',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text(
-                                  '${_hasilLaboratorium!.bilirubinIndirect ?? ""}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('0.1 - 1.0',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mg/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('SGOT/AST',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.sgot}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('0 - 37',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('U/L',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('SGPT/ALT',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.sgpt}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('0 - 42',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('U/L',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Alkaline Phosphatase',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text(
-                                  '${_hasilLaboratorium!.alkalinePhosphatase}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('35 - 105',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('U/L',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Cholinesterase',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text(
-                                  '${_hasilLaboratorium!.cholinesterase}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('5300 - 13000',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('U/L',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Text("Fungsi Ginjal",
-                              style: pw.TextStyle(
-                                  fontSize: 7, fontWeight: pw.FontWeight.bold)),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Ureum',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.ureum}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('10.0 - 50.0',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mg/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Creatinine',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child:
-                                  pw.Text('${_hasilLaboratorium!.creatinine}',
-                                      style: pw.TextStyle(
-                                        fontSize: 7,
-                                      ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('0.6 - 1.1',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mg/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Uric Acid',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.uricAcid}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('3.4 - 7.0',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mg/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Text("Karbohidrat",
-                              style: pw.TextStyle(
-                                  fontSize: 7, fontWeight: pw.FontWeight.bold)),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Glukosa Puasa',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child:
-                                  pw.Text('${_hasilLaboratorium!.glukosaPuasa}',
-                                      style: pw.TextStyle(
-                                        fontSize: 7,
-                                      ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('70 - 100',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mg/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('KGD 2 Jam PP',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.kgd2JamPP}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('< 180',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mg/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Text("Lipid Profil",
-                              style: pw.TextStyle(
-                                  fontSize: 7, fontWeight: pw.FontWeight.bold)),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Cholesterol Total',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text(
-                                  '${_hasilLaboratorium!.cholesterolTotal}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('<= 190',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mg/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('HDL-Cholesterol',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text(
-                                  '${_hasilLaboratorium!.hdlCholesterol}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('> 40',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mg/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('LDL-Cholesterol',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text(
-                                  '${_hasilLaboratorium!.ldlCholesterol}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('< 160',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mg/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Triglyserida',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child:
-                                  pw.Text('${_hasilLaboratorium!.triglyserida}',
-                                      style: pw.TextStyle(
-                                        fontSize: 7,
-                                      ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('< 150',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mg/dl',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Text("Golongan Darah",
-                              style: pw.TextStyle(
-                                  fontSize: 7, fontWeight: pw.FontWeight.bold)),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Golongan Darah',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text(
-                                  '${_hasilLaboratorium!.golonganDarah ?? ""}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 550,
-                              padding: pw.EdgeInsets.all(2),
-                              decoration: pw.BoxDecoration(
-                                  color: PdfColors.grey200,
-                                  border: pw.Border(
-                                      top:
-                                          pw.BorderSide(color: PdfColors.black),
-                                      bottom: pw.BorderSide(
-                                          color: PdfColors.black))),
-                              child: pw.Text("URINALISASI",
-                                  style: pw.TextStyle(
-                                      fontSize: 8,
-                                      fontWeight: pw.FontWeight.bold)))
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Leukosit',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text(
-                                  '${_hasilLaboratorium!.leukositUrinalisa}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('Negatif',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('/ul',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Nitrit',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.nitrit}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('Negatif',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Urobilin',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.urobilin}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('3.2 -16',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('umol/l',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Protein',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.protein}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('Negatif',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('g/l',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('PH',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.ph}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('5.0 - 7.8',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Darah',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.darah}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('Negatif',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('/ul',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Berat Jenis',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child:
-                                  pw.Text('${_hasilLaboratorium!.beratJenis}',
-                                      style: pw.TextStyle(
-                                        fontSize: 7,
-                                      ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('1.000 - 1.030',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Keton',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.keton}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('Negatif',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mmol/l',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Bilirubi',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.bilirubi}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('Negatif',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('umol/l',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Glukosa',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.glukosa}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('Negatif',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('mmol/l',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 550,
-                              padding: pw.EdgeInsets.all(2),
-                              decoration: pw.BoxDecoration(
-                                  color: PdfColors.grey200,
-                                  border: pw.Border(
-                                      top:
-                                          pw.BorderSide(color: PdfColors.black),
-                                      bottom: pw.BorderSide(
-                                          color: PdfColors.black))),
-                              child: pw.Text("FESES",
-                                  style: pw.TextStyle(
-                                      fontSize: 8,
-                                      fontWeight: pw.FontWeight.bold)))
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Konsistensi',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child:
-                                  pw.Text('${_hasilLaboratorium!.konsitensi}',
-                                      style: pw.TextStyle(
-                                        fontSize: 7,
-                                      ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Warna',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.warna}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Lendir',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.lendir}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Darah',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child:
-                                  pw.Text('${_hasilLaboratorium!.darahFeses}',
-                                      style: pw.TextStyle(
-                                        fontSize: 7,
-                                      ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Telur Cacing',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child:
-                                  pw.Text('${_hasilLaboratorium!.telurCacing}',
-                                      style: pw.TextStyle(
-                                        fontSize: 7,
-                                      ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Parasit',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.parasit}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Cyste',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.cyste}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Leucocyte',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.leucocyte}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Erythrocyte',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child:
-                                  pw.Text('${_hasilLaboratorium!.erythrocyte}',
-                                      style: pw.TextStyle(
-                                        fontSize: 7,
-                                      ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Lemak',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.lemak}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Amylum',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.amylum}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                        pw.Row(children: [
-                          pw.Container(
-                              width: 200,
-                              child: pw.Text('Serabut',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('${_hasilLaboratorium!.serabut}',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 150,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                          pw.Container(
-                              width: 100,
-                              child: pw.Text('',
-                                  style: pw.TextStyle(
-                                    fontSize: 7,
-                                  ))),
-                        ]),
-                      ]))
-                ];
-              }));
+                                          fontSize: 8,
+                                          fontWeight: pw.FontWeight.bold))),
+                            ]),
+                            _hasilLaboratorium!.hemoglobin! == "" &&
+                                    _hasilLaboratorium!.hematokrit! == "" &&
+                                    _hasilLaboratorium!.eritrosit! == "" &&
+                                    _hasilLaboratorium!.trombosit! == "" &&
+                                    _hasilLaboratorium!.leukosit! == "" &&
+                                    _hasilLaboratorium!.mcv! == "" &&
+                                    _hasilLaboratorium!.mch! == "" &&
+                                    _hasilLaboratorium!.mchc! == "" &&
+                                    _hasilLaboratorium!.rdw! == "" &&
+                                    _hasilLaboratorium!.led! == "" &&
+                                    _hasilLaboratorium!.limfosit! == "" &&
+                                    _hasilLaboratorium!.granulosit! == "" &&
+                                    _hasilLaboratorium!.mid! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 550,
+                                        padding: pw.EdgeInsets.all(2),
+                                        decoration: pw.BoxDecoration(
+                                            color: PdfColors.grey200,
+                                            border: pw.Border(
+                                                top: pw.BorderSide(
+                                                    color: PdfColors.black),
+                                                bottom: pw.BorderSide(
+                                                    color: PdfColors.black))),
+                                        child: pw.Text("HEMATOLOGI",
+                                            style: pw.TextStyle(
+                                                fontSize: 8,
+                                                fontWeight:
+                                                    pw.FontWeight.bold)))
+                                  ]),
+                            _hasilLaboratorium!.hemoglobin! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Hemoglobin',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.hemoglobin}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('13.0 - 18.0',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('g/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.hematokrit! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Hematokrit',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.hematokrit}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('37.0 - 47.0',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('%',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.eritrosit! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Eritrosit',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.eritrosit}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('4.5 - 6.5',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('10^6/mm^3',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.trombosit! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Trombosit',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.trombosit}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('150 - 450',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('10^3/mm^3',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.leukosit! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Leukosit',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.leukosit}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('4.0 - 11.0',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('10^3/mm^3',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.mcv! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('MCV',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.mcv}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('79 - 99',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('fL',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.mch! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('MCH',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.mch}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('27.0 - 31.0',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('pg',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.mchc! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('MCHC',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.mchc}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('33 - 37',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('%',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.rdw! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('RDW',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.rdw}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('11.5 - 14.5',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('%',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.led! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('LED',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.led ?? ""}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('0 - 20',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mm/jam',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.limfosit! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Text("Hitung Jenis",
+                                        style: pw.TextStyle(
+                                            fontSize: 7,
+                                            fontWeight: pw.FontWeight.bold)),
+                                  ]),
+                            _hasilLaboratorium!.limfosit! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Limfosit',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.limfosit}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('19 - 48',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('%',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.granulosit! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Granulosit',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.granulosit}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('2.0 - 8.0',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('10^3/mm^3',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.mid! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('MID',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.mid}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('2.0 - 15.0',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('%',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.bilirubinTotal! == "" &&
+                                    _hasilLaboratorium!.bilirubinDirect! ==
+                                        "" &&
+                                    _hasilLaboratorium!.bilirubinIndirect! ==
+                                        "" &&
+                                    _hasilLaboratorium!.sgot! == "" &&
+                                    _hasilLaboratorium!.sgpt! == "" &&
+                                    _hasilLaboratorium!.alkalinePhosphatase! ==
+                                        "" &&
+                                    _hasilLaboratorium!.cholinesterase! == "" &&
+                                    _hasilLaboratorium!.ureum! == "" &&
+                                    _hasilLaboratorium!.creatinine! == "" &&
+                                    _hasilLaboratorium!.uricAcid! == "" &&
+                                    _hasilLaboratorium!.glukosaPuasa! == "" &&
+                                    _hasilLaboratorium!.kgd2JamPP! == "" &&
+                                    _hasilLaboratorium!.cholesterolTotal! ==
+                                        "" &&
+                                    _hasilLaboratorium!.hdlCholesterol! == "" &&
+                                    _hasilLaboratorium!.ldlCholesterol! == "" &&
+                                    _hasilLaboratorium!.triglyserida! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 550,
+                                        padding: pw.EdgeInsets.all(2),
+                                        decoration: pw.BoxDecoration(
+                                            color: PdfColors.grey200,
+                                            border: pw.Border(
+                                                top: pw.BorderSide(
+                                                    color: PdfColors.black),
+                                                bottom: pw.BorderSide(
+                                                    color: PdfColors.black))),
+                                        child: pw.Text("KIMIA DARAH",
+                                            style: pw.TextStyle(
+                                                fontSize: 8,
+                                                fontWeight:
+                                                    pw.FontWeight.bold)))
+                                  ]),
+                            _hasilLaboratorium!.bilirubinTotal! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Text("Fungsi Hati",
+                                        style: pw.TextStyle(
+                                            fontSize: 7,
+                                            fontWeight: pw.FontWeight.bold)),
+                                  ]),
+                            _hasilLaboratorium!.bilirubinTotal! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Bilirubin Total',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.bilirubinTotal}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('< 1.00',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mg/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.bilirubinDirect! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Bilirubin Direct',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.bilirubinDirect}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('< 0.5',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mg/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.bilirubinIndirect! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Bilirubin Indirect',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.bilirubinIndirect ?? ""}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('0.1 - 1.0',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mg/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.sgot! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('SGOT/AST',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.sgot}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('0 - 37',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('U/L',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.sgpt! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('SGPT/ALT',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.sgpt}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('0 - 42',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('U/L',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.alkalinePhosphatase! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Alkaline Phosphatase',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.alkalinePhosphatase}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('35 - 105',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('U/L',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.cholinesterase! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Cholinesterase',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.cholinesterase}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('5300 - 13000',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('U/L',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.ureum! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Text("Fungsi Ginjal",
+                                        style: pw.TextStyle(
+                                            fontSize: 7,
+                                            fontWeight: pw.FontWeight.bold)),
+                                  ]),
+                            _hasilLaboratorium!.ureum! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Ureum',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.ureum}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('10.0 - 50.0',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mg/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.creatinine! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Creatinine',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.creatinine}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('0.6 - 1.1',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mg/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.uricAcid! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Uric Acid',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.uricAcid}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('3.4 - 7.0',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mg/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.glukosaPuasa! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Text("Karbohidrat",
+                                        style: pw.TextStyle(
+                                            fontSize: 7,
+                                            fontWeight: pw.FontWeight.bold)),
+                                  ]),
+                            _hasilLaboratorium!.glukosaPuasa! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Glukosa Puasa',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.glukosaPuasa}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('70 - 100',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mg/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.kgd2JamPP! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('KGD 2 Jam PP',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.kgd2JamPP}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('< 180',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mg/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.cholesterolTotal! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Text("Lipid Profil",
+                                        style: pw.TextStyle(
+                                            fontSize: 7,
+                                            fontWeight: pw.FontWeight.bold)),
+                                  ]),
+                            _hasilLaboratorium!.cholesterolTotal! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Cholesterol Total',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.cholesterolTotal}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('<= 190',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mg/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.hdlCholesterol! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('HDL-Cholesterol',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.hdlCholesterol}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('> 40',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mg/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.ldlCholesterol! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('LDL-Cholesterol',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.ldlCholesterol}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('< 160',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mg/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.triglyserida! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Triglyserida',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.triglyserida}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('< 150',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mg/dl',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.golonganDarah! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Text("Golongan Darah",
+                                        style: pw.TextStyle(
+                                            fontSize: 7,
+                                            fontWeight: pw.FontWeight.bold)),
+                                  ]),
+                            _hasilLaboratorium!.golonganDarah! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Golongan Darah',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.golonganDarah ?? ""}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.leukosit! == "" &&
+                                    _hasilLaboratorium!.nitrit! == "" &&
+                                    _hasilLaboratorium!.urobilin! == "" &&
+                                    _hasilLaboratorium!.protein! == "" &&
+                                    _hasilLaboratorium!.ph! == "" &&
+                                    _hasilLaboratorium!.darah! == "" &&
+                                    _hasilLaboratorium!.beratJenis! == "" &&
+                                    _hasilLaboratorium!.keton! == "" &&
+                                    _hasilLaboratorium!.bilirubi! == "" &&
+                                    _hasilLaboratorium!.glukosa! == "" &&
+                                    _hasilLaboratorium!.golonganDarah! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 550,
+                                        padding: pw.EdgeInsets.all(2),
+                                        decoration: pw.BoxDecoration(
+                                            color: PdfColors.grey200,
+                                            border: pw.Border(
+                                                top: pw.BorderSide(
+                                                    color: PdfColors.black),
+                                                bottom: pw.BorderSide(
+                                                    color: PdfColors.black))),
+                                        child: pw.Text("URINALISASI",
+                                            style: pw.TextStyle(
+                                                fontSize: 8,
+                                                fontWeight:
+                                                    pw.FontWeight.bold)))
+                                  ]),
+                            _hasilLaboratorium!.leukosit! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Leukosit',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.leukositUrinalisa}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('Negatif',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('/ul',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.nitrit! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Nitrit',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.nitrit}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('Negatif',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.urobilin! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Urobilin',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.urobilin}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('3.2 -16',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('umol/l',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.protein! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Protein',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.protein}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('Negatif',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('g/l',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.ph! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('PH',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child:
+                                            pw.Text('${_hasilLaboratorium!.ph}',
+                                                style: pw.TextStyle(
+                                                  fontSize: 7,
+                                                ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('5.0 - 7.8',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.darah! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Darah',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.darah}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('Negatif',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('/ul',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.beratJenis! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Berat Jenis',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.beratJenis}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('1.000 - 1.030',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.keton! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Keton',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.keton}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('Negatif',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mmol/l',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.bilirubi! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Bilirubi',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.bilirubi}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('Negatif',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('umol/l',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.glukosa! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Glukosa',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.glukosa}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('Negatif',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('mmol/l',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.konsitensi! == "" &&
+                                    _hasilLaboratorium!.warna! == "" &&
+                                    _hasilLaboratorium!.lendir! == "" &&
+                                    _hasilLaboratorium!.darahFeses! == "" &&
+                                    _hasilLaboratorium!.telurCacing! == "" &&
+                                    _hasilLaboratorium!.parasit! == "" &&
+                                    _hasilLaboratorium!.cyste! == "" &&
+                                    _hasilLaboratorium!.leucocyte! == "" &&
+                                    _hasilLaboratorium!.erythrocyte! == "" &&
+                                    _hasilLaboratorium!.lemak! == "" &&
+                                    _hasilLaboratorium!.amylum! == "" &&
+                                    _hasilLaboratorium!.serabut! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 550,
+                                        padding: pw.EdgeInsets.all(2),
+                                        decoration: pw.BoxDecoration(
+                                            color: PdfColors.grey200,
+                                            border: pw.Border(
+                                                top: pw.BorderSide(
+                                                    color: PdfColors.black),
+                                                bottom: pw.BorderSide(
+                                                    color: PdfColors.black))),
+                                        child: pw.Text("FESES",
+                                            style: pw.TextStyle(
+                                                fontSize: 8,
+                                                fontWeight:
+                                                    pw.FontWeight.bold)))
+                                  ]),
+                            _hasilLaboratorium!.konsitensi! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Konsistensi',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.konsitensi}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.warna! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Warna',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.warna}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.lendir! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Lendir',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.lendir}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.darahFeses! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Darah',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.darahFeses}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.telurCacing! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Telur Cacing',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.telurCacing}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.parasit! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Parasit',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.parasit}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.cyste! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Cyste',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.cyste}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.leucocyte! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Leucocyte',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.leucocyte}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.erythrocyte! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Erythrocyte',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.erythrocyte}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.lemak! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Lemak',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.lemak}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.amylum! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Amylum',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.amylum}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                            _hasilLaboratorium!.serabut! == ""
+                                ? pw.Container()
+                                : pw.Row(children: [
+                                    pw.Container(
+                                        width: 200,
+                                        child: pw.Text('Serabut',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text(
+                                            '${_hasilLaboratorium!.serabut}',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 150,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                    pw.Container(
+                                        width: 100,
+                                        child: pw.Text('',
+                                            style: pw.TextStyle(
+                                              fontSize: 7,
+                                            ))),
+                                  ]),
+                          ]))
+                    ];
+                  }));
 
       _hasilJantung == null
           ? null
-          : _hasilJantung!.image == ""
+          : _hasilJantung!.image! == ""
               ? null
               : pdf.addPage(pw.MultiPage(
                   pageFormat: PdfPageFormat.a4,
@@ -7188,243 +7526,267 @@ class _PasienDetailState extends State<PasienDetail> {
                   }));
       _hasilJantung == null
           ? null
-          : pdf.addPage(pw.MultiPage(
-              pageFormat: PdfPageFormat.a4,
-              margin: pw.EdgeInsets.all(0),
-              maxPages: 20,
-              header: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  margin: pw.EdgeInsets.only(bottom: 10),
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(headerImage),
-                        fit: pw.BoxFit.fill,
+          : _hasilJantung!.keterangan! == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              footer: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(footerImage),
-                        fit: pw.BoxFit.fill,
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              build: (pw.Context context) {
-                return [
-                  pw.Container(
-                      padding: pw.EdgeInsets.all(20),
-                      child: pw.Column(children: [
-                        pw.Text(_hasilJantung!.judul!,
-                            style: pw.TextStyle(
-                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 20),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Nama Pasien",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Umur",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("J.Kelamin",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_pasien!.nama}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.umur}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.jenisKelamin}",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ])
-                              ]),
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(_hasilJantung!.dokterApa!,
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Tanggal Pemeriksaan",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_hasilJantung!.namaDokter!}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(
-                                          ": ${_pasien!.tanggalPemeriksaan}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ])
-                              ])
-                            ]),
-                        // pw.SizedBox(height: 10),
-                        // _hasilJantung!.image! == ""
-                        //     ? pw.Container()
-                        //     : pw.Container(
-                        //         width: 700,
-                        //         height: 450,
-                        //         child: pw.Image(
-                        //           pw.MemoryImage(
-                        //               base64Decode(_hasilJantung!.image!)),
-                        //           fit: pw.BoxFit.contain,
-                        //         ),
-                        //       ),
-                        pw.SizedBox(height: 10),
-                        pw.Row(children: [
-                          pw.Text(_hasilJantung!.keterangan!,
-                              style: pw.TextStyle(fontSize: 12)),
-                        ])
-                      ]))
-                ];
-              }));
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                          padding: pw.EdgeInsets.all(20),
+                          child: pw.Column(children: [
+                            pw.Text(_hasilJantung!.judul!,
+                                style: pw.TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 20),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    pw.MainAxisAlignment.spaceBetween,
+                                children: [
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Nama Pasien",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Umur",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("J.Kelamin",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_pasien!.nama}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.umur}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.jenisKelamin}",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ])
+                                  ]),
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(_hasilJantung!.dokterApa!,
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Tanggal Pemeriksaan",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(
+                                              ": ${_hasilJantung!.namaDokter!}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(
+                                              ": ${_pasien!.tanggalPemeriksaan}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ])
+                                  ])
+                                ]),
+                            // pw.SizedBox(height: 10),
+                            // _hasilJantung!.image! == ""
+                            //     ? pw.Container()
+                            //     : pw.Container(
+                            //         width: 700,
+                            //         height: 450,
+                            //         child: pw.Image(
+                            //           pw.MemoryImage(
+                            //               base64Decode(_hasilJantung!.image!)),
+                            //           fit: pw.BoxFit.contain,
+                            //         ),
+                            //       ),
+                            pw.SizedBox(height: 10),
+                            pw.Row(children: [
+                              pw.Text(_hasilJantung!.keterangan!,
+                                  style: pw.TextStyle(fontSize: 12)),
+                            ])
+                          ]))
+                    ];
+                  }));
 
       _hasilParu == null
           ? null
-          : pdf.addPage(pw.MultiPage(
-              pageFormat: PdfPageFormat.a4,
-              margin: pw.EdgeInsets.all(0),
-              maxPages: 20,
-              header: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  margin: pw.EdgeInsets.only(bottom: 10),
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(headerImage),
-                        fit: pw.BoxFit.fill,
+          : _hasilParu!.image! == "" && _hasilParu!.keterangan! == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              footer: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(footerImage),
-                        fit: pw.BoxFit.fill,
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              build: (pw.Context context) {
-                return [
-                  pw.Container(
-                      padding: pw.EdgeInsets.all(20),
-                      child: pw.Column(children: [
-                        pw.Text(_hasilParu!.judul!,
-                            style: pw.TextStyle(
-                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 20),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Nama Pasien",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Umur",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("J.Kelamin",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_pasien!.nama}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.umur}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.jenisKelamin}",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ])
-                              ]),
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(_hasilParu!.dokterApa!,
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Tanggal Pemeriksaan",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_hasilParu!.namaDokter!}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(
-                                          ": ${_pasien!.tanggalPemeriksaan}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ])
-                              ])
-                            ]),
-                        pw.SizedBox(height: 10),
-                        _hasilParu!.image! == ""
-                            ? pw.Container()
-                            : pw.Container(
-                                width: 700,
-                                height: 450,
-                                child: pw.Image(
-                                  pw.MemoryImage(
-                                      base64Decode(_hasilParu!.image!)),
-                                  fit: pw.BoxFit.contain,
-                                ),
-                              ),
-                        pw.SizedBox(height: 10),
-                        pw.Row(children: [
-                          pw.Text(_hasilParu!.keterangan!,
-                              style: pw.TextStyle(fontSize: 12)),
-                        ])
-                      ]))
-                ];
-              }));
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                          padding: pw.EdgeInsets.all(20),
+                          child: pw.Column(children: [
+                            pw.Text(_hasilParu!.judul!,
+                                style: pw.TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 20),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    pw.MainAxisAlignment.spaceBetween,
+                                children: [
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Nama Pasien",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Umur",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("J.Kelamin",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_pasien!.nama}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.umur}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.jenisKelamin}",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ])
+                                  ]),
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(_hasilParu!.dokterApa!,
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Tanggal Pemeriksaan",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(
+                                              ": ${_hasilParu!.namaDokter!}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(
+                                              ": ${_pasien!.tanggalPemeriksaan}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ])
+                                  ])
+                                ]),
+                            pw.SizedBox(height: 10),
+                            _hasilParu!.image! == ""
+                                ? pw.Container()
+                                : pw.Container(
+                                    width: 700,
+                                    height: 450,
+                                    child: pw.Image(
+                                      pw.MemoryImage(
+                                          base64Decode(_hasilParu!.image!)),
+                                      fit: pw.BoxFit.contain,
+                                    ),
+                                  ),
+                            pw.SizedBox(height: 10),
+                            pw.Row(children: [
+                              pw.Text(_hasilParu!.keterangan!,
+                                  style: pw.TextStyle(fontSize: 12)),
+                            ])
+                          ]))
+                    ];
+                  }));
 
       _hasilUsg == null
           ? null
@@ -7631,501 +7993,416 @@ class _PasienDetailState extends State<PasienDetail> {
                   }));
       _hasilUsg == null
           ? null
-          : pdf.addPage(pw.MultiPage(
-              pageFormat: PdfPageFormat.a4,
-              margin: pw.EdgeInsets.all(0),
-              maxPages: 20,
-              header: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  margin: pw.EdgeInsets.only(bottom: 10),
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(headerImage),
-                        fit: pw.BoxFit.fill,
+          : _hasilUsg!.keterangan == "" || _hasilUsg!.keterangan == null
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              footer: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(footerImage),
-                        fit: pw.BoxFit.fill,
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              build: (pw.Context context) {
-                return [
-                  pw.Container(
-                      padding: pw.EdgeInsets.all(20),
-                      child: pw.Column(children: [
-                        pw.Text(_hasilUsg!.judul!,
-                            style: pw.TextStyle(
-                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 20),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Nama Pasien",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Umur",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("J.Kelamin",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_pasien!.nama}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.umur}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.jenisKelamin}",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ])
-                              ]),
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(_hasilUsg!.dokterApa!,
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Tanggal Pemeriksaan",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_hasilUsg!.namaDokter!}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(
-                                          ": ${_pasien!.tanggalPemeriksaan}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ])
-                              ])
-                            ]),
-                        // pw.SizedBox(height: 10),
-                        // _hasilUsg!.image! == ""
-                        //     ? pw.Container()
-                        //     : pw.Container(
-                        //         width: 700,
-                        //         height: 450,
-                        //         child: pw.Image(
-                        //           pw.MemoryImage(
-                        //               base64Decode(_hasilUsg!.image!)),
-                        //           fit: pw.BoxFit.contain,
-                        //         ),
-                        //       ),
-                        pw.SizedBox(height: 20),
-                        pw.Text("PEMERIKSAAN USG ABDOMEN",
-                            style: pw.TextStyle(
-                                fontSize: 12, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 10),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            children: [
-                              pw.Text("KLINIS : MEDIKAL CHECK UP",
-                                  style: pw.TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: pw.FontWeight.bold)),
-                            ]),
-                        pw.SizedBox(height: 10),
-                        pw.Row(children: [
-                          pw.Text(_hasilUsg!.keterangan!,
-                              style: pw.TextStyle(fontSize: 11)),
-                        ])
-                      ]))
-                ];
-              }));
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                          padding: pw.EdgeInsets.all(20),
+                          child: pw.Column(children: [
+                            pw.Text(_hasilUsg!.judul!,
+                                style: pw.TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 20),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    pw.MainAxisAlignment.spaceBetween,
+                                children: [
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Nama Pasien",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Umur",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("J.Kelamin",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_pasien!.nama}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.umur}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.jenisKelamin}",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ])
+                                  ]),
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(_hasilUsg!.dokterApa!,
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Tanggal Pemeriksaan",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_hasilUsg!.namaDokter!}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(
+                                              ": ${_pasien!.tanggalPemeriksaan}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ])
+                                  ])
+                                ]),
+                            // pw.SizedBox(height: 10),
+                            // _hasilUsg!.image! == ""
+                            //     ? pw.Container()
+                            //     : pw.Container(
+                            //         width: 700,
+                            //         height: 450,
+                            //         child: pw.Image(
+                            //           pw.MemoryImage(
+                            //               base64Decode(_hasilUsg!.image!)),
+                            //           fit: pw.BoxFit.contain,
+                            //         ),
+                            //       ),
+                            pw.SizedBox(height: 20),
+                            pw.Text("PEMERIKSAAN USG ABDOMEN",
+                                style: pw.TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 10),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                children: [
+                                  pw.Text("KLINIS : MEDIKAL CHECK UP",
+                                      style: pw.TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: pw.FontWeight.bold)),
+                                ]),
+                            pw.SizedBox(height: 10),
+                            pw.Row(children: [
+                              pw.Text(_hasilUsg!.keterangan!,
+                                  style: pw.TextStyle(fontSize: 11)),
+                            ])
+                          ]))
+                    ];
+                  }));
 
       _hasilNapfa == null
           ? null
-          : pdf.addPage(pw.MultiPage(
-              pageFormat: PdfPageFormat.a4,
-              margin: pw.EdgeInsets.all(0),
-              maxPages: 20,
-              header: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  margin: pw.EdgeInsets.only(bottom: 10),
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(headerImage),
-                        fit: pw.BoxFit.fill,
+          : _hasilNapfa!.image! == "" && _hasilNapfa!.keterangan! == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              footer: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(footerImage),
-                        fit: pw.BoxFit.fill,
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              build: (pw.Context context) {
-                return [
-                  pw.Container(
-                      padding: pw.EdgeInsets.all(20),
-                      child: pw.Column(children: [
-                        pw.Text("${_hasilNapfa!.judul!}",
-                            style: pw.TextStyle(
-                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 20),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Nama Pasien",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Umur",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("J.Kelamin",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_pasien!.nama}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.umur}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.jenisKelamin}",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ])
-                              ]),
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(_hasilNapfa!.dokterApa!,
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Tanggal Pemeriksaan",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_hasilNapfa!.namaDokter!}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(
-                                          ": ${_pasien!.tanggalPemeriksaan}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ])
-                              ])
-                            ]),
-                        pw.SizedBox(height: 10),
-                        _hasilNapfa!.image! == ""
-                            ? pw.Container()
-                            : pw.Container(
-                                width: 700,
-                                height: 450,
-                                child: pw.Image(
-                                  pw.MemoryImage(
-                                      base64Decode(_hasilNapfa!.image!)),
-                                  fit: pw.BoxFit.contain,
-                                ),
-                              ),
-                        pw.SizedBox(height: 10),
-                        pw.Row(children: [
-                          pw.Text(_hasilNapfa!.keterangan!,
-                              style: pw.TextStyle(fontSize: 12)),
-                        ])
-                      ]))
-                ];
-              }));
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                          padding: pw.EdgeInsets.all(20),
+                          child: pw.Column(children: [
+                            pw.Text("${_hasilNapfa!.judul!}",
+                                style: pw.TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 20),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    pw.MainAxisAlignment.spaceBetween,
+                                children: [
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Nama Pasien",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Umur",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("J.Kelamin",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_pasien!.nama}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.umur}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.jenisKelamin}",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ])
+                                  ]),
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(_hasilNapfa!.dokterApa!,
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Tanggal Pemeriksaan",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(
+                                              ": ${_hasilNapfa!.namaDokter!}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(
+                                              ": ${_pasien!.tanggalPemeriksaan}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ])
+                                  ])
+                                ]),
+                            pw.SizedBox(height: 10),
+                            _hasilNapfa!.image! == ""
+                                ? pw.Container()
+                                : pw.Container(
+                                    width: 700,
+                                    height: 450,
+                                    child: pw.Image(
+                                      pw.MemoryImage(
+                                          base64Decode(_hasilNapfa!.image!)),
+                                      fit: pw.BoxFit.contain,
+                                    ),
+                                  ),
+                            pw.SizedBox(height: 10),
+                            pw.Row(children: [
+                              pw.Text(_hasilNapfa!.keterangan!,
+                                  style: pw.TextStyle(fontSize: 12)),
+                            ])
+                          ]))
+                    ];
+                  }));
 
       _hasilNapza == null
           ? null
-          : pdf.addPage(pw.MultiPage(
-              pageFormat: PdfPageFormat.a4,
-              margin: pw.EdgeInsets.all(0),
-              maxPages: 20,
-              header: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  margin: pw.EdgeInsets.only(bottom: 10),
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(headerImage),
-                        fit: pw.BoxFit.fill,
+          : _hasilNapza!.image! == "" && _hasilNapza!.keterangan! == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              footer: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(footerImage),
-                        fit: pw.BoxFit.fill,
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-              build: (pw.Context context) {
-                return [
-                  pw.Container(
-                      padding: pw.EdgeInsets.all(20),
-                      child: pw.Column(children: [
-                        pw.Text("${_hasilNapza!.judul!}",
-                            style: pw.TextStyle(
-                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 20),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Nama Pasien",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Umur",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("J.Kelamin",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_pasien!.nama}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.umur}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.jenisKelamin}",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ])
-                              ]),
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(_hasilNapza!.dokterApa!,
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Tanggal Pemeriksaan",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_hasilNapza!.namaDokter!}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(
-                                          ": ${_pasien!.tanggalPemeriksaan}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ])
-                              ])
-                            ]),
-                        pw.SizedBox(height: 10),
-                        _hasilNapza!.image! == ""
-                            ? pw.Container()
-                            : pw.Container(
-                                width: 700,
-                                height: 450,
-                                child: pw.Image(
-                                  pw.MemoryImage(
-                                      base64Decode(_hasilNapza!.image!)),
-                                  fit: pw.BoxFit.contain,
-                                ),
-                              ),
-                        pw.SizedBox(height: 10),
-                        pw.Row(children: [
-                          pw.Text(_hasilNapza!.keterangan!,
-                              style: pw.TextStyle(fontSize: 12)),
-                        ])
-                      ]))
-                ];
-              }));
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                          padding: pw.EdgeInsets.all(20),
+                          child: pw.Column(children: [
+                            pw.Text("${_hasilNapza!.judul!}",
+                                style: pw.TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 20),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    pw.MainAxisAlignment.spaceBetween,
+                                children: [
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Nama Pasien",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Umur",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("J.Kelamin",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_pasien!.nama}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.umur}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.jenisKelamin}",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ])
+                                  ]),
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(_hasilNapza!.dokterApa!,
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Tanggal Pemeriksaan",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(
+                                              ": ${_hasilNapza!.namaDokter!}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(
+                                              ": ${_pasien!.tanggalPemeriksaan}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ])
+                                  ])
+                                ]),
+                            pw.SizedBox(height: 10),
+                            _hasilNapza!.image! == ""
+                                ? pw.Container()
+                                : pw.Container(
+                                    width: 700,
+                                    height: 450,
+                                    child: pw.Image(
+                                      pw.MemoryImage(
+                                          base64Decode(_hasilNapza!.image!)),
+                                      fit: pw.BoxFit.contain,
+                                    ),
+                                  ),
+                            pw.SizedBox(height: 10),
+                            pw.Row(children: [
+                              pw.Text(_hasilNapza!.keterangan!,
+                                  style: pw.TextStyle(fontSize: 12)),
+                            ])
+                          ]))
+                    ];
+                  }));
 
       _hasilTreadmill == null
           ? null
-          : pdf.addPage(pw.MultiPage(
-              pageFormat: PdfPageFormat.a4,
-              margin: pw.EdgeInsets.all(0),
-              maxPages: 20,
-              header: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  margin: pw.EdgeInsets.only(bottom: 10),
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(headerImage),
-                        fit: pw.BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                );
-              },
-              footer: (context) {
-                return pw.Container(
-                  width: 1000,
-                  height: 80,
-                  decoration: pw.BoxDecoration(),
-                  child: pw.ClipRRect(
-                    child: pw.Container(
-                      child: pw.Image(
-                        pw.MemoryImage(footerImage),
-                        fit: pw.BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                );
-              },
-              build: (pw.Context context) {
-                return [
-                  pw.Container(
-                      padding: pw.EdgeInsets.all(20),
-                      child: pw.Column(children: [
-                        pw.Text(_hasilTreadmill!.judul!,
-                            style: pw.TextStyle(
-                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
-                        pw.SizedBox(height: 20),
-                        pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text("Nama Pasien",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Umur",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("J.Kelamin",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(": ${_pasien!.nama}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.umur}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(": ${_pasien!.jenisKelamin}",
-                                          style: pw.TextStyle(fontSize: 12))
-                                    ])
-                              ]),
-                              pw.Row(children: [
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(_hasilTreadmill!.dokterApa!,
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text("Tanggal Pemeriksaan",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ]),
-                                pw.SizedBox(width: 20),
-                                pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw.Text(
-                                          ": ${_hasilTreadmill!.namaDokter!}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                      pw.Text(
-                                          ": ${_pasien!.tanggalPemeriksaan}",
-                                          style: pw.TextStyle(fontSize: 12)),
-                                    ])
-                              ])
-                            ]),
-                        pw.SizedBox(height: 10),
-                        _hasilTreadmill!.image! == ""
-                            ? pw.Container()
-                            : pw.Container(
-                                width: 700,
-                                height: 450,
-                                child: pw.Image(
-                                  pw.MemoryImage(
-                                      base64Decode(_hasilTreadmill!.image!)),
-                                  fit: pw.BoxFit.contain,
-                                ),
-                              ),
-                        pw.SizedBox(height: 10),
-                        pw.Row(children: [
-                          pw.Text(_hasilTreadmill!.keterangan!,
-                              style: pw.TextStyle(fontSize: 12)),
-                        ])
-                      ]))
-                ];
-              }));
-
-      _fotoLainLain == null
-          ? null
-          : _fotoLainLain!.foto1 == ""
+          : _hasilTreadmill!.image! == "" && _hasilTreadmill!.keterangan! == ""
               ? null
               : pdf.addPage(pw.MultiPage(
                   pageFormat: PdfPageFormat.a4,
@@ -8165,20 +8442,99 @@ class _PasienDetailState extends State<PasienDetail> {
                   build: (pw.Context context) {
                     return [
                       pw.Container(
-                        margin: pw.EdgeInsets.all(10),
-                        width: 600,
-                        height: 620,
-                        child: pw.Image(
-                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto2!)),
-                          fit: pw.BoxFit.fill,
-                        ),
-                      ),
+                          padding: pw.EdgeInsets.all(20),
+                          child: pw.Column(children: [
+                            pw.Text(_hasilTreadmill!.judul!,
+                                style: pw.TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: pw.FontWeight.bold)),
+                            pw.SizedBox(height: 20),
+                            pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    pw.MainAxisAlignment.spaceBetween,
+                                children: [
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text("Nama Pasien",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Umur",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("J.Kelamin",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(": ${_pasien!.nama}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.umur}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(": ${_pasien!.jenisKelamin}",
+                                              style: pw.TextStyle(fontSize: 12))
+                                        ])
+                                  ]),
+                                  pw.Row(children: [
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(_hasilTreadmill!.dokterApa!,
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text("Tanggal Pemeriksaan",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ]),
+                                    pw.SizedBox(width: 20),
+                                    pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Text(
+                                              ": ${_hasilTreadmill!.namaDokter!}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                          pw.Text(
+                                              ": ${_pasien!.tanggalPemeriksaan}",
+                                              style:
+                                                  pw.TextStyle(fontSize: 12)),
+                                        ])
+                                  ])
+                                ]),
+                            pw.SizedBox(height: 10),
+                            _hasilTreadmill!.image! == ""
+                                ? pw.Container()
+                                : pw.Container(
+                                    width: 700,
+                                    height: 450,
+                                    child: pw.Image(
+                                      pw.MemoryImage(base64Decode(
+                                          _hasilTreadmill!.image!)),
+                                      fit: pw.BoxFit.contain,
+                                    ),
+                                  ),
+                            pw.SizedBox(height: 10),
+                            pw.Row(children: [
+                              pw.Text(_hasilTreadmill!.keterangan!,
+                                  style: pw.TextStyle(fontSize: 12)),
+                            ])
+                          ]))
                     ];
                   }));
 
-      _fotoLainLain == null
+      _fotoLain12 == null
           ? null
-          : _fotoLainLain!.foto2 == ""
+          : _fotoLain12!.foto1 == ""
               ? null
               : pdf.addPage(pw.MultiPage(
                   pageFormat: PdfPageFormat.a4,
@@ -8218,20 +8574,21 @@ class _PasienDetailState extends State<PasienDetail> {
                   build: (pw.Context context) {
                     return [
                       pw.Container(
-                        margin: pw.EdgeInsets.all(10),
-                        width: 600,
-                        height: 620,
-                        child: pw.Image(
-                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto2!)),
-                          fit: pw.BoxFit.fill,
-                        ),
-                      ),
+                          margin: pw.EdgeInsets.all(10),
+                          width: 600,
+                          height: 620,
+                          child: pw.Center(
+                            child: pw.Image(
+                              pw.MemoryImage(base64Decode(_fotoLain12!.foto1!)),
+                              fit: pw.BoxFit.contain,
+                            ),
+                          )),
                     ];
                   }));
 
-      _fotoLainLain == null
+      _fotoLain12 == null
           ? null
-          : _fotoLainLain!.foto3 == ""
+          : _fotoLain12!.foto2 == ""
               ? null
               : pdf.addPage(pw.MultiPage(
                   pageFormat: PdfPageFormat.a4,
@@ -8271,20 +8628,21 @@ class _PasienDetailState extends State<PasienDetail> {
                   build: (pw.Context context) {
                     return [
                       pw.Container(
-                        margin: pw.EdgeInsets.all(10),
-                        width: 600,
-                        height: 620,
-                        child: pw.Image(
-                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto3!)),
-                          fit: pw.BoxFit.fill,
-                        ),
-                      ),
+                          margin: pw.EdgeInsets.all(10),
+                          width: 600,
+                          height: 620,
+                          child: pw.Center(
+                            child: pw.Image(
+                              pw.MemoryImage(base64Decode(_fotoLain12!.foto2!)),
+                              fit: pw.BoxFit.contain,
+                            ),
+                          )),
                     ];
                   }));
 
-      _fotoLainLain == null
+      _fotoLain34 == null
           ? null
-          : _fotoLainLain!.foto4 == ""
+          : _fotoLain34!.foto1 == ""
               ? null
               : pdf.addPage(pw.MultiPage(
                   pageFormat: PdfPageFormat.a4,
@@ -8324,20 +8682,21 @@ class _PasienDetailState extends State<PasienDetail> {
                   build: (pw.Context context) {
                     return [
                       pw.Container(
-                        margin: pw.EdgeInsets.all(10),
-                        width: 600,
-                        height: 620,
-                        child: pw.Image(
-                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto4!)),
-                          fit: pw.BoxFit.fill,
-                        ),
-                      ),
+                          margin: pw.EdgeInsets.all(10),
+                          width: 600,
+                          height: 620,
+                          child: pw.Center(
+                            child: pw.Image(
+                              pw.MemoryImage(base64Decode(_fotoLain34!.foto1!)),
+                              fit: pw.BoxFit.contain,
+                            ),
+                          )),
                     ];
                   }));
 
-      _fotoLainLain == null
+      _fotoLain34 == null
           ? null
-          : _fotoLainLain!.foto5 == ""
+          : _fotoLain34!.foto2 == ""
               ? null
               : pdf.addPage(pw.MultiPage(
                   pageFormat: PdfPageFormat.a4,
@@ -8377,20 +8736,21 @@ class _PasienDetailState extends State<PasienDetail> {
                   build: (pw.Context context) {
                     return [
                       pw.Container(
-                        margin: pw.EdgeInsets.all(10),
-                        width: 600,
-                        height: 620,
-                        child: pw.Image(
-                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto5!)),
-                          fit: pw.BoxFit.fill,
-                        ),
-                      ),
+                          margin: pw.EdgeInsets.all(10),
+                          width: 600,
+                          height: 620,
+                          child: pw.Center(
+                            child: pw.Image(
+                              pw.MemoryImage(base64Decode(_fotoLain34!.foto2!)),
+                              fit: pw.BoxFit.contain,
+                            ),
+                          )),
                     ];
                   }));
 
-      _fotoLainLain == null
+      _fotoLain56 == null
           ? null
-          : _fotoLainLain!.foto6 == ""
+          : _fotoLain56!.foto1 == ""
               ? null
               : pdf.addPage(pw.MultiPage(
                   pageFormat: PdfPageFormat.a4,
@@ -8430,20 +8790,21 @@ class _PasienDetailState extends State<PasienDetail> {
                   build: (pw.Context context) {
                     return [
                       pw.Container(
-                        margin: pw.EdgeInsets.all(10),
-                        width: 600,
-                        height: 620,
-                        child: pw.Image(
-                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto6!)),
-                          fit: pw.BoxFit.fill,
-                        ),
-                      ),
+                          margin: pw.EdgeInsets.all(10),
+                          width: 600,
+                          height: 620,
+                          child: pw.Center(
+                            child: pw.Image(
+                              pw.MemoryImage(base64Decode(_fotoLain56!.foto1!)),
+                              fit: pw.BoxFit.contain,
+                            ),
+                          )),
                     ];
                   }));
 
-      _fotoLainLain == null
+      _fotoLain56 == null
           ? null
-          : _fotoLainLain!.foto7 == ""
+          : _fotoLain56!.foto2 == ""
               ? null
               : pdf.addPage(pw.MultiPage(
                   pageFormat: PdfPageFormat.a4,
@@ -8483,20 +8844,21 @@ class _PasienDetailState extends State<PasienDetail> {
                   build: (pw.Context context) {
                     return [
                       pw.Container(
-                        margin: pw.EdgeInsets.all(10),
-                        width: 600,
-                        height: 620,
-                        child: pw.Image(
-                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto7!)),
-                          fit: pw.BoxFit.fill,
-                        ),
-                      ),
+                          margin: pw.EdgeInsets.all(10),
+                          width: 600,
+                          height: 620,
+                          child: pw.Center(
+                            child: pw.Image(
+                              pw.MemoryImage(base64Decode(_fotoLain56!.foto2!)),
+                              fit: pw.BoxFit.contain,
+                            ),
+                          )),
                     ];
                   }));
 
-      _fotoLainLain == null
+      _fotoLain78 == null
           ? null
-          : _fotoLainLain!.foto8 == ""
+          : _fotoLain78!.foto1 == ""
               ? null
               : pdf.addPage(pw.MultiPage(
                   pageFormat: PdfPageFormat.a4,
@@ -8536,20 +8898,21 @@ class _PasienDetailState extends State<PasienDetail> {
                   build: (pw.Context context) {
                     return [
                       pw.Container(
-                        margin: pw.EdgeInsets.all(10),
-                        width: 600,
-                        height: 620,
-                        child: pw.Image(
-                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto8!)),
-                          fit: pw.BoxFit.fill,
-                        ),
-                      ),
+                          margin: pw.EdgeInsets.all(10),
+                          width: 600,
+                          height: 620,
+                          child: pw.Center(
+                            child: pw.Image(
+                              pw.MemoryImage(base64Decode(_fotoLain78!.foto1!)),
+                              fit: pw.BoxFit.contain,
+                            ),
+                          )),
                     ];
                   }));
 
-      _fotoLainLain == null
+      _fotoLain78 == null
           ? null
-          : _fotoLainLain!.foto9 == ""
+          : _fotoLain78!.foto2 == ""
               ? null
               : pdf.addPage(pw.MultiPage(
                   pageFormat: PdfPageFormat.a4,
@@ -8589,14 +8952,69 @@ class _PasienDetailState extends State<PasienDetail> {
                   build: (pw.Context context) {
                     return [
                       pw.Container(
-                        margin: pw.EdgeInsets.all(10),
-                        width: 600,
-                        height: 620,
-                        child: pw.Image(
-                          pw.MemoryImage(base64Decode(_fotoLainLain!.foto9!)),
-                          fit: pw.BoxFit.fill,
+                          margin: pw.EdgeInsets.all(10),
+                          width: 600,
+                          height: 620,
+                          child: pw.Center(
+                            child: pw.Image(
+                              pw.MemoryImage(base64Decode(_fotoLain78!.foto2!)),
+                              fit: pw.BoxFit.contain,
+                            ),
+                          )),
+                    ];
+                  }));
+
+      _fotoLain9 == null
+          ? null
+          : _fotoLain9!.foto1 == ""
+              ? null
+              : pdf.addPage(pw.MultiPage(
+                  pageFormat: PdfPageFormat.a4,
+                  margin: pw.EdgeInsets.all(0),
+                  maxPages: 20,
+                  header: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      margin: pw.EdgeInsets.only(bottom: 10),
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(headerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
                         ),
                       ),
+                    );
+                  },
+                  footer: (context) {
+                    return pw.Container(
+                      width: 1000,
+                      height: 80,
+                      decoration: pw.BoxDecoration(),
+                      child: pw.ClipRRect(
+                        child: pw.Container(
+                          child: pw.Image(
+                            pw.MemoryImage(footerImage),
+                            fit: pw.BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  build: (pw.Context context) {
+                    return [
+                      pw.Container(
+                          margin: pw.EdgeInsets.all(10),
+                          width: 600,
+                          height: 620,
+                          child: pw.Center(
+                            child: pw.Image(
+                              pw.MemoryImage(base64Decode(_fotoLain9!.foto1!)),
+                              fit: pw.BoxFit.contain,
+                            ),
+                          )),
                     ];
                   }));
 
@@ -8651,9 +9069,9 @@ class _PasienDetailState extends State<PasienDetail> {
 
       if (kIsWeb) {
         final bytes = await pdf.save();
-        final blob = htmm.Blob([bytes], 'application/pdf');
-        final url = htmm.Url.createObjectUrlFromBlob(blob);
-        htmm.AnchorElement anchorElement = htmm.AnchorElement(href: url);
+        final blob = html.Blob([bytes], 'application/pdf');
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        html.AnchorElement anchorElement = html.AnchorElement(href: url);
         anchorElement.download = "Hasil MCU ${_pasien!.nama}";
         anchorElement.click();
       } else {
@@ -13261,9 +13679,9 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    _fotoLainLain == null
+                    _fotoLain12 == null
                         ? ""
-                        : "${_fotoLainLain!.foto1 == null ? "" : "[FOTO]"}",
+                        : "${_fotoLain12!.foto1 == "" ? "" : "[FOTO]"}",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13290,9 +13708,9 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    _fotoLainLain == null
+                    _fotoLain12 == null
                         ? ""
-                        : "${_fotoLainLain!.foto2 == null ? "" : "[FOTO]"}",
+                        : "${_fotoLain12!.foto2 == "" ? "" : "[FOTO]"}",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13319,9 +13737,9 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    _fotoLainLain == null
+                    _fotoLain34 == null
                         ? ""
-                        : "${_fotoLainLain!.foto3 == null ? "" : "[FOTO]"}",
+                        : "${_fotoLain34!.foto1 == "" ? "" : "[FOTO]"}",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13348,9 +13766,9 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    _fotoLainLain == null
+                    _fotoLain34 == null
                         ? ""
-                        : "${_fotoLainLain!.foto4 == null ? "" : "[FOTO]"}",
+                        : "${_fotoLain34!.foto2 == "" ? "" : "[FOTO]"}",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13377,9 +13795,9 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    _fotoLainLain == null
+                    _fotoLain56 == null
                         ? ""
-                        : "${_fotoLainLain!.foto5 == null ? "" : "[FOTO]"}",
+                        : "${_fotoLain56!.foto1 == "" ? "" : "[FOTO]"}",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13406,9 +13824,9 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    _fotoLainLain == null
+                    _fotoLain56 == null
                         ? ""
-                        : "${_fotoLainLain!.foto6 == null ? "" : "[FOTO]"}",
+                        : "${_fotoLain56!.foto2 == "" ? "" : "[FOTO]"}",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13435,9 +13853,9 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    _fotoLainLain == null
+                    _fotoLain78 == null
                         ? ""
-                        : "${_fotoLainLain!.foto7 == null ? "" : "[FOTO]"}",
+                        : "${_fotoLain78!.foto1 == "" ? "" : "[FOTO]"}",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13464,9 +13882,9 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    _fotoLainLain == null
+                    _fotoLain78 == null
                         ? ""
-                        : "${_fotoLainLain!.foto8 == null ? "" : "[FOTO]"}",
+                        : "${_fotoLain78!.foto2 == "" ? "" : "[FOTO]"}",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13493,9 +13911,9 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    _fotoLainLain == null
+                    _fotoLain9 == null
                         ? ""
-                        : "${_fotoLainLain!.foto9 == null ? "" : "[FOTO]"}",
+                        : "${_fotoLain9!.foto1 == "" ? "" : "[FOTO]"}",
                     Colors.black,
                     12,
                     FontWeight.normal),

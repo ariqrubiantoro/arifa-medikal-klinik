@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'dart:html' as html;
 
 import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_model.dart';
@@ -17,7 +16,6 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 
 import '../../../../components/colors/color.dart';
 import '../../../../components/widget/text.dart';
@@ -80,14 +78,15 @@ class _HasilPemeriksaanNapfaState extends State<HasilPemeriksaanNapfa> {
     });
   }
 
-  Future<void> _pickImage() async {
-    fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
-      setState(() {
-        fotoHasilBase64 = base64Encode(fromPicker!);
-        print(fotoHasilBase64);
-      });
-    }
+  Future getFotoWeb() async {
+    final ImagePicker picker = ImagePicker();
+
+    var image = await picker.pickImage(
+        source: ImageSource.gallery, maxWidth: 800, maxHeight: 800);
+    var imageForWeb = await image!.readAsBytes();
+    setState(() {
+      fotoHasilBase64 = base64Encode(imageForWeb);
+    });
   }
 
   @override
@@ -206,7 +205,7 @@ class _HasilPemeriksaanNapfaState extends State<HasilPemeriksaanNapfa> {
                         onTap: () {
                           if (kIsWeb) {
                             setState(() {
-                              _pickImage();
+                              getFotoWeb();
                             });
                           } else {
                             setState(() {

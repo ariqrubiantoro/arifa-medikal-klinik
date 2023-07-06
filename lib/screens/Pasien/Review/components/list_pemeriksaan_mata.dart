@@ -81,8 +81,11 @@ class ListPemeriksaanMata extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                child: textDefault("${_pemeriksaanMata!.visusKiri}",
-                    Colors.black, 12, FontWeight.normal),
+                child: textDefault(
+                    "${_pemeriksaanMata!.visusKiri} ${_pemeriksaanMata!.koreksiKiri == "" ? "" : "(${_pemeriksaanMata!.koreksiKiri})"}",
+                    Colors.black,
+                    12,
+                    FontWeight.normal),
               ),
             ),
           ],
@@ -105,8 +108,11 @@ class ListPemeriksaanMata extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                child: textDefault("${_pemeriksaanMata!.visusKanan}",
-                    Colors.black, 12, FontWeight.normal),
+                child: textDefault(
+                    "${_pemeriksaanMata!.visusKanan} ${_pemeriksaanMata!.koreksiKanan == "" ? "" : "(${_pemeriksaanMata!.koreksiKanan})"}",
+                    Colors.black,
+                    12,
+                    FontWeight.normal),
               ),
             ),
           ],

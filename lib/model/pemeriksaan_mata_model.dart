@@ -4,6 +4,8 @@ class PemeriksaanMataModel {
   String? kondisi;
   String? visusKiri;
   String? visusKanan;
+  String? koreksiKiri;
+  String? koreksiKanan;
   String? olahraga;
   String? butaWarna;
   String? penyakitMata;
@@ -16,6 +18,8 @@ class PemeriksaanMataModel {
     this.kondisi,
     this.visusKiri,
     this.visusKanan,
+    this.koreksiKiri,
+    this.koreksiKanan,
     this.olahraga,
     this.butaWarna,
     this.penyakitMata,
@@ -30,6 +34,8 @@ class PemeriksaanMataModel {
       kondisi: json['kondisi'],
       visusKiri: json['visusKiri'],
       visusKanan: json['visusKanan'],
+      koreksiKiri: json['koreksiKiri'],
+      koreksiKanan: json['koreksiKanan'],
       olahraga: json['olahraga'],
       butaWarna: json['butaWarna'],
       penyakitMata: json['penyakitMata'],
@@ -44,6 +50,8 @@ class PemeriksaanMataModel {
       'kondisi': kondisi,
       'visusKiri': visusKiri,
       'visusKanan': visusKanan,
+      'koreksiKiri': koreksiKiri,
+      'koreksiKanan': koreksiKanan,
       'olahraga': olahraga,
       'butaWarna': butaWarna,
       'penyakitMata': penyakitMata,
