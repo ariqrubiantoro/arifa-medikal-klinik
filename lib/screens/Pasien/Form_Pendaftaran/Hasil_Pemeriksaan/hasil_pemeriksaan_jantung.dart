@@ -5,8 +5,6 @@ import 'dart:io';
 
 import 'package:arifa_medikal_klink_3/model/hasil_pemeriksaan/hasil_pemeriksaan_model.dart';
 import 'package:arifa_medikal_klink_3/model/pemeriksaan_model.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_paru.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
 import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaan_5_8.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

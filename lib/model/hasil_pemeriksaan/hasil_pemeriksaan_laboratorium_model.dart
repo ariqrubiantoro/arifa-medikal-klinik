@@ -49,12 +49,12 @@ class HasilPemeriksaanLaboratoriumModel {
   String? lendir;
   String? darahFeses;
   String? telurCacing;
-  String? parasit;
-  String? cyste;
+  String? bakteri;
+  String? amoeba;
   String? leucocyte;
   String? erythrocyte;
-  String? lemak;
-  String? amylum;
+  String? epitel;
+  String? jamur;
   String? serabut;
 
   HasilPemeriksaanLaboratoriumModel({
@@ -105,12 +105,12 @@ class HasilPemeriksaanLaboratoriumModel {
     this.lendir,
     this.darahFeses,
     this.telurCacing,
-    this.parasit,
-    this.cyste,
+    this.bakteri,
+    this.amoeba,
     this.leucocyte,
     this.erythrocyte,
-    this.lemak,
-    this.amylum,
+    this.epitel,
+    this.jamur,
     this.serabut,
   });
 
@@ -164,12 +164,12 @@ class HasilPemeriksaanLaboratoriumModel {
       lendir: json['lendir'],
       darahFeses: json['darahFeses'],
       telurCacing: json['telurCacing'],
-      parasit: json['parasit'],
-      cyste: json['cyste'],
+      bakteri: json['bakteri'],
+      amoeba: json['amoeba'],
       leucocyte: json['leucocyte'],
       erythrocyte: json['erythrocyte'],
-      lemak: json['lemak'],
-      amylum: json['amylum'],
+      epitel: json['epitel'],
+      jamur: json['jamur'],
       serabut: json['serabut'],
     );
   }
@@ -223,12 +223,12 @@ class HasilPemeriksaanLaboratoriumModel {
       "lendir": lendir,
       "darahFeses": darahFeses,
       "telurCacing": telurCacing,
-      "parasit": parasit,
-      "cyste": cyste,
+      "bakteri": bakteri,
+      "amoeba": amoeba,
       "leucocyte": leucocyte,
       "erythrocyte": erythrocyte,
-      "lemak": lemak,
-      "amylum": amylum,
+      "epitel": epitel,
+      "jamur": jamur,
       "serabut": serabut,
     };
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 alertError(BuildContext context, String message) {
@@ -11,7 +13,7 @@ alertError(BuildContext context, String message) {
       behavior: SnackBarBehavior.floating,
       content: ListTile(
         leading: Container(
-          padding: EdgeInsets.all(2),
+          padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50), color: Colors.red),
           child: Icon(

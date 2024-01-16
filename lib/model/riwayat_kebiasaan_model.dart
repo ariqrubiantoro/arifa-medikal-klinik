@@ -1,3 +1,5 @@
+// ignore_for_file: annotate_overrides
+
 class RiwayatKebiasaanModel {
   String? id;
   String? strMerokok;

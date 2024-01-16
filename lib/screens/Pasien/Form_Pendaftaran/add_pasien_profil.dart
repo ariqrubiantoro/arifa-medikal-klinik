@@ -153,7 +153,7 @@ class _AddPasienProfilState extends State<AddPasienProfil> {
       },
       child: Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: true,
           backgroundColor: blueDefault,
           title: Row(
             children: [

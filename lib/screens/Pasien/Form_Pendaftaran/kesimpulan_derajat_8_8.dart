@@ -265,8 +265,13 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                     SizedBox(
                       height: 20,
                     ),
-                    textDefault("Ditemukan Kelainan Medis", Colors.black, 14,
-                        FontWeight.bold),
+                    textDefault("Tidak Ditemukan Kelainan Medis", Colors.black,
+                        14, FontWeight.bold),
+                    textDefault(
+                        "(Note: Pilih Ya jika ditemukan kelainan medis)",
+                        Colors.grey,
+                        12,
+                        FontWeight.normal),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -299,11 +304,15 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         ),
                       ],
                     ),
+
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
-                    textDefault("Ditemukan Kelainan Medis yang Tidak Serius",
-                        Colors.black, 14, FontWeight.bold),
+                    textDefault(
+                        "Tidak Ditemukan Kelainan Medis yang Tidak Serius",
+                        Colors.black,
+                        14,
+                        FontWeight.bold),
                     Row(
                       children: <Widget>[
                         Radio(
@@ -336,11 +345,16 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         ),
                       ],
                     ),
+                    // textDefault(
+                    //     "(Note: Pilih Ya jika ditemukan kelainan medis yang tidak serius)",
+                    //     Colors.grey,
+                    //     12,
+                    //     FontWeight.normal),
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     textDefault(
-                        "Ditemukan Kelainan Medis, Resiko Kesehatan Rendah",
+                        "Tidak Ditemukan Kelainan Medis, Resiko Kesehatan Rendah",
                         Colors.black,
                         14,
                         FontWeight.bold),
@@ -376,11 +390,16 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         ),
                       ],
                     ),
+                    // textDefault(
+                    //     "(Note: Pilih Ya jika ditemukan kelainan medis, Resiko kesehatan rendah)",
+                    //     Colors.grey,
+                    //     12,
+                    //     FontWeight.normal),
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     textDefault(
-                        "Ditemukan Kelainan Medis Bermakna yang Dapat Menjadi Serius, Resiko Kesehatan Sedang",
+                        "Tidak Ditemukan Kelainan Medis Bermakna yang Dapat Menjadi Serius, Resiko Kesehatan Sedang",
                         Colors.black,
                         14,
                         FontWeight.bold),
@@ -416,11 +435,16 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         ),
                       ],
                     ),
+                    // textDefault(
+                    //     "(Note: Pilih Ya jika ditemukan kelainan medis, Resiko kesehatan sedang)",
+                    //     Colors.grey,
+                    //     12,
+                    //     FontWeight.normal),
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     textDefault(
-                        "Ditemukan Kelainan Medis yang Serius, Resiko Kesehatan Tinggi",
+                        "Tidak Ditemukan Kelainan Medis yang Serius, Resiko Kesehatan Tinggi",
                         Colors.black,
                         14,
                         FontWeight.bold),
@@ -456,11 +480,16 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         ),
                       ],
                     ),
+                    // textDefault(
+                    //     "(Note: Pilih Ya jika ditemukan kelainan medis, Resiko kesehatan tinggi)",
+                    //     Colors.grey,
+                    //     12,
+                    //     FontWeight.normal),
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     textDefault(
-                        "Ditemukan Kelainan Medis yang Menyebabkan Keterbatasan Fisik Maupun Psikis Untuk Melakukan Sesuai Jabatan/Posisinya",
+                        "Tidak Ditemukan Kelainan Medis yang Menyebabkan Keterbatasan Fisik Maupun Psikis Untuk Melakukan Sesuai Jabatan/Posisinya",
                         Colors.black,
                         14,
                         FontWeight.bold),
@@ -496,8 +525,13 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         ),
                       ],
                     ),
+                    // textDefault(
+                    //     "(Note: Pilih Ya jika ditemukan kelainan medis yang Menyebabkan Keterbatasan Fisik Maupun Psikis Untuk Melakukan Sesuai Jabatan/Posisinya)",
+                    //     Colors.grey,
+                    //     12,
+                    //     FontWeight.normal),
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     textDefault(
                         "Tidak Dapat Bekerja Untuk Melakukan Pekerjaan Sesuai Jabatan/Posisinya dan/atau Posisi Apapun, dalam Perawatan Rumah Sakit, atau dalam Status Izin Sakit",
@@ -536,8 +570,13 @@ class _KesimpulanDerajat8State extends State<KesimpulanDerajat8> {
                         ),
                       ],
                     ),
+                    // textDefault(
+                    //     "(Note: Pilih Ya jika Tidak Dapat Bekerja Untuk Melakukan Pekerjaan Sesuai Jabatan/Posisinya)",
+                    //     Colors.grey,
+                    //     12,
+                    //     FontWeight.normal),
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                   ],
                 ),

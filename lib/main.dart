@@ -1,19 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:io';
 
-import 'package:arifa_medikal_klink_3/firebase_options.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_audiometri.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_fisik.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_jantung.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_laboratorium1.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/Hasil_Pemeriksaan/hasil_pemeriksaan_usg.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/anjuran_6_8.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/foto_lain_lain_view.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/keluhan_sekarang_4_8/keadaan_umum/pemeriksaan_mata.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Form_Pendaftaran/pemeriksaan_5_8.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/Menu_Form/menu_form.dart';
-import 'package:arifa_medikal_klink_3/screens/Pasien/pasien_detail.dart';
 import 'package:arifa_medikal_klink_3/screens/auth_screen.dart';
 import 'package:arifa_medikal_klink_3/screens/menu_utama.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -83,7 +70,7 @@ class MyApp extends StatelessWidget {
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, userSnapshot) {
-            // return HasilPemeriksaanAudiometri(
+            // return KesimpulanDerajat8(
             //   idPasien: "4YjDaN6cMrDqIcPukBkL",
             // );
             if (userSnapshot.hasData) {

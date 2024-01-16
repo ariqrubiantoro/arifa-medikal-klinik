@@ -76,12 +76,12 @@ class _HasilPemeriksaanLaboratorium1State
   final lendir = TextEditingController();
   final darahFeses = TextEditingController();
   final telurCacing = TextEditingController();
-  final parasit = TextEditingController();
-  final cyste = TextEditingController();
+  final bakteri = TextEditingController();
+  final amoeba = TextEditingController();
   final leucocyte = TextEditingController();
   final erythrocyte = TextEditingController();
-  final lemak = TextEditingController();
-  final amylum = TextEditingController();
+  final epitel = TextEditingController();
+  final jamur = TextEditingController();
   final serabut = TextEditingController();
 
   bool booldokter = false;
@@ -135,12 +135,12 @@ class _HasilPemeriksaanLaboratorium1State
   bool boollendir = false;
   bool booldarahFeses = false;
   bool booltelurCacing = false;
-  bool boolparasit = false;
-  bool boolcyste = false;
+  bool boolbakteri = false;
+  bool boolamoeba = false;
   bool boolleucocyte = false;
   bool boolerythrocyte = false;
-  bool boollemak = false;
-  bool boolamylum = false;
+  bool boolepitel = false;
+  bool booljamur = false;
   bool boolserabut = false;
 
   HasilPemeriksaanLaboratoriumModel? _hasilPemeriksaanLaboratorium;
@@ -210,12 +210,12 @@ class _HasilPemeriksaanLaboratorium1State
         lendir.text = _hasilPemeriksaanLaboratorium!.lendir ?? "";
         darahFeses.text = _hasilPemeriksaanLaboratorium!.darahFeses ?? "";
         telurCacing.text = _hasilPemeriksaanLaboratorium!.telurCacing ?? "";
-        parasit.text = _hasilPemeriksaanLaboratorium!.parasit ?? "";
-        cyste.text = _hasilPemeriksaanLaboratorium!.cyste ?? "";
+        bakteri.text = _hasilPemeriksaanLaboratorium!.bakteri ?? "";
+        amoeba.text = _hasilPemeriksaanLaboratorium!.amoeba ?? "";
         leucocyte.text = _hasilPemeriksaanLaboratorium!.leucocyte ?? "";
         erythrocyte.text = _hasilPemeriksaanLaboratorium!.erythrocyte ?? "";
-        lemak.text = _hasilPemeriksaanLaboratorium!.lemak ?? "";
-        amylum.text = _hasilPemeriksaanLaboratorium!.amylum ?? "";
+        epitel.text = _hasilPemeriksaanLaboratorium!.epitel ?? "";
+        jamur.text = _hasilPemeriksaanLaboratorium!.jamur ?? "";
         serabut.text = _hasilPemeriksaanLaboratorium!.serabut ?? "";
         dokter.text = _hasilPemeriksaanLaboratorium!.dokter ?? "";
         analisa.text = _hasilPemeriksaanLaboratorium!.analisa ?? "";
@@ -466,14 +466,14 @@ class _HasilPemeriksaanLaboratorium1State
         booltelurCacing = true;
       });
     }
-    if (parasit.text != "") {
+    if (bakteri.text != "") {
       setState(() {
-        boolparasit = true;
+        boolbakteri = true;
       });
     }
-    if (cyste.text != "") {
+    if (amoeba.text != "") {
       setState(() {
-        boolcyste = true;
+        boolamoeba = true;
       });
     }
     if (leucocyte.text != "") {
@@ -486,14 +486,14 @@ class _HasilPemeriksaanLaboratorium1State
         boolerythrocyte = true;
       });
     }
-    if (lemak.text != "") {
+    if (epitel.text != "") {
       setState(() {
-        boollemak = true;
+        boolepitel = true;
       });
     }
-    if (amylum.text != "") {
+    if (jamur.text != "") {
       setState(() {
-        boolamylum = true;
+        booljamur = true;
       });
     }
     if (serabut.text != "") {
@@ -2527,12 +2527,12 @@ class _HasilPemeriksaanLaboratorium1State
                             boollendir == false &&
                             booldarahFeses == false &&
                             booltelurCacing == false &&
-                            boolparasit == false &&
-                            boolcyste == false &&
+                            boolbakteri == false &&
+                            boolamoeba == false &&
                             boolleucocyte == false &&
                             boolerythrocyte == false &&
-                            boollemak == false &&
-                            boolamylum == false &&
+                            boolepitel == false &&
+                            booljamur == false &&
                             boolserabut == false
                         ? Container()
                         : textDefault(
@@ -2758,7 +2758,7 @@ class _HasilPemeriksaanLaboratorium1State
                               ),
                             ],
                           ),
-                    boolparasit == false
+                    boolbakteri == false
                         ? Container()
                         : Column(
                             children: [
@@ -2766,13 +2766,13 @@ class _HasilPemeriksaanLaboratorium1State
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  textDefault("Parasit", Colors.black, 14,
+                                  textDefault("Bakteri", Colors.black, 14,
                                       FontWeight.normal),
                                   InkWell(
                                     onTap: () {
                                       setState(() {
-                                        boolparasit = false;
-                                        parasit.text = "";
+                                        boolbakteri = false;
+                                        bakteri.text = "";
                                       });
                                     },
                                     child: Container(
@@ -2791,7 +2791,7 @@ class _HasilPemeriksaanLaboratorium1State
                                     border: Border.all(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10)),
                                 child: TextFormField(
-                                  controller: parasit,
+                                  controller: bakteri,
                                   decoration:
                                       InputDecoration(border: InputBorder.none),
                                 ),
@@ -2801,7 +2801,7 @@ class _HasilPemeriksaanLaboratorium1State
                               ),
                             ],
                           ),
-                    boolcyste == false
+                    boolamoeba == false
                         ? Container()
                         : Column(
                             children: [
@@ -2809,13 +2809,13 @@ class _HasilPemeriksaanLaboratorium1State
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  textDefault("Cyste", Colors.black, 14,
+                                  textDefault("Amoeba", Colors.black, 14,
                                       FontWeight.normal),
                                   InkWell(
                                     onTap: () {
                                       setState(() {
-                                        boolcyste = false;
-                                        cyste.text = "";
+                                        boolamoeba = false;
+                                        amoeba.text = "";
                                       });
                                     },
                                     child: Container(
@@ -2834,7 +2834,7 @@ class _HasilPemeriksaanLaboratorium1State
                                     border: Border.all(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10)),
                                 child: TextFormField(
-                                  controller: cyste,
+                                  controller: amoeba,
                                   decoration:
                                       InputDecoration(border: InputBorder.none),
                                 ),
@@ -2930,7 +2930,7 @@ class _HasilPemeriksaanLaboratorium1State
                               ),
                             ],
                           ),
-                    boollemak == false
+                    boolepitel == false
                         ? Container()
                         : Column(
                             children: [
@@ -2938,13 +2938,13 @@ class _HasilPemeriksaanLaboratorium1State
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  textDefault("Lemak", Colors.black, 14,
+                                  textDefault("Epitel", Colors.black, 14,
                                       FontWeight.normal),
                                   InkWell(
                                     onTap: () {
                                       setState(() {
-                                        boollemak = false;
-                                        lemak.text = "";
+                                        boolepitel = false;
+                                        epitel.text = "";
                                       });
                                     },
                                     child: Container(
@@ -2963,7 +2963,7 @@ class _HasilPemeriksaanLaboratorium1State
                                     border: Border.all(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10)),
                                 child: TextFormField(
-                                  controller: lemak,
+                                  controller: epitel,
                                   decoration:
                                       InputDecoration(border: InputBorder.none),
                                 ),
@@ -2973,7 +2973,7 @@ class _HasilPemeriksaanLaboratorium1State
                               ),
                             ],
                           ),
-                    boolamylum == false
+                    booljamur == false
                         ? Container()
                         : Column(
                             children: [
@@ -2981,13 +2981,13 @@ class _HasilPemeriksaanLaboratorium1State
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  textDefault("Amylum", Colors.black, 14,
+                                  textDefault("Jamur", Colors.black, 14,
                                       FontWeight.normal),
                                   InkWell(
                                     onTap: () {
                                       setState(() {
-                                        boolamylum = false;
-                                        amylum.text = "";
+                                        booljamur = false;
+                                        jamur.text = "";
                                       });
                                     },
                                     child: Container(
@@ -3006,7 +3006,7 @@ class _HasilPemeriksaanLaboratorium1State
                                     border: Border.all(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10)),
                                 child: TextFormField(
-                                  controller: amylum,
+                                  controller: jamur,
                                   decoration:
                                       InputDecoration(border: InputBorder.none),
                                 ),
@@ -3016,49 +3016,49 @@ class _HasilPemeriksaanLaboratorium1State
                               ),
                             ],
                           ),
-                    boolserabut == false
-                        ? Container()
-                        : Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  textDefault("Serabut", Colors.black, 14,
-                                      FontWeight.normal),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        boolserabut = false;
-                                        serabut.text = "";
-                                      });
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(right: 20),
-                                      child: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: TextFormField(
-                                  controller: serabut,
-                                  decoration:
-                                      InputDecoration(border: InputBorder.none),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
+                    // boolserabut == false
+                    //     ? Container()
+                    //     : Column(
+                    //         children: [
+                    //           Row(
+                    //             mainAxisAlignment:
+                    //                 MainAxisAlignment.spaceBetween,
+                    //             children: [
+                    //               textDefault("Serabut", Colors.black, 14,
+                    //                   FontWeight.normal),
+                    //               InkWell(
+                    //                 onTap: () {
+                    //                   setState(() {
+                    //                     boolserabut = false;
+                    //                     serabut.text = "";
+                    //                   });
+                    //                 },
+                    //                 child: Container(
+                    //                   margin: EdgeInsets.only(right: 20),
+                    //                   child: Icon(
+                    //                     Icons.delete,
+                    //                     color: Colors.red,
+                    //                   ),
+                    //                 ),
+                    //               )
+                    //             ],
+                    //           ),
+                    //           Container(
+                    //             padding: EdgeInsets.symmetric(horizontal: 10),
+                    //             decoration: BoxDecoration(
+                    //                 border: Border.all(color: Colors.grey),
+                    //                 borderRadius: BorderRadius.circular(10)),
+                    //             child: TextFormField(
+                    //               controller: serabut,
+                    //               decoration:
+                    //                   InputDecoration(border: InputBorder.none),
+                    //             ),
+                    //           ),
+                    //           SizedBox(
+                    //             height: 10,
+                    //           ),
+                    //         ],
+                    //       ),
                   ],
                 ),
               ),
@@ -4174,46 +4174,46 @@ class _HasilPemeriksaanLaboratorium1State
                         : Divider(
                             thickness: 1,
                           ),
-                    boolparasit
+                    boolbakteri
                         ? Container()
                         : InkWell(
                             onTap: () {
                               setT(
                                 () {
-                                  boolparasit = true;
+                                  boolbakteri = true;
                                   // Navigator.of(context).pop();
                                   setState(() {});
                                 },
                               );
                             },
                             child: Container(
-                              child: textDefault("Parasit", Colors.black, 14,
+                              child: textDefault("Bakteri", Colors.black, 14,
                                   FontWeight.normal),
                             ),
                           ),
-                    boolparasit
+                    boolbakteri
                         ? Container()
                         : Divider(
                             thickness: 1,
                           ),
-                    boolcyste
+                    boolamoeba
                         ? Container()
                         : InkWell(
                             onTap: () {
                               setT(
                                 () {
-                                  boolcyste = true;
+                                  boolamoeba = true;
                                   // Navigator.of(context).pop();
                                   setState(() {});
                                 },
                               );
                             },
                             child: Container(
-                              child: textDefault("Glukosa", Colors.black, 14,
+                              child: textDefault("Amoeba", Colors.black, 14,
                                   FontWeight.normal),
                             ),
                           ),
-                    boolcyste
+                    boolamoeba
                         ? Container()
                         : Divider(
                             thickness: 1,
@@ -4262,13 +4262,35 @@ class _HasilPemeriksaanLaboratorium1State
                         : Divider(
                             thickness: 1,
                           ),
-                    boollemak
+                    boolepitel
                         ? Container()
                         : InkWell(
                             onTap: () {
                               setT(
                                 () {
-                                  boollemak = true;
+                                  boolepitel = true;
+                                  // Navigator.of(context).pop();
+                                  setState(() {});
+                                },
+                              );
+                            },
+                            child: Container(
+                              child: textDefault("Epitel", Colors.black, 14,
+                                  FontWeight.normal),
+                            ),
+                          ),
+                    boolepitel
+                        ? Container()
+                        : Divider(
+                            thickness: 1,
+                          ),
+                    booljamur
+                        ? Container()
+                        : InkWell(
+                            onTap: () {
+                              setT(
+                                () {
+                                  booljamur = true;
                                   // Navigator.of(context).pop();
                                   setState(() {});
                                 },
@@ -4276,58 +4298,36 @@ class _HasilPemeriksaanLaboratorium1State
                             },
                             child: Container(
                               child: textDefault(
-                                  "Lemak", Colors.black, 14, FontWeight.normal),
+                                  "Jamur", Colors.black, 14, FontWeight.normal),
                             ),
                           ),
-                    boollemak
+                    booljamur
                         ? Container()
                         : Divider(
                             thickness: 1,
                           ),
-                    boolamylum
-                        ? Container()
-                        : InkWell(
-                            onTap: () {
-                              setT(
-                                () {
-                                  boolamylum = true;
-                                  // Navigator.of(context).pop();
-                                  setState(() {});
-                                },
-                              );
-                            },
-                            child: Container(
-                              child: textDefault("Amylum", Colors.black, 14,
-                                  FontWeight.normal),
-                            ),
-                          ),
-                    boolamylum
-                        ? Container()
-                        : Divider(
-                            thickness: 1,
-                          ),
-                    boolserabut
-                        ? Container()
-                        : InkWell(
-                            onTap: () {
-                              setT(
-                                () {
-                                  boolserabut = true;
-                                  // Navigator.of(context).pop();
-                                  setState(() {});
-                                },
-                              );
-                            },
-                            child: Container(
-                              child: textDefault("Serabut", Colors.black, 14,
-                                  FontWeight.normal),
-                            ),
-                          ),
-                    boolserabut
-                        ? Container()
-                        : Divider(
-                            thickness: 1,
-                          ),
+                    // boolserabut
+                    //     ? Container()
+                    //     : InkWell(
+                    //         onTap: () {
+                    //           setT(
+                    //             () {
+                    //               boolserabut = true;
+                    //               // Navigator.of(context).pop();
+                    //               setState(() {});
+                    //             },
+                    //           );
+                    //         },
+                    //         child: Container(
+                    //           child: textDefault("Serabut", Colors.black, 14,
+                    //               FontWeight.normal),
+                    //         ),
+                    //       ),
+                    // boolserabut
+                    //     ? Container()
+                    //     : Divider(
+                    //         thickness: 1,
+                    //       ),
                   ],
                 ),
               ),
@@ -4443,12 +4443,12 @@ class _HasilPemeriksaanLaboratorium1State
       lendir: lendir.text,
       darahFeses: darahFeses.text,
       telurCacing: telurCacing.text,
-      parasit: parasit.text,
-      cyste: cyste.text,
+      bakteri: bakteri.text,
+      amoeba: amoeba.text,
       leucocyte: leucocyte.text,
       erythrocyte: erythrocyte.text,
-      lemak: lemak.text,
-      amylum: amylum.text,
+      epitel: epitel.text,
+      jamur: jamur.text,
       serabut: serabut.text,
       led: led.text,
       bilirubinIndirect: bilirubinIndirect.text,

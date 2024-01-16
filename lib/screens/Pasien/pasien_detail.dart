@@ -4466,19 +4466,31 @@ class _PasienDetailState extends State<PasienDetail> {
                           ]),
                     _pemeriksaan!.pemeriksaanUsg == ""
                         ? pw.Container()
-                        : pw.Row(children: [
-                            pw.SizedBox(width: 10),
-                            pw.Container(
-                                width: 240,
-                                child: pw.Text("PEMERIKSAAN USG",
-                                    style: pw.TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: pw.FontWeight.bold))),
-                            pw.Text(": ${_pemeriksaan!.pemeriksaanUsg}",
-                                style: pw.TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: pw.FontWeight.normal))
-                          ]),
+                        : pw.Row(
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                            mainAxisAlignment: pw.MainAxisAlignment.start,
+                            children: [
+                                pw.SizedBox(width: 10),
+                                pw.Container(
+                                    width: 240,
+                                    child: pw.Text("PEMERIKSAAN USG",
+                                        style: pw.TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: pw.FontWeight.bold))),
+                                pw.Container(
+                                    width: 10,
+                                    child: pw.Text(":",
+                                        style: pw.TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: pw.FontWeight.normal))),
+                                pw.Container(
+                                    width: 350,
+                                    child: pw.Text(
+                                        "${_pemeriksaan!.pemeriksaanUsg}",
+                                        style: pw.TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: pw.FontWeight.normal)))
+                              ]),
                     _pemeriksaan!.pemeriksaanNapfa == ""
                         ? pw.Container()
                         : pw.Row(children: [
@@ -4606,7 +4618,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
                                     _ajuran!.olahragaTeratur == "Ya"
-                                        ? "2. Olahraga teratur minimal 30 menit setiap harinya 3-4x seminggu"
+                                        ? "2. Olahraga teratur minimal 30 menit setiap harinya\n    3-4x seminggu"
                                         : _ajuran!.olahragaTeratur == "Tidak"
                                             ? "2. -"
                                             : "2. ${_ajuran!.olahragaTeratur}",
@@ -4672,7 +4684,8 @@ class _PasienDetailState extends State<PasienDetail> {
                                         fontSize: 11,
                                         fontWeight: pw.FontWeight.bold)),
                                 pw.Text(
-                                    _kelayakanKerja!.layakBekerjaSesuaiPosisi ==
+                                    _kelayakanKerja!
+                                                .layakBekerjaSesuaiPosisi! ==
                                             "Ya"
                                         ? "(v) : Laik Bekerja Sesuai Posisi dan Lokasi Saat Ini"
                                         : "(  ) : Laik Bekerja Sesuai Posisi dan Lokasi Saat Ini",
@@ -4681,7 +4694,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
                                     _kelayakanKerja!
-                                                .layakBekerjaDenganCatatan ==
+                                                .layakBekerjaDenganCatatan! ==
                                             "Ya"
                                         ? "(v) : Laik Bekerja Sesuai Posisi dan Lokasi Saat Ini, Dengan Catatan"
                                         : "(  ) : Laik Bekerja Sesuai Posisi dan Lokasi Saat Ini, Dengan Catatan",
@@ -4690,7 +4703,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
                                     _kelayakanKerja!
-                                                .layakBekerjaDenganPenyesuaian ==
+                                                .layakBekerjaDenganPenyesuaian! ==
                                             "Ya"
                                         ? "(v) : Laik Bekerja Dengan Penyesuaian dan atau Pembatasan Pekerjaan"
                                         : "(  ) : Laik Bekerja Dengan Penyesuaian dan atau Pembatasan Pekerjaan",
@@ -4698,7 +4711,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                         fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
                                 pw.Text(
-                                    _kelayakanKerja!.layakuntukBekerja == "Ya"
+                                    _kelayakanKerja!.layakuntukBekerja! == "Ya"
                                         ? "(v) : Tidak Laik Untuk Bekerja"
                                         : "(  ) : Tidak Laik Untuk Bekerja",
                                     style: pw.TextStyle(
@@ -4743,8 +4756,8 @@ class _PasienDetailState extends State<PasienDetail> {
                                     _kesimpulanDerajatKesehatan!
                                                 .ditemukanKelainanYangTidakSerius ==
                                             "Ya"
-                                        ? "(v) : P2. Ditemukan kelainan medis yang tidak serius"
-                                        : "(  ) : P2. Ditemukan kelainan medis yang tidak serius",
+                                        ? "(v) : P2. Tidak Ditemukan kelainan medis yang tidak serius"
+                                        : "(  ) : P2. Tidak Ditemukan kelainan medis yang tidak serius",
                                     style: pw.TextStyle(
                                         fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
@@ -4752,8 +4765,8 @@ class _PasienDetailState extends State<PasienDetail> {
                                     _kesimpulanDerajatKesehatan!
                                                 .ditemukanKelainanResikoKesehatanRendah ==
                                             "Ya"
-                                        ? "(v) : P3. Ditemukan kelainan medis, resiko kesehatan rendah"
-                                        : "(  ) : P3. Ditemukan kelainan medis, resiko kesehatan rendah",
+                                        ? "(v) : P3. Tidak Ditemukan kelainan medis, resiko kesehatan rendah"
+                                        : "(  ) : P3. Tidak Ditemukan kelainan medis, resiko kesehatan rendah",
                                     style: pw.TextStyle(
                                         fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
@@ -4761,8 +4774,8 @@ class _PasienDetailState extends State<PasienDetail> {
                                     _kesimpulanDerajatKesehatan!
                                                 .ditemukanKelainanResikoKesehatanSedang ==
                                             "Ya"
-                                        ? "(v) : P4. Ditemukan kelainan medis bermakna yang dapat menjadi serius, resiko kesehatan sedang"
-                                        : "(  ) : P4. Ditemukan kelainan medis bermakna yang dapat menjadi serius, resiko kesehatan sedang",
+                                        ? "(v) : P4. Tidak Ditemukan kelainan medis bermakna yang dapat menjadi serius, resiko kesehatan sedang"
+                                        : "(  ) : P4. Tidak Ditemukan kelainan medis bermakna yang dapat menjadi serius, resiko kesehatan sedang",
                                     style: pw.TextStyle(
                                         fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
@@ -4770,8 +4783,8 @@ class _PasienDetailState extends State<PasienDetail> {
                                     _kesimpulanDerajatKesehatan!
                                                 .ditemukanKelainanResikoKesehatanTinggi ==
                                             "Ya"
-                                        ? "(v) : P5. Ditemukan kelainan medis yang serius, resiko kesehatan tinggi"
-                                        : "(  ) : P5. Ditemukan kelainan medis yang serius, resiko kesehatan tinggi",
+                                        ? "(v) : P5. Tidak Ditemukan kelainan medis yang serius, resiko kesehatan tinggi"
+                                        : "(  ) : P5. Tidak Ditemukan kelainan medis yang serius, resiko kesehatan tinggi",
                                     style: pw.TextStyle(
                                         fontSize: 11,
                                         fontWeight: pw.FontWeight.normal)),
@@ -4798,7 +4811,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                               pw.CrossAxisAlignment.start,
                                           children: [
                                             pw.Text(
-                                                "P6. Ditemukan kelainan medis yang menyebabkan keterbatasan fisik maupun psikis untuk",
+                                                "P6. Tidak Ditemukan kelainan medis yang menyebabkan keterbatasan fisik maupun psikis untuk",
                                                 style: pw.TextStyle(
                                                     fontSize: 11,
                                                     fontWeight:
@@ -5701,7 +5714,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                           fontWeight: pw.FontWeight.bold))),
                               pw.Container(
                                   width: 150,
-                                  child: pw.Text('Angka Normal',
+                                  child: pw.Text('Nilai Rujukan',
                                       style: pw.TextStyle(
                                           fontSize: 8,
                                           fontWeight: pw.FontWeight.bold))),
@@ -6862,7 +6875,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                                 ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('5.0 - 7.8',
+                                        child: pw.Text('4.5 - 8.0',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -6920,7 +6933,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                             ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('1.000 - 1.030',
+                                        child: pw.Text('1.003 - 1.035',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -6955,7 +6968,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                             ))),
                                     pw.Container(
                                         width: 100,
-                                        child: pw.Text('mmol/l',
+                                        child: pw.Text('mg/dl',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -6984,7 +6997,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                             ))),
                                     pw.Container(
                                         width: 100,
-                                        child: pw.Text('umol/l',
+                                        child: pw.Text('mg/dl',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -7013,7 +7026,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                             ))),
                                     pw.Container(
                                         width: 100,
-                                        child: pw.Text('mmol/l',
+                                        child: pw.Text('mg/dl',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -7023,12 +7036,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                     _hasilLaboratorium!.lendir! == "" &&
                                     _hasilLaboratorium!.darahFeses! == "" &&
                                     _hasilLaboratorium!.telurCacing! == "" &&
-                                    _hasilLaboratorium!.parasit! == "" &&
-                                    _hasilLaboratorium!.cyste! == "" &&
+                                    _hasilLaboratorium!.bakteri == "" &&
+                                    _hasilLaboratorium!.amoeba! == "" &&
                                     _hasilLaboratorium!.leucocyte! == "" &&
                                     _hasilLaboratorium!.erythrocyte! == "" &&
-                                    _hasilLaboratorium!.lemak! == "" &&
-                                    _hasilLaboratorium!.amylum! == "" &&
+                                    _hasilLaboratorium!.epitel! == "" &&
+                                    _hasilLaboratorium!.jamur! == "" &&
                                     _hasilLaboratorium!.serabut! == ""
                                 ? pw.Container()
                                 : pw.Row(children: [
@@ -7066,7 +7079,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                             ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('',
+                                        child: pw.Text('Lunak',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -7095,7 +7108,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                             ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('',
+                                        child: pw.Text('Kuning',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -7124,7 +7137,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                             ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('',
+                                        child: pw.Text('Negatif',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -7153,7 +7166,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                             ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('',
+                                        child: pw.Text('Negatif',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -7182,7 +7195,7 @@ class _PasienDetailState extends State<PasienDetail> {
                                             ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('',
+                                        child: pw.Text('Negatif',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -7193,25 +7206,26 @@ class _PasienDetailState extends State<PasienDetail> {
                                               fontSize: 7,
                                             ))),
                                   ]),
-                            _hasilLaboratorium!.parasit! == ""
+                            _hasilLaboratorium!.bakteri == null ||
+                                    _hasilLaboratorium!.bakteri! == ""
                                 ? pw.Container()
                                 : pw.Row(children: [
                                     pw.Container(
                                         width: 200,
-                                        child: pw.Text('Parasit',
+                                        child: pw.Text('Bakteri',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                     pw.Container(
                                         width: 150,
                                         child: pw.Text(
-                                            '${_hasilLaboratorium!.parasit}',
+                                            '${_hasilLaboratorium!.bakteri}',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('',
+                                        child: pw.Text('Negatif',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -7222,25 +7236,26 @@ class _PasienDetailState extends State<PasienDetail> {
                                               fontSize: 7,
                                             ))),
                                   ]),
-                            _hasilLaboratorium!.cyste! == ""
+                            _hasilLaboratorium!.amoeba == null ||
+                                    _hasilLaboratorium!.amoeba! == ""
                                 ? pw.Container()
                                 : pw.Row(children: [
                                     pw.Container(
                                         width: 200,
-                                        child: pw.Text('Cyste',
+                                        child: pw.Text('Amoeba',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                     pw.Container(
                                         width: 150,
                                         child: pw.Text(
-                                            '${_hasilLaboratorium!.cyste}',
+                                            '${_hasilLaboratorium!.amoeba}',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('',
+                                        child: pw.Text('Negatif',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -7269,13 +7284,13 @@ class _PasienDetailState extends State<PasienDetail> {
                                             ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('',
+                                        child: pw.Text('0-1',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                     pw.Container(
                                         width: 100,
-                                        child: pw.Text('',
+                                        child: pw.Text('/lpb',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
@@ -7298,104 +7313,106 @@ class _PasienDetailState extends State<PasienDetail> {
                                             ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('',
+                                        child: pw.Text('0-1',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                     pw.Container(
                                         width: 100,
-                                        child: pw.Text('',
+                                        child: pw.Text('/lpb',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                   ]),
-                            _hasilLaboratorium!.lemak! == ""
+                            _hasilLaboratorium!.epitel == null ||
+                                    _hasilLaboratorium!.epitel! == ""
                                 ? pw.Container()
                                 : pw.Row(children: [
                                     pw.Container(
                                         width: 200,
-                                        child: pw.Text('Lemak',
+                                        child: pw.Text('Epitel',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                     pw.Container(
                                         width: 150,
                                         child: pw.Text(
-                                            '${_hasilLaboratorium!.lemak}',
+                                            '${_hasilLaboratorium!.epitel}',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('',
+                                        child: pw.Text('Negatif',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                     pw.Container(
                                         width: 100,
-                                        child: pw.Text('',
+                                        child: pw.Text('/lpb',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                   ]),
-                            _hasilLaboratorium!.amylum! == ""
+                            _hasilLaboratorium!.jamur == null ||
+                                    _hasilLaboratorium!.jamur! == ""
                                 ? pw.Container()
                                 : pw.Row(children: [
                                     pw.Container(
                                         width: 200,
-                                        child: pw.Text('Amylum',
+                                        child: pw.Text('Jamur',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                     pw.Container(
                                         width: 150,
                                         child: pw.Text(
-                                            '${_hasilLaboratorium!.amylum}',
+                                            '${_hasilLaboratorium!.jamur}',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                     pw.Container(
                                         width: 150,
-                                        child: pw.Text('',
+                                        child: pw.Text('Negatif',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                     pw.Container(
                                         width: 100,
-                                        child: pw.Text('',
+                                        child: pw.Text('Negatif',
                                             style: pw.TextStyle(
                                               fontSize: 7,
                                             ))),
                                   ]),
-                            _hasilLaboratorium!.serabut! == ""
-                                ? pw.Container()
-                                : pw.Row(children: [
-                                    pw.Container(
-                                        width: 200,
-                                        child: pw.Text('Serabut',
-                                            style: pw.TextStyle(
-                                              fontSize: 7,
-                                            ))),
-                                    pw.Container(
-                                        width: 150,
-                                        child: pw.Text(
-                                            '${_hasilLaboratorium!.serabut}',
-                                            style: pw.TextStyle(
-                                              fontSize: 7,
-                                            ))),
-                                    pw.Container(
-                                        width: 150,
-                                        child: pw.Text('',
-                                            style: pw.TextStyle(
-                                              fontSize: 7,
-                                            ))),
-                                    pw.Container(
-                                        width: 100,
-                                        child: pw.Text('',
-                                            style: pw.TextStyle(
-                                              fontSize: 7,
-                                            ))),
-                                  ]),
+                            // _hasilLaboratorium!.serabut! == ""
+                            //     ? pw.Container()
+                            //     : pw.Row(children: [
+                            //         pw.Container(
+                            //             width: 200,
+                            //             child: pw.Text('Serabut',
+                            //                 style: pw.TextStyle(
+                            //                   fontSize: 7,
+                            //                 ))),
+                            //         pw.Container(
+                            //             width: 150,
+                            //             child: pw.Text(
+                            //                 '${_hasilLaboratorium!.serabut}',
+                            //                 style: pw.TextStyle(
+                            //                   fontSize: 7,
+                            //                 ))),
+                            //         pw.Container(
+                            //             width: 150,
+                            //             child: pw.Text('',
+                            //                 style: pw.TextStyle(
+                            //                   fontSize: 7,
+                            //                 ))),
+                            //         pw.Container(
+                            //             width: 100,
+                            //             child: pw.Text('',
+                            //                 style: pw.TextStyle(
+                            //                   fontSize: 7,
+                            //                 ))),
+                            //       ]),
                           ]))
                     ];
                   }));
@@ -8128,10 +8145,11 @@ class _PasienDetailState extends State<PasienDetail> {
                                           fontWeight: pw.FontWeight.bold)),
                                 ]),
                             pw.SizedBox(height: 10),
-                            pw.Row(children: [
-                              pw.Text(_hasilUsg!.keterangan!,
+                            pw.Container(
+                              width: 1000,
+                              child: pw.Text(_hasilUsg!.keterangan!,
                                   style: pw.TextStyle(fontSize: 11)),
-                            ])
+                            )
                           ]))
                     ];
                   }));
@@ -8461,12 +8479,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                         children: [
                                           pw.Text("Nama Pasien",
                                               style:
-                                                  pw.TextStyle(fontSize: 12)),
+                                                  pw.TextStyle(fontSize: 11)),
                                           pw.Text("Umur",
                                               style:
-                                                  pw.TextStyle(fontSize: 12)),
+                                                  pw.TextStyle(fontSize: 11)),
                                           pw.Text("J.Kelamin",
-                                              style: pw.TextStyle(fontSize: 12))
+                                              style: pw.TextStyle(fontSize: 11))
                                         ]),
                                     pw.SizedBox(width: 20),
                                     pw.Column(
@@ -8475,12 +8493,12 @@ class _PasienDetailState extends State<PasienDetail> {
                                         children: [
                                           pw.Text(": ${_pasien!.nama}",
                                               style:
-                                                  pw.TextStyle(fontSize: 12)),
+                                                  pw.TextStyle(fontSize: 11)),
                                           pw.Text(": ${_pasien!.umur}",
                                               style:
-                                                  pw.TextStyle(fontSize: 12)),
+                                                  pw.TextStyle(fontSize: 11)),
                                           pw.Text(": ${_pasien!.jenisKelamin}",
-                                              style: pw.TextStyle(fontSize: 12))
+                                              style: pw.TextStyle(fontSize: 11))
                                         ])
                                   ]),
                                   pw.Row(children: [
@@ -8490,10 +8508,10 @@ class _PasienDetailState extends State<PasienDetail> {
                                         children: [
                                           pw.Text(_hasilTreadmill!.dokterApa!,
                                               style:
-                                                  pw.TextStyle(fontSize: 12)),
+                                                  pw.TextStyle(fontSize: 11)),
                                           pw.Text("Tanggal Pemeriksaan",
                                               style:
-                                                  pw.TextStyle(fontSize: 12)),
+                                                  pw.TextStyle(fontSize: 11)),
                                         ]),
                                     pw.SizedBox(width: 20),
                                     pw.Column(
@@ -8503,11 +8521,11 @@ class _PasienDetailState extends State<PasienDetail> {
                                           pw.Text(
                                               ": ${_hasilTreadmill!.namaDokter!}",
                                               style:
-                                                  pw.TextStyle(fontSize: 12)),
+                                                  pw.TextStyle(fontSize: 11)),
                                           pw.Text(
                                               ": ${_pasien!.tanggalPemeriksaan}",
                                               style:
-                                                  pw.TextStyle(fontSize: 12)),
+                                                  pw.TextStyle(fontSize: 11)),
                                         ])
                                   ])
                                 ]),
@@ -9079,7 +9097,7 @@ class _PasienDetailState extends State<PasienDetail> {
         final dir = await getApplicationDocumentsDirectory();
         // final file = File('${dir.path}/pasienMCU.pdf');
 
-        final file = File('${dir.path}/Hasil MCU ${_pasien!.nama}');
+        final file = File('${dir.path}/Hasil MCU ${_pasien!.nama}.pdf');
         // await OpenFilex.open(file.path);
         await OpenFilex.open(file.path);
         await file.writeAsBytes(bytes);
@@ -13457,7 +13475,7 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child:
-                    textDefault("Parasit", Colors.black, 12, FontWeight.normal),
+                    textDefault("Bakteri", Colors.black, 12, FontWeight.normal),
               ),
             ),
             Container(
@@ -13466,7 +13484,7 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    "${_hasilLaboratorium == null ? "" : _hasilLaboratorium!.parasit}          ",
+                    "${_hasilLaboratorium == null ? "" : _hasilLaboratorium!.bakteri}          ",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13484,7 +13502,7 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child:
-                    textDefault("Cyste", Colors.black, 12, FontWeight.normal),
+                    textDefault("Amoeba", Colors.black, 12, FontWeight.normal),
               ),
             ),
             Container(
@@ -13493,7 +13511,7 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    "${_hasilLaboratorium == null ? "" : _hasilLaboratorium!.cyste}          ",
+                    "${_hasilLaboratorium == null ? "" : _hasilLaboratorium!.amoeba}          ",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13565,7 +13583,7 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child:
-                    textDefault("Lemak", Colors.black, 12, FontWeight.normal),
+                    textDefault("epitel", Colors.black, 12, FontWeight.normal),
               ),
             ),
             Container(
@@ -13574,7 +13592,7 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    "${_hasilLaboratorium == null ? "" : _hasilLaboratorium!.lemak}          ",
+                    "${_hasilLaboratorium == null ? "" : _hasilLaboratorium!.epitel}          ",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13592,7 +13610,7 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child:
-                    textDefault("Amylum", Colors.black, 12, FontWeight.normal),
+                    textDefault("Jamur", Colors.black, 12, FontWeight.normal),
               ),
             ),
             Container(
@@ -13601,7 +13619,7 @@ class _PasienDetailState extends State<PasienDetail> {
             Expanded(
               child: Container(
                 child: textDefault(
-                    "${_hasilLaboratorium == null ? "" : _hasilLaboratorium!.amylum}          ",
+                    "${_hasilLaboratorium == null ? "" : _hasilLaboratorium!.jamur}          ",
                     Colors.black,
                     12,
                     FontWeight.normal),
@@ -13609,33 +13627,33 @@ class _PasienDetailState extends State<PasienDetail> {
             ),
           ],
         ),
-        SizedBox(
-          height: 5,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Container(
-                child:
-                    textDefault("Serabut", Colors.black, 12, FontWeight.normal),
-              ),
-            ),
-            Container(
-              child: textDefault(":  ", Colors.black, 12, FontWeight.normal),
-            ),
-            Expanded(
-              child: Container(
-                child: textDefault(
-                    "${_hasilLaboratorium == null ? "" : _hasilLaboratorium!.serabut}          ",
-                    Colors.black,
-                    12,
-                    FontWeight.normal),
-              ),
-            ),
-          ],
-        ),
+        // SizedBox(
+        //   height: 5,
+        // ),
+        // Row(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     Expanded(
+        //       child: Container(
+        //         child:
+        //             textDefault("Serabut", Colors.black, 12, FontWeight.normal),
+        //       ),
+        //     ),
+        //     Container(
+        //       child: textDefault(":  ", Colors.black, 12, FontWeight.normal),
+        //     ),
+        //     Expanded(
+        //       child: Container(
+        //         child: textDefault(
+        //             "${_hasilLaboratorium == null ? "" : _hasilLaboratorium!.serabut}          ",
+        //             Colors.black,
+        //             12,
+        //             FontWeight.normal),
+        //       ),
+        //     ),
+        //   ],
+        // ),
         SizedBox(
           height: 5,
         ),
